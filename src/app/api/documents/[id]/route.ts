@@ -8,7 +8,7 @@ import { projectScope } from "@/lib/rbac";
 
 export const dynamic = "force-dynamic";
 
-const UPLOAD_DIR = path.resolve(process.env.UPLOAD_DIR ?? "./uploads");
+const UPLOAD_DIR = path.resolve(/*turbopackIgnore: true*/ process.env.UPLOAD_DIR ?? "./uploads");
 
 function notFound() {
   return new Response("Not found", { status: 404, headers: { "Cache-Control": "private, no-store" } });
@@ -39,7 +39,7 @@ export async function GET(_req: NextRequest, ctx: RouteContext<"/api/documents/[
 
   // Path traversal guard: only the basename of the stored name is ever used, and it must resolve inside UPLOAD_DIR.
   const safeName = path.basename(doc.storedName);
-  const filePath = path.join(UPLOAD_DIR, safeName);
+  const filePath = path.join(/*turbopackIgnore: true*/ UPLOAD_DIR, safeName);
   if (!safeName || safeName.startsWith(".") || path.dirname(filePath) !== UPLOAD_DIR) return notFound();
 
   let stat: fs.Stats;

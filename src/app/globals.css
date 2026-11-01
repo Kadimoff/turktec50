@@ -181,6 +181,11 @@
     @apply bg-background text-foreground;
     font-feature-settings: "cv11", "ss01";
   }
+  /* Implicit grids get one shrinkable column so truncated text can never widen the page on mobile.
+     Any grid-cols-* utility (utilities layer) overrides this. */
+  .grid:not(.grid-flow-col) {
+    grid-template-columns: minmax(0, 1fr);
+  }
   /* Tabular numbers for metrics & tables */
   .tabular {
     font-variant-numeric: tabular-nums;

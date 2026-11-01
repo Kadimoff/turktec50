@@ -18,7 +18,7 @@
     "overdue": "Overdue",
     "overdueHint": "Past due date, not done",
     "doneWeek": "Done this week",
-    "doneWeekHint": "Moved to DONE this week"
+    "doneWeekHint": "Tasks completed this week"
   },
   "views": {
     "label": "View",

@@ -18,7 +18,7 @@
     "overdue": "Gecikən",
     "overdueHint": "Son tarixi keçmiş, tamamlanmamış",
     "doneWeek": "Bu həftə tamamlanan",
-    "doneWeekHint": "Bu həftə DONE statusuna keçənlər"
+    "doneWeekHint": "Bu həftə tamamlanan tapşırıqlar"
   },
   "views": {
     "label": "Görünüş",

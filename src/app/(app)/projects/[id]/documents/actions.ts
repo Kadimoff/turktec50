@@ -13,7 +13,7 @@ import { logAudit, notify } from "@/lib/audit";
 import { UPLOAD } from "@/lib/constants";
 import type { ActionState } from "@/components/documents/types";
 
-const UPLOAD_DIR = path.resolve(process.env.UPLOAD_DIR ?? "./uploads");
+const UPLOAD_DIR = path.resolve(/*turbopackIgnore: true*/ process.env.UPLOAD_DIR ?? "./uploads");
 
 /** Fallback when the browser sends no/unknown MIME type. */
 const EXT_MIME: Record<string, string> = {
@@ -94,9 +94,9 @@ export async function uploadDocument(_prev: ActionState, formData: FormData): Pr
   if (!item) return fail("errors.notFound");
 
   const storedName = `${randomUUID()}${ext ? `.${ext}` : ""}`;
-  await fs.promises.mkdir(UPLOAD_DIR, { recursive: true });
+  await fs.promises.mkdir(/*turbopackIgnore: true*/ UPLOAD_DIR, { recursive: true });
   const buf = Buffer.from(await file.arrayBuffer());
-  await fs.promises.writeFile(path.join(UPLOAD_DIR, storedName), buf, { flag: "wx" });
+  await fs.promises.writeFile(path.join(/*turbopackIgnore: true*/ UPLOAD_DIR, storedName), buf, { flag: "wx" });
 
   const fileName = cleanFileName(file.name);
   const version = (item.documents[0]?.version ?? 0) + 1;
@@ -116,7 +116,7 @@ export async function uploadDocument(_prev: ActionState, formData: FormData): Pr
       return created;
     });
   } catch {
-    await fs.promises.rm(path.join(UPLOAD_DIR, storedName), { force: true });
+    await fs.promises.rm(path.join(/*turbopackIgnore: true*/ UPLOAD_DIR, storedName), { force: true });
     return fail("errors.generic");
   }
 
@@ -298,7 +298,7 @@ export async function deleteDocument(documentId: string): Promise<ActionState> {
   const stillUsed = await prisma.document.count({ where: { storedName: doc.storedName } });
   if (stillUsed === 0) {
     const safe = path.basename(doc.storedName);
-    if (safe && !safe.startsWith(".")) await fs.promises.rm(path.join(UPLOAD_DIR, safe), { force: true });
+    if (safe && !safe.startsWith(".")) await fs.promises.rm(path.join(/*turbopackIgnore: true*/ UPLOAD_DIR, safe), { force: true });
   }
 
   const label = doc.checklistItem ? await itemLabel(doc.checklistItem) : doc.fileName;

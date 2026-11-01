@@ -96,6 +96,7 @@ export async function AdminDashboard() {
       take: 3,
     }),
     prisma.auditLog.findMany({
+      where: { NOT: { action: { startsWith: "auth." } } },
       select: {
         id: true, action: true, summary: true, createdAt: true, projectId: true,
         actor: { select: { name: true } }, project: { select: { code: true } },
