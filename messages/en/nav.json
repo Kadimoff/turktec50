@@ -1,0 +1,31 @@
+{
+  "groups": {
+    "workspace": "Workspace",
+    "evaluation": "Evaluation",
+    "program": "Program",
+    "admin": "Administration"
+  },
+  "dashboard": "Overview",
+  "myProject": "My project",
+  "applications": "Applications",
+  "projects": "Projects",
+  "tasks": "Tasks",
+  "mentors": "Mentors",
+  "documents": "Documents",
+  "risks": "Risks",
+  "jury": "Jury panel",
+  "kpi": "KPIs & reports",
+  "calendar": "Calendar",
+  "users": "Users",
+  "audit": "Audit log",
+  "projectTabs": {
+    "overview": "Overview",
+    "tasks": "Tasks",
+    "sessions": "Mentor sessions",
+    "documents": "Document checklist",
+    "risks": "Risks",
+    "evaluations": "Evaluation",
+    "activity": "Activity"
+  },
+  "toggleSidebar": "Toggle menu"
+}

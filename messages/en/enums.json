@@ -1,0 +1,81 @@
+{
+  "Role": {
+    "ADMIN": "Program coordinator",
+    "TEAM": "Team member",
+    "MENTOR": "Mentor",
+    "JURY": "Jury member"
+  },
+  "ApplicationStatus": {
+    "SUBMITTED": "Submitted",
+    "UNDER_REVIEW": "Under review",
+    "ACCEPTED": "Accepted",
+    "WAITLIST": "Waitlist",
+    "REJECTED": "Not accepted"
+  },
+  "ProjectStage": {
+    "VALIDATION": "Validation",
+    "PROTOTYPE": "Prototype",
+    "MVP": "MVP",
+    "QA": "Quality check",
+    "SUBMITTED": "Submitted"
+  },
+  "ProjectHealth": {
+    "ON_TRACK": "On track",
+    "WATCH": "Watch",
+    "AT_RISK": "At risk"
+  },
+  "CompetitionResult": {
+    "PENDING": "Result pending",
+    "FINALIST": "Finalist",
+    "NOT_SELECTED": "Not selected"
+  },
+  "TaskStatus": {
+    "TODO": "To do",
+    "IN_PROGRESS": "In progress",
+    "REVIEW": "In review",
+    "DONE": "Done",
+    "BLOCKED": "Blocked"
+  },
+  "Priority": {
+    "LOW": "Low",
+    "MEDIUM": "Medium",
+    "HIGH": "High"
+  },
+  "SessionStatus": {
+    "PLANNED": "Pending",
+    "CONFIRMED": "Confirmed",
+    "COMPLETED": "Completed",
+    "CANCELLED": "Cancelled"
+  },
+  "ChecklistCategory": {
+    "CORE": "Core document",
+    "ANNEX": "Annex",
+    "CONDITIONAL": "Conditional"
+  },
+  "ChecklistStatus": {
+    "MISSING": "Missing",
+    "UPLOADED": "Uploaded",
+    "IN_REVIEW": "In review",
+    "APPROVED": "Approved",
+    "REJECTED": "Needs changes"
+  },
+  "RiskLevel": {
+    "LOW": "Low",
+    "MEDIUM": "Medium",
+    "HIGH": "High"
+  },
+  "RiskStatus": {
+    "OPEN": "Open",
+    "MITIGATING": "Mitigating",
+    "CLOSED": "Closed"
+  },
+  "RubricKind": {
+    "SELECTION": "Selection rubric",
+    "MIDTERM": "Midterm jury",
+    "FINAL": "Mock final"
+  },
+  "EvaluationStatus": {
+    "DRAFT": "Draft",
+    "SUBMITTED": "Submitted"
+  }
+}

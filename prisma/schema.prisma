@@ -1,0 +1,434 @@
+// TÜRKTECH 50 — Project Tracking MVP data model
+// Principle: the system records & makes visible; it never makes selection/jury decisions automatically.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN // program coordinator
+  TEAM // student team member
+  MENTOR
+  JURY
+}
+
+enum ApplicationStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  ACCEPTED
+  WAITLIST
+  REJECTED
+}
+
+enum ProjectStage {
+  VALIDATION
+  PROTOTYPE
+  MVP
+  QA // quality assurance / midterm jury
+  SUBMITTED // competition application sent
+}
+
+enum ProjectHealth {
+  ON_TRACK
+  WATCH
+  AT_RISK
+}
+
+enum CompetitionResult {
+  PENDING
+  FINALIST
+  NOT_SELECTED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  REVIEW
+  DONE
+  BLOCKED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum SessionStatus {
+  PLANNED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum ChecklistCategory {
+  CORE
+  ANNEX
+  CONDITIONAL
+}
+
+enum ChecklistStatus {
+  MISSING
+  UPLOADED
+  IN_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum RiskStatus {
+  OPEN
+  MITIGATING
+  CLOSED
+}
+
+enum RubricKind {
+  SELECTION // application pre-evaluation
+  MIDTERM // ara jüri
+  FINAL // deneme finali
+}
+
+enum EvaluationStatus {
+  DRAFT
+  SUBMITTED
+}
+
+model University {
+  id           String        @id @default(cuid())
+  name         String
+  shortName    String
+  country      String // ISO-2: AZ, TR, KZ, UZ, KG, TM
+  city         String
+  isPartner    Boolean       @default(false) // false = pilot host / confirmed; true = invited partner
+  users        User[]
+  projects     Project[]
+  applications Application[]
+}
+
+model User {
+  id                 String             @id @default(cuid())
+  email              String             @unique
+  name               String
+  passwordHash       String
+  role               Role
+  title              String? // e.g. "Proqram koordinatoru", "Professor", "Software engineer"
+  expertise          String? // mentors/jury: comma separated tags
+  locale             String             @default("az")
+  active             Boolean            @default(true)
+  universityId       String?
+  university         University?        @relation(fields: [universityId], references: [id])
+  createdAt          DateTime           @default(now())
+  lastLoginAt        DateTime?
+  memberships        ProjectMember[]
+  mentorAssignments  MentorAssignment[]
+  juryAssignments    JuryAssignment[]
+  assignedTasks      Task[]             @relation("TaskAssignee")
+  createdTasks       Task[]             @relation("TaskCreator")
+  mentorSessions     MentorSession[]
+  ownedRisks         Risk[]
+  documents          Document[]
+  evaluations        Evaluation[]
+  auditLogs          AuditLog[]
+  notifications      Notification[]
+  reviewedChecklists ChecklistItem[]    @relation("ChecklistReviewer")
+}
+
+model Competition {
+  id                  String        @id @default(cuid())
+  name                String // e.g. "TEKNOFEST 2027 — Sağlıkta Teknoloji"
+  organizer           String
+  category            String
+  country             String
+  applicationDeadline DateTime
+  finalDate           DateTime?
+  url                 String?
+  projects            Project[]
+  applications        Application[]
+}
+
+model Application {
+  id            String            @id @default(cuid())
+  code          String            @unique // APP-0001
+  teamName      String
+  projectTitle  String
+  problem       String
+  solution      String
+  category      String // see lib/constants CATEGORIES
+  memberCount   Int
+  contactName   String
+  contactEmail  String
+  universityId  String
+  university    University        @relation(fields: [universityId], references: [id])
+  competitionId String?
+  competition   Competition?      @relation(fields: [competitionId], references: [id])
+  status        ApplicationStatus @default(SUBMITTED)
+  decisionNote  String? // human decision rationale (admin)
+  decidedAt     DateTime?
+  submittedAt   DateTime          @default(now())
+  projectId     String?           @unique
+  project       Project?          @relation(fields: [projectId], references: [id])
+  evaluations   Evaluation[]
+}
+
+model Project {
+  id                String             @id @default(cuid())
+  code              String             @unique // T50-001
+  title             String
+  tagline           String
+  summary           String
+  category          String
+  universityId      String
+  university        University         @relation(fields: [universityId], references: [id])
+  competitionId     String?
+  competition       Competition?       @relation(fields: [competitionId], references: [id])
+  stage             ProjectStage       @default(VALIDATION)
+  health            ProjectHealth      @default(ON_TRACK)
+  prototypeVerified Boolean            @default(false) // KPI: functional prototype/MVP with test evidence
+  packageQcPassed   Boolean            @default(false) // KPI: application package passed QC checklist
+  submittedAt       DateTime? // competition application sent
+  result            CompetitionResult  @default(PENDING)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  application       Application?
+  members           ProjectMember[]
+  mentors           MentorAssignment[]
+  jurors            JuryAssignment[]
+  tasks             Task[]
+  sessions          MentorSession[]
+  checklist         ChecklistItem[]
+  documents         Document[]
+  risks             Risk[]
+  evaluations       Evaluation[]
+  auditLogs         AuditLog[]
+  stageHistory      StageChange[]
+}
+
+model StageChange {
+  id        String       @id @default(cuid())
+  projectId String
+  project   Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  fromStage ProjectStage
+  toStage   ProjectStage
+  note      String?
+  actorId   String?
+  createdAt DateTime     @default(now())
+}
+
+model ProjectMember {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamRole  String // free text: "Team lead", "Hardware", "Software", "Business"
+  isLead    Boolean @default(false)
+
+  @@unique([projectId, userId])
+}
+
+model MentorAssignment {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mentorId  String
+  mentor    User     @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  focus     String? // e.g. "Technical", "Business", "IP"
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, mentorId])
+}
+
+model JuryAssignment {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  juryId    String
+  jury      User     @relation(fields: [juryId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, juryId])
+}
+
+model Task {
+  id                 String         @id @default(cuid())
+  projectId          String
+  project            Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title              String
+  description        String?
+  acceptanceCriteria String? // "Meyar" — definition of done
+  assigneeId         String?
+  assignee           User?          @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  createdById        String?
+  createdBy          User?          @relation("TaskCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  dueDate            DateTime
+  priority           Priority       @default(MEDIUM)
+  status             TaskStatus     @default(TODO)
+  evidenceUrl        String? // link to demo/test evidence
+  sourceSessionId    String? // created from a mentor session's next step
+  sourceSession      MentorSession? @relation(fields: [sourceSessionId], references: [id], onDelete: SetNull)
+  week               Int? // program week 1..8
+  completedAt        DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+}
+
+model MentorSession {
+  id          String        @id @default(cuid())
+  projectId   String
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mentorId    String
+  mentor      User          @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  scheduledAt DateTime
+  durationMin Int           @default(45)
+  topic       String
+  agenda      String? // team prepares before meeting
+  notes       String? // mentor writes after meeting
+  nextSteps   String[] // each line can be converted into a Task
+  status      SessionStatus @default(PLANNED)
+  online      Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  tasks       Task[]
+}
+
+model ChecklistItem {
+  id           String            @id @default(cuid())
+  projectId    String
+  project      Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  key          String? // template key -> translated label "documents.items.<key>.title"; null for custom items
+  title        String? // custom item title (when key is null)
+  category     ChecklistCategory @default(CORE)
+  required     Boolean           @default(true)
+  status       ChecklistStatus   @default(MISSING)
+  reviewerNote String?
+  reviewerId   String?
+  reviewer     User?             @relation("ChecklistReviewer", fields: [reviewerId], references: [id], onDelete: SetNull)
+  reviewedAt   DateTime?
+  order        Int               @default(0)
+  documents    Document[]
+  updatedAt    DateTime          @updatedAt
+}
+
+model Document {
+  id              String         @id @default(cuid())
+  projectId       String
+  project         Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  checklistItemId String?
+  checklistItem   ChecklistItem? @relation(fields: [checklistItemId], references: [id], onDelete: SetNull)
+  fileName        String
+  storedName      String // file on disk under UPLOAD_DIR
+  mimeType        String
+  size            Int
+  version         Int            @default(1)
+  confidential    Boolean        @default(false) // trade secret / patentable — never in public pitch material
+  uploadedById    String?
+  uploadedBy      User?          @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt       DateTime       @default(now())
+}
+
+model Risk {
+  id          String     @id @default(cuid())
+  projectId   String? // null = program-level risk
+  project     Project?   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  probability RiskLevel  @default(MEDIUM)
+  impact      RiskLevel  @default(MEDIUM)
+  mitigation  String?
+  ownerId     String?
+  owner       User?      @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  status      RiskStatus @default(OPEN)
+  reviewDate  DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Rubric {
+  id          String            @id @default(cuid())
+  kind        RubricKind        @unique
+  criteria    RubricCriterion[]
+  evaluations Evaluation[]
+}
+
+model RubricCriterion {
+  id       String            @id @default(cuid())
+  rubricId String
+  rubric   Rubric            @relation(fields: [rubricId], references: [id], onDelete: Cascade)
+  key      String // translated label "jury.criteria.<key>.title" / ".hint"
+  weight   Int // percentage, criteria of a rubric sum to 100
+  maxScore Int               @default(5)
+  order    Int               @default(0)
+  scores   EvaluationScore[]
+}
+
+model Evaluation {
+  id             String            @id @default(cuid())
+  rubricId       String
+  rubric         Rubric            @relation(fields: [rubricId], references: [id])
+  evaluatorId    String
+  evaluator      User              @relation(fields: [evaluatorId], references: [id], onDelete: Cascade)
+  applicationId  String? // SELECTION rubric
+  application    Application?      @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  projectId      String? // MIDTERM / FINAL rubric
+  project        Project?          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  comment        String?
+  recommendation String? // free text "next step" — advisory only, not a decision
+  status         EvaluationStatus  @default(DRAFT)
+  submittedAt    DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  scores         EvaluationScore[]
+
+  @@unique([rubricId, evaluatorId, applicationId])
+  @@unique([rubricId, evaluatorId, projectId])
+}
+
+model EvaluationScore {
+  id           String          @id @default(cuid())
+  evaluationId String
+  evaluation   Evaluation      @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+  criterionId  String
+  criterion    RubricCriterion @relation(fields: [criterionId], references: [id], onDelete: Cascade)
+  score        Int
+
+  @@unique([evaluationId, criterionId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action    String // e.g. "task.create", "project.stage", "evaluation.submit" -> translated "audit.actions.<action>"
+  entity    String // "Task", "Project", ...
+  entityId  String
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  summary   String? // short human readable detail (e.g. task title)
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([createdAt])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String // translated "common.notifications.<type>" with params
+  params    Json?
+  href      String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+}

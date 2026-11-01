@@ -1,0 +1,31 @@
+{
+  "groups": {
+    "workspace": "Çalışma alanı",
+    "evaluation": "Değerlendirme",
+    "program": "Program",
+    "admin": "Yönetim"
+  },
+  "dashboard": "Genel bakış",
+  "myProject": "Projem",
+  "applications": "Başvurular",
+  "projects": "Projeler",
+  "tasks": "Görevler",
+  "mentors": "Mentorlar",
+  "documents": "Belgeler",
+  "risks": "Riskler",
+  "jury": "Jüri paneli",
+  "kpi": "KPI ve raporlar",
+  "calendar": "Takvim",
+  "users": "Kullanıcılar",
+  "audit": "İşlem kaydı",
+  "projectTabs": {
+    "overview": "Genel bakış",
+    "tasks": "Görevler",
+    "sessions": "Mentor oturumları",
+    "documents": "Belge kontrol listesi",
+    "risks": "Riskler",
+    "evaluations": "Değerlendirme",
+    "activity": "Etkinlik"
+  },
+  "toggleSidebar": "Menüyü aç/kapat"
+}

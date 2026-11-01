@@ -1,0 +1,31 @@
+{
+  "groups": {
+    "workspace": "İş sahəsi",
+    "evaluation": "Qiymətləndirmə",
+    "program": "Proqram",
+    "admin": "İdarəetmə"
+  },
+  "dashboard": "İcmal",
+  "myProject": "Layihəm",
+  "applications": "Müraciətlər",
+  "projects": "Layihələr",
+  "tasks": "Tapşırıqlar",
+  "mentors": "Mentorlar",
+  "documents": "Sənədlər",
+  "risks": "Risklər",
+  "jury": "Münsif paneli",
+  "kpi": "KPI və hesabatlar",
+  "calendar": "Təqvim",
+  "users": "İstifadəçilər",
+  "audit": "Əməliyyat jurnalı",
+  "projectTabs": {
+    "overview": "İcmal",
+    "tasks": "Tapşırıqlar",
+    "sessions": "Mentor sessiyaları",
+    "documents": "Sənəd checklist-i",
+    "risks": "Risklər",
+    "evaluations": "Qiymətləndirmə",
+    "activity": "Fəaliyyət"
+  },
+  "toggleSidebar": "Menyunu aç/bağla"
+}

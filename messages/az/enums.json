@@ -1,0 +1,81 @@
+{
+  "Role": {
+    "ADMIN": "Proqram koordinatoru",
+    "TEAM": "Komanda üzvü",
+    "MENTOR": "Mentor",
+    "JURY": "Münsif"
+  },
+  "ApplicationStatus": {
+    "SUBMITTED": "Göndərilib",
+    "UNDER_REVIEW": "Baxılır",
+    "ACCEPTED": "Qəbul edilib",
+    "WAITLIST": "Gözləmə siyahısı",
+    "REJECTED": "Qəbul edilməyib"
+  },
+  "ProjectStage": {
+    "VALIDATION": "Validasiya",
+    "PROTOTYPE": "Prototip",
+    "MVP": "MVP",
+    "QA": "Keyfiyyət yoxlaması",
+    "SUBMITTED": "Təqdim edilib"
+  },
+  "ProjectHealth": {
+    "ON_TRACK": "Vaxtında",
+    "WATCH": "İzləmədə",
+    "AT_RISK": "Risk var"
+  },
+  "CompetitionResult": {
+    "PENDING": "Nəticə gözlənilir",
+    "FINALIST": "Finalçı",
+    "NOT_SELECTED": "Seçilməyib"
+  },
+  "TaskStatus": {
+    "TODO": "Açıq",
+    "IN_PROGRESS": "İcrada",
+    "REVIEW": "Yoxlamada",
+    "DONE": "Tamamlandı",
+    "BLOCKED": "Bloklanıb"
+  },
+  "Priority": {
+    "LOW": "Aşağı",
+    "MEDIUM": "Orta",
+    "HIGH": "Yüksək"
+  },
+  "SessionStatus": {
+    "PLANNED": "Gözləyir",
+    "CONFIRMED": "Təsdiqlənib",
+    "COMPLETED": "Keçirilib",
+    "CANCELLED": "Ləğv edilib"
+  },
+  "ChecklistCategory": {
+    "CORE": "Əsas sənəd",
+    "ANNEX": "Əlavə",
+    "CONDITIONAL": "Şərti"
+  },
+  "ChecklistStatus": {
+    "MISSING": "Yoxdur",
+    "UPLOADED": "Yüklənib",
+    "IN_REVIEW": "Yoxlamada",
+    "APPROVED": "Təsdiqlənib",
+    "REJECTED": "Düzəliş lazımdır"
+  },
+  "RiskLevel": {
+    "LOW": "Aşağı",
+    "MEDIUM": "Orta",
+    "HIGH": "Yüksək"
+  },
+  "RiskStatus": {
+    "OPEN": "Açıq",
+    "MITIGATING": "Yumşaldılır",
+    "CLOSED": "Bağlanıb"
+  },
+  "RubricKind": {
+    "SELECTION": "Seçim rubriki",
+    "MIDTERM": "Ara münsif",
+    "FINAL": "Sınaq finalı"
+  },
+  "EvaluationStatus": {
+    "DRAFT": "Qaralama",
+    "SUBMITTED": "Göndərilib"
+  }
+}

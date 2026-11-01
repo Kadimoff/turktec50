@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: turktech50-db
+    environment:
+      POSTGRES_USER: turktech
+      POSTGRES_PASSWORD: turktech_dev
+      POSTGRES_DB: turktech50
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - turktech50-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U turktech -d turktech50"]
+      interval: 3s
+      retries: 20
+volumes:
+  turktech50-pg:

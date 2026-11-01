@@ -1,0 +1,81 @@
+{
+  "Role": {
+    "ADMIN": "Program koordinatörü",
+    "TEAM": "Ekip üyesi",
+    "MENTOR": "Mentor",
+    "JURY": "Jüri üyesi"
+  },
+  "ApplicationStatus": {
+    "SUBMITTED": "Gönderildi",
+    "UNDER_REVIEW": "İnceleniyor",
+    "ACCEPTED": "Kabul edildi",
+    "WAITLIST": "Yedek liste",
+    "REJECTED": "Kabul edilmedi"
+  },
+  "ProjectStage": {
+    "VALIDATION": "Doğrulama",
+    "PROTOTYPE": "Prototip",
+    "MVP": "MVP",
+    "QA": "Kalite kontrol",
+    "SUBMITTED": "Başvuru yapıldı"
+  },
+  "ProjectHealth": {
+    "ON_TRACK": "Zamanında",
+    "WATCH": "İzlemede",
+    "AT_RISK": "Risk var"
+  },
+  "CompetitionResult": {
+    "PENDING": "Sonuç bekleniyor",
+    "FINALIST": "Finalist",
+    "NOT_SELECTED": "Seçilmedi"
+  },
+  "TaskStatus": {
+    "TODO": "Açık",
+    "IN_PROGRESS": "Devam ediyor",
+    "REVIEW": "İncelemede",
+    "DONE": "Tamamlandı",
+    "BLOCKED": "Engellendi"
+  },
+  "Priority": {
+    "LOW": "Düşük",
+    "MEDIUM": "Orta",
+    "HIGH": "Yüksek"
+  },
+  "SessionStatus": {
+    "PLANNED": "Bekliyor",
+    "CONFIRMED": "Onaylandı",
+    "COMPLETED": "Tamamlandı",
+    "CANCELLED": "İptal edildi"
+  },
+  "ChecklistCategory": {
+    "CORE": "Temel belge",
+    "ANNEX": "Ek",
+    "CONDITIONAL": "Koşullu"
+  },
+  "ChecklistStatus": {
+    "MISSING": "Eksik",
+    "UPLOADED": "Yüklendi",
+    "IN_REVIEW": "İncelemede",
+    "APPROVED": "Onaylandı",
+    "REJECTED": "Düzeltme gerekli"
+  },
+  "RiskLevel": {
+    "LOW": "Düşük",
+    "MEDIUM": "Orta",
+    "HIGH": "Yüksek"
+  },
+  "RiskStatus": {
+    "OPEN": "Açık",
+    "MITIGATING": "Azaltılıyor",
+    "CLOSED": "Kapandı"
+  },
+  "RubricKind": {
+    "SELECTION": "Seçim rubriği",
+    "MIDTERM": "Ara jüri",
+    "FINAL": "Deneme finali"
+  },
+  "EvaluationStatus": {
+    "DRAFT": "Taslak",
+    "SUBMITTED": "Gönderildi"
+  }
+}

@@ -1,0 +1,213 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * TÜRKTECH 50 design tokens — "institutional data-dense dashboard".
+ * Identity from the submitted T06 prototype: navy #102a43 + teal #087f8c.
+ * All text/background pairs verified ≥ 4.5:1 (WCAG AA) in light and dark.
+ * Components must use these semantic tokens — never raw hex values.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-mono-jb);
+  --font-heading: var(--font-inter);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Status tones (text on matching -soft background ≥ 4.5:1) */
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-neutral: var(--neutral);
+  --color-neutral-soft: var(--neutral-soft);
+  --color-brand-navy: var(--brand-navy);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-card: 0 1px 2px rgb(16 42 67 / 0.04), 0 4px 16px rgb(16 42 67 / 0.05);
+}
+
+:root {
+  --radius: 0.625rem;
+  --brand-navy: #102a43;
+
+  --background: #f4f7fa;
+  --foreground: #102a43;
+  --card: #ffffff;
+  --card-foreground: #102a43;
+  --popover: #ffffff;
+  --popover-foreground: #102a43;
+  --primary: #0a7380;
+  --primary-foreground: #ffffff;
+  --secondary: #eaf0f5;
+  --secondary-foreground: #102a43;
+  --muted: #eef2f6;
+  --muted-foreground: #52637a;
+  --accent: #e6f4f5;
+  --accent-foreground: #075e68;
+  --destructive: #b42335;
+  --border: #e2e8ef;
+  --input: #d3dce6;
+  --ring: #087f8c;
+
+  --success: #1f7a52;
+  --success-soft: #e8f6ef;
+  --warning: #9a5300;
+  --warning-soft: #fff3e0;
+  --danger: #b42335;
+  --danger-soft: #fdecee;
+  --info: #2f5fc4;
+  --info-soft: #edf2ff;
+  --neutral: #52637a;
+  --neutral-soft: #eef2f6;
+
+  --chart-1: #087f8c;
+  --chart-2: #3567d4;
+  --chart-3: #c27515;
+  --chart-4: #27835e;
+  --chart-5: #7c5cc4;
+
+  --sidebar: #0f2840;
+  --sidebar-foreground: #d6e2ee;
+  --sidebar-primary: #2bb3c0;
+  --sidebar-primary-foreground: #04212a;
+  --sidebar-accent: #183b5a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1d3a55;
+  --sidebar-ring: #2bb3c0;
+}
+
+.dark {
+  --brand-navy: #e6edf4;
+
+  --background: #0b1622;
+  --foreground: #e6edf4;
+  --card: #0f1e2d;
+  --card-foreground: #e6edf4;
+  --popover: #0f1e2d;
+  --popover-foreground: #e6edf4;
+  --primary: #2bb3c0;
+  --primary-foreground: #04212a;
+  --secondary: #162a3d;
+  --secondary-foreground: #e6edf4;
+  --muted: #142536;
+  --muted-foreground: #93a6ba;
+  --accent: #12313c;
+  --accent-foreground: #8fdfe6;
+  --destructive: #f2727f;
+  --border: #1f3346;
+  --input: #24394e;
+  --ring: #2bb3c0;
+
+  --success: #4cc38a;
+  --success-soft: #0f2a1f;
+  --warning: #f0a247;
+  --warning-soft: #2e2010;
+  --danger: #f2727f;
+  --danger-soft: #2e1418;
+  --info: #7aa2ff;
+  --info-soft: #142040;
+  --neutral: #93a6ba;
+  --neutral-soft: #142536;
+
+  --chart-1: #2bb3c0;
+  --chart-2: #6f95f0;
+  --chart-3: #f0a247;
+  --chart-4: #4cc38a;
+  --chart-5: #a68cf0;
+
+  --sidebar: #08121c;
+  --sidebar-foreground: #c9d6e3;
+  --sidebar-primary: #2bb3c0;
+  --sidebar-primary-foreground: #04212a;
+  --sidebar-accent: #132739;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #16283a;
+  --sidebar-ring: #2bb3c0;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+  }
+  /* Tabular numbers for metrics & tables */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  a[href] {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+}
