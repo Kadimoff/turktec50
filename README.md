@@ -54,6 +54,8 @@ Tüm hesapların şifresi `Demo2026!`. Giriş sayfasındaki "Demo hesaplar" kart
 
 Demo verisini sıfırlamak için: `npm run db:seed`
 
+Tüm demo kullanıcıların listesi: [`docs/USERS.md`](docs/USERS.md)
+
 ### Root hesabı (sistem sahibi)
 
 | İsim | Kullanıcı adı | Şifre |
