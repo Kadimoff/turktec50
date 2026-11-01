@@ -1,8 +1,30 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/auth";
-import { PageHeader } from "@/components/shared/page-header";
+import { getProjectAccess } from "@/lib/rbac";
+import { TaskWorkspace } from "@/components/tasks/task-workspace";
 
-// PLACEHOLDER — owned by module agent: C tasks-mentors
-export default async function Page() {
-  await requireUser();
-  return <PageHeader title="projects/[id]/tasks" description="TODO: C tasks-mentors" />;
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("tasks");
+  return { title: t("title") };
+}
+
+/** Project tab: tasks of one project (board default, table, or grouped by program week). */
+export default async function ProjectTasksPage(props: PageProps<"/projects/[id]/tasks">) {
+  const { id } = await props.params;
+  const user = await requireUser();
+  const access = await getProjectAccess(user, id);
+  if (!access.tabs.includes("tasks")) notFound();
+  const sp = await props.searchParams;
+  const t = await getTranslations("tasks");
+  return (
+    <TaskWorkspace
+      user={user}
+      searchParams={sp}
+      projectId={id}
+      basePath={`/projects/${id}/tasks`}
+      heading={{ kind: "section", title: t("projectSection.title"), description: t("projectSection.description") }}
+    />
+  );
 }

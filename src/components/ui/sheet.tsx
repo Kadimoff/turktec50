@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl"
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog"
 import { cn } from "cn"
 
@@ -72,7 +73,7 @@ function SheetContent({
           >
             <XIcon
             />
-            <span className="sr-only">Close</span>
+            <CloseLabel />
           </SheetPrimitive.Close>
         )}
       </SheetPrimitive.Popup>
@@ -135,4 +136,9 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
+}
+
+function CloseLabel() {
+  const t = useTranslations("common.actions")
+  return <span className="sr-only">{t("close")}</span>
 }

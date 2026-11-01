@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -272,7 +273,7 @@ function SidebarTrigger({
       {...props}
     >
       <PanelLeftIcon />
-      <span className="sr-only">Toggle Sidebar</span>
+      <ToggleLabel />
     </Button>
   )
 }
@@ -284,7 +285,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
     <button
       data-sidebar="rail"
       data-slot="sidebar-rail"
-      aria-label="Toggle Sidebar"
+      aria-label={undefined}
       tabIndex={-1}
       onClick={toggleSidebar}
       title="Toggle Sidebar"
@@ -720,4 +721,9 @@ export {
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
+}
+
+function ToggleLabel() {
+  const t = useTranslations("nav")
+  return <span className="sr-only">{t("toggleSidebar")}</span>
 }

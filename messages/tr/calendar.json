@@ -1,1 +1,71 @@
-{}
+{
+  "title": "Takvim",
+  "description": {
+    "ADMIN": "Program aşamaları, yarışma son tarihleri ve tüm projelerde yaklaşan oturum ve görevler.",
+    "TEAM": "Ekibinizin yaklaşan mentor oturumları, görev son tarihleri ve yarışma tarihleri.",
+    "MENTOR": "Oturumlarınız, mentorluk yaptığınız projelerin görev son tarihleri ve program tarihleri.",
+    "JURY": "Ara jüri ve deneme finali tarihleri, yarışma son tarihleri."
+  },
+  "program": {
+    "title": "Program takvimi",
+    "subtitle": "{start} – {end} · 6 aşama, 8 haftalık kuluçka"
+  },
+  "agenda": {
+    "title": "Ajanda · önümüzdeki {days} gün",
+    "subtitle": {
+      "ADMIN": "Tüm oturumlar, gün bazında görev son tarihleri, yarışma ve program tarihleri",
+      "TEAM": "Ekibinizin oturumları ve görevleri, haftalara göre",
+      "MENTOR": "Oturumlarınız ve projelerinizin görevleri, haftalara göre",
+      "JURY": "Jüri ve yarışma tarihleri, haftalara göre"
+    },
+    "empty": "Bu dönemde planlanmış etkinlik yok",
+    "weekOf": "Hafta: {range}",
+    "programWeek": "Kuluçka haftası {n}",
+    "items": "{count, plural, one {# kayıt} other {# kayıt}}"
+  },
+  "overdueNote": "{count, plural, one {# gecikmiş görev} other {# gecikmiş görev}} ajandaya dahil değil — görevler bölümünde bakın.",
+  "legend": "Göstergeler",
+  "kinds": {
+    "session": "Mentor oturumu",
+    "task": "Görev son tarihi",
+    "taskGroup": "Görev son tarihleri",
+    "deadline": "Yarışma son tarihi",
+    "milestone": "Program tarihi",
+    "sessionGroup": "Mentor oturumları"
+  },
+  "milestonesTitle": "Önemli tarihler",
+  "milestones": {
+    "programStart": "Program başlangıcı",
+    "incubationStart": "Kuluçka başlangıcı",
+    "midtermJury": "Ara jüri",
+    "incubationEnd": "Kuluçka sonu",
+    "mockFinal": "Deneme finali",
+    "programEnd": "Program sonu"
+  },
+  "passed": "Geçti",
+  "weeksTitle": "{n} haftalık kuluçka",
+  "weekN": "Hafta {n}",
+  "thisWeek": "Bu hafta",
+  "done": "Bitti",
+  "competitions": {
+    "title": "Yarışmalar ve son tarihler",
+    "subtitle": "{count} hedef yarışma · en yakın son tarihten başlayarak",
+    "empty": "Yarışma eklenmedi",
+    "name": "Yarışma",
+    "category": "Kategori",
+    "deadline": "Başvuru son tarihi",
+    "final": "Final",
+    "teams": "Ekipler",
+    "website": "{name} — web sitesi (yeni pencerede)"
+  },
+  "yourCompetition": "Sizin yarışmanız",
+  "minutes": "{count} dk",
+  "unassigned": "Sorumlu atanmadı",
+  "mine": "Benim",
+  "tasksDue": "{count, plural, one {# görevin son tarihi} other {# görevin son tarihi}}",
+  "highPriority": "{count} yüksek öncelikli",
+  "allProjects": "Tüm projeler",
+  "deadlineOf": "Son tarih: {name}",
+  "sessionsCount": "{count, plural, one {# mentor oturumu} other {# mentor oturumu}}",
+  "confirmedOf": "{a}/{b} onaylı"
+}

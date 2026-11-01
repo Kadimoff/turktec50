@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 import { cn } from "cn"
 
@@ -72,7 +73,7 @@ function DialogContent({
           >
             <XIcon
             />
-            <span className="sr-only">Close</span>
+            <CloseLabel />
           </DialogPrimitive.Close>
         )}
       </DialogPrimitive.Popup>
@@ -157,4 +158,9 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+}
+
+function CloseLabel() {
+  const t = useTranslations("common.actions")
+  return <span className="sr-only">{t("close")}</span>
 }

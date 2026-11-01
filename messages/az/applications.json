@@ -1,1 +1,130 @@
-{}
+{
+  "title": "Müraciətlər",
+  "eyebrow": "Seçim mərhələsi",
+  "description": "Komanda müraciətlərinin seçim rubriki ilə qiymətləndirilməsi. Ballar məlumat xarakterlidir; qəbul qərarını koordinator qeyd edir.",
+  "listLabel": "Müraciətlər siyahısı",
+  "empty": "Filtrləri dəyişin və ya axtarışı təmizləyin.",
+  "stats": {
+    "total": "Ümumi müraciət",
+    "totalHint": "Çağırış dövründə daxil olan bütün müraciətlər",
+    "evaluated": "Qiymətləndirilib",
+    "evaluatedHint": "Ən azı 1 göndərilmiş rubrik · hədəf {target}",
+    "underReview": "Baxılmada",
+    "underReviewHint": "Qərar gözləyən müraciətlər",
+    "myTodo": "Mənim baxışımı gözləyir",
+    "mySubmitted": "{count, plural, one {# qiymətləndirmə göndərmisiniz} other {# qiymətləndirmə göndərmisiniz}}",
+    "accepted": "Qəbul edilib",
+    "acceptedHint": "Gözləmə: {waitlist} · Qəbul edilməyib: {rejected}"
+  },
+  "filters": {
+    "status": "Status üzrə filtr",
+    "category": "Kateqoriya",
+    "university": "Universitet",
+    "searchPlaceholder": "Kod, komanda və ya layihə adı",
+    "myTodo": "Mənim baxışımı gözləyənlər"
+  },
+  "table": {
+    "code": "Kod",
+    "team": "Layihə və komanda",
+    "university": "Universitet",
+    "category": "Kateqoriya",
+    "evaluations": "Rubriklər",
+    "score": "Orta bal",
+    "scoreHint": "Orta bal göndərilmiş rubriklərin çəkili ortalamasıdır (0–100) və yalnız məlumat üçündür; qərar deyil.",
+    "myReview": "Mənim baxışım",
+    "status": "Status"
+  },
+  "myReview": {
+    "none": "Qiymətləndirilməyib",
+    "draft": "Qaralama",
+    "submitted": "Göndərilib"
+  },
+  "detail": {
+    "content": "Müraciət məzmunu",
+    "problem": "Problem",
+    "solution": "Təklif olunan həll",
+    "facts": "Müraciət məlumatları",
+    "category": "Kateqoriya",
+    "university": "Universitet",
+    "competition": "Hədəf yarışma",
+    "deadline": "son tarix {date}",
+    "teamSize": "Komanda ölçüsü",
+    "submittedAt": "Göndərilmə tarixi",
+    "evaluations": "Göndərilmiş rubriklər",
+    "evaluationsValue": "{count, plural, =0 {Hələ yoxdur} one {# münsif} other {# münsif}}",
+    "contact": "Əlaqə şəxsi",
+    "contactNote": "Əlaqə məlumatları yalnız koordinatora görünür (minimum məlumat prinsipi).",
+    "hasProject": "Bu müraciət əsasında {code} layihə iş sahəsi yaradılıb."
+  },
+  "rubric": {
+    "title": "Seçim rubriki",
+    "subtitle": "Hər meyarı 1–5 şkalası ilə qiymətləndirin. Göndərildikdən sonra qiymətləndirmə kilidlənir.",
+    "weight": "Çəki {weight}%",
+    "criterionRequired": "Göndərmək üçün bu meyarı qiymətləndirin.",
+    "comment": "Şərh",
+    "commentHint": "Güclü və zəif tərəflər, komandaya tövsiyə. Koordinator görə bilər.",
+    "preview": "Çəkili bal (məlumat üçün)",
+    "previewHint": "{scored}/{total} meyar qiymətləndirilib. Bal avtomatik qərar yaratmır; qərarı insanlar verir.",
+    "submit": "Göndər",
+    "draftSaved": "Qaralama yadda saxlanılıb",
+    "confirmTitle": "Qiymətləndirmə göndərilsin?",
+    "confirmBody": "Çəkili bal: {score} / 100. Göndərildikdən sonra balları dəyişmək mümkün olmayacaq.",
+    "confirmAction": "Bəli, göndər",
+    "lockedNote": "Qiymətləndirmə {date} tarixində göndərilib və kilidlənib.",
+    "toastSubmitted": "Qiymətləndirmə göndərildi",
+    "toastDraft": "Qaralama yadda saxlanıldı",
+    "errors": {
+      "invalid": "Məlumat düzgün deyil. Yenidən cəhd edin.",
+      "incomplete": "Göndərmək üçün bütün meyarları qiymətləndirin.",
+      "locked": "Bu qiymətləndirmə artıq göndərilib və dəyişdirilə bilməz.",
+      "notFound": "Müraciət və ya rubrik tapılmadı.",
+      "error": "Xəta baş verdi. Yenidən cəhd edin."
+    }
+  },
+  "panel": {
+    "title": "Bütün münsiflərin balları",
+    "subtitle": "{count, plural, one {# göndərilmiş qiymətləndirmə} other {# göndərilmiş qiymətləndirmə}}",
+    "drafts": "{count, plural, one {# qaralama hesablanmır} other {# qaralama hesablanmır}}",
+    "average": "Orta çəkili bal",
+    "empty": "Hələ göndərilmiş qiymətləndirmə yoxdur",
+    "emptyHint": "Münsiflər rubriki göndərdikdən sonra ballar burada görünəcək.",
+    "criterion": "Meyar",
+    "avg": "Orta",
+    "weighted": "Çəkili bal (0–100)",
+    "noComment": "Şərh yazılmayıb."
+  },
+  "decision": {
+    "title": "Koordinator qərarı",
+    "subtitle": "Qərarı insan verir və əsaslandırma ilə qeyd edir. Ballar yalnız istinaddır.",
+    "choose": "Qərar",
+    "note": "Əsaslandırma",
+    "noteHint": "Qərarın səbəbini qısa yazın (ən azı 10 simvol). Əməliyyat jurnalında saxlanılır.",
+    "saving": "Qeyd olunur…",
+    "record": "Qərarı qeyd et",
+    "toast": "Qərar qeyd olundu",
+    "lockedByProject": "Layihə iş sahəsi artıq yaradılıb, ona görə qərar kilidlənib.",
+    "errors": {
+      "invalid": "Qərar seçin.",
+      "noteRequired": "Əsaslandırma ən azı 10 simvol olmalıdır.",
+      "locked": "Layihə artıq yaradılıb; qərar dəyişdirilə bilməz.",
+      "notFound": "Müraciət tapılmadı."
+    }
+  },
+  "workspace": {
+    "title": "Layihə iş sahəsi",
+    "hint": "Qəbul edilmiş komanda üçün layihə, sənəd checklist-i və komanda liderinin hesabı yaradılır.",
+    "create": "Layihə iş sahəsi yarat",
+    "open": "{code} layihəsini aç",
+    "confirmTitle": "İş sahəsi yaradılsın?",
+    "confirmBody": "Validasiya mərhələsində yeni layihə, 13 bəndli sənəd checklist-i və {email} üçün komanda lideri hesabı (demo şifrə) yaradılacaq.",
+    "confirmAction": "Yarat",
+    "toast": "{code} layihəsi yaradıldı",
+    "toastUser": "{email} üçün komanda hesabı açıldı.",
+    "errors": {
+      "notAccepted": "Yalnız qəbul edilmiş müraciət üçün iş sahəsi yaradıla bilər.",
+      "exists": "Bu müraciət üçün layihə artıq mövcuddur.",
+      "notFound": "Müraciət tapılmadı.",
+      "error": "Layihə yaradılmadı. Yenidən cəhd edin."
+    }
+  }
+}

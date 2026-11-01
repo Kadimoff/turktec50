@@ -1,1 +1,71 @@
-{}
+{
+  "pagination": {
+    "label": "Səhifələmə",
+    "range": "{total} nəticədən {from}–{to}",
+    "prev": "Əvvəlki",
+    "next": "Növbəti",
+    "page": "Səhifə {page} / {pages}"
+  },
+  "users": {
+    "eyebrow": "İdarəetmə",
+    "title": "İstifadəçilər",
+    "description": "Rollar, universitet bağlılığı və hesab statusu. Yalnız proqram koordinatoru üçün görünür.",
+    "create": "Yeni istifadəçi",
+    "createTitle": "Yeni istifadəçi yarat",
+    "createHint": "İlkin şifrəni istifadəçiyə təhlükəsiz kanalla çatdırın; ilk girişdən sonra dəyişdirilməsi tövsiyə olunur.",
+    "editTitle": "İstifadəçini redaktə et",
+    "toastCreated": "İstifadəçi yaradıldı",
+    "toastActivated": "Hesab aktivləşdirildi",
+    "toastDeactivated": "Hesab deaktiv edildi",
+    "fields": {
+      "name": "Ad və soyad",
+      "email": "E-poçt",
+      "role": "Rol",
+      "title": "Vəzifə / titul",
+      "titleHint": "Məsələn: Komanda lideri, Professor, Software engineer",
+      "university": "Universitet",
+      "password": "İlkin şifrə",
+      "passwordHint": "Ən azı 8 simvol. Şifrə şifrələnmiş (hash) şəkildə saxlanılır.",
+      "status": "Status"
+    },
+    "errors": {
+      "forbidden": "Bu əməliyyat üçün icazəniz yoxdur.",
+      "error": "Xəta baş verdi. Yenidən cəhd edin.",
+      "self": "Öz hesabınızı deaktiv edə və ya öz admin rolunuzu dəyişə bilməzsiniz.",
+      "required": "Bu sahə tələb olunur",
+      "tooLong": "Mətn çox uzundur",
+      "invalidEmail": "E-poçt ünvanı düzgün deyil",
+      "emailTaken": "Bu e-poçtla istifadəçi artıq mövcuddur",
+      "passwordShort": "Şifrə ən azı 8 simvol olmalıdır",
+      "invalid": "Daxil edilən məlumat düzgün deyil"
+    },
+    "noUniversity": "Universitet yoxdur",
+    "actionsFor": "{name} üçün əməliyyatlar",
+    "activate": "Aktivləşdir",
+    "deactivate": "Deaktiv et",
+    "selfNote": "Öz hesabınızı deaktiv edə bilməzsiniz.",
+    "selfRoleNote": "Öz admin rolunuzu dəyişə bilməzsiniz.",
+    "deactivateTitle": "{name} deaktiv edilsin?",
+    "deactivateBody": "İstifadəçi sistemə daxil ola bilməyəcək. Məlumatları və əməliyyat tarixçəsi saxlanılır; hesabı istənilən vaxt yenidən aktivləşdirə bilərsiniz.",
+    "activateTitle": "{name} aktivləşdirilsin?",
+    "activateBody": "İstifadəçi mövcud şifrəsi ilə yenidən sistemə daxil ola biləcək.",
+    "statHint": "{active} aktiv · {inactive} deaktiv",
+    "searchPlaceholder": "Ad, e-poçt və ya vəzifə",
+    "active": "Aktiv",
+    "inactive": "Deaktiv",
+    "listTitle": "İstifadəçi siyahısı",
+    "found": "{count, plural, one {# istifadəçi} other {# istifadəçi}}",
+    "noResultsHint": "Filtrləri dəyişin və ya təmizləyin.",
+    "linkedShort": "{count, plural, one {# layihə bağlantısı} other {# layihə bağlantısı}}",
+    "linkedTitle": "Komanda: {members} · Mentor: {mentor} · Münsif: {jury}",
+    "never": "Heç daxil olmayıb",
+    "you": "siz",
+    "cols": {
+      "user": "İstifadəçi",
+      "linked": "Layihələr",
+      "lastLogin": "Son giriş",
+      "actions": "Əməliyyatlar"
+    },
+    "privacyNote": "Minimum məlumat prinsipi: yalnız proqramda iştirak üçün zəruri olan ad, e-poçt, rol, vəzifə və universitet saxlanılır. Şəxsiyyət vəsiqəsi, telefon və ünvan toplanmır. Deaktiv edilmiş hesablar silinmir ki, əməliyyat jurnalı tam qalsın."
+  }
+}

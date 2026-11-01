@@ -1,1 +1,71 @@
-{}
+{
+  "pagination": {
+    "label": "Pagination",
+    "range": "{from}–{to} of {total}",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {page} of {pages}"
+  },
+  "users": {
+    "eyebrow": "Administration",
+    "title": "Users",
+    "description": "Roles, university affiliation and account status. Visible to the programme coordinator only.",
+    "create": "New user",
+    "createTitle": "Create a new user",
+    "createHint": "Share the initial password through a secure channel; the user should change it after first sign-in.",
+    "editTitle": "Edit user",
+    "toastCreated": "User created",
+    "toastActivated": "Account activated",
+    "toastDeactivated": "Account deactivated",
+    "fields": {
+      "name": "Full name",
+      "email": "Email",
+      "role": "Role",
+      "title": "Title / position",
+      "titleHint": "e.g. Team lead, Professor, Software engineer",
+      "university": "University",
+      "password": "Initial password",
+      "passwordHint": "At least 8 characters. Stored only as a hash.",
+      "status": "Status"
+    },
+    "errors": {
+      "forbidden": "You are not allowed to do this.",
+      "error": "Something went wrong. Please try again.",
+      "self": "You cannot deactivate your own account or change your own admin role.",
+      "required": "This field is required",
+      "tooLong": "Text is too long",
+      "invalidEmail": "Invalid email address",
+      "emailTaken": "A user with this email already exists",
+      "passwordShort": "Password must be at least 8 characters",
+      "invalid": "Invalid value"
+    },
+    "noUniversity": "No university",
+    "actionsFor": "Actions for {name}",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "selfNote": "You cannot deactivate your own account.",
+    "selfRoleNote": "You cannot change your own admin role.",
+    "deactivateTitle": "Deactivate {name}?",
+    "deactivateBody": "The user will no longer be able to sign in. Their data and activity history are kept; you can reactivate the account at any time.",
+    "activateTitle": "Activate {name}?",
+    "activateBody": "The user will be able to sign in again with their existing password.",
+    "statHint": "{active} active · {inactive} inactive",
+    "searchPlaceholder": "Name, email or title",
+    "active": "Active",
+    "inactive": "Inactive",
+    "listTitle": "User list",
+    "found": "{count, plural, one {# user} other {# users}}",
+    "noResultsHint": "Change or clear the filters.",
+    "linkedShort": "{count, plural, one {# project link} other {# project links}}",
+    "linkedTitle": "Team: {members} · Mentor: {mentor} · Jury: {jury}",
+    "never": "Never signed in",
+    "you": "you",
+    "cols": {
+      "user": "User",
+      "linked": "Projects",
+      "lastLogin": "Last sign-in",
+      "actions": "Actions"
+    },
+    "privacyNote": "Data minimisation: only what is needed to take part in the programme is stored — name, email, role, title and university. No ID numbers, phone numbers or addresses are collected. Deactivated accounts are not deleted so that the audit log stays complete."
+  }
+}

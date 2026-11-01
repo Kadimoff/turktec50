@@ -1,1 +1,71 @@
-{}
+{
+  "pagination": {
+    "label": "Sayfalama",
+    "range": "{total} sonuçtan {from}–{to}",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "page": "Sayfa {page} / {pages}"
+  },
+  "users": {
+    "eyebrow": "Yönetim",
+    "title": "Kullanıcılar",
+    "description": "Roller, üniversite bağlantısı ve hesap durumu. Yalnızca program koordinatörü görebilir.",
+    "create": "Yeni kullanıcı",
+    "createTitle": "Yeni kullanıcı oluştur",
+    "createHint": "İlk şifreyi kullanıcıya güvenli bir kanalla iletin; ilk girişten sonra değiştirilmesi önerilir.",
+    "editTitle": "Kullanıcıyı düzenle",
+    "toastCreated": "Kullanıcı oluşturuldu",
+    "toastActivated": "Hesap etkinleştirildi",
+    "toastDeactivated": "Hesap devre dışı bırakıldı",
+    "fields": {
+      "name": "Ad soyad",
+      "email": "E-posta",
+      "role": "Rol",
+      "title": "Unvan / görev",
+      "titleHint": "Örn.: Takım lideri, Profesör, Software engineer",
+      "university": "Üniversite",
+      "password": "İlk şifre",
+      "passwordHint": "En az 8 karakter. Şifre özetlenmiş (hash) olarak saklanır.",
+      "status": "Durum"
+    },
+    "errors": {
+      "forbidden": "Bu işlem için yetkiniz yok.",
+      "error": "Bir hata oluştu. Tekrar deneyin.",
+      "self": "Kendi hesabınızı devre dışı bırakamaz veya kendi yönetici rolünüzü değiştiremezsiniz.",
+      "required": "Bu alan zorunludur",
+      "tooLong": "Metin çok uzun",
+      "invalidEmail": "E-posta adresi geçersiz",
+      "emailTaken": "Bu e-postayla bir kullanıcı zaten var",
+      "passwordShort": "Şifre en az 8 karakter olmalıdır",
+      "invalid": "Girilen bilgi geçersiz"
+    },
+    "noUniversity": "Üniversite yok",
+    "actionsFor": "{name} için işlemler",
+    "activate": "Etkinleştir",
+    "deactivate": "Devre dışı bırak",
+    "selfNote": "Kendi hesabınızı devre dışı bırakamazsınız.",
+    "selfRoleNote": "Kendi yönetici rolünüzü değiştiremezsiniz.",
+    "deactivateTitle": "{name} devre dışı bırakılsın mı?",
+    "deactivateBody": "Kullanıcı sisteme giriş yapamayacak. Verileri ve işlem geçmişi korunur; hesabı istediğiniz zaman yeniden etkinleştirebilirsiniz.",
+    "activateTitle": "{name} etkinleştirilsin mi?",
+    "activateBody": "Kullanıcı mevcut şifresiyle yeniden giriş yapabilecek.",
+    "statHint": "{active} etkin · {inactive} pasif",
+    "searchPlaceholder": "Ad, e-posta veya unvan",
+    "active": "Etkin",
+    "inactive": "Pasif",
+    "listTitle": "Kullanıcı listesi",
+    "found": "{count, plural, one {# kullanıcı} other {# kullanıcı}}",
+    "noResultsHint": "Filtreleri değiştirin veya temizleyin.",
+    "linkedShort": "{count, plural, one {# proje bağlantısı} other {# proje bağlantısı}}",
+    "linkedTitle": "Ekip: {members} · Mentor: {mentor} · Jüri: {jury}",
+    "never": "Hiç giriş yapmadı",
+    "you": "siz",
+    "cols": {
+      "user": "Kullanıcı",
+      "linked": "Projeler",
+      "lastLogin": "Son giriş",
+      "actions": "İşlemler"
+    },
+    "privacyNote": "Veri minimizasyonu: yalnızca programa katılım için gerekli olan ad, e-posta, rol, unvan ve üniversite saklanır. Kimlik numarası, telefon ve adres toplanmaz. İşlem kaydının eksiksiz kalması için pasif hesaplar silinmez."
+  }
+}

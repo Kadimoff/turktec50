@@ -1,1 +1,237 @@
-{}
+{
+  "title": "Sənəd checklist-i",
+  "description": "Final təqdimat paketinin sənədləri, versiyaları və yoxlama statusu.",
+  "readiness": {
+    "title": "Paketin hazırlığı",
+    "label": "Paketin hazırlıq faizi",
+    "approvedOfRequired": "{approved} / {required} mütləq sənəd təsdiqlənib",
+    "approved": "Təsdiqlənib",
+    "missingRequired": "Çatışmayan mütləq",
+    "awaitingReview": "Yoxlama gözləyir",
+    "rejected": "Düzəliş lazımdır",
+    "missingList": "Hələ yüklənməyən mütləq sənədlər",
+    "allPresent": "Bütün mütləq sənədlər yüklənib.",
+    "qcPassed": "Paket keyfiyyət yoxlamasından keçib",
+    "qcPending": "Keyfiyyət yoxlaması hələ qeyd olunmayıb",
+    "qcNote": "QC nəticəsini proqram koordinatoru qeyd edir; hazırlıq faizi avtomatik qərar deyil."
+  },
+  "groups": {
+    "CORE": "Müraciət paketinin özəyi — hamısı mütləqdir.",
+    "ANNEX": "Prototipi, arxitekturanı və iş axınını göstərən vizual və texniki material.",
+    "CONDITIONAL": "Yalnız real və yoxlanıla bilən sübut olduqda əlavə edilir."
+  },
+  "groupProgress": "{approved}/{total} təsdiqlənib",
+  "required": "Mütləq",
+  "optional": "İstəyə bağlı",
+  "custom": "Əlavə tələb",
+  "noFile": "Hələ fayl yüklənməyib",
+  "noVisibleFile": "Baxış üçün açıq fayl yoxdur",
+  "version": "v{n}",
+  "uploadedBy": "{name}",
+  "unknownUser": "Naməlum istifadəçi",
+  "confidential": "Məxfi",
+  "confidentialHint": "Münsiflərə göstərilmir",
+  "downloadFile": "Endir: {name}",
+  "history": "Versiya tarixçəsi ({count})",
+  "reviewerNote": "Yoxlayıcının qeydi",
+  "reviewedBy": "{name} · {date}",
+  "approvedBy": "{name} təsdiqləyib · {date}",
+  "inReviewBy": "{name} yoxlayır",
+  "latest": "Son versiya",
+  "itemsCount": "{count, plural, one {# bənd} other {# bənd}}",
+  "items": {
+    "final_form": {
+      "title": "Final müraciət forması",
+      "hint": "Yarışma platformasındakı rəsmi müraciət formasının doldurulmuş və yoxlanılmış son versiyası."
+    },
+    "budget_plan": {
+      "title": "Büdcə planı",
+      "hint": "Komponent, xidmət və digər xərclərin cədvəli; cəmlər və qiymət mənbələri göstərilməklə."
+    },
+    "commitment_form": {
+      "title": "Öhdəlik forması",
+      "hint": "Bütün komanda üzvlərinin imzaladığı iştirak və öhdəlik forması."
+    },
+    "test_evidence": {
+      "title": "Test sübutu",
+      "hint": "Prototipin işlədiyini göstərən test protokolu: tarix, şərait, ölçmə nəticələri və foto/video sübut."
+    },
+    "demo_video": {
+      "title": "Demo video",
+      "hint": "Prototipin real işini göstərən 2–3 dəqiqəlik video; montajla olmayan nəticə göstərilmir."
+    },
+    "prototype_visuals": {
+      "title": "Prototip vizualları",
+      "hint": "Prototipin real vəziyyətini əks etdirən foto və ekran görüntüləri."
+    },
+    "architecture_diagram": {
+      "title": "Sistem arxitekturası sxemi",
+      "hint": "Komponentləri, məlumat axınını və inteqrasiyaları göstərən sxem."
+    },
+    "workflow_diagram": {
+      "title": "İş axını sxemi",
+      "hint": "İstifadəçi və sistem addımlarının ardıcıllığını göstərən diaqram."
+    },
+    "technical_drawing": {
+      "title": "Texniki çertyoj / sxem",
+      "hint": "Mexaniki çertyoj, elektrik sxemi və ya PCB planı. Patentləşdirilə bilən detallar varsa məxfi kimi işarələyin."
+    },
+    "references": {
+      "title": "İstinadlar",
+      "hint": "İstifadə olunan elmi mənbələr, standartlar və açıq məlumat dəstləri."
+    },
+    "survey_results": {
+      "title": "Sorğu nəticələri",
+      "hint": "Yalnız real sorğu keçirilibsə əlavə edin: metod, tarix, iştirakçı sayı və xam nəticələr göstərilməlidir."
+    },
+    "support_letter": {
+      "title": "Dəstək məktubu",
+      "hint": "Yalnız tərəfdaşın imzaladığı və istifadəsinə icazə verdiyi məktublar. İmzasız və ya komanda tərəfindən yazılmış məktub əlavə edilmir."
+    },
+    "patent_info": {
+      "title": "Patent məlumatı",
+      "hint": "Yalnız rəsmi müraciət və ya qeydiyyat nömrəsi olduqda. Ticari sirr açıq pitch materialına daxil edilmir."
+    }
+  },
+  "guide": {
+    "title": "Hansı əlavələr uyğundur?",
+    "fitTitle": "Paketi gücləndirən əlavələr",
+    "fit1": "Prototip vizualları — real foto və ekran görüntüləri",
+    "fit2": "Sistem arxitekturası və iş axını sxemləri",
+    "fit3": "Texniki çertyoj və ya elektrik sxemi",
+    "conditionalTitle": "Yalnız real sübut olduqda",
+    "cond1": "Sorğu nəticələri — metod, tarix, iştirakçılar və xam nəticə ilə",
+    "cond2": "Dəstək məktubu — tərəfdaşın imzası və icazəsi ilə",
+    "cond3": "Patent məlumatı — rəsmi müraciət və ya qeydiyyat nömrəsi ilə",
+    "never": "Uydurulmuş və ya şişirdilmiş sübut heç vaxt əlavə edilmir.",
+    "confidentialTitle": "Məxfi məzmun",
+    "confidentialBody": "Ticari sirr və patentləşdirilə bilən material “məxfi” kimi işarələnir, açıq pitch materialından ayrı saxlanılır və münsiflərə göstərilmir.",
+    "juryConfidential": "Məxfi işarələnmiş materiallar münsif baxışında göstərilmir. Burada yalnız açıq təqdimat materialı var.",
+    "rulesTitle": "Fayl qaydaları",
+    "rulesBody": "Maksimum {size}. PDF, PNG, JPG, WEBP, MP4, ZIP, DOCX, XLSX, PPTX, TXT. Hər yükləmə yeni versiya yaradır və əməliyyat jurnalına yazılır."
+  },
+  "upload": {
+    "button": "Yüklə",
+    "newVersion": "Yeni versiya",
+    "title": "Sənəd yüklə",
+    "description": "{item} üçün v{n} versiyası yaradılacaq.",
+    "file": "Fayl",
+    "fileHint": "Maksimum {size} · PDF, şəkil, MP4, ZIP, Office və ya TXT",
+    "selected": "{name} · {size}",
+    "confidential": "Məxfi material (ticari sirr / patentləşdirilə bilən)",
+    "confidentialHint": "Münsiflərə göstərilmir və açıq pitch materialına daxil edilmir.",
+    "conditionalWarning": "Şərti əlavə: yalnız real və yoxlanıla bilən sübut yükləyin.",
+    "submit": "Yüklə",
+    "pending": "Yüklənir…",
+    "progress": "Fayl serverə göndərilir"
+  },
+  "review": {
+    "start": "Yoxlamaya götür",
+    "button": "Yoxla",
+    "title": "Sənədi yoxla",
+    "description": "{item} · son versiya v{n}",
+    "decision": "Qərar",
+    "approve": "Təsdiqlə",
+    "approveHint": "Sənəd tələblərə uyğundur.",
+    "reject": "Düzəliş istə",
+    "rejectHint": "Komanda düzəldilmiş versiya yükləməlidir.",
+    "note": "Qeyd",
+    "noteHint": "Düzəliş istəyəndə qeyd mütləqdir: nə dəyişməlidir?",
+    "submit": "Qərarı yadda saxla",
+    "pending": "Yadda saxlanılır…"
+  },
+  "add": {
+    "button": "Bənd əlavə et",
+    "title": "Yeni checklist bəndi",
+    "description": "Bu layihə üçün əlavə tələb olunan sənəd. Əməliyyat jurnala yazılır.",
+    "itemTitle": "Bəndin adı",
+    "itemTitleHint": "Məs.: Laboratoriya təhlükəsizlik təsdiqi",
+    "category": "Kateqoriya",
+    "required": "Mütləq sənəd (hazırlıq faizinə daxildir)",
+    "submit": "Əlavə et",
+    "pending": "Əlavə edilir…"
+  },
+  "delete": {
+    "label": "v{n} versiyasını sil",
+    "title": "Versiyanı silmək?",
+    "description": "{name} (v{n}) faylı serverdən silinəcək. Bu əməliyyat geri qaytarılmır və jurnala yazılır.",
+    "confirm": "Sil",
+    "pending": "Silinir…"
+  },
+  "toast": {
+    "uploaded": "Sənəd yükləndi",
+    "approved": "Sənəd təsdiqləndi",
+    "changesRequested": "Düzəliş istəndi",
+    "inReview": "Sənəd yoxlamaya götürüldü",
+    "itemAdded": "Bənd əlavə olundu",
+    "deleted": "Versiya silindi"
+  },
+  "errors": {
+    "invalid": "Daxil edilən məlumat düzgün deyil.",
+    "forbidden": "Bu əməliyyat üçün icazəniz yoxdur.",
+    "notFound": "Qeyd tapılmadı.",
+    "generic": "Xəta baş verdi. Yenidən cəhd edin.",
+    "fileRequired": "Fayl seçin.",
+    "fileTooLarge": "Fayl {size} limitini keçir.",
+    "fileType": "Bu fayl növü qəbul edilmir.",
+    "noteRequired": "Düzəliş səbəbini yazın (ən azı 3 simvol).",
+    "nothingToReview": "Yoxlamaq üçün fayl yoxdur.",
+    "titleShort": "Ad ən azı 3 simvol olmalıdır.",
+    "titleLong": "Ad çox uzundur (maks. 140 simvol)."
+  },
+  "overview": {
+    "eyebrow": "Təqdimat paketi",
+    "title": "Sənədlər",
+    "descriptionAdmin": "Bütün komandaların təqdimat paketinin hazırlığı, yoxlama növbəsi və çatışmayan sənədlər.",
+    "descriptionMentor": "Təyin olunduğunuz layihələrin sənəd hazırlığı və yoxlama növbəsi.",
+    "avgReadiness": "Orta hazırlıq",
+    "avgHint": "{count, plural, one {# layihə üzrə} other {# layihə üzrə}}",
+    "fullyApproved": "Tam təsdiqlənmiş paketlər",
+    "fullyHint": "QC keçib: {qc}",
+    "awaiting": "Yoxlama gözləyən",
+    "awaitingHint": "Ən köhnəsi {when} yüklənib",
+    "queueEmpty": "Növbə boşdur",
+    "rejected": "Düzəliş lazım olan",
+    "rejectedHint": "{count, plural, one {# layihədə} other {# layihədə}}",
+    "queueTitle": "Yoxlama növbəsi",
+    "queueSubtitle": "Ən uzun gözləyənlər əvvəldə",
+    "queueNone": "Yoxlama gözləyən sənəd yoxdur.",
+    "queueMore": "+{count} daha — filtrdə “Yoxlama gözləyir” seçin",
+    "uploadedWhen": "{when} yüklənib",
+    "tableTitle": "Layihələr üzrə hazırlıq",
+    "results": "{count, plural, one {# layihə} other {# layihə}}",
+    "project": "Layihə",
+    "readiness": "Hazırlıq",
+    "missing": "Çatışmayan",
+    "awaitingCol": "Yoxlamada",
+    "rejectedCol": "Düzəliş",
+    "lastUpload": "Son yükləmə",
+    "openChecklist": "{project} checklist-inə keç",
+    "qc": "QC",
+    "empty": "Filtrə uyğun layihə yoxdur",
+    "emptyHint": "Axtarışı və ya filtrləri dəyişin."
+  },
+  "filters": {
+    "q": "Axtarış",
+    "qPlaceholder": "Layihə adı və ya kodu…",
+    "status": "Vəziyyət",
+    "all": "Hamısı",
+    "missing": "Çatışmayan mütləq var",
+    "review": "Yoxlama gözləyir",
+    "rejected": "Düzəliş lazımdır",
+    "complete": "Tam təsdiqlənib",
+    "sort": "Sıralama",
+    "sortReadinessAsc": "Hazırlıq: aşağıdan",
+    "sortReadinessDesc": "Hazırlıq: yuxarıdan",
+    "sortCode": "Kod üzrə",
+    "sortRecent": "Son yükləmə",
+    "apply": "Tətbiq et",
+    "reset": "Sıfırla"
+  },
+  "pagination": {
+    "label": "Səhifələmə",
+    "range": "{from}–{to} / {total}",
+    "prev": "Əvvəlki",
+    "next": "Növbəti"
+  }
+}

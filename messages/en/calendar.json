@@ -1,1 +1,71 @@
-{}
+{
+  "title": "Calendar",
+  "description": {
+    "ADMIN": "Programme phases, competition deadlines and upcoming sessions and tasks across all projects.",
+    "TEAM": "Your team's upcoming mentor sessions, task deadlines and competition dates.",
+    "MENTOR": "Your sessions, task deadlines in projects you mentor, and programme dates.",
+    "JURY": "Midterm jury and mock final dates, competition deadlines."
+  },
+  "program": {
+    "title": "Programme timeline",
+    "subtitle": "{start} – {end} · 6 phases, 8-week incubation"
+  },
+  "agenda": {
+    "title": "Agenda · next {days} days",
+    "subtitle": {
+      "ADMIN": "All sessions, task deadlines per day, competition and programme dates",
+      "TEAM": "Your team's sessions and tasks, by week",
+      "MENTOR": "Your sessions and your projects' tasks, by week",
+      "JURY": "Jury and competition dates, by week"
+    },
+    "empty": "Nothing scheduled in this period",
+    "weekOf": "Week of {range}",
+    "programWeek": "Incubation week {n}",
+    "items": "{count, plural, one {# item} other {# items}}"
+  },
+  "overdueNote": "{count, plural, one {# overdue task is} other {# overdue tasks are}} not shown in the agenda — see Tasks.",
+  "legend": "Legend",
+  "kinds": {
+    "session": "Mentor session",
+    "task": "Task due",
+    "taskGroup": "Tasks due",
+    "deadline": "Competition deadline",
+    "milestone": "Programme date",
+    "sessionGroup": "Mentor sessions"
+  },
+  "milestonesTitle": "Key dates",
+  "milestones": {
+    "programStart": "Programme start",
+    "incubationStart": "Incubation starts",
+    "midtermJury": "Midterm jury",
+    "incubationEnd": "Incubation ends",
+    "mockFinal": "Mock final",
+    "programEnd": "Programme end"
+  },
+  "passed": "Passed",
+  "weeksTitle": "{n}-week incubation",
+  "weekN": "Week {n}",
+  "thisWeek": "This week",
+  "done": "Done",
+  "competitions": {
+    "title": "Competitions & deadlines",
+    "subtitle": "{count} target competitions · nearest deadline first",
+    "empty": "No competitions added",
+    "name": "Competition",
+    "category": "Category",
+    "deadline": "Application deadline",
+    "final": "Final",
+    "teams": "Teams",
+    "website": "{name} — website (opens in new tab)"
+  },
+  "yourCompetition": "Your competition",
+  "minutes": "{count} min",
+  "unassigned": "Unassigned",
+  "mine": "Mine",
+  "tasksDue": "{count, plural, one {# task due} other {# tasks due}}",
+  "highPriority": "{count} high priority",
+  "allProjects": "All projects",
+  "deadlineOf": "Deadline: {name}",
+  "sessionsCount": "{count, plural, one {# mentor session} other {# mentor sessions}}",
+  "confirmedOf": "{a}/{b} confirmed"
+}

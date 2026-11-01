@@ -1,1 +1,234 @@
-{}
+{
+  "title": "Mentors",
+  "eyebrow": "Mentoring",
+  "titleByRole": {
+    "ADMIN": "Mentor pool and sessions",
+    "MENTOR": "My sessions",
+    "TEAM": "My mentors"
+  },
+  "description": {
+    "ADMIN": "Mentor sessions happen at least every two weeks. Track planned meetings, sessions awaiting notes and mentor workload.",
+    "MENTOR": "Confirm meetings, then record your advice and next steps afterwards. An agreed next step becomes a task in one click.",
+    "TEAM": "Share your agenda and progress before the meeting, request sessions, and follow mentor advice and next steps here."
+  },
+  "visibility": "Visible only to the project team, its mentor(s) and the coordinator",
+  "pending": "Saving…",
+  "projectSection": {
+    "title": "Mentor sessions",
+    "description": "First the team shares its agenda, then the mentor records advice and next steps; an agreed step can be turned into a task."
+  },
+  "stats": {
+    "upcoming": "Upcoming sessions",
+    "upcomingHint": "In the next 14 days",
+    "needsNotes": "Awaiting notes",
+    "needsNotesHint": "Time has passed, no mentor notes yet",
+    "completedMonth": "Held in the last 30 days",
+    "completedMonthHint": "Total mentoring: {hours} h",
+    "noRecentSession": "Projects without a session",
+    "noRecentSessionHint": "No session held in the last {days} days",
+    "myUpcomingHint": "Planned and confirmed",
+    "myNeedsNotesHint": "Record advice and next steps",
+    "completed": "Sessions held",
+    "hoursHint": "{hours} h of mentoring",
+    "projectsLate": "Projects behind cadence"
+  },
+  "upcoming": {
+    "title": "Upcoming sessions",
+    "titleMine": "Upcoming meetings",
+    "subtitle": "{count, plural, one {# session planned} other {# sessions planned}}",
+    "subtitleCapped": "Showing the next {shown} · {total} in total",
+    "empty": "No sessions planned",
+    "emptyHintMentor": "Plan a new meeting for your projects.",
+    "showAll": "Show all ({count})",
+    "showLess": "Show fewer"
+  },
+  "needsNotes": {
+    "title": "Sessions awaiting notes",
+    "subtitle": "The meeting time has passed but no mentor notes or next steps were recorded.",
+    "empty": "No sessions awaiting notes",
+    "emptyHint": "Mentor notes are recorded for all past meetings."
+  },
+  "completed": {
+    "title": "Recently held sessions",
+    "subtitle": "Advice and next steps; you can turn a step into a task.",
+    "empty": "No sessions held yet"
+  },
+  "pool": {
+    "title": "Mentor pool",
+    "subtitle": "{count, plural, one {# active mentor} other {# active mentors}} · assignments, sessions held and mentoring hours",
+    "empty": "No active mentors",
+    "projectsLabel": "Projects",
+    "sessionsLabel": "Sessions",
+    "hoursLabel": "Hours",
+    "upcomingLabel": "Upcoming",
+    "email": "Email {name}",
+    "expertise": "Areas of expertise"
+  },
+  "myProjects": {
+    "title": "My projects",
+    "subtitle": "{count, plural, one {# project} other {# projects}} · two-week cadence",
+    "empty": "No projects assigned to you",
+    "last": "Last",
+    "next": "Next",
+    "ok": "On cadence",
+    "late": "Behind"
+  },
+  "myMentors": {
+    "title": "Our mentors",
+    "subtitle": "Mentors assigned to your project",
+    "empty": "No mentor assigned yet",
+    "emptyHint": "You can request sessions once the coordinator assigns a mentor.",
+    "noProject": "You are not on a project team yet",
+    "focus": "Focus"
+  },
+  "explainer": {
+    "title": "How mentor notes work",
+    "subtitle": "Every session follows a four-step flow",
+    "steps": {
+      "before": {
+        "title": "Before the meeting",
+        "body": "The team shares its agenda, weekly progress and questions."
+      },
+      "after": {
+        "title": "After the meeting",
+        "body": "The mentor records advice and the agreed next steps."
+      },
+      "followup": {
+        "title": "Follow-up",
+        "body": "A next step becomes a task with an owner, due date and acceptance criterion in one click."
+      },
+      "visibility": {
+        "title": "Visibility",
+        "body": "Notes are visible only to the project team, its mentor and the coordinator."
+      }
+    }
+  },
+  "columns": {
+    "when": "Date and time",
+    "topic": "Topic",
+    "project": "Project",
+    "mentor": "Mentor",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "session": {
+    "duration": "{min} min",
+    "online": "Online",
+    "inPerson": "In person",
+    "awaitingNotes": "Awaiting notes",
+    "agenda": "Agenda",
+    "agendaWho": "before the meeting, team",
+    "noAgenda": "The team hasn't shared an agenda yet.",
+    "notes": "Mentor advice",
+    "notesWho": "after the meeting, {name}",
+    "nextSteps": "Next steps",
+    "noSteps": "No next steps recorded.",
+    "converted": "Task created",
+    "viewTask": "view task",
+    "convert": "Convert to task",
+    "converting": "Creating…",
+    "needsNotesHint": "The meeting is over — advice and next steps are pending."
+  },
+  "actions": {
+    "plan": "Plan session",
+    "request": "Request a session",
+    "confirm": "Confirm",
+    "reschedule": "Reschedule",
+    "cancel": "Cancel session",
+    "complete": "Record notes",
+    "editAgenda": "Edit agenda",
+    "addAgenda": "Add agenda",
+    "more": "Session actions: {topic}"
+  },
+  "plan": {
+    "titlePlan": "Plan a mentor session",
+    "titleRequest": "Request a mentor session",
+    "descriptionPlan": "The team and mentor will be notified. The team can share an agenda before the meeting.",
+    "descriptionRequest": "Your mentor will confirm the request or suggest another time. Describe your progress and questions in the agenda.",
+    "project": "Project",
+    "projectPlaceholder": "Select a project",
+    "mentor": "Mentor",
+    "mentorHint": "Select the project first — only assigned mentors are listed.",
+    "when": "Date and time",
+    "whenHint": "Baku time (UTC+4)",
+    "duration": "Duration",
+    "topic": "Topic",
+    "topicPlaceholder": "E.g. MVP review meeting",
+    "agenda": "Agenda and progress",
+    "agendaHint": "Before the meeting: what was done, where are you stuck, what questions do you have?",
+    "agendaPlaceholder": "E.g. first field-test results, LoRa range, next sprint plan",
+    "online": "Online meeting",
+    "onlineHint": "When off, the meeting is held in person.",
+    "submitPlan": "Plan",
+    "submitRequest": "Send request"
+  },
+  "complete": {
+    "title": "Record mentor notes",
+    "notes": "Advice and recommendations",
+    "notesHint": "The team will see this note. Keep it concrete and actionable.",
+    "steps": "Next steps",
+    "stepsHint": "Write each agreed step separately — it can be turned into a task later.",
+    "stepLabel": "Step {n}",
+    "stepPlaceholder": "E.g. Interview 3 farmers",
+    "removeStep": "Remove step {n}",
+    "addStep": "Add step",
+    "submit": "Complete session"
+  },
+  "reschedule": {
+    "title": "Reschedule session",
+    "description": "“{topic}” — the team will be notified of the new time.",
+    "submit": "Save new time"
+  },
+  "agendaDialog": {
+    "title": "Meeting agenda",
+    "description": "Share progress and questions before the meeting so your mentor can prepare.",
+    "submit": "Save agenda"
+  },
+  "cancel": {
+    "title": "Cancel this session?",
+    "description": "“{topic}” ({when}) will be cancelled. The action is recorded in the activity log.",
+    "confirm": "Cancel session"
+  },
+  "toast": {
+    "planned": "Session planned",
+    "requested": "Session request sent",
+    "confirmed": "Session confirmed",
+    "rescheduled": "Session rescheduled",
+    "cancelled": "Session cancelled",
+    "completed": "Notes saved, the team has been notified",
+    "converted": "Next step turned into a task",
+    "agendaSaved": "Agenda saved"
+  },
+  "errors": {
+    "forbidden": "You are not allowed to do this.",
+    "notFound": "Session not found.",
+    "invalid": "Some fields need your attention.",
+    "generic": "Something went wrong. Please try again.",
+    "required": "This field is required.",
+    "duration": "Duration must be 15–240 minutes.",
+    "topicLength": "Topic must be 3–160 characters.",
+    "tooLong": "Text is too long.",
+    "agendaRequired": "An agenda is required (at least 3 characters).",
+    "mentorNotAssigned": "This mentor is not assigned to the project.",
+    "dateInvalid": "Invalid date.",
+    "datePast": "A past date cannot be selected.",
+    "wrongStatus": "The session's current status does not allow this action.",
+    "notesLength": "Notes must be at least 10 characters.",
+    "tooManySteps": "At most 10 steps can be added.",
+    "stepLength": "Each step can be at most 160 characters."
+  },
+  "timeline": {
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "emptyUpcoming": "No sessions planned",
+    "emptyUpcomingHint": "Rule: a mentor session at least every two weeks.",
+    "emptyPast": "No sessions held yet",
+    "last": "Last session held",
+    "never": "None yet",
+    "next": "Next session",
+    "notPlanned": "Not planned",
+    "rule": "Two-week cadence",
+    "cadenceOk": "On cadence",
+    "cadenceLate": "No session for over 14 days"
+  }
+}

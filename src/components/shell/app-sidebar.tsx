@@ -25,7 +25,7 @@ export function AppSidebar({ groups, week }: { groups: NavGroup[]; week: string 
   const isActive = (href: string) => (href === "/dashboard" ? pathname === href : pathname === href || pathname.startsWith(href + "/"));
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" className="no-print">
       <SidebarHeader className="px-3 pt-4 pb-2">
         <Link href="/dashboard" className="flex items-center gap-2.5 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring">
           <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-sidebar-primary text-[13px] font-extrabold tracking-tight text-sidebar-primary-foreground">

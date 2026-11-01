@@ -1,1 +1,130 @@
-{}
+{
+  "title": "Başvurular",
+  "eyebrow": "Seçim aşaması",
+  "description": "Takım başvurularının seçim rubriği ile değerlendirilmesi. Puanlar bilgi amaçlıdır; kabul kararını koordinatör kaydeder.",
+  "listLabel": "Başvuru listesi",
+  "empty": "Filtreleri değiştirin veya aramayı temizleyin.",
+  "stats": {
+    "total": "Toplam başvuru",
+    "totalHint": "Çağrı döneminde gelen tüm başvurular",
+    "evaluated": "Değerlendirildi",
+    "evaluatedHint": "En az 1 gönderilmiş rubrik · hedef {target}",
+    "underReview": "İncelemede",
+    "underReviewHint": "Karar bekleyen başvurular",
+    "myTodo": "Değerlendirmemi bekleyen",
+    "mySubmitted": "{count, plural, one {# değerlendirme gönderdiniz} other {# değerlendirme gönderdiniz}}",
+    "accepted": "Kabul edildi",
+    "acceptedHint": "Yedek: {waitlist} · Kabul edilmedi: {rejected}"
+  },
+  "filters": {
+    "status": "Duruma göre filtre",
+    "category": "Kategori",
+    "university": "Üniversite",
+    "searchPlaceholder": "Kod, takım veya proje adı",
+    "myTodo": "Değerlendirmemi bekleyenler"
+  },
+  "table": {
+    "code": "Kod",
+    "team": "Proje ve takım",
+    "university": "Üniversite",
+    "category": "Kategori",
+    "evaluations": "Rubrikler",
+    "score": "Ort. puan",
+    "scoreHint": "Ortalama puan, gönderilmiş rubriklerin ağırlıklı ortalamasıdır (0–100) ve yalnızca bilgi amaçlıdır; karar değildir.",
+    "myReview": "Değerlendirmem",
+    "status": "Durum"
+  },
+  "myReview": {
+    "none": "Değerlendirilmedi",
+    "draft": "Taslak",
+    "submitted": "Gönderildi"
+  },
+  "detail": {
+    "content": "Başvuru içeriği",
+    "problem": "Problem",
+    "solution": "Önerilen çözüm",
+    "facts": "Başvuru bilgileri",
+    "category": "Kategori",
+    "university": "Üniversite",
+    "competition": "Hedef yarışma",
+    "deadline": "son tarih {date}",
+    "teamSize": "Takım büyüklüğü",
+    "submittedAt": "Gönderim tarihi",
+    "evaluations": "Gönderilmiş rubrikler",
+    "evaluationsValue": "{count, plural, =0 {Henüz yok} one {# jüri üyesi} other {# jüri üyesi}}",
+    "contact": "İletişim kişisi",
+    "contactNote": "İletişim bilgileri yalnızca koordinatöre görünür (veri minimizasyonu).",
+    "hasProject": "Bu başvurudan {code} proje çalışma alanı oluşturuldu."
+  },
+  "rubric": {
+    "title": "Seçim rubriği",
+    "subtitle": "Her ölçütü 1–5 ölçeğiyle puanlayın. Gönderildikten sonra değerlendirme kilitlenir.",
+    "weight": "Ağırlık %{weight}",
+    "criterionRequired": "Göndermek için bu ölçütü puanlayın.",
+    "comment": "Yorum",
+    "commentHint": "Güçlü ve zayıf yönler, takıma öneri. Koordinatör görebilir.",
+    "preview": "Ağırlıklı puan (bilgi amaçlı)",
+    "previewHint": "{scored}/{total} ölçüt puanlandı. Puan otomatik karar üretmez; kararı insanlar verir.",
+    "submit": "Gönder",
+    "draftSaved": "Taslak kaydedildi",
+    "confirmTitle": "Değerlendirme gönderilsin mi?",
+    "confirmBody": "Ağırlıklı puan: {score} / 100. Gönderildikten sonra puanlar değiştirilemez.",
+    "confirmAction": "Evet, gönder",
+    "lockedNote": "Değerlendirme {date} tarihinde gönderildi ve kilitlendi.",
+    "toastSubmitted": "Değerlendirme gönderildi",
+    "toastDraft": "Taslak kaydedildi",
+    "errors": {
+      "invalid": "Veri geçersiz. Tekrar deneyin.",
+      "incomplete": "Göndermek için tüm ölçütleri puanlayın.",
+      "locked": "Bu değerlendirme zaten gönderildi ve değiştirilemez.",
+      "notFound": "Başvuru veya rubrik bulunamadı.",
+      "error": "Bir hata oluştu. Tekrar deneyin."
+    }
+  },
+  "panel": {
+    "title": "Tüm jüri üyelerinin puanları",
+    "subtitle": "{count, plural, one {# gönderilmiş değerlendirme} other {# gönderilmiş değerlendirme}}",
+    "drafts": "{count, plural, one {# taslak hesaba katılmaz} other {# taslak hesaba katılmaz}}",
+    "average": "Ortalama ağırlıklı puan",
+    "empty": "Henüz gönderilmiş değerlendirme yok",
+    "emptyHint": "Jüri üyeleri rubriği gönderdikten sonra puanlar burada görünecek.",
+    "criterion": "Ölçüt",
+    "avg": "Ort.",
+    "weighted": "Ağırlıklı puan (0–100)",
+    "noComment": "Yorum yazılmadı."
+  },
+  "decision": {
+    "title": "Koordinatör kararı",
+    "subtitle": "Kararı insan verir ve gerekçesiyle kaydeder. Puanlar yalnızca referanstır.",
+    "choose": "Karar",
+    "note": "Gerekçe",
+    "noteHint": "Kararın nedenini kısaca yazın (en az 10 karakter). İşlem kaydında saklanır.",
+    "saving": "Kaydediliyor…",
+    "record": "Kararı kaydet",
+    "toast": "Karar kaydedildi",
+    "lockedByProject": "Proje çalışma alanı zaten oluşturuldu, bu nedenle karar kilitli.",
+    "errors": {
+      "invalid": "Bir karar seçin.",
+      "noteRequired": "Gerekçe en az 10 karakter olmalıdır.",
+      "locked": "Proje zaten oluşturuldu; karar değiştirilemez.",
+      "notFound": "Başvuru bulunamadı."
+    }
+  },
+  "workspace": {
+    "title": "Proje çalışma alanı",
+    "hint": "Kabul edilen takım için proje, belge kontrol listesi ve takım lideri hesabı oluşturulur.",
+    "create": "Proje çalışma alanı oluştur",
+    "open": "{code} projesini aç",
+    "confirmTitle": "Çalışma alanı oluşturulsun mu?",
+    "confirmBody": "Doğrulama aşamasında yeni proje, 13 maddelik belge kontrol listesi ve {email} için takım lideri hesabı (demo şifre) oluşturulacak.",
+    "confirmAction": "Oluştur",
+    "toast": "{code} projesi oluşturuldu",
+    "toastUser": "{email} için takım hesabı açıldı.",
+    "errors": {
+      "notAccepted": "Çalışma alanı yalnızca kabul edilmiş başvuru için oluşturulabilir.",
+      "exists": "Bu başvuru için proje zaten mevcut.",
+      "notFound": "Başvuru bulunamadı.",
+      "error": "Proje oluşturulamadı. Tekrar deneyin."
+    }
+  }
+}

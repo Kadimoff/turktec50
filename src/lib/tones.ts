@@ -10,6 +10,7 @@ export const checklistTone: Record<string, Tone> = { MISSING: "neutral", UPLOADE
 export const riskLevelTone: Record<string, Tone> = { LOW: "success", MEDIUM: "warning", HIGH: "danger" };
 export const riskStatusTone: Record<string, Tone> = { OPEN: "danger", MITIGATING: "warning", CLOSED: "success" };
 export const appStatusTone: Record<string, Tone> = { SUBMITTED: "neutral", UNDER_REVIEW: "info", ACCEPTED: "success", WAITLIST: "warning", REJECTED: "danger" };
+export const evaluationTone: Record<string, Tone> = { DRAFT: "warning", SUBMITTED: "success" };
 export const resultTone: Record<string, Tone> = { PENDING: "neutral", FINALIST: "success", NOT_SELECTED: "neutral" };
 
 export const toneClasses: Record<Tone, string> = {

@@ -1,1 +1,133 @@
-{}
+{
+  "eyebrow": "Yönetim",
+  "title": "İşlem kaydı",
+  "description": "Platformda yapılan tüm değişikliklerin kaydı: kim, ne zaman, neyi değiştirdi. Yalnızca program koordinatörü görebilir.",
+  "filters": {
+    "group": "İşlem türü",
+    "actor": "İşlemi yapan",
+    "actorPlaceholder": "Ad veya e-posta",
+    "project": "Proje",
+    "from": "Başlangıç tarihi",
+    "to": "Bitiş tarihi"
+  },
+  "groups": {
+    "auth": "Giriş/çıkış",
+    "application": "Başvurular",
+    "project": "Projeler",
+    "task": "Görevler",
+    "session": "Mentor oturumları",
+    "document": "Belgeler",
+    "checklist": "Belge kontrol listesi",
+    "risk": "Riskler",
+    "evaluation": "Değerlendirme",
+    "user": "Kullanıcılar"
+  },
+  "listTitle": "Kayıtlar",
+  "found": "{count, plural, one {# kayıt} other {# kayıt}}",
+  "noResultsHint": "Filtreleri değiştirin veya tarih aralığını genişletin.",
+  "system": "Sistem",
+  "cols": {
+    "time": "Zaman",
+    "actor": "İşlemi yapan",
+    "action": "İşlem",
+    "entity": "Nesne",
+    "project": "Proje"
+  },
+  "retentionNote": "Kayıt yalnızca eklemeli tutulur — kayıtlar düzenlenmez veya silinmez. Tüm kaydı yalnızca koordinatör görür; ekipler ve mentorlar kendi projelerinin etkinlik akışını görür. Kayıtlar pilot süresi ve raporlama dönemi boyunca saklanır; CSV dışa aktarımı filtrelere uyan en fazla 20.000 kaydı içerir.",
+  "csv": {
+    "time": "Zaman (UTC)",
+    "actor": "İşlemi yapan",
+    "email": "E-posta",
+    "role": "Rol",
+    "actionKey": "İşlem anahtarı",
+    "action": "İşlem",
+    "entity": "Nesne",
+    "entityId": "Nesne ID",
+    "summary": "Özet",
+    "projectCode": "Proje kodu",
+    "project": "Proje"
+  },
+  "actions": {
+    "auth": {
+      "login": "Sisteme giriş yaptı",
+      "logout": "Sistemden çıktı"
+    },
+    "application": {
+      "evaluate": "Başvuruyu değerlendirdi",
+      "decide": "Başvuru kararını kaydetti"
+    },
+    "project": {
+      "create": "Proje oluşturdu",
+      "update": "Projeyi güncelledi",
+      "stage": "Aşamayı değiştirdi",
+      "assign_mentor": "Mentor atadı",
+      "unassign_mentor": "Mentoru çıkardı",
+      "assign_jury": "Jüri üyesi atadı",
+      "unassign_jury": "Jüri üyesini çıkardı",
+      "flags": "KPI göstergelerini güncelledi"
+    },
+    "task": {
+      "create": "Görev oluşturdu",
+      "update": "Görevi güncelledi",
+      "status": "Görev durumunu değiştirdi",
+      "delete": "Görevi sildi"
+    },
+    "session": {
+      "create": "Mentor oturumu planladı",
+      "update": "Mentor oturumunu güncelledi",
+      "complete": "Mentor oturumunu tamamladı",
+      "cancel": "Mentor oturumunu iptal etti",
+      "convert_step": "Sonraki adımı göreve dönüştürdü"
+    },
+    "document": {
+      "upload": "Belge yükledi",
+      "delete": "Belgeyi sildi"
+    },
+    "checklist": {
+      "review": "Kontrol listesi maddesini inceledi",
+      "add": "Kontrol listesine madde ekledi"
+    },
+    "risk": {
+      "create": "Risk kaydetti",
+      "update": "Riski güncelledi",
+      "close": "Riski kapattı"
+    },
+    "evaluation": {
+      "save": "Değerlendirme taslağını kaydetti",
+      "submit": "Değerlendirmeyi gönderdi"
+    },
+    "user": {
+      "create": "Kullanıcı oluşturdu",
+      "update": "Kullanıcıyı güncelledi",
+      "deactivate": "Kullanıcıyı devre dışı bıraktı",
+      "activate": "Kullanıcıyı etkinleştirdi"
+    }
+  },
+  "entities": {
+    "User": "Kullanıcı",
+    "Application": "Başvuru",
+    "Project": "Proje",
+    "Task": "Görev",
+    "Session": "Mentor oturumu",
+    "MentorSession": "Mentor oturumu",
+    "Document": "Belge",
+    "Checklist": "Kontrol listesi maddesi",
+    "ChecklistItem": "Kontrol listesi maddesi",
+    "Risk": "Risk",
+    "Evaluation": "Değerlendirme",
+    "JuryAssignment": "Jüri ataması",
+    "MentorAssignment": "Mentor ataması",
+    "StageChange": "Aşama değişikliği"
+  },
+  "activity": {
+    "title": "Etkinlik akışı",
+    "description": "Projede yapılan değişiklikler ve aşama geçişleri, günlere göre.",
+    "empty": "Henüz etkinlik kaydı yok",
+    "emptyHint": "Görev, belge ve oturum değişiklikleri burada görünür.",
+    "stageChange": "Aşamayı değiştirdi",
+    "yesterday": "Dün",
+    "more": "Daha eski kayıtları göster",
+    "showing": "Son {count} kayıt gösteriliyor",
+    "events": "{count, plural, one {# olay} other {# olay}}"
+  }
+}

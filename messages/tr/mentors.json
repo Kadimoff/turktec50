@@ -1,1 +1,234 @@
-{}
+{
+  "title": "Mentorlar",
+  "eyebrow": "Mentorluk",
+  "titleByRole": {
+    "ADMIN": "Mentor havuzu ve oturumlar",
+    "MENTOR": "Oturumlarım",
+    "TEAM": "Mentorlarım"
+  },
+  "description": {
+    "ADMIN": "Mentor oturumları en az iki haftada bir yapılır. Planlanan görüşmeleri, not bekleyen oturumları ve mentor yükünü izleyin.",
+    "MENTOR": "Görüşmeleri onaylayın, görüşmeden sonra geri bildirimi ve sonraki adımları kaydedin. Üzerinde anlaşılan adım tek tıkla göreve dönüşür.",
+    "TEAM": "Görüşmeden önce gündemi ve ilerlemeyi paylaşın, oturum talep edin, mentor geri bildirimini ve sonraki adımları buradan izleyin."
+  },
+  "visibility": "Yalnızca proje ekibi, mentor(lar)ı ve koordinatör görür",
+  "pending": "Kaydediliyor…",
+  "projectSection": {
+    "title": "Mentor oturumları",
+    "description": "Önce ekip gündemi paylaşır, ardından mentor geri bildirimi ve sonraki adımları yazar; anlaşılan adım göreve dönüştürülebilir."
+  },
+  "stats": {
+    "upcoming": "Yaklaşan oturumlar",
+    "upcomingHint": "Önümüzdeki 14 gün içinde",
+    "needsNotes": "Not bekleniyor",
+    "needsNotesHint": "Zamanı geçti, mentor notu yazılmadı",
+    "completedMonth": "Son 30 günde yapılan",
+    "completedMonthHint": "Toplam mentorluk: {hours} saat",
+    "noRecentSession": "Oturumsuz projeler",
+    "noRecentSessionHint": "Son {days} günde yapılmış oturum yok",
+    "myUpcomingHint": "Planlanan ve onaylanan",
+    "myNeedsNotesHint": "Geri bildirimi ve sonraki adımları yazın",
+    "completed": "Yapılan oturumlar",
+    "hoursHint": "{hours} saat mentorluk",
+    "projectsLate": "Geciken projeler"
+  },
+  "upcoming": {
+    "title": "Yaklaşan oturumlar",
+    "titleMine": "Yaklaşan görüşmeler",
+    "subtitle": "{count, plural, one {# oturum planlandı} other {# oturum planlandı}}",
+    "subtitleCapped": "En yakın {shown} gösteriliyor · toplam {total}",
+    "empty": "Planlanmış oturum yok",
+    "emptyHintMentor": "Projeleriniz için yeni bir görüşme planlayın.",
+    "showAll": "Tümünü göster ({count})",
+    "showLess": "Daha az göster"
+  },
+  "needsNotes": {
+    "title": "Not bekleyen oturumlar",
+    "subtitle": "Görüşme zamanı geçti ancak mentor notu ve sonraki adımlar yazılmadı.",
+    "empty": "Not bekleyen oturum yok",
+    "emptyHint": "Geçmiş tüm görüşmeler için mentor notları yazıldı."
+  },
+  "completed": {
+    "title": "Son yapılan oturumlar",
+    "subtitle": "Geri bildirim ve sonraki adımlar; adımı göreve dönüştürebilirsiniz.",
+    "empty": "Henüz yapılmış oturum yok"
+  },
+  "pool": {
+    "title": "Mentor havuzu",
+    "subtitle": "{count, plural, one {# aktif mentor} other {# aktif mentor}} · atamalar, yapılan oturumlar ve mentorluk saatleri",
+    "empty": "Aktif mentor yok",
+    "projectsLabel": "Proje",
+    "sessionsLabel": "Oturum",
+    "hoursLabel": "Saat",
+    "upcomingLabel": "Yaklaşan",
+    "email": "{name} ile e-posta",
+    "expertise": "Uzmanlık alanları"
+  },
+  "myProjects": {
+    "title": "Projelerim",
+    "subtitle": "{count, plural, one {# proje} other {# proje}} · iki haftalık ritim",
+    "empty": "Size atanmış proje yok",
+    "last": "Son",
+    "next": "Sonraki",
+    "ok": "Ritimde",
+    "late": "Gecikiyor"
+  },
+  "myMentors": {
+    "title": "Mentorlarımız",
+    "subtitle": "Projenize atanmış mentorlar",
+    "empty": "Henüz mentor atanmadı",
+    "emptyHint": "Koordinatör mentor atadıktan sonra oturum talep edebilirsiniz.",
+    "noProject": "Henüz hiçbir proje ekibinde değilsiniz",
+    "focus": "Odak"
+  },
+  "explainer": {
+    "title": "Mentor notları nasıl işler",
+    "subtitle": "Her oturum dört adımlı bir akışla izlenir",
+    "steps": {
+      "before": {
+        "title": "Görüşmeden önce",
+        "body": "Ekip gündemi, haftalık ilerlemeyi ve sorularını paylaşır."
+      },
+      "after": {
+        "title": "Görüşmeden sonra",
+        "body": "Mentor önerilerini ve üzerinde anlaşılan sonraki adımları kaydeder."
+      },
+      "followup": {
+        "title": "Takip",
+        "body": "Sonraki adım tek tıkla sorumlusu, son tarihi ve kabul ölçütü olan bir göreve dönüşür."
+      },
+      "visibility": {
+        "title": "Görünürlük",
+        "body": "Notları yalnızca proje ekibi, mentoru ve koordinatör görür."
+      }
+    }
+  },
+  "columns": {
+    "when": "Tarih ve saat",
+    "topic": "Konu",
+    "project": "Proje",
+    "mentor": "Mentor",
+    "status": "Durum",
+    "actions": "İşlemler"
+  },
+  "session": {
+    "duration": "{min} dk",
+    "online": "Çevrim içi",
+    "inPerson": "Yüz yüze",
+    "awaitingNotes": "Not bekleniyor",
+    "agenda": "Gündem",
+    "agendaWho": "görüşmeden önce, ekip",
+    "noAgenda": "Ekip henüz gündem paylaşmadı.",
+    "notes": "Mentor geri bildirimi",
+    "notesWho": "görüşmeden sonra, {name}",
+    "nextSteps": "Sonraki adımlar",
+    "noSteps": "Sonraki adım kaydedilmedi.",
+    "converted": "Görev oluşturuldu",
+    "viewTask": "göreve git",
+    "convert": "Göreve dönüştür",
+    "converting": "Oluşturuluyor…",
+    "needsNotesHint": "Görüşme yapıldı — geri bildirim ve sonraki adımlar bekleniyor."
+  },
+  "actions": {
+    "plan": "Oturum planla",
+    "request": "Oturum talep et",
+    "confirm": "Onayla",
+    "reschedule": "Zamanı değiştir",
+    "cancel": "İptal et",
+    "complete": "Not yaz",
+    "editAgenda": "Gündemi düzenle",
+    "addAgenda": "Gündem ekle",
+    "more": "Oturum işlemleri: {topic}"
+  },
+  "plan": {
+    "titlePlan": "Mentor oturumu planla",
+    "titleRequest": "Mentor oturumu talep et",
+    "descriptionPlan": "Ekip ve mentor bildirim alır. Görüşmeden önce ekip gündemi paylaşabilir.",
+    "descriptionRequest": "Mentorunuz talebi onaylayacak veya başka bir zaman önerecek. Gündeme ilerlemenizi ve sorularınızı yazın.",
+    "project": "Proje",
+    "projectPlaceholder": "Proje seçin",
+    "mentor": "Mentor",
+    "mentorHint": "Önce projeyi seçin — yalnızca atanmış mentorlar gösterilir.",
+    "when": "Tarih ve saat",
+    "whenHint": "Bakü saati (UTC+4)",
+    "duration": "Süre",
+    "topic": "Konu",
+    "topicPlaceholder": "Örn.: MVP kontrol görüşmesi",
+    "agenda": "Gündem ve ilerleme",
+    "agendaHint": "Görüşmeden önce: ne yapıldı, nerede takıldınız, hangi sorular var?",
+    "agendaPlaceholder": "Örn.: saha testinin ilk sonuçları, LoRa menzili, sonraki sprint planı",
+    "online": "Çevrim içi görüşme",
+    "onlineHint": "Kapalıysa görüşme yüz yüze yapılır.",
+    "submitPlan": "Planla",
+    "submitRequest": "Talep gönder"
+  },
+  "complete": {
+    "title": "Mentor geri bildirimini yaz",
+    "notes": "Geri bildirim ve öneriler",
+    "notesHint": "Ekip bu notu görecek. Somut ve uygulanabilir olsun.",
+    "steps": "Sonraki adımlar",
+    "stepsHint": "Üzerinde anlaşılan her adımı ayrı yazın — sonra göreve dönüştürülebilir.",
+    "stepLabel": "Adım {n}",
+    "stepPlaceholder": "Örn.: 3 çiftçiyle kullanıcı görüşmesi yapmak",
+    "removeStep": "{n}. adımı sil",
+    "addStep": "Adım ekle",
+    "submit": "Oturumu tamamla"
+  },
+  "reschedule": {
+    "title": "Oturum zamanını değiştir",
+    "description": "«{topic}» — ekip yeni zaman hakkında bildirim alacak.",
+    "submit": "Yeni zamanı kaydet"
+  },
+  "agendaDialog": {
+    "title": "Görüşme gündemi",
+    "description": "Mentorun hazırlanabilmesi için görüşmeden önce ilerlemeyi ve soruları paylaşın.",
+    "submit": "Gündemi kaydet"
+  },
+  "cancel": {
+    "title": "Oturum iptal edilsin mi?",
+    "description": "«{topic}» ({when}) iptal edilecek. İşlem kayda geçer.",
+    "confirm": "Oturumu iptal et"
+  },
+  "toast": {
+    "planned": "Oturum planlandı",
+    "requested": "Oturum talebi gönderildi",
+    "confirmed": "Oturum onaylandı",
+    "rescheduled": "Oturum zamanı değiştirildi",
+    "cancelled": "Oturum iptal edildi",
+    "completed": "Geri bildirim kaydedildi, ekibe bildirim gönderildi",
+    "converted": "Sonraki adım göreve dönüştürüldü",
+    "agendaSaved": "Gündem kaydedildi"
+  },
+  "errors": {
+    "forbidden": "Bu işlem için yetkiniz yok.",
+    "notFound": "Oturum bulunamadı.",
+    "invalid": "Formda düzeltilmesi gereken alanlar var.",
+    "generic": "Bir hata oluştu. Tekrar deneyin.",
+    "required": "Bu alan zorunludur.",
+    "duration": "Süre 15–240 dakika olmalıdır.",
+    "topicLength": "Konu 3–160 karakter olmalıdır.",
+    "tooLong": "Metin çok uzun.",
+    "agendaRequired": "Gündem zorunludur (en az 3 karakter).",
+    "mentorNotAssigned": "Bu mentor projeye atanmamış.",
+    "dateInvalid": "Tarih geçersiz.",
+    "datePast": "Geçmiş bir tarih seçilemez.",
+    "wrongStatus": "Oturumun mevcut durumu bu işleme izin vermiyor.",
+    "notesLength": "Geri bildirim en az 10 karakter olmalıdır.",
+    "tooManySteps": "En fazla 10 adım eklenebilir.",
+    "stepLength": "Her adım en fazla 160 karakter olmalıdır."
+  },
+  "timeline": {
+    "upcoming": "Yaklaşan",
+    "past": "Geçmiş",
+    "emptyUpcoming": "Planlanmış oturum yok",
+    "emptyUpcomingHint": "Kural: mentor oturumu en az iki haftada bir yapılır.",
+    "emptyPast": "Henüz yapılmış oturum yok",
+    "last": "Son yapılan oturum",
+    "never": "Henüz yok",
+    "next": "Sonraki oturum",
+    "notPlanned": "Planlanmadı",
+    "rule": "İki haftalık ritim",
+    "cadenceOk": "Kurala uygun",
+    "cadenceLate": "14 günden fazladır oturum yok"
+  }
+}

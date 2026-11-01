@@ -1,1 +1,234 @@
-{}
+{
+  "title": "Mentorlar",
+  "eyebrow": "Mentorluq",
+  "titleByRole": {
+    "ADMIN": "Mentor hovuzu və sessiyalar",
+    "MENTOR": "Mənim sessiyalarım",
+    "TEAM": "Mentorlarım"
+  },
+  "description": {
+    "ADMIN": "Mentor sessiyaları ən azı iki həftədə bir keçirilir. Planlanmış görüşləri, rəyi gözlənilən sessiyaları və mentor yükünü izləyin.",
+    "MENTOR": "Görüşləri təsdiqləyin, görüşdən sonra rəy və növbəti addımları qeyd edin. Razılaşdırılmış addım bir kliklə tapşırığa çevrilir.",
+    "TEAM": "Görüşdən əvvəl gündəlik və irəliləyişi paylaşın, sessiya istəyin, mentor rəyini və növbəti addımları buradan izləyin."
+  },
+  "visibility": "Yalnız layihə komandası, onun mentor(lar)ı və koordinator görür",
+  "pending": "Yadda saxlanılır…",
+  "projectSection": {
+    "title": "Mentor sessiyaları",
+    "description": "Əvvəl komanda gündəliyi paylaşır, sonra mentor rəy və növbəti addımları yazır; razılaşdırılmış addım tapşırığa çevrilə bilər."
+  },
+  "stats": {
+    "upcoming": "Qarşıdakı sessiyalar",
+    "upcomingHint": "Növbəti 14 gün ərzində",
+    "needsNotes": "Rəy gözlənilir",
+    "needsNotesHint": "Vaxtı keçib, mentor qeydi yazılmayıb",
+    "completedMonth": "Son 30 gündə keçirilib",
+    "completedMonthHint": "Ümumi mentorluq: {hours} saat",
+    "noRecentSession": "Sessiyasız layihələr",
+    "noRecentSessionHint": "Son {days} gündə keçirilmiş sessiya yoxdur",
+    "myUpcomingHint": "Planlanmış və təsdiqlənmiş",
+    "myNeedsNotesHint": "Rəy və növbəti addımları yazın",
+    "completed": "Keçirilmiş sessiyalar",
+    "hoursHint": "{hours} saat mentorluq",
+    "projectsLate": "Gecikən layihələr"
+  },
+  "upcoming": {
+    "title": "Qarşıdakı sessiyalar",
+    "titleMine": "Qarşıdakı görüşlər",
+    "subtitle": "{count, plural, one {# sessiya planlanıb} other {# sessiya planlanıb}}",
+    "subtitleCapped": "Ən yaxın {shown} göstərilir · cəmi {total}",
+    "empty": "Planlanmış sessiya yoxdur",
+    "emptyHintMentor": "Layihələriniz üçün yeni görüş planlayın.",
+    "showAll": "Hamısını göstər ({count})",
+    "showLess": "Daha az göstər"
+  },
+  "needsNotes": {
+    "title": "Rəy gözləyən sessiyalar",
+    "subtitle": "Görüş vaxtı keçib, lakin mentor qeydi və növbəti addımlar yazılmayıb.",
+    "empty": "Rəy gözləyən sessiya yoxdur",
+    "emptyHint": "Bütün keçmiş görüşlər üçün mentor qeydləri yazılıb."
+  },
+  "completed": {
+    "title": "Son keçirilmiş sessiyalar",
+    "subtitle": "Rəy və növbəti addımlar; addımı tapşırığa çevirə bilərsiniz.",
+    "empty": "Hələ keçirilmiş sessiya yoxdur"
+  },
+  "pool": {
+    "title": "Mentor hovuzu",
+    "subtitle": "{count, plural, one {# aktiv mentor} other {# aktiv mentor}} · təyinatlar, keçirilmiş sessiyalar və mentorluq saatları",
+    "empty": "Aktiv mentor yoxdur",
+    "projectsLabel": "Layihə",
+    "sessionsLabel": "Sessiya",
+    "hoursLabel": "Saat",
+    "upcomingLabel": "Qarşıda",
+    "email": "{name} ilə e-poçt",
+    "expertise": "Ekspertiza sahələri"
+  },
+  "myProjects": {
+    "title": "Layihələrim",
+    "subtitle": "{count, plural, one {# layihə} other {# layihə}} · iki həftəlik ritm",
+    "empty": "Sizə layihə təyin olunmayıb",
+    "last": "Son",
+    "next": "Növbəti",
+    "ok": "Ritmdə",
+    "late": "Gecikir"
+  },
+  "myMentors": {
+    "title": "Mentorlarımız",
+    "subtitle": "Layihənizə təyin olunmuş mentorlar",
+    "empty": "Hələ mentor təyin olunmayıb",
+    "emptyHint": "Koordinator mentor təyin etdikdən sonra sessiya istəyə bilərsiniz.",
+    "noProject": "Siz hələ heç bir layihə komandasında deyilsiniz",
+    "focus": "İstiqamət"
+  },
+  "explainer": {
+    "title": "Mentor qeydləri necə işləyir",
+    "subtitle": "Hər sessiya dörd addımlı axınla izlənir",
+    "steps": {
+      "before": {
+        "title": "Görüşdən əvvəl",
+        "body": "Komanda gündəliyi, həftəlik irəliləyişi və sualları paylaşır."
+      },
+      "after": {
+        "title": "Görüşdən sonra",
+        "body": "Mentor tövsiyələrini və razılaşdırılmış növbəti addımları qeyd edir."
+      },
+      "followup": {
+        "title": "İzləmə",
+        "body": "Növbəti addım bir kliklə məsulu, son tarixi və meyarı olan tapşırığa çevrilir."
+      },
+      "visibility": {
+        "title": "Görünürlük",
+        "body": "Qeydləri yalnız layihə komandası, onun mentoru və koordinator görür."
+      }
+    }
+  },
+  "columns": {
+    "when": "Tarix və saat",
+    "topic": "Mövzu",
+    "project": "Layihə",
+    "mentor": "Mentor",
+    "status": "Status",
+    "actions": "Əməliyyatlar"
+  },
+  "session": {
+    "duration": "{min} dəq",
+    "online": "Onlayn",
+    "inPerson": "Əyani",
+    "awaitingNotes": "Rəy gözlənilir",
+    "agenda": "Gündəlik",
+    "agendaWho": "görüşdən əvvəl, komanda",
+    "noAgenda": "Komanda hələ gündəlik paylaşmayıb.",
+    "notes": "Mentor rəyi",
+    "notesWho": "görüşdən sonra, {name}",
+    "nextSteps": "Növbəti addımlar",
+    "noSteps": "Növbəti addım qeyd olunmayıb.",
+    "converted": "Tapşırıq yaradılıb",
+    "viewTask": "tapşırığa bax",
+    "convert": "Tapşırığa çevir",
+    "converting": "Yaradılır…",
+    "needsNotesHint": "Görüş keçib — rəy və növbəti addımlar gözlənilir."
+  },
+  "actions": {
+    "plan": "Sessiya planla",
+    "request": "Sessiya istə",
+    "confirm": "Təsdiqlə",
+    "reschedule": "Vaxtı dəyiş",
+    "cancel": "Ləğv et",
+    "complete": "Rəy yaz",
+    "editAgenda": "Gündəliyi redaktə et",
+    "addAgenda": "Gündəlik əlavə et",
+    "more": "Sessiya əməliyyatları: {topic}"
+  },
+  "plan": {
+    "titlePlan": "Mentor sessiyası planla",
+    "titleRequest": "Mentor sessiyası istə",
+    "descriptionPlan": "Komanda və mentor bildiriş alacaq. Görüşdən əvvəl komanda gündəliyi paylaşa bilər.",
+    "descriptionRequest": "Mentorunuz istəyi təsdiqləyəcək və ya başqa vaxt təklif edəcək. Gündəlikdə irəliləyişi və suallarınızı yazın.",
+    "project": "Layihə",
+    "projectPlaceholder": "Layihə seçin",
+    "mentor": "Mentor",
+    "mentorHint": "Əvvəlcə layihəni seçin — yalnız təyin olunmuş mentorlar göstərilir.",
+    "when": "Tarix və saat",
+    "whenHint": "Bakı vaxtı (UTC+4)",
+    "duration": "Müddət",
+    "topic": "Mövzu",
+    "topicPlaceholder": "Məs.: MVP yoxlama görüşü",
+    "agenda": "Gündəlik və irəliləyiş",
+    "agendaHint": "Görüşdən əvvəl: nə edildi, harada ilişdiniz, hansı suallar var?",
+    "agendaPlaceholder": "Məs.: sahə testinin ilkin nəticələri, LoRa məsafəsi, növbəti sprint planı",
+    "online": "Onlayn görüş",
+    "onlineHint": "Söndürülübsə görüş əyani keçirilir.",
+    "submitPlan": "Planla",
+    "submitRequest": "İstək göndər"
+  },
+  "complete": {
+    "title": "Mentor rəyini yaz",
+    "notes": "Rəy və tövsiyələr",
+    "notesHint": "Komanda bu qeydi görəcək. Konkret və icra oluna bilən olsun.",
+    "steps": "Növbəti addımlar",
+    "stepsHint": "Hər razılaşdırılmış addımı ayrıca yazın — sonra tapşırığa çevrilə bilər.",
+    "stepLabel": "Addım {n}",
+    "stepPlaceholder": "Məs.: 3 fermerlə istifadəçi müsahibəsi aparmaq",
+    "removeStep": "Addım {n}-i sil",
+    "addStep": "Addım əlavə et",
+    "submit": "Sessiyanı tamamla"
+  },
+  "reschedule": {
+    "title": "Sessiyanın vaxtını dəyiş",
+    "description": "«{topic}» — komanda yeni vaxt barədə bildiriş alacaq.",
+    "submit": "Yeni vaxtı saxla"
+  },
+  "agendaDialog": {
+    "title": "Görüş gündəliyi",
+    "description": "Görüşdən əvvəl irəliləyişi və sualları paylaşın ki, mentor hazırlaşa bilsin.",
+    "submit": "Gündəliyi saxla"
+  },
+  "cancel": {
+    "title": "Sessiya ləğv edilsin?",
+    "description": "«{topic}» ({when}) ləğv ediləcək. Əməliyyat jurnalda qeyd olunur.",
+    "confirm": "Sessiyanı ləğv et"
+  },
+  "toast": {
+    "planned": "Sessiya planlandı",
+    "requested": "Sessiya istəyi göndərildi",
+    "confirmed": "Sessiya təsdiqləndi",
+    "rescheduled": "Sessiyanın vaxtı dəyişdirildi",
+    "cancelled": "Sessiya ləğv edildi",
+    "completed": "Rəy yadda saxlanıldı, komandaya bildiriş göndərildi",
+    "converted": "Növbəti addım tapşırığa çevrildi",
+    "agendaSaved": "Gündəlik yadda saxlanıldı"
+  },
+  "errors": {
+    "forbidden": "Bu əməliyyat üçün icazəniz yoxdur.",
+    "notFound": "Sessiya tapılmadı.",
+    "invalid": "Formada düzəliş tələb olunan sahələr var.",
+    "generic": "Xəta baş verdi. Yenidən cəhd edin.",
+    "required": "Bu sahə tələb olunur.",
+    "duration": "Müddət 15–240 dəqiqə olmalıdır.",
+    "topicLength": "Mövzu 3–160 simvol olmalıdır.",
+    "tooLong": "Mətn çox uzundur.",
+    "agendaRequired": "Gündəlik tələb olunur (ən azı 3 simvol).",
+    "mentorNotAssigned": "Bu mentor layihəyə təyin olunmayıb.",
+    "dateInvalid": "Tarix düzgün deyil.",
+    "datePast": "Keçmiş tarix seçilə bilməz.",
+    "wrongStatus": "Sessiyanın cari statusu bu əməliyyata imkan vermir.",
+    "notesLength": "Rəy ən azı 10 simvol olmalıdır.",
+    "tooManySteps": "Ən çox 10 addım əlavə etmək olar.",
+    "stepLength": "Hər addım ən çox 160 simvol olmalıdır."
+  },
+  "timeline": {
+    "upcoming": "Qarşıdakı",
+    "past": "Keçmiş",
+    "emptyUpcoming": "Planlanmış sessiya yoxdur",
+    "emptyUpcomingHint": "Qayda: mentor sessiyası ən azı iki həftədə bir keçirilir.",
+    "emptyPast": "Hələ keçirilmiş sessiya yoxdur",
+    "last": "Son keçirilmiş sessiya",
+    "never": "Hələ olmayıb",
+    "next": "Növbəti sessiya",
+    "notPlanned": "Planlanmayıb",
+    "rule": "İki həftəlik ritm",
+    "cadenceOk": "Qaydaya uyğundur",
+    "cadenceLate": "14 gündən çoxdur sessiya yoxdur"
+  }
+}

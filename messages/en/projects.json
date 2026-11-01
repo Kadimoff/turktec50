@@ -1,1 +1,184 @@
-{}
+{
+  "title": "Projects",
+  "eyebrow": {
+    "ADMIN": "Programme portfolio",
+    "MENTOR": "Projects I mentor",
+    "JURY": "Projects assigned to me",
+    "TEAM": "My project"
+  },
+  "description": {
+    "ADMIN": "{count, plural, one {# project} other {# projects}} · stage, readiness and risk at a glance.",
+    "MENTOR": "{count, plural, one {# project assigned to you} other {# projects assigned to you}} · readiness and overdue tasks.",
+    "JURY": "{count, plural, one {# project assigned to you for evaluation} other {# projects assigned to you for evaluation}}.",
+    "TEAM": "Your team's project."
+  },
+  "stageStrip": "Filter by stage",
+  "listLabel": "Projects list",
+  "pagination": {
+    "label": "Pages",
+    "summary": "{from}–{to} of {total}",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {page} of {pages}"
+  },
+  "team": {
+    "noProject": "You have not joined a project yet",
+    "noProjectHint": "The project will appear here once the coordinator adds you to a team."
+  },
+  "filters": {
+    "searchPlaceholder": "Code, title or tagline",
+    "health": "Health",
+    "category": "Category",
+    "university": "University",
+    "sort": "Sort by"
+  },
+  "sort": {
+    "code": "Code",
+    "readiness": "Most ready",
+    "overdue": "Most overdue"
+  },
+  "empty": {
+    "none": "No projects",
+    "filtered": "No projects match the filters",
+    "filteredHint": "Change the filters or clear the search.",
+    "noneHint": {
+      "ADMIN": "Create a project from an accepted application or with the “New project” button.",
+      "MENTOR": "Projects appear here once the coordinator assigns you.",
+      "JURY": "Projects appear here once the coordinator assigns you.",
+      "TEAM": "The project will appear here once the coordinator adds you to a team."
+    }
+  },
+  "table": {
+    "project": "Project",
+    "lead": "Team lead",
+    "mentors": "Mentors",
+    "noMentor": "Not assigned",
+    "stage": "Stage",
+    "readiness": "Readiness",
+    "readinessOf": "{title} readiness",
+    "tasks": "Open tasks",
+    "overdue": "{count, plural, one {# overdue} other {# overdue}}",
+    "health": "Health",
+    "competition": "Competition"
+  },
+  "card": {
+    "tasks": "{count, plural, one {# open task} other {# open tasks}}"
+  },
+  "create": {
+    "button": "New project",
+    "title": "New project",
+    "description": "The project starts in the Validation stage with the 13-item document checklist.",
+    "fields": {
+      "title": "Project title",
+      "tagline": "Tagline",
+      "taglineHint": "One sentence: who it is for and which problem it solves.",
+      "summary": "Summary",
+      "category": "Category",
+      "university": "University",
+      "competition": "Target competition",
+      "competitionHint": "Can also be set later."
+    },
+    "choose": "Choose…",
+    "noCompetition": "Not chosen yet",
+    "creating": "Creating…",
+    "toast": "Project {code} created",
+    "errors": {
+      "required": "This field is required",
+      "tooLong": "The text is too long"
+    }
+  },
+  "overview": {
+    "readiness": "Readiness",
+    "readinessHint": "{approved}/{total} required documents approved",
+    "tasks": "Tasks done",
+    "tasksHint": "Done / total",
+    "overdue": "Overdue tasks",
+    "overdueHint": "Past due date and not done",
+    "overdueNone": "Nothing overdue",
+    "risks": "Open risks",
+    "risksHint": "Open and mitigating risks",
+    "nextSession": "Next mentor session",
+    "noSession": "No session planned",
+    "summary": "Project summary",
+    "competitionLine": "Target competition: {name} · application deadline {deadline}",
+    "stage": "Stage",
+    "stageHint": "Programme stages from validation to competition submission.",
+    "current": "Current",
+    "upcoming": "Upcoming",
+    "history": "Stage history",
+    "noHistory": "No stage changes recorded yet.",
+    "movedBack": "Moved back",
+    "system": "System",
+    "evidence": "KPI evidence",
+    "evidenceHint": "Human-confirmed facts that count towards programme indicators.",
+    "flags": {
+      "prototype": "Working prototype / MVP",
+      "verified": "Verified with test evidence",
+      "notYet": "Not yet",
+      "qc": "Application package quality check",
+      "passed": "Passed",
+      "submitted": "Competition application",
+      "notSubmitted": "Not submitted",
+      "result": "Competition result"
+    },
+    "team": "Team",
+    "noMembers": "No team members",
+    "lead": "Lead",
+    "mentors": "Mentors",
+    "noMentors": "No mentor assigned.",
+    "focus": "Focus: {focus}",
+    "jurors": "Jurors",
+    "adminOnly": "Coordinator only",
+    "noJurors": "No jurors assigned.",
+    "quickLinks": "Sections"
+  },
+  "manage": {
+    "title": "Coordinator management",
+    "subtitle": "Stage, health, KPI evidence and assignments. Every change is written to the audit log.",
+    "stageTitle": "Change stage",
+    "healthTitle": "Project health",
+    "flagsTitle": "KPI evidence and competition",
+    "toStage": "New stage",
+    "stageNote": "Note",
+    "stageNoteHint": "What was checked and why is it changing? The team will be notified.",
+    "saving": "Saving…",
+    "changeStage": "Change stage",
+    "health": "Health",
+    "save": "Save",
+    "prototypeVerified": "Prototype / MVP verified",
+    "prototypeVerifiedHint": "Functional prototype checked with test evidence.",
+    "packageQcPassed": "Package passed quality check",
+    "packageQcPassedHint": "Application package reviewed against the checklist.",
+    "submittedAt": "Competition application date",
+    "submittedAtHint": "Empty = not submitted yet",
+    "result": "Competition result",
+    "resultHint": "Record based on the official announcement.",
+    "saveFlags": "Save KPI evidence",
+    "addMentor": "Assign mentor",
+    "addJury": "Assign juror",
+    "choosePerson": "Choose…",
+    "focus": "Focus",
+    "focusPlaceholder": "e.g. Technical",
+    "assign": "Assign",
+    "noMentorsLeft": "All mentors are already assigned.",
+    "noJuryLeft": "All jurors are already assigned.",
+    "unassignLabel": "Unassign {name}",
+    "unassignTitle": "Remove assignment?",
+    "unassignBody": "{name} will be removed from this project.",
+    "unassign": "Remove",
+    "unassigned": "Assignment removed",
+    "stageSaved": "Stage changed",
+    "healthSaved": "Health updated",
+    "flagsSaved": "KPI evidence saved",
+    "mentorAssigned": "Mentor assigned",
+    "juryAssigned": "Juror assigned",
+    "errors": {
+      "invalid": "Invalid data.",
+      "forbidden": "You are not allowed to do this.",
+      "noteRequired": "The note must be at least 5 characters.",
+      "sameStage": "The project is already in this stage.",
+      "notFound": "Record not found.",
+      "duplicate": "Already assigned."
+    }
+  }
+}

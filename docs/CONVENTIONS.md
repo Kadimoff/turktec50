@@ -22,6 +22,7 @@ Core product rule (must be visible in UI where relevant): **the system never mak
 - Server Actions: `"use server"` files; call `revalidatePath(...)` after mutations. Use `useActionState` (from `react`) + `useFormStatus` for pending state in client forms. Keep heavy data fetching in Server Components.
 
 ## 2. shadcn here is the **Base UI** flavour (not Radix)
+- When a `Button` renders a non-button element (e.g. `render={<Link/>}`), add `nativeButton={false}` or Base UI logs a dev warning.
 - No `asChild`. Use the `render` prop: `<Button render={<Link href="/x" />}>Open</Button>`, `<DropdownMenuTrigger render={<Button variant="ghost" />}>…</DropdownMenuTrigger>`, `<DialogTrigger render={<Button />}>…</DialogTrigger>`.
 - Read the component file in `src/components/ui/` before using it (props differ from Radix shadcn).
 - `DropdownMenuLabel` must be inside `DropdownMenuGroup`.

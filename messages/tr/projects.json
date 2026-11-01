@@ -1,1 +1,184 @@
-{}
+{
+  "title": "Projeler",
+  "eyebrow": {
+    "ADMIN": "Program portföyü",
+    "MENTOR": "Mentorluk yaptığım projeler",
+    "JURY": "Bana atanan projeler",
+    "TEAM": "Projem"
+  },
+  "description": {
+    "ADMIN": "{count, plural, one {# proje} other {# proje}} · aşama, hazırlık ve risk durumu tek bakışta.",
+    "MENTOR": "{count, plural, one {Size atanmış # proje} other {Size atanmış # proje}} · hazırlık ve geciken görevler.",
+    "JURY": "{count, plural, one {Değerlendirme için atanmış # proje} other {Değerlendirme için atanmış # proje}}.",
+    "TEAM": "Takımınızın projesi."
+  },
+  "stageStrip": "Aşamaya göre filtre",
+  "listLabel": "Proje listesi",
+  "pagination": {
+    "label": "Sayfalar",
+    "summary": "{from}–{to} / {total}",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "page": "Sayfa {page} / {pages}"
+  },
+  "team": {
+    "noProject": "Henüz bir projeye katılmadınız",
+    "noProjectHint": "Koordinatör sizi takıma ekledikten sonra proje burada görünecek."
+  },
+  "filters": {
+    "searchPlaceholder": "Kod, ad veya kısa açıklama",
+    "health": "Durum",
+    "category": "Kategori",
+    "university": "Üniversite",
+    "sort": "Sıralama"
+  },
+  "sort": {
+    "code": "Koda göre",
+    "readiness": "En hazır",
+    "overdue": "En çok geciken"
+  },
+  "empty": {
+    "none": "Proje yok",
+    "filtered": "Filtrelere uyan proje bulunamadı",
+    "filteredHint": "Filtreleri değiştirin veya aramayı temizleyin.",
+    "noneHint": {
+      "ADMIN": "Kabul edilen bir başvurudan veya “Yeni proje” düğmesiyle proje oluşturun.",
+      "MENTOR": "Koordinatör sizi bir projeye atadıktan sonra burada görünecek.",
+      "JURY": "Koordinatör sizi bir projeye atadıktan sonra burada görünecek.",
+      "TEAM": "Koordinatör sizi takıma ekledikten sonra proje burada görünecek."
+    }
+  },
+  "table": {
+    "project": "Proje",
+    "lead": "Takım lideri",
+    "mentors": "Mentorlar",
+    "noMentor": "Atanmadı",
+    "stage": "Aşama",
+    "readiness": "Hazırlık",
+    "readinessOf": "{title} hazırlığı",
+    "tasks": "Açık görev",
+    "overdue": "{count, plural, one {# gecikti} other {# gecikti}}",
+    "health": "Durum",
+    "competition": "Yarışma"
+  },
+  "card": {
+    "tasks": "{count, plural, one {# açık görev} other {# açık görev}}"
+  },
+  "create": {
+    "button": "Yeni proje",
+    "title": "Yeni proje",
+    "description": "Proje Doğrulama aşamasında ve 13 maddelik belge kontrol listesiyle oluşturulur.",
+    "fields": {
+      "title": "Proje adı",
+      "tagline": "Kısa açıklama",
+      "taglineHint": "Tek cümle: kimin için ve hangi problemi çözüyor.",
+      "summary": "Özet",
+      "category": "Kategori",
+      "university": "Üniversite",
+      "competition": "Hedef yarışma",
+      "competitionHint": "Daha sonra da belirlenebilir."
+    },
+    "choose": "Seçin…",
+    "noCompetition": "Henüz seçilmedi",
+    "creating": "Oluşturuluyor…",
+    "toast": "{code} projesi oluşturuldu",
+    "errors": {
+      "required": "Bu alan zorunludur",
+      "tooLong": "Metin çok uzun"
+    }
+  },
+  "overview": {
+    "readiness": "Hazırlık",
+    "readinessHint": "{approved}/{total} zorunlu belge onaylandı",
+    "tasks": "Tamamlanan görevler",
+    "tasksHint": "Tamamlanan / toplam",
+    "overdue": "Geciken görevler",
+    "overdueHint": "Son tarihi geçmiş, tamamlanmamış",
+    "overdueNone": "Gecikme yok",
+    "risks": "Açık riskler",
+    "risksHint": "Açık ve azaltılmakta olan riskler",
+    "nextSession": "Sonraki mentor oturumu",
+    "noSession": "Planlanmış oturum yok",
+    "summary": "Proje özeti",
+    "competitionLine": "Hedef yarışma: {name} · başvuru son tarihi {deadline}",
+    "stage": "Aşama",
+    "stageHint": "Doğrulamadan yarışma başvurusuna kadar program aşamaları.",
+    "current": "Mevcut",
+    "upcoming": "Sıradaki",
+    "history": "Aşama geçmişi",
+    "noHistory": "Henüz aşama değişikliği kaydedilmedi.",
+    "movedBack": "Geri alındı",
+    "system": "Sistem",
+    "evidence": "KPI kanıtları",
+    "evidenceHint": "Program göstergelerine giren, insan tarafından onaylanmış olgular.",
+    "flags": {
+      "prototype": "Çalışan prototip / MVP",
+      "verified": "Test kanıtıyla doğrulandı",
+      "notYet": "Henüz değil",
+      "qc": "Başvuru paketi kalite kontrolü",
+      "passed": "Geçti",
+      "submitted": "Yarışma başvurusu",
+      "notSubmitted": "Gönderilmedi",
+      "result": "Yarışma sonucu"
+    },
+    "team": "Takım",
+    "noMembers": "Takım üyesi yok",
+    "lead": "Lider",
+    "mentors": "Mentorlar",
+    "noMentors": "Mentor atanmadı.",
+    "focus": "Odak: {focus}",
+    "jurors": "Jüri üyeleri",
+    "adminOnly": "Yalnızca koordinatör",
+    "noJurors": "Jüri üyesi atanmadı.",
+    "quickLinks": "Bölümler"
+  },
+  "manage": {
+    "title": "Koordinatör yönetimi",
+    "subtitle": "Aşama, durum, KPI kanıtları ve atamalar. Her değişiklik işlem kaydına yazılır.",
+    "stageTitle": "Aşamayı değiştir",
+    "healthTitle": "Proje durumu",
+    "flagsTitle": "KPI kanıtları ve yarışma",
+    "toStage": "Yeni aşama",
+    "stageNote": "Not",
+    "stageNoteHint": "Ne kontrol edildi ve neden değişiyor? Takım bildirim alacak.",
+    "saving": "Kaydediliyor…",
+    "changeStage": "Aşamayı değiştir",
+    "health": "Durum",
+    "save": "Kaydet",
+    "prototypeVerified": "Prototip / MVP doğrulandı",
+    "prototypeVerifiedHint": "Fonksiyonel prototip test kanıtıyla kontrol edildi.",
+    "packageQcPassed": "Paket kalite kontrolünü geçti",
+    "packageQcPassedHint": "Başvuru paketi kontrol listesine göre incelendi.",
+    "submittedAt": "Yarışma başvuru tarihi",
+    "submittedAtHint": "Boş = henüz gönderilmedi",
+    "result": "Yarışma sonucu",
+    "resultHint": "Resmî duyuruya göre kaydedin.",
+    "saveFlags": "KPI kanıtlarını kaydet",
+    "addMentor": "Mentor ata",
+    "addJury": "Jüri üyesi ata",
+    "choosePerson": "Seçin…",
+    "focus": "Odak",
+    "focusPlaceholder": "örn. Teknik",
+    "assign": "Ata",
+    "noMentorsLeft": "Tüm mentorlar zaten atandı.",
+    "noJuryLeft": "Tüm jüri üyeleri zaten atandı.",
+    "unassignLabel": "{name} atamasını kaldır",
+    "unassignTitle": "Atama kaldırılsın mı?",
+    "unassignBody": "{name} bu projeden çıkarılacak.",
+    "unassign": "Kaldır",
+    "unassigned": "Atama kaldırıldı",
+    "stageSaved": "Aşama değiştirildi",
+    "healthSaved": "Durum güncellendi",
+    "flagsSaved": "KPI kanıtları kaydedildi",
+    "mentorAssigned": "Mentor atandı",
+    "juryAssigned": "Jüri üyesi atandı",
+    "errors": {
+      "invalid": "Veri geçersiz.",
+      "forbidden": "Bu işlem için yetkiniz yok.",
+      "noteRequired": "Not en az 5 karakter olmalıdır.",
+      "sameStage": "Proje zaten bu aşamada.",
+      "notFound": "Kayıt bulunamadı.",
+      "duplicate": "Zaten atanmış."
+    }
+  }
+}

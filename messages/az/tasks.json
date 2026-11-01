@@ -1,1 +1,165 @@
-{}
+{
+  "title": "Tapşırıqlar",
+  "eyebrow": "İş sahəsi",
+  "description": {
+    "ADMIN": "Bütün layihələrin tapşırıqları: məsul, son tarix, prioritet və meyar. Gecikmələri erkən görün.",
+    "TEAM": "Komandanızın tapşırıqları. Hər həftə statusu yeniləyin; tapşırıq meyar ödənildikdə tamamlanır.",
+    "MENTOR": "Mentorluq etdiyiniz layihələrin tapşırıqları. Tapşırığı komanda tamamlayır, siz isə yoxlayır və rəy verirsiniz."
+  },
+  "projectSection": {
+    "title": "Layihə tapşırıqları",
+    "description": "Hər tapşırığın məsulu, son tarixi, prioriteti və meyarı (hazırlıq tərifi) var. Komanda statusu hər həftə yeniləyir."
+  },
+  "stats": {
+    "open": "Açıq tapşırıqlar",
+    "openHint": "Tamamlanmamış bütün tapşırıqlar",
+    "dueWeek": "Bu həftə son tarix",
+    "dueWeekHint": "Bazar ertəsi – bazar, tamamlanmamış",
+    "overdue": "Gecikən",
+    "overdueHint": "Son tarixi keçmiş, tamamlanmamış",
+    "doneWeek": "Bu həftə tamamlanan",
+    "doneWeekHint": "Bu həftə DONE statusuna keçənlər"
+  },
+  "views": {
+    "label": "Görünüş",
+    "board": "Lövhə",
+    "table": "Cədvəl",
+    "week": "Həftələr üzrə"
+  },
+  "filters": {
+    "label": "Tapşırıq filtrləri",
+    "search": "Axtarış",
+    "searchPlaceholder": "Başlıq və ya meyar…",
+    "project": "Layihə",
+    "allProjects": "Bütün layihələr",
+    "assignee": "Məsul",
+    "anyone": "Hamı",
+    "mine": "Mənim tapşırıqlarım",
+    "unassigned": "Təyin olunmayıb",
+    "status": "Status",
+    "anyStatus": "Bütün statuslar",
+    "open": "Tamamlanmamış",
+    "priority": "Prioritet",
+    "anyPriority": "Bütün prioritetlər",
+    "due": "Son tarix",
+    "anyDue": "İstənilən",
+    "overdue": "Gecikən",
+    "week": "Bu həftə",
+    "later": "Daha sonra",
+    "reset": "Təmizlə",
+    "loading": "Yüklənir…",
+    "active": "{count, plural, =0 {Filtr tətbiq olunmayıb} one {# filtr tətbiq olunub} other {# filtr tətbiq olunub}}"
+  },
+  "columns": {
+    "task": "Tapşırıq və meyar",
+    "project": "Layihə",
+    "assignee": "Məsul",
+    "due": "Son tarix",
+    "priority": "Prioritet",
+    "status": "Status",
+    "actions": "Əməliyyatlar"
+  },
+  "criterion": "Meyar",
+  "noAssignee": "Təyin olunmayıb",
+  "fromSession": "Mentor sessiyasından",
+  "fromSessionTitle": "Mentor sessiyasının növbəti addımından yaradılıb: {topic}",
+  "weekLabel": "Həftə {n}",
+  "noWeek": "Həftə təyin olunmayıb",
+  "due": {
+    "today": "Bu gün",
+    "tomorrow": "Sabah",
+    "daysLeft": "{count, plural, one {# gün qalıb} other {# gün qalıb}}",
+    "overdueDays": "{count, plural, one {# gün gecikib} other {# gün gecikib}}",
+    "overdueToday": "Bu gün · gecikib",
+    "completed": "Tamamlandı · {date}"
+  },
+  "board": {
+    "label": "Tapşırıq lövhəsi",
+    "dragHint": "Statusu kartdakı menyu ilə dəyişin; kompüterdə kartı sütunlar arasında sürükləmək də olar.",
+    "countLabel": "Tapşırıq sayı",
+    "dropHint": "Buraya buraxın",
+    "empty": "Bu sütunda tapşırıq yoxdur",
+    "more": "{count, plural, one {daha # tapşırıq} other {daha # tapşırıq}}",
+    "showAllInTable": "hamısını cədvəldə göstər"
+  },
+  "table": {
+    "caption": "Tapşırıqlar cədvəli",
+    "pagination": "Səhifələmə",
+    "showing": "{from}–{to} / {total} tapşırıq",
+    "prev": "Əvvəlki",
+    "next": "Növbəti",
+    "page": "{page} / {pages}"
+  },
+  "status": {
+    "change": "Statusu dəyiş (indiki: {status})",
+    "menuLabel": "Statusu dəyiş",
+    "changed": "Status yeniləndi: {status}"
+  },
+  "actions": {
+    "new": "Yeni tapşırıq",
+    "edit": "Redaktə et",
+    "delete": "Sil",
+    "more": "Əməliyyatlar: {title}",
+    "openProject": "Layihənin tapşırıqları"
+  },
+  "form": {
+    "createTitle": "Yeni tapşırıq",
+    "createDescription": "Məsul, son tarix və meyar aydın olsun — tapşırıq meyar ödənildikdə tamamlanmış sayılır.",
+    "editTitle": "Tapşırığı redaktə et",
+    "editDescription": "Dəyişikliklər əməliyyat jurnalına yazılır.",
+    "project": "Layihə",
+    "projectPlaceholder": "Layihə seçin",
+    "title": "Başlıq",
+    "titlePlaceholder": "Məs.: LoRa ötürmə məsafəsinin sahə testi",
+    "criterion": "Meyar",
+    "criterionHint": "Hazırlıq tərifi: nə olduqda tapşırıq tamamlanmış sayılır?",
+    "criterionPlaceholder": "Məs.: 3 nöqtədə RSSI ölçülüb və cədvəlləşdirilib",
+    "assignee": "Məsul",
+    "assigneeHint": "Yalnız layihə komandasının üzvləri. Məsula bildiriş göndərilir.",
+    "noAssignee": "Təyin olunmayıb",
+    "lead": "komanda lideri",
+    "due": "Son tarix",
+    "priority": "Prioritet",
+    "week": "Proqram həftəsi",
+    "description": "Təsvir",
+    "descriptionHint": "İstəyə bağlı: kontekst, keçidlər, qeydlər.",
+    "submitCreate": "Tapşırıq yarat",
+    "submitEdit": "Yadda saxla",
+    "pending": "Yadda saxlanılır…"
+  },
+  "delete": {
+    "title": "Tapşırıq silinsin?",
+    "description": "«{title}» birdəfəlik silinəcək. Əməliyyat jurnalda qeyd olunur.",
+    "confirm": "Bəli, sil",
+    "pending": "Silinir…"
+  },
+  "toast": {
+    "created": "Tapşırıq yaradıldı",
+    "updated": "Tapşırıq yeniləndi",
+    "deleted": "Tapşırıq silindi"
+  },
+  "errors": {
+    "forbidden": "Bu əməliyyat üçün icazəniz yoxdur.",
+    "notFound": "Tapşırıq tapılmadı.",
+    "invalid": "Formada düzəliş tələb olunan sahələr var.",
+    "generic": "Xəta baş verdi. Yenidən cəhd edin.",
+    "required": "Bu sahə tələb olunur.",
+    "titleLength": "Başlıq 3–160 simvol olmalıdır.",
+    "tooLong": "Mətn çox uzundur.",
+    "dateInvalid": "Tarix düzgün deyil.",
+    "assigneeNotMember": "Məsul layihə komandasının üzvü olmalıdır.",
+    "mentorNoDone": "Tapşırığı komanda tamamlayır; mentor rəyini sessiya qeydlərinə yazır.",
+    "deleteForbidden": "Tapşırığı yalnız onu yaradan şəxs və ya koordinator silə bilər."
+  },
+  "empty": {
+    "title": "Hələ tapşırıq yoxdur",
+    "description": "İlk tapşırığı yaradın və ya mentor sessiyasının növbəti addımını tapşırığa çevirin.",
+    "filtered": "Filtrlərə uyğun tapşırıq yoxdur",
+    "filteredDescription": "Filtrləri dəyişin və ya təmizləyin.",
+    "reset": "Filtrləri təmizlə"
+  },
+  "weekView": {
+    "progress": "{done}/{total} tamamlanıb",
+    "current": "Cari həftə"
+  }
+}

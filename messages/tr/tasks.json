@@ -1,1 +1,165 @@
-{}
+{
+  "title": "Görevler",
+  "eyebrow": "Çalışma alanı",
+  "description": {
+    "ADMIN": "Tüm projelerin görevleri: sorumlu, son tarih, öncelik ve kabul ölçütü. Gecikmeleri erken görün.",
+    "TEAM": "Ekibinizin görevleri. Durumu her hafta güncelleyin; görev, kabul ölçütü karşılandığında tamamlanır.",
+    "MENTOR": "Mentorluk yaptığınız projelerin görevleri. Görevi ekip tamamlar; siz kontrol eder ve geri bildirim verirsiniz."
+  },
+  "projectSection": {
+    "title": "Proje görevleri",
+    "description": "Her görevin sorumlusu, son tarihi, önceliği ve kabul ölçütü (tamamlanma tanımı) vardır. Ekip durumu her hafta günceller."
+  },
+  "stats": {
+    "open": "Açık görevler",
+    "openHint": "Tamamlanmamış tüm görevler",
+    "dueWeek": "Bu hafta son tarihli",
+    "dueWeekHint": "Pazartesi – pazar, tamamlanmamış",
+    "overdue": "Geciken",
+    "overdueHint": "Son tarihi geçmiş, tamamlanmamış",
+    "doneWeek": "Bu hafta tamamlanan",
+    "doneWeekHint": "Bu hafta DONE durumuna geçenler"
+  },
+  "views": {
+    "label": "Görünüm",
+    "board": "Pano",
+    "table": "Tablo",
+    "week": "Haftalara göre"
+  },
+  "filters": {
+    "label": "Görev filtreleri",
+    "search": "Arama",
+    "searchPlaceholder": "Başlık veya kabul ölçütü…",
+    "project": "Proje",
+    "allProjects": "Tüm projeler",
+    "assignee": "Sorumlu",
+    "anyone": "Herkes",
+    "mine": "Benim görevlerim",
+    "unassigned": "Atanmamış",
+    "status": "Durum",
+    "anyStatus": "Tüm durumlar",
+    "open": "Tamamlanmamış",
+    "priority": "Öncelik",
+    "anyPriority": "Tüm öncelikler",
+    "due": "Son tarih",
+    "anyDue": "Herhangi",
+    "overdue": "Geciken",
+    "week": "Bu hafta",
+    "later": "Daha sonra",
+    "reset": "Temizle",
+    "loading": "Yükleniyor…",
+    "active": "{count, plural, =0 {Filtre uygulanmadı} one {# filtre uygulandı} other {# filtre uygulandı}}"
+  },
+  "columns": {
+    "task": "Görev ve kabul ölçütü",
+    "project": "Proje",
+    "assignee": "Sorumlu",
+    "due": "Son tarih",
+    "priority": "Öncelik",
+    "status": "Durum",
+    "actions": "İşlemler"
+  },
+  "criterion": "Kabul ölçütü",
+  "noAssignee": "Atanmamış",
+  "fromSession": "Mentor oturumundan",
+  "fromSessionTitle": "Mentor oturumunun sonraki adımından oluşturuldu: {topic}",
+  "weekLabel": "Hafta {n}",
+  "noWeek": "Hafta atanmamış",
+  "due": {
+    "today": "Bugün",
+    "tomorrow": "Yarın",
+    "daysLeft": "{count, plural, one {# gün kaldı} other {# gün kaldı}}",
+    "overdueDays": "{count, plural, one {# gün gecikti} other {# gün gecikti}}",
+    "overdueToday": "Bugün · gecikti",
+    "completed": "Tamamlandı · {date}"
+  },
+  "board": {
+    "label": "Görev panosu",
+    "dragHint": "Durumu karttaki menüyle değiştirin; bilgisayarda kartı sütunlar arasında sürükleyebilirsiniz.",
+    "countLabel": "Görev sayısı",
+    "dropHint": "Buraya bırakın",
+    "empty": "Bu sütunda görev yok",
+    "more": "{count, plural, one {# görev daha} other {# görev daha}}",
+    "showAllInTable": "tümünü tabloda göster"
+  },
+  "table": {
+    "caption": "Görev tablosu",
+    "pagination": "Sayfalama",
+    "showing": "{from}–{to} / {total} görev",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "page": "{page} / {pages}"
+  },
+  "status": {
+    "change": "Durumu değiştir (şu an: {status})",
+    "menuLabel": "Durumu değiştir",
+    "changed": "Durum güncellendi: {status}"
+  },
+  "actions": {
+    "new": "Yeni görev",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "more": "İşlemler: {title}",
+    "openProject": "Projenin görevleri"
+  },
+  "form": {
+    "createTitle": "Yeni görev",
+    "createDescription": "Sorumlu, son tarih ve kabul ölçütü net olsun — görev, ölçüt karşılandığında tamamlanmış sayılır.",
+    "editTitle": "Görevi düzenle",
+    "editDescription": "Değişiklikler işlem kaydına yazılır.",
+    "project": "Proje",
+    "projectPlaceholder": "Proje seçin",
+    "title": "Başlık",
+    "titlePlaceholder": "Örn.: LoRa iletim mesafesinin saha testi",
+    "criterion": "Kabul ölçütü",
+    "criterionHint": "Tamamlanma tanımı: görev ne zaman bitmiş sayılır?",
+    "criterionPlaceholder": "Örn.: 3 noktada RSSI ölçüldü ve tablolaştırıldı",
+    "assignee": "Sorumlu",
+    "assigneeHint": "Yalnızca proje ekibinin üyeleri. Sorumluya bildirim gönderilir.",
+    "noAssignee": "Atanmamış",
+    "lead": "ekip lideri",
+    "due": "Son tarih",
+    "priority": "Öncelik",
+    "week": "Program haftası",
+    "description": "Açıklama",
+    "descriptionHint": "İsteğe bağlı: bağlam, bağlantılar, notlar.",
+    "submitCreate": "Görev oluştur",
+    "submitEdit": "Kaydet",
+    "pending": "Kaydediliyor…"
+  },
+  "delete": {
+    "title": "Görev silinsin mi?",
+    "description": "«{title}» kalıcı olarak silinecek. İşlem kayda geçer.",
+    "confirm": "Evet, sil",
+    "pending": "Siliniyor…"
+  },
+  "toast": {
+    "created": "Görev oluşturuldu",
+    "updated": "Görev güncellendi",
+    "deleted": "Görev silindi"
+  },
+  "errors": {
+    "forbidden": "Bu işlem için yetkiniz yok.",
+    "notFound": "Görev bulunamadı.",
+    "invalid": "Formda düzeltilmesi gereken alanlar var.",
+    "generic": "Bir hata oluştu. Tekrar deneyin.",
+    "required": "Bu alan zorunludur.",
+    "titleLength": "Başlık 3–160 karakter olmalıdır.",
+    "tooLong": "Metin çok uzun.",
+    "dateInvalid": "Tarih geçersiz.",
+    "assigneeNotMember": "Sorumlu, proje ekibinin üyesi olmalıdır.",
+    "mentorNoDone": "Görevi ekip tamamlar; mentor geri bildirimini oturum notlarına yazar.",
+    "deleteForbidden": "Görevi yalnızca oluşturan kişi veya koordinatör silebilir."
+  },
+  "empty": {
+    "title": "Henüz görev yok",
+    "description": "İlk görevi oluşturun veya bir mentor oturumunun sonraki adımını göreve dönüştürün.",
+    "filtered": "Filtrelere uygun görev yok",
+    "filteredDescription": "Filtreleri değiştirin veya temizleyin.",
+    "reset": "Filtreleri temizle"
+  },
+  "weekView": {
+    "progress": "{done}/{total} tamamlandı",
+    "current": "Bu hafta"
+  }
+}

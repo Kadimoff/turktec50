@@ -1,1 +1,237 @@
-{}
+{
+  "title": "Document checklist",
+  "description": "Documents, versions and review status of the final submission package.",
+  "readiness": {
+    "title": "Package readiness",
+    "label": "Package readiness percentage",
+    "approvedOfRequired": "{approved} / {required} required documents approved",
+    "approved": "Approved",
+    "missingRequired": "Missing required",
+    "awaitingReview": "Awaiting review",
+    "rejected": "Changes requested",
+    "missingList": "Required documents not uploaded yet",
+    "allPresent": "All required documents are uploaded.",
+    "qcPassed": "Package passed quality check",
+    "qcPending": "Quality check not recorded yet",
+    "qcNote": "The program coordinator records the QC result; the readiness percentage is not an automatic decision."
+  },
+  "groups": {
+    "CORE": "The core of the application package — all required.",
+    "ANNEX": "Visual and technical material showing the prototype, architecture and workflow.",
+    "CONDITIONAL": "Added only when real, verifiable evidence exists."
+  },
+  "groupProgress": "{approved}/{total} approved",
+  "required": "Required",
+  "optional": "Optional",
+  "custom": "Additional requirement",
+  "noFile": "No file uploaded yet",
+  "noVisibleFile": "No public file available",
+  "version": "v{n}",
+  "uploadedBy": "{name}",
+  "unknownUser": "Unknown user",
+  "confidential": "Confidential",
+  "confidentialHint": "Hidden from jury",
+  "downloadFile": "Download: {name}",
+  "history": "Version history ({count})",
+  "reviewerNote": "Reviewer note",
+  "reviewedBy": "{name} · {date}",
+  "approvedBy": "Approved by {name} · {date}",
+  "inReviewBy": "Being reviewed by {name}",
+  "latest": "Latest version",
+  "itemsCount": "{count, plural, one {# item} other {# items}}",
+  "items": {
+    "final_form": {
+      "title": "Final application form",
+      "hint": "The completed and checked final version of the official application form on the competition platform."
+    },
+    "budget_plan": {
+      "title": "Budget plan",
+      "hint": "Table of components, services and other costs, with totals and price sources."
+    },
+    "commitment_form": {
+      "title": "Commitment form",
+      "hint": "Participation and commitment form signed by every team member."
+    },
+    "test_evidence": {
+      "title": "Test evidence",
+      "hint": "Test protocol proving the prototype works: date, conditions, measured results and photo/video evidence."
+    },
+    "demo_video": {
+      "title": "Demo video",
+      "hint": "A 2–3 minute video of the prototype actually working; no results staged through editing."
+    },
+    "prototype_visuals": {
+      "title": "Prototype visuals",
+      "hint": "Photos and screenshots that reflect the real state of the prototype."
+    },
+    "architecture_diagram": {
+      "title": "System architecture diagram",
+      "hint": "Diagram of components, data flow and integrations."
+    },
+    "workflow_diagram": {
+      "title": "Workflow diagram",
+      "hint": "Diagram of the sequence of user and system steps."
+    },
+    "technical_drawing": {
+      "title": "Technical drawing / schematic",
+      "hint": "Mechanical drawing, electrical schematic or PCB layout. Mark as confidential if it contains patentable detail."
+    },
+    "references": {
+      "title": "References",
+      "hint": "Scientific sources, standards and open datasets used."
+    },
+    "survey_results": {
+      "title": "Survey results",
+      "hint": "Include only if a real survey was conducted: state the method, date, number of participants and raw results."
+    },
+    "support_letter": {
+      "title": "Support letter",
+      "hint": "Only letters signed by the partner who has given permission to use them. No unsigned or team-drafted letters."
+    },
+    "patent_info": {
+      "title": "Patent information",
+      "hint": "Only with an official application or registration number. Trade secrets never go into public pitch material."
+    }
+  },
+  "guide": {
+    "title": "Which annexes fit?",
+    "fitTitle": "Annexes that strengthen the package",
+    "fit1": "Prototype visuals — real photos and screenshots",
+    "fit2": "System architecture and workflow diagrams",
+    "fit3": "Technical drawing or electrical schematic",
+    "conditionalTitle": "Only with real evidence",
+    "cond1": "Survey results — with method, date, participants and raw results",
+    "cond2": "Support letter — signed by the partner, with permission",
+    "cond3": "Patent information — with an official application or registration number",
+    "never": "Fabricated or inflated evidence is never added.",
+    "confidentialTitle": "Confidential content",
+    "confidentialBody": "Trade secrets and patentable material are marked “confidential”, kept separate from public pitch material and hidden from the jury.",
+    "juryConfidential": "Material marked confidential is not shown in the jury view. Only public submission material is listed here.",
+    "rulesTitle": "File rules",
+    "rulesBody": "Max {size}. PDF, PNG, JPG, WEBP, MP4, ZIP, DOCX, XLSX, PPTX, TXT. Every upload creates a new version and is written to the audit log."
+  },
+  "upload": {
+    "button": "Upload",
+    "newVersion": "New version",
+    "title": "Upload document",
+    "description": "Version v{n} of {item} will be created.",
+    "file": "File",
+    "fileHint": "Max {size} · PDF, image, MP4, ZIP, Office or TXT",
+    "selected": "{name} · {size}",
+    "confidential": "Confidential material (trade secret / patentable)",
+    "confidentialHint": "Hidden from the jury and never part of public pitch material.",
+    "conditionalWarning": "Conditional annex: upload only real, verifiable evidence.",
+    "submit": "Upload",
+    "pending": "Uploading…",
+    "progress": "Sending file to the server"
+  },
+  "review": {
+    "start": "Start review",
+    "button": "Review",
+    "title": "Review document",
+    "description": "{item} · latest version v{n}",
+    "decision": "Decision",
+    "approve": "Approve",
+    "approveHint": "The document meets the requirements.",
+    "reject": "Request changes",
+    "rejectHint": "The team must upload a corrected version.",
+    "note": "Note",
+    "noteHint": "A note is required when requesting changes: what must change?",
+    "submit": "Save decision",
+    "pending": "Saving…"
+  },
+  "add": {
+    "button": "Add item",
+    "title": "New checklist item",
+    "description": "An additional document required for this project. The action is audited.",
+    "itemTitle": "Item title",
+    "itemTitleHint": "E.g. Lab safety approval",
+    "category": "Category",
+    "required": "Required document (counts toward readiness)",
+    "submit": "Add",
+    "pending": "Adding…"
+  },
+  "delete": {
+    "label": "Delete version v{n}",
+    "title": "Delete this version?",
+    "description": "The file {name} (v{n}) will be removed from the server. This cannot be undone and is written to the audit log.",
+    "confirm": "Delete",
+    "pending": "Deleting…"
+  },
+  "toast": {
+    "uploaded": "Document uploaded",
+    "approved": "Document approved",
+    "changesRequested": "Changes requested",
+    "inReview": "Document marked in review",
+    "itemAdded": "Item added",
+    "deleted": "Version deleted"
+  },
+  "errors": {
+    "invalid": "The submitted data is not valid.",
+    "forbidden": "You are not allowed to do this.",
+    "notFound": "Record not found.",
+    "generic": "Something went wrong. Please try again.",
+    "fileRequired": "Choose a file.",
+    "fileTooLarge": "The file exceeds the {size} limit.",
+    "fileType": "This file type is not accepted.",
+    "noteRequired": "Describe the required changes (at least 3 characters).",
+    "nothingToReview": "There is no file to review.",
+    "titleShort": "The title must have at least 3 characters.",
+    "titleLong": "The title is too long (max 140 characters)."
+  },
+  "overview": {
+    "eyebrow": "Submission package",
+    "title": "Documents",
+    "descriptionAdmin": "Submission package readiness of every team, the review queue and missing documents.",
+    "descriptionMentor": "Document readiness and review queue of the projects assigned to you.",
+    "avgReadiness": "Average readiness",
+    "avgHint": "{count, plural, one {across # project} other {across # projects}}",
+    "fullyApproved": "Fully approved packages",
+    "fullyHint": "QC passed: {qc}",
+    "awaiting": "Awaiting review",
+    "awaitingHint": "Oldest uploaded {when}",
+    "queueEmpty": "Queue is empty",
+    "rejected": "Changes requested",
+    "rejectedHint": "{count, plural, one {in # project} other {in # projects}}",
+    "queueTitle": "Review queue",
+    "queueSubtitle": "Longest waiting first",
+    "queueNone": "No documents are awaiting review.",
+    "queueMore": "+{count} more — filter by “Awaiting review”",
+    "uploadedWhen": "uploaded {when}",
+    "tableTitle": "Readiness by project",
+    "results": "{count, plural, one {# project} other {# projects}}",
+    "project": "Project",
+    "readiness": "Readiness",
+    "missing": "Missing",
+    "awaitingCol": "In review",
+    "rejectedCol": "Changes",
+    "lastUpload": "Last upload",
+    "openChecklist": "Open the checklist of {project}",
+    "qc": "QC",
+    "empty": "No projects match the filters",
+    "emptyHint": "Change the search or filters."
+  },
+  "filters": {
+    "q": "Search",
+    "qPlaceholder": "Project title or code…",
+    "status": "Status",
+    "all": "All",
+    "missing": "Missing required",
+    "review": "Awaiting review",
+    "rejected": "Changes requested",
+    "complete": "Fully approved",
+    "sort": "Sort",
+    "sortReadinessAsc": "Readiness: lowest first",
+    "sortReadinessDesc": "Readiness: highest first",
+    "sortCode": "By code",
+    "sortRecent": "Last upload",
+    "apply": "Apply",
+    "reset": "Reset"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "range": "{from}–{to} of {total}",
+    "prev": "Previous",
+    "next": "Next"
+  }
+}

@@ -1,1 +1,71 @@
-{}
+{
+  "title": "Təqvim",
+  "description": {
+    "ADMIN": "Proqram mərhələləri, yarışma son tarixləri və bütün layihələr üzrə qarşıdakı sessiya və tapşırıqlar.",
+    "TEAM": "Komandanızın qarşıdakı mentor sessiyaları, tapşırıq son tarixləri və yarışma tarixləri.",
+    "MENTOR": "Sessiyalarınız, mentorluq etdiyiniz layihələrin tapşırıq son tarixləri və proqram tarixləri.",
+    "JURY": "Ara münsif və sınaq finalı tarixləri, yarışma son tarixləri."
+  },
+  "program": {
+    "title": "Proqram təqvimi",
+    "subtitle": "{start} – {end} · 6 mərhələ, 8 həftəlik inkubasiya"
+  },
+  "agenda": {
+    "title": "Gündəm · növbəti {days} gün",
+    "subtitle": {
+      "ADMIN": "Bütün sessiyalar, gün üzrə tapşırıq son tarixləri, yarışma və proqram tarixləri",
+      "TEAM": "Komandanızın sessiyaları və tapşırıqları, həftələr üzrə",
+      "MENTOR": "Sizin sessiyalarınız və layihələrinizin tapşırıqları, həftələr üzrə",
+      "JURY": "Münsif və yarışma tarixləri, həftələr üzrə"
+    },
+    "empty": "Bu dövrdə planlanmış hadisə yoxdur",
+    "weekOf": "Həftə: {range}",
+    "programWeek": "İnkubasiya həftəsi {n}",
+    "items": "{count, plural, one {# qeyd} other {# qeyd}}"
+  },
+  "overdueNote": "{count, plural, one {# gecikmiş tapşırıq} other {# gecikmiş tapşırıq}} gündəmə daxil deyil — tapşırıqlar bölməsində baxın.",
+  "legend": "İşarələr",
+  "kinds": {
+    "session": "Mentor sessiyası",
+    "task": "Tapşırıq son tarixi",
+    "taskGroup": "Tapşırıq son tarixləri",
+    "deadline": "Yarışma son tarixi",
+    "milestone": "Proqram tarixi",
+    "sessionGroup": "Mentor sessiyaları"
+  },
+  "milestonesTitle": "Əsas tarixlər",
+  "milestones": {
+    "programStart": "Proqramın başlanğıcı",
+    "incubationStart": "İnkubasiyanın başlanğıcı",
+    "midtermJury": "Ara münsif",
+    "incubationEnd": "İnkubasiyanın sonu",
+    "mockFinal": "Sınaq finalı",
+    "programEnd": "Proqramın sonu"
+  },
+  "passed": "Keçib",
+  "weeksTitle": "{n} həftəlik inkubasiya",
+  "weekN": "Həftə {n}",
+  "thisWeek": "Bu həftə",
+  "done": "Bitib",
+  "competitions": {
+    "title": "Yarışmalar və son tarixlər",
+    "subtitle": "{count} hədəf yarışma · ən yaxın son tarixdən başlayaraq",
+    "empty": "Yarışma əlavə olunmayıb",
+    "name": "Yarışma",
+    "category": "Kateqoriya",
+    "deadline": "Müraciət son tarixi",
+    "final": "Final",
+    "teams": "Komandalar",
+    "website": "{name} — sayt (yeni pəncərədə)"
+  },
+  "yourCompetition": "Sizin yarışma",
+  "minutes": "{count} dəq",
+  "unassigned": "Məsul təyin olunmayıb",
+  "mine": "Mənim",
+  "tasksDue": "{count, plural, one {# tapşırığın son tarixi} other {# tapşırığın son tarixi}}",
+  "highPriority": "{count} yüksək prioritetli",
+  "allProjects": "Bütün layihələr",
+  "deadlineOf": "Son tarix: {name}",
+  "sessionsCount": "{count, plural, one {# mentor sessiyası} other {# mentor sessiyası}}",
+  "confirmedOf": "{a}/{b} təsdiqlənib"
+}

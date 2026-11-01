@@ -1,8 +1,17 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/auth";
-import { PageHeader } from "@/components/shared/page-header";
+import { AdminMentorsView, MentorSessionsView, TeamMentorsView } from "@/components/mentors/views";
 
-// PLACEHOLDER — owned by module agent: C tasks-mentors
-export default async function Page() {
-  await requireUser();
-  return <PageHeader title="mentors" description="TODO: C tasks-mentors" />;
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("mentors");
+  return { title: t("title") };
+}
+
+/** ADMIN: mentor pool + all sessions · MENTOR: my sessions · TEAM: my mentors + project sessions. JURY: no access. */
+export default async function MentorsPage(props: PageProps<"/mentors">) {
+  const user = await requireUser(["ADMIN", "TEAM", "MENTOR"]);
+  if (user.role === "ADMIN") return <AdminMentorsView user={user} showAll={(await props.searchParams).upcoming === "all"} />;
+  if (user.role === "MENTOR") return <MentorSessionsView user={user} />;
+  return <TeamMentorsView user={user} />;
 }

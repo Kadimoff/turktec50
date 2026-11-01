@@ -1,1 +1,184 @@
-{}
+{
+  "title": "Layihələr",
+  "eyebrow": {
+    "ADMIN": "Proqram portfeli",
+    "MENTOR": "Mentorluq etdiyim layihələr",
+    "JURY": "Mənə təyin olunmuş layihələr",
+    "TEAM": "Layihəm"
+  },
+  "description": {
+    "ADMIN": "{count, plural, one {# layihə} other {# layihə}} · mərhələ, hazırlıq və risk vəziyyəti bir baxışda.",
+    "MENTOR": "{count, plural, one {Sizə təyin olunmuş # layihə} other {Sizə təyin olunmuş # layihə}} · hazırlıq və gecikən tapşırıqlar.",
+    "JURY": "{count, plural, one {Qiymətləndirmək üçün təyin olunmuş # layihə} other {Qiymətləndirmək üçün təyin olunmuş # layihə}}.",
+    "TEAM": "Komandanızın layihəsi."
+  },
+  "stageStrip": "Mərhələ üzrə filtr",
+  "listLabel": "Layihələr siyahısı",
+  "pagination": {
+    "label": "Səhifələr",
+    "summary": "{from}–{to} / {total}",
+    "prev": "Əvvəlki",
+    "next": "Növbəti",
+    "page": "Səhifə {page} / {pages}"
+  },
+  "team": {
+    "noProject": "Hələ layihəyə qoşulmamısınız",
+    "noProjectHint": "Koordinator sizi komandaya əlavə etdikdən sonra layihə burada görünəcək."
+  },
+  "filters": {
+    "searchPlaceholder": "Kod, ad və ya qısa təsvir",
+    "health": "Vəziyyət",
+    "category": "Kateqoriya",
+    "university": "Universitet",
+    "sort": "Sıralama"
+  },
+  "sort": {
+    "code": "Kod üzrə",
+    "readiness": "Ən hazır",
+    "overdue": "Ən çox gecikən"
+  },
+  "empty": {
+    "none": "Layihə yoxdur",
+    "filtered": "Filtrlərə uyğun layihə tapılmadı",
+    "filteredHint": "Filtrləri dəyişin və ya axtarışı təmizləyin.",
+    "noneHint": {
+      "ADMIN": "Qəbul edilmiş müraciətdən və ya “Yeni layihə” düyməsi ilə layihə yaradın.",
+      "MENTOR": "Koordinator sizi layihəyə təyin etdikdən sonra burada görünəcək.",
+      "JURY": "Koordinator sizi layihəyə təyin etdikdən sonra burada görünəcək.",
+      "TEAM": "Koordinator sizi komandaya əlavə etdikdən sonra layihə burada görünəcək."
+    }
+  },
+  "table": {
+    "project": "Layihə",
+    "lead": "Komanda lideri",
+    "mentors": "Mentorlar",
+    "noMentor": "Təyin olunmayıb",
+    "stage": "Mərhələ",
+    "readiness": "Hazırlıq",
+    "readinessOf": "{title} hazırlığı",
+    "tasks": "Açıq tapşırıq",
+    "overdue": "{count, plural, one {# gecikib} other {# gecikib}}",
+    "health": "Vəziyyət",
+    "competition": "Yarışma"
+  },
+  "card": {
+    "tasks": "{count, plural, one {# açıq tapşırıq} other {# açıq tapşırıq}}"
+  },
+  "create": {
+    "button": "Yeni layihə",
+    "title": "Yeni layihə",
+    "description": "Layihə Validasiya mərhələsində və 13 bəndli sənəd checklist-i ilə yaradılır.",
+    "fields": {
+      "title": "Layihə adı",
+      "tagline": "Qısa təsvir",
+      "taglineHint": "Bir cümlə: kim üçün və hansı problemi həll edir.",
+      "summary": "Xülasə",
+      "category": "Kateqoriya",
+      "university": "Universitet",
+      "competition": "Hədəf yarışma",
+      "competitionHint": "Sonradan da müəyyən edilə bilər."
+    },
+    "choose": "Seçin…",
+    "noCompetition": "Hələ seçilməyib",
+    "creating": "Yaradılır…",
+    "toast": "{code} layihəsi yaradıldı",
+    "errors": {
+      "required": "Bu sahə tələb olunur",
+      "tooLong": "Mətn çox uzundur"
+    }
+  },
+  "overview": {
+    "readiness": "Hazırlıq",
+    "readinessHint": "{approved}/{total} məcburi sənəd təsdiqlənib",
+    "tasks": "Tamamlanan tapşırıqlar",
+    "tasksHint": "Tamamlanan / ümumi",
+    "overdue": "Gecikən tapşırıqlar",
+    "overdueHint": "Son tarixi keçmiş, tamamlanmamış",
+    "overdueNone": "Gecikmə yoxdur",
+    "risks": "Açıq risklər",
+    "risksHint": "Açıq və yumşaldılan risklər",
+    "nextSession": "Növbəti mentor sessiyası",
+    "noSession": "Planlanmış sessiya yoxdur",
+    "summary": "Layihə xülasəsi",
+    "competitionLine": "Hədəf yarışma: {name} · müraciət son tarixi {deadline}",
+    "stage": "Mərhələ",
+    "stageHint": "Validasiyadan yarışma təqdimatına qədər proqram mərhələləri.",
+    "current": "Cari",
+    "upcoming": "Növbəti",
+    "history": "Mərhələ tarixçəsi",
+    "noHistory": "Mərhələ dəyişikliyi hələ qeyd olunmayıb.",
+    "movedBack": "Geri qaytarılıb",
+    "system": "Sistem",
+    "evidence": "KPI sübutları",
+    "evidenceHint": "Proqram göstəricilərinə daxil olan, insan tərəfindən təsdiqlənmiş faktlar.",
+    "flags": {
+      "prototype": "İşlək prototip / MVP",
+      "verified": "Test sübutu ilə təsdiqlənib",
+      "notYet": "Hələ yox",
+      "qc": "Müraciət paketi keyfiyyət yoxlaması",
+      "passed": "Keçib",
+      "submitted": "Yarışmaya müraciət",
+      "notSubmitted": "Göndərilməyib",
+      "result": "Yarışma nəticəsi"
+    },
+    "team": "Komanda",
+    "noMembers": "Komanda üzvü yoxdur",
+    "lead": "Lider",
+    "mentors": "Mentorlar",
+    "noMentors": "Mentor təyin olunmayıb.",
+    "focus": "Fokus: {focus}",
+    "jurors": "Münsiflər",
+    "adminOnly": "Yalnız koordinator",
+    "noJurors": "Münsif təyin olunmayıb.",
+    "quickLinks": "Bölmələr"
+  },
+  "manage": {
+    "title": "Koordinator idarəetməsi",
+    "subtitle": "Mərhələ, vəziyyət, KPI sübutları və təyinatlar. Hər dəyişiklik əməliyyat jurnalına yazılır.",
+    "stageTitle": "Mərhələni dəyiş",
+    "healthTitle": "Layihə vəziyyəti",
+    "flagsTitle": "KPI sübutları və yarışma",
+    "toStage": "Yeni mərhələ",
+    "stageNote": "Qeyd",
+    "stageNoteHint": "Nə yoxlanıldı və niyə dəyişir? Komanda bildiriş alacaq.",
+    "saving": "Yadda saxlanılır…",
+    "changeStage": "Mərhələni dəyiş",
+    "health": "Vəziyyət",
+    "save": "Yadda saxla",
+    "prototypeVerified": "Prototip / MVP təsdiqlənib",
+    "prototypeVerifiedHint": "Funksional prototip test sübutu ilə yoxlanılıb.",
+    "packageQcPassed": "Paket keyfiyyət yoxlamasından keçib",
+    "packageQcPassedHint": "Müraciət paketi checklist üzrə yoxlanılıb.",
+    "submittedAt": "Yarışmaya müraciət tarixi",
+    "submittedAtHint": "Boş = hələ göndərilməyib",
+    "result": "Yarışma nəticəsi",
+    "resultHint": "Rəsmi elan əsasında qeyd edin.",
+    "saveFlags": "KPI sübutlarını yadda saxla",
+    "addMentor": "Mentor təyin et",
+    "addJury": "Münsif təyin et",
+    "choosePerson": "Seçin…",
+    "focus": "Fokus",
+    "focusPlaceholder": "məs. Texniki",
+    "assign": "Təyin et",
+    "noMentorsLeft": "Bütün mentorlar artıq təyin olunub.",
+    "noJuryLeft": "Bütün münsiflər artıq təyin olunub.",
+    "unassignLabel": "{name} təyinatını ləğv et",
+    "unassignTitle": "Təyinat ləğv edilsin?",
+    "unassignBody": "{name} bu layihədən çıxarılacaq.",
+    "unassign": "Ləğv et",
+    "unassigned": "Təyinat ləğv edildi",
+    "stageSaved": "Mərhələ dəyişdirildi",
+    "healthSaved": "Vəziyyət yeniləndi",
+    "flagsSaved": "KPI sübutları yadda saxlanıldı",
+    "mentorAssigned": "Mentor təyin olundu",
+    "juryAssigned": "Münsif təyin olundu",
+    "errors": {
+      "invalid": "Məlumat düzgün deyil.",
+      "forbidden": "Bu əməliyyat üçün icazəniz yoxdur.",
+      "noteRequired": "Qeyd ən azı 5 simvol olmalıdır.",
+      "sameStage": "Layihə artıq bu mərhələdədir.",
+      "notFound": "Qeyd tapılmadı.",
+      "duplicate": "Artıq təyin olunub."
+    }
+  }
+}

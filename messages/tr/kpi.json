@@ -1,1 +1,144 @@
-{}
+{
+  "title": "KPI ve raporlar",
+  "description": "Proje önerisinin B ekindeki göstergeler: kayıtlardan canlı hesaplanır, tahmin edilmez.",
+  "snapshot": "Durum: {date}",
+  "printTitle": "Dönem raporu · KPI özeti",
+  "print": "Dönem raporunu yazdır",
+  "footnote": "Tüm rakamlar platformadaki kayıtlardan hesaplanır. Platform seçim veya jüri kararı vermez; göstergeler yalnızca görünürlük içindir.",
+  "export": {
+    "projects": "Portföy CSV",
+    "kpi": "KPI CSV"
+  },
+  "funnel": {
+    "title": "Program hunisi",
+    "subtitle": "Başvurudan finale her aşama: gerçekleşen, hedef ve bir önceki aşamaya göre geçiş oranı",
+    "conversion": "öncekinden %{pct}",
+    "legendActual": "Gerçekleşen",
+    "legendTarget": "Hedef",
+    "legendMet": "Hedefe ulaşıldı",
+    "steps": {
+      "applicationsTotal": "Gelen başvurular",
+      "applicationsEvaluated": "Değerlendirilen başvurular",
+      "teamsAccepted": "Kabul edilen ekipler",
+      "prototypes": "Çalışan prototip / MVP",
+      "qcPackages": "Kalite kontrolünden geçen paket",
+      "submitted": "Yarışmaya gönderilen",
+      "finalists": "Finalistler (pilot)"
+    }
+  },
+  "charts": {
+    "stage": "Aşamaya göre projeler",
+    "stageSub": "{count} aktif proje",
+    "turkic": "Türk dünyasında yayılım",
+    "turkicSub": "{unis} üniversite · {countries} ülke (pilot ev sahibi ve davetli ortaklar)",
+    "byCountry": "Ülke",
+    "byUniversity": "Üniversite",
+    "completion": "Haftalık görev tamamlama",
+    "completionSub": "Kuluçka haftasına göre tamamlanan görevler · toplam {done}/{total} (%{pct})",
+    "weekPrefix": "H",
+    "completedTasks": "Tamamlanan görev",
+    "currentWeek": "içinde bulunulan hafta",
+    "showTable": "Tablo olarak göster",
+    "weekNote": "Soluk sütun içinde bulunulan (bitmemiş) haftadır. H0 — kuluçka öncesi hazırlık.",
+    "mentoring": "Mentorluk saatleri",
+    "mentoringSub": "Gerçekleşen oturumlar × süre, haftaya göre",
+    "category": "Kategoriye göre projeler",
+    "categorySub": "{count} teknoloji alanı"
+  },
+  "mentoring": {
+    "hours": "Mentorluk saati",
+    "sessions": "Gerçekleşen oturum",
+    "projects": "Desteklenen proje",
+    "hoursPerWeek": "Mentorluk saati",
+    "hUnit": " sa"
+  },
+  "definitions": {
+    "title": "KPI tanımları (Ek B)",
+    "subtitle": "Her gösterge nasıl hesaplanır, hangi kanıtla doğrulanır ve ne zaman güncellenir",
+    "indicator": "Gösterge",
+    "definition": "Tanım",
+    "evidence": "Kanıt",
+    "frequency": "Sıklık",
+    "rows": {
+      "applicationsEvaluated": {
+        "name": "Değerlendirilen başvurular",
+        "definition": "Seçim rubriğiyle en az bir gönderilmiş jüri değerlendirmesi olan tekil başvuru sayısı.",
+        "evidence": "Platformdaki rubrik puan formları; başvuru kaydı.",
+        "frequency": "Seçim döneminde haftalık"
+      },
+      "teamsAccepted": {
+        "name": "Kabul edilen ekipler",
+        "definition": "Koordinatörün kaydettiği insan kararıyla kabul edilip projeye dönüştürülen başvurular.",
+        "evidence": "Karar gerekçesi, katılım taahhüt formu.",
+        "frequency": "Seçim sonunda bir kez"
+      },
+      "prototypes": {
+        "name": "Çalışan prototip / MVP",
+        "definition": "Test kanıtıyla çalıştığı mentor veya koordinatör tarafından doğrulanmış prototip/MVP'si olan projeler.",
+        "evidence": "Test protokolü, demo video, deneme sonuçları.",
+        "frequency": "Aylık; ara jüride doğrulanır"
+      },
+      "qcPackages": {
+        "name": "Kalite kontrolünden geçen başvuru paketleri",
+        "definition": "Tüm zorunlu kontrol listesi belgeleri onaylanmış ve kalite kontrolünden geçmiş yarışma paketleri.",
+        "evidence": "Belge kontrol listesi, inceleyici notları, sürüm geçmişi.",
+        "frequency": "Haftalık (5–6. aylar)"
+      },
+      "finalists": {
+        "name": "Finalist ekipler",
+        "definition": "Yarışma düzenleyicisi tarafından resmî olarak finalist ilan edilen projeler. Pilot hedef 10, ölçek hedefi 50.",
+        "evidence": "Düzenleyicinin resmî duyurusu veya yazısı.",
+        "frequency": "Sonuç açıklandığında"
+      },
+      "mentoringHours": {
+        "name": "Mentorluk saatleri",
+        "definition": "Gerçekleşen mentor oturumlarının sürelerinin toplamı (iptal edilenler hariç).",
+        "evidence": "Oturum kayıtları, mentor notları ve sonraki adımlar.",
+        "frequency": "Haftalık"
+      },
+      "taskCompletion": {
+        "name": "Görev tamamlama",
+        "definition": "Kabul ölçütü karşılanarak “Tamamlandı” durumuna geçen görevlerin haftalık sayısı ve toplam payı.",
+        "evidence": "Görev geçmişi, kanıt bağlantıları, işlem kaydı.",
+        "frequency": "Haftalık"
+      },
+      "turkicReach": {
+        "name": "Türk dünyasında yayılım",
+        "definition": "Projesi olan üniversite ve ülke sayısı; pilot ev sahibi ve davetli ortaklar ayrı gösterilir.",
+        "evidence": "Ortaklık yazıları, üniversite kaydı.",
+        "frequency": "Dönem sonunda"
+      }
+    }
+  },
+  "csv": {
+    "indicator": "Gösterge",
+    "actual": "Gerçekleşen",
+    "target": "Hedef",
+    "pctTarget": "Hedefe oran %",
+    "conversion": "Önceki aşamadan geçiş %",
+    "finalistsScale": "Finalistler (ölçek hedefi)",
+    "tasksDone": "Tamamlanan görevler",
+    "generated": "Oluşturuldu",
+    "yes": "Evet",
+    "no": "Hayır",
+    "cols": {
+      "code": "Kod",
+      "title": "Proje",
+      "university": "Üniversite",
+      "country": "Ülke",
+      "category": "Kategori",
+      "stage": "Aşama",
+      "health": "Durum",
+      "readiness": "Hazırlık",
+      "openTasks": "Açık görevler",
+      "overdueTasks": "Geciken görevler",
+      "prototype": "Prototip doğrulandı",
+      "qc": "Paket kalite kontrolünü geçti",
+      "submittedAt": "Gönderim tarihi",
+      "result": "Sonuç",
+      "competition": "Yarışma",
+      "mentors": "Mentorlar",
+      "members": "Ekip üyeleri"
+    }
+  }
+}

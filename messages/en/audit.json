@@ -1,1 +1,133 @@
-{}
+{
+  "eyebrow": "Administration",
+  "title": "Audit log",
+  "description": "A record of every change made in the platform: who changed what, and when. Visible to the programme coordinator only.",
+  "filters": {
+    "group": "Action type",
+    "actor": "Actor",
+    "actorPlaceholder": "Name or email",
+    "project": "Project",
+    "from": "From date",
+    "to": "To date"
+  },
+  "groups": {
+    "auth": "Sign-in/out",
+    "application": "Applications",
+    "project": "Projects",
+    "task": "Tasks",
+    "session": "Mentor sessions",
+    "document": "Documents",
+    "checklist": "Document checklist",
+    "risk": "Risks",
+    "evaluation": "Evaluation",
+    "user": "Users"
+  },
+  "listTitle": "Entries",
+  "found": "{count, plural, one {# entry} other {# entries}}",
+  "noResultsHint": "Change the filters or widen the date range.",
+  "system": "System",
+  "cols": {
+    "time": "Time",
+    "actor": "Actor",
+    "action": "Action",
+    "entity": "Object",
+    "project": "Project"
+  },
+  "retentionNote": "The log is append-only — entries are never edited or deleted. Only the coordinator sees the full log; teams and mentors see the activity feed of their own projects. Entries are kept for the pilot and its reporting period; the CSV export contains up to 20,000 entries matching the filters.",
+  "csv": {
+    "time": "Time (UTC)",
+    "actor": "Actor",
+    "email": "Email",
+    "role": "Role",
+    "actionKey": "Action key",
+    "action": "Action",
+    "entity": "Object",
+    "entityId": "Object ID",
+    "summary": "Summary",
+    "projectCode": "Project code",
+    "project": "Project"
+  },
+  "actions": {
+    "auth": {
+      "login": "Signed in",
+      "logout": "Signed out"
+    },
+    "application": {
+      "evaluate": "Evaluated an application",
+      "decide": "Recorded an application decision"
+    },
+    "project": {
+      "create": "Created a project",
+      "update": "Updated the project",
+      "stage": "Changed the stage",
+      "assign_mentor": "Assigned a mentor",
+      "unassign_mentor": "Removed a mentor",
+      "assign_jury": "Assigned a juror",
+      "unassign_jury": "Removed a juror",
+      "flags": "Updated KPI flags"
+    },
+    "task": {
+      "create": "Created a task",
+      "update": "Updated a task",
+      "status": "Changed task status",
+      "delete": "Deleted a task"
+    },
+    "session": {
+      "create": "Planned a mentor session",
+      "update": "Updated a mentor session",
+      "complete": "Completed a mentor session",
+      "cancel": "Cancelled a mentor session",
+      "convert_step": "Turned a next step into a task"
+    },
+    "document": {
+      "upload": "Uploaded a document",
+      "delete": "Deleted a document"
+    },
+    "checklist": {
+      "review": "Reviewed a checklist item",
+      "add": "Added a checklist item"
+    },
+    "risk": {
+      "create": "Logged a risk",
+      "update": "Updated a risk",
+      "close": "Closed a risk"
+    },
+    "evaluation": {
+      "save": "Saved an evaluation draft",
+      "submit": "Submitted an evaluation"
+    },
+    "user": {
+      "create": "Created a user",
+      "update": "Updated a user",
+      "deactivate": "Deactivated a user",
+      "activate": "Activated a user"
+    }
+  },
+  "entities": {
+    "User": "User",
+    "Application": "Application",
+    "Project": "Project",
+    "Task": "Task",
+    "Session": "Mentor session",
+    "MentorSession": "Mentor session",
+    "Document": "Document",
+    "Checklist": "Checklist item",
+    "ChecklistItem": "Checklist item",
+    "Risk": "Risk",
+    "Evaluation": "Evaluation",
+    "JuryAssignment": "Jury assignment",
+    "MentorAssignment": "Mentor assignment",
+    "StageChange": "Stage change"
+  },
+  "activity": {
+    "title": "Activity feed",
+    "description": "Changes and stage transitions in this project, grouped by day.",
+    "empty": "No activity yet",
+    "emptyHint": "Task, document and session changes will appear here.",
+    "stageChange": "Changed the stage",
+    "yesterday": "Yesterday",
+    "more": "Show older entries",
+    "showing": "Showing the latest {count} entries",
+    "events": "{count, plural, one {# event} other {# events}}"
+  }
+}

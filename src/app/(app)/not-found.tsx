@@ -11,7 +11,7 @@ export default async function NotFound() {
       icon={SearchX}
       title={t("states.notFoundTitle")}
       description={t("states.notFoundBody")}
-      action={<Button render={<Link href="/dashboard" />}>{t("actions.back")}</Button>}
+      action={<Button nativeButton={false} render={<Link href="/dashboard" />}>{t("actions.back")}</Button>}
       className="mt-10"
     />
   );

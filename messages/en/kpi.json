@@ -1,1 +1,144 @@
-{}
+{
+  "title": "KPIs & reports",
+  "description": "Annex B indicators of the project proposal, computed live from records — never estimated.",
+  "snapshot": "Snapshot: {date}",
+  "printTitle": "Term report · KPI summary",
+  "print": "Print term report",
+  "footnote": "All figures are computed from platform records. The platform makes no selection or jury decisions; indicators are for visibility only.",
+  "export": {
+    "projects": "Portfolio CSV",
+    "kpi": "KPI CSV"
+  },
+  "funnel": {
+    "title": "Programme funnel",
+    "subtitle": "Every step from application to final: actual, target and conversion from the previous step",
+    "conversion": "{pct}% of previous",
+    "legendActual": "Actual",
+    "legendTarget": "Target",
+    "legendMet": "Target met",
+    "steps": {
+      "applicationsTotal": "Applications received",
+      "applicationsEvaluated": "Applications evaluated",
+      "teamsAccepted": "Teams accepted",
+      "prototypes": "Functional prototype / MVP",
+      "qcPackages": "QC-passed application package",
+      "submitted": "Submitted to competition",
+      "finalists": "Finalists (pilot)"
+    }
+  },
+  "charts": {
+    "stage": "Projects by stage",
+    "stageSub": "{count} active projects",
+    "turkic": "Turkic-world reach",
+    "turkicSub": "{unis} universities · {countries} countries (pilot host and invited partners)",
+    "byCountry": "Country",
+    "byUniversity": "University",
+    "completion": "Weekly task completion",
+    "completionSub": "Tasks completed per incubation week · {done}/{total} overall ({pct}%)",
+    "weekPrefix": "W",
+    "completedTasks": "Tasks completed",
+    "currentWeek": "current week, in progress",
+    "showTable": "Show as table",
+    "weekNote": "The faded bar is the current, unfinished week. W0 = preparation before incubation.",
+    "mentoring": "Mentoring hours",
+    "mentoringSub": "Completed sessions × duration, by week",
+    "category": "Projects by category",
+    "categorySub": "{count} technology areas"
+  },
+  "mentoring": {
+    "hours": "Mentoring hours",
+    "sessions": "Sessions held",
+    "projects": "Projects mentored",
+    "hoursPerWeek": "Mentoring hours",
+    "hUnit": " h"
+  },
+  "definitions": {
+    "title": "KPI definitions (Annex B)",
+    "subtitle": "How each indicator is computed, what evidence supports it and how often it is reported",
+    "indicator": "Indicator",
+    "definition": "Definition",
+    "evidence": "Evidence",
+    "frequency": "Frequency",
+    "rows": {
+      "applicationsEvaluated": {
+        "name": "Applications evaluated",
+        "definition": "Number of unique applications with at least one submitted jury evaluation on the selection rubric.",
+        "evidence": "Rubric score sheets in the platform; application register.",
+        "frequency": "Weekly during selection"
+      },
+      "teamsAccepted": {
+        "name": "Teams accepted",
+        "definition": "Applications accepted by a recorded human decision and converted into an incubation project.",
+        "evidence": "Decision rationale, signed participation commitment form.",
+        "frequency": "Once, at end of selection"
+      },
+      "prototypes": {
+        "name": "Functional prototypes / MVP",
+        "definition": "Projects whose prototype/MVP has been verified as working by a mentor or coordinator, backed by test evidence.",
+        "evidence": "Test protocol, demo video, trial results.",
+        "frequency": "Monthly; checked at midterm jury"
+      },
+      "qcPackages": {
+        "name": "QC-passed application packages",
+        "definition": "Competition packages whose required checklist documents are all approved and that passed quality control.",
+        "evidence": "Document checklist, reviewer notes, version history.",
+        "frequency": "Weekly (months 5–6)"
+      },
+      "finalists": {
+        "name": "Finalist teams",
+        "definition": "Projects officially announced as finalists by the competition organiser. Pilot target 10, scale-up target 50.",
+        "evidence": "Organiser's official announcement or letter.",
+        "frequency": "When results are announced"
+      },
+      "mentoringHours": {
+        "name": "Mentoring hours",
+        "definition": "Sum of durations of completed mentor sessions (cancelled sessions excluded).",
+        "evidence": "Session records, mentor notes and next steps.",
+        "frequency": "Weekly"
+      },
+      "taskCompletion": {
+        "name": "Task completion",
+        "definition": "Weekly count and overall share of tasks moved to “Done” with their acceptance criterion met.",
+        "evidence": "Task history, evidence links, audit log.",
+        "frequency": "Weekly"
+      },
+      "turkicReach": {
+        "name": "Turkic-world reach",
+        "definition": "Number of universities and countries with projects; pilot host and invited partners shown separately.",
+        "evidence": "Partnership letters, university register.",
+        "frequency": "End of term"
+      }
+    }
+  },
+  "csv": {
+    "indicator": "Indicator",
+    "actual": "Actual",
+    "target": "Target",
+    "pctTarget": "% of target",
+    "conversion": "Conversion from previous %",
+    "finalistsScale": "Finalists (scale-up target)",
+    "tasksDone": "Tasks completed",
+    "generated": "Generated",
+    "yes": "Yes",
+    "no": "No",
+    "cols": {
+      "code": "Code",
+      "title": "Project",
+      "university": "University",
+      "country": "Country",
+      "category": "Category",
+      "stage": "Stage",
+      "health": "Health",
+      "readiness": "Readiness",
+      "openTasks": "Open tasks",
+      "overdueTasks": "Overdue tasks",
+      "prototype": "Prototype verified",
+      "qc": "Package QC passed",
+      "submittedAt": "Submitted on",
+      "result": "Result",
+      "competition": "Competition",
+      "mentors": "Mentors",
+      "members": "Team members"
+    }
+  }
+}

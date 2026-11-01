@@ -1,1 +1,237 @@
-{}
+{
+  "title": "Belge kontrol listesi",
+  "description": "Final başvuru paketinin belgeleri, sürümleri ve inceleme durumu.",
+  "readiness": {
+    "title": "Paket hazırlığı",
+    "label": "Paket hazırlık yüzdesi",
+    "approvedOfRequired": "{approved} / {required} zorunlu belge onaylandı",
+    "approved": "Onaylandı",
+    "missingRequired": "Eksik zorunlu",
+    "awaitingReview": "İnceleme bekliyor",
+    "rejected": "Düzeltme gerekli",
+    "missingList": "Henüz yüklenmemiş zorunlu belgeler",
+    "allPresent": "Tüm zorunlu belgeler yüklendi.",
+    "qcPassed": "Paket kalite kontrolünden geçti",
+    "qcPending": "Kalite kontrolü henüz kaydedilmedi",
+    "qcNote": "QC sonucunu program koordinatörü kaydeder; hazırlık yüzdesi otomatik bir karar değildir."
+  },
+  "groups": {
+    "CORE": "Başvuru paketinin çekirdeği — hepsi zorunludur.",
+    "ANNEX": "Prototipi, mimariyi ve iş akışını gösteren görsel ve teknik materyal.",
+    "CONDITIONAL": "Yalnızca gerçek ve doğrulanabilir kanıt varsa eklenir."
+  },
+  "groupProgress": "{approved}/{total} onaylandı",
+  "required": "Zorunlu",
+  "optional": "İsteğe bağlı",
+  "custom": "Ek gereklilik",
+  "noFile": "Henüz dosya yüklenmedi",
+  "noVisibleFile": "Görüntülenebilir açık dosya yok",
+  "version": "v{n}",
+  "uploadedBy": "{name}",
+  "unknownUser": "Bilinmeyen kullanıcı",
+  "confidential": "Gizli",
+  "confidentialHint": "Jüriye gösterilmez",
+  "downloadFile": "İndir: {name}",
+  "history": "Sürüm geçmişi ({count})",
+  "reviewerNote": "İnceleyenin notu",
+  "reviewedBy": "{name} · {date}",
+  "approvedBy": "{name} onayladı · {date}",
+  "inReviewBy": "{name} inceliyor",
+  "latest": "Son sürüm",
+  "itemsCount": "{count, plural, one {# madde} other {# madde}}",
+  "items": {
+    "final_form": {
+      "title": "Final başvuru formu",
+      "hint": "Yarışma platformundaki resmi başvuru formunun doldurulmuş ve kontrol edilmiş son hâli."
+    },
+    "budget_plan": {
+      "title": "Bütçe planı",
+      "hint": "Bileşen, hizmet ve diğer giderlerin tablosu; toplamlar ve fiyat kaynakları belirtilerek."
+    },
+    "commitment_form": {
+      "title": "Taahhüt formu",
+      "hint": "Tüm takım üyelerinin imzaladığı katılım ve taahhüt formu."
+    },
+    "test_evidence": {
+      "title": "Test kanıtı",
+      "hint": "Prototipin çalıştığını gösteren test protokolü: tarih, koşullar, ölçüm sonuçları ve fotoğraf/video kanıtı."
+    },
+    "demo_video": {
+      "title": "Demo videosu",
+      "hint": "Prototipin gerçek çalışmasını gösteren 2–3 dakikalık video; kurgu ile olmayan sonuç gösterilmez."
+    },
+    "prototype_visuals": {
+      "title": "Prototip görselleri",
+      "hint": "Prototipin gerçek durumunu yansıtan fotoğraf ve ekran görüntüleri."
+    },
+    "architecture_diagram": {
+      "title": "Sistem mimarisi şeması",
+      "hint": "Bileşenleri, veri akışını ve entegrasyonları gösteren şema."
+    },
+    "workflow_diagram": {
+      "title": "İş akışı şeması",
+      "hint": "Kullanıcı ve sistem adımlarının sırasını gösteren diyagram."
+    },
+    "technical_drawing": {
+      "title": "Teknik çizim / şema",
+      "hint": "Mekanik çizim, elektrik şeması veya PCB planı. Patentlenebilir ayrıntı varsa gizli olarak işaretleyin."
+    },
+    "references": {
+      "title": "Kaynaklar",
+      "hint": "Kullanılan bilimsel kaynaklar, standartlar ve açık veri setleri."
+    },
+    "survey_results": {
+      "title": "Anket sonuçları",
+      "hint": "Yalnızca gerçekten bir anket yapıldıysa ekleyin: yöntem, tarih, katılımcı sayısı ve ham sonuçlar belirtilmelidir."
+    },
+    "support_letter": {
+      "title": "Destek mektubu",
+      "hint": "Yalnızca paydaşın imzaladığı ve kullanımına izin verdiği mektuplar. İmzasız veya takımca yazılmış mektup eklenmez."
+    },
+    "patent_info": {
+      "title": "Patent bilgisi",
+      "hint": "Yalnızca resmî başvuru veya tescil numarası varsa. Ticari sır açık pitch materyaline konmaz."
+    }
+  },
+  "guide": {
+    "title": "Hangi ekler uygundur?",
+    "fitTitle": "Paketi güçlendiren ekler",
+    "fit1": "Prototip görselleri — gerçek fotoğraf ve ekran görüntüleri",
+    "fit2": "Sistem mimarisi ve iş akışı şemaları",
+    "fit3": "Teknik çizim veya elektrik şeması",
+    "conditionalTitle": "Yalnızca gerçek kanıt varsa",
+    "cond1": "Anket sonuçları — yöntem, tarih, katılımcılar ve ham sonuçlarla",
+    "cond2": "Destek mektubu — paydaşın imzası ve izniyle",
+    "cond3": "Patent bilgisi — resmî başvuru veya tescil numarasıyla",
+    "never": "Uydurulmuş veya abartılmış kanıt asla eklenmez.",
+    "confidentialTitle": "Gizli içerik",
+    "confidentialBody": "Ticari sır ve patentlenebilir materyal “gizli” olarak işaretlenir, açık pitch materyalinden ayrı tutulur ve jüriye gösterilmez.",
+    "juryConfidential": "Gizli işaretli materyaller jüri görünümünde gösterilmez. Burada yalnızca açık sunum materyali vardır.",
+    "rulesTitle": "Dosya kuralları",
+    "rulesBody": "En fazla {size}. PDF, PNG, JPG, WEBP, MP4, ZIP, DOCX, XLSX, PPTX, TXT. Her yükleme yeni bir sürüm oluşturur ve işlem günlüğüne yazılır."
+  },
+  "upload": {
+    "button": "Yükle",
+    "newVersion": "Yeni sürüm",
+    "title": "Belge yükle",
+    "description": "{item} için v{n} sürümü oluşturulacak.",
+    "file": "Dosya",
+    "fileHint": "En fazla {size} · PDF, görsel, MP4, ZIP, Office veya TXT",
+    "selected": "{name} · {size}",
+    "confidential": "Gizli materyal (ticari sır / patentlenebilir)",
+    "confidentialHint": "Jüriye gösterilmez ve açık pitch materyaline konmaz.",
+    "conditionalWarning": "Koşullu ek: yalnızca gerçek ve doğrulanabilir kanıt yükleyin.",
+    "submit": "Yükle",
+    "pending": "Yükleniyor…",
+    "progress": "Dosya sunucuya gönderiliyor"
+  },
+  "review": {
+    "start": "İncelemeye al",
+    "button": "İncele",
+    "title": "Belgeyi incele",
+    "description": "{item} · son sürüm v{n}",
+    "decision": "Karar",
+    "approve": "Onayla",
+    "approveHint": "Belge gerekliliklere uygun.",
+    "reject": "Düzeltme iste",
+    "rejectHint": "Takım düzeltilmiş bir sürüm yüklemeli.",
+    "note": "Not",
+    "noteHint": "Düzeltme isterken not zorunludur: ne değişmeli?",
+    "submit": "Kararı kaydet",
+    "pending": "Kaydediliyor…"
+  },
+  "add": {
+    "button": "Madde ekle",
+    "title": "Yeni kontrol listesi maddesi",
+    "description": "Bu proje için ek olarak istenen belge. İşlem günlüğe yazılır.",
+    "itemTitle": "Madde adı",
+    "itemTitleHint": "Örn.: Laboratuvar güvenlik onayı",
+    "category": "Kategori",
+    "required": "Zorunlu belge (hazırlık yüzdesine dahil)",
+    "submit": "Ekle",
+    "pending": "Ekleniyor…"
+  },
+  "delete": {
+    "label": "v{n} sürümünü sil",
+    "title": "Sürüm silinsin mi?",
+    "description": "{name} (v{n}) dosyası sunucudan silinecek. Bu işlem geri alınamaz ve günlüğe yazılır.",
+    "confirm": "Sil",
+    "pending": "Siliniyor…"
+  },
+  "toast": {
+    "uploaded": "Belge yüklendi",
+    "approved": "Belge onaylandı",
+    "changesRequested": "Düzeltme istendi",
+    "inReview": "Belge incelemeye alındı",
+    "itemAdded": "Madde eklendi",
+    "deleted": "Sürüm silindi"
+  },
+  "errors": {
+    "invalid": "Girilen bilgi geçerli değil.",
+    "forbidden": "Bu işlem için yetkiniz yok.",
+    "notFound": "Kayıt bulunamadı.",
+    "generic": "Bir hata oluştu. Tekrar deneyin.",
+    "fileRequired": "Bir dosya seçin.",
+    "fileTooLarge": "Dosya {size} sınırını aşıyor.",
+    "fileType": "Bu dosya türü kabul edilmiyor.",
+    "noteRequired": "Düzeltme nedenini yazın (en az 3 karakter).",
+    "nothingToReview": "İncelenecek dosya yok.",
+    "titleShort": "Ad en az 3 karakter olmalı.",
+    "titleLong": "Ad çok uzun (en fazla 140 karakter)."
+  },
+  "overview": {
+    "eyebrow": "Başvuru paketi",
+    "title": "Belgeler",
+    "descriptionAdmin": "Tüm takımların başvuru paketi hazırlığı, inceleme kuyruğu ve eksik belgeler.",
+    "descriptionMentor": "Atandığınız projelerin belge hazırlığı ve inceleme kuyruğu.",
+    "avgReadiness": "Ortalama hazırlık",
+    "avgHint": "{count, plural, one {# proje üzerinden} other {# proje üzerinden}}",
+    "fullyApproved": "Tamamen onaylı paketler",
+    "fullyHint": "QC geçti: {qc}",
+    "awaiting": "İnceleme bekleyen",
+    "awaitingHint": "En eskisi {when} yüklendi",
+    "queueEmpty": "Kuyruk boş",
+    "rejected": "Düzeltme gereken",
+    "rejectedHint": "{count, plural, one {# projede} other {# projede}}",
+    "queueTitle": "İnceleme kuyruğu",
+    "queueSubtitle": "En uzun bekleyenler önce",
+    "queueNone": "İnceleme bekleyen belge yok.",
+    "queueMore": "+{count} daha — filtrede “İnceleme bekliyor” seçin",
+    "uploadedWhen": "{when} yüklendi",
+    "tableTitle": "Projelere göre hazırlık",
+    "results": "{count, plural, one {# proje} other {# proje}}",
+    "project": "Proje",
+    "readiness": "Hazırlık",
+    "missing": "Eksik",
+    "awaitingCol": "İncelemede",
+    "rejectedCol": "Düzeltme",
+    "lastUpload": "Son yükleme",
+    "openChecklist": "{project} kontrol listesine git",
+    "qc": "QC",
+    "empty": "Filtreye uyan proje yok",
+    "emptyHint": "Aramayı veya filtreleri değiştirin."
+  },
+  "filters": {
+    "q": "Arama",
+    "qPlaceholder": "Proje adı veya kodu…",
+    "status": "Durum",
+    "all": "Tümü",
+    "missing": "Eksik zorunlu var",
+    "review": "İnceleme bekliyor",
+    "rejected": "Düzeltme gerekli",
+    "complete": "Tamamen onaylı",
+    "sort": "Sıralama",
+    "sortReadinessAsc": "Hazırlık: düşükten",
+    "sortReadinessDesc": "Hazırlık: yüksekten",
+    "sortCode": "Koda göre",
+    "sortRecent": "Son yükleme",
+    "apply": "Uygula",
+    "reset": "Sıfırla"
+  },
+  "pagination": {
+    "label": "Sayfalama",
+    "range": "{from}–{to} / {total}",
+    "prev": "Önceki",
+    "next": "Sonraki"
+  }
+}

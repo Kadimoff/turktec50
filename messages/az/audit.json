@@ -1,1 +1,133 @@
-{}
+{
+  "eyebrow": "İdarəetmə",
+  "title": "Əməliyyat jurnalı",
+  "description": "Platformada edilən bütün dəyişikliklərin qeydi: kim, nə vaxt, nəyi dəyişdi. Yalnız proqram koordinatoru üçün görünür.",
+  "filters": {
+    "group": "Əməliyyat növü",
+    "actor": "İcraçı",
+    "actorPlaceholder": "Ad və ya e-poçt",
+    "project": "Layihə",
+    "from": "Başlanğıc tarixi",
+    "to": "Son tarix"
+  },
+  "groups": {
+    "auth": "Giriş/çıxış",
+    "application": "Müraciətlər",
+    "project": "Layihələr",
+    "task": "Tapşırıqlar",
+    "session": "Mentor sessiyaları",
+    "document": "Sənədlər",
+    "checklist": "Sənəd checklist-i",
+    "risk": "Risklər",
+    "evaluation": "Qiymətləndirmə",
+    "user": "İstifadəçilər"
+  },
+  "listTitle": "Qeydlər",
+  "found": "{count, plural, one {# qeyd} other {# qeyd}}",
+  "noResultsHint": "Filtrləri dəyişin və ya tarix aralığını genişləndirin.",
+  "system": "Sistem",
+  "cols": {
+    "time": "Vaxt",
+    "actor": "İcraçı",
+    "action": "Əməliyyat",
+    "entity": "Obyekt",
+    "project": "Layihə"
+  },
+  "retentionNote": "Jurnal yalnız əlavə olunur — qeydlər redaktə və ya silinmir. Yalnız koordinator bütün jurnalı görür; komanda və mentorlar öz layihələrinin fəaliyyət lentini görür. Qeydlər pilot müddəti və hesabat dövrü ərzində saxlanılır; CSV ixracı filtrlərə uyğun ən çox 20 000 qeyd daxil edir.",
+  "csv": {
+    "time": "Vaxt (UTC)",
+    "actor": "İcraçı",
+    "email": "E-poçt",
+    "role": "Rol",
+    "actionKey": "Əməliyyat açarı",
+    "action": "Əməliyyat",
+    "entity": "Obyekt",
+    "entityId": "Obyekt ID",
+    "summary": "Qısa məzmun",
+    "projectCode": "Layihə kodu",
+    "project": "Layihə"
+  },
+  "actions": {
+    "auth": {
+      "login": "Sistemə daxil oldu",
+      "logout": "Sistemdən çıxdı"
+    },
+    "application": {
+      "evaluate": "Müraciəti qiymətləndirdi",
+      "decide": "Müraciət qərarını qeyd etdi"
+    },
+    "project": {
+      "create": "Layihə yaratdı",
+      "update": "Layihəni yenilədi",
+      "stage": "Mərhələni dəyişdi",
+      "assign_mentor": "Mentor təyin etdi",
+      "unassign_mentor": "Mentoru çıxardı",
+      "assign_jury": "Münsif təyin etdi",
+      "unassign_jury": "Münsifi çıxardı",
+      "flags": "KPI göstəricilərini yenilədi"
+    },
+    "task": {
+      "create": "Tapşırıq yaratdı",
+      "update": "Tapşırığı yenilədi",
+      "status": "Tapşırıq statusunu dəyişdi",
+      "delete": "Tapşırığı sildi"
+    },
+    "session": {
+      "create": "Mentor sessiyası planladı",
+      "update": "Mentor sessiyasını yenilədi",
+      "complete": "Mentor sessiyasını tamamladı",
+      "cancel": "Mentor sessiyasını ləğv etdi",
+      "convert_step": "Növbəti addımı tapşırığa çevirdi"
+    },
+    "document": {
+      "upload": "Sənəd yüklədi",
+      "delete": "Sənədi sildi"
+    },
+    "checklist": {
+      "review": "Checklist bəndini yoxladı",
+      "add": "Checklist-ə bənd əlavə etdi"
+    },
+    "risk": {
+      "create": "Risk qeyd etdi",
+      "update": "Riski yenilədi",
+      "close": "Riski bağladı"
+    },
+    "evaluation": {
+      "save": "Qiymətləndirmə qaralamasını saxladı",
+      "submit": "Qiymətləndirməni göndərdi"
+    },
+    "user": {
+      "create": "İstifadəçi yaratdı",
+      "update": "İstifadəçini yenilədi",
+      "deactivate": "İstifadəçini deaktiv etdi",
+      "activate": "İstifadəçini aktivləşdirdi"
+    }
+  },
+  "entities": {
+    "User": "İstifadəçi",
+    "Application": "Müraciət",
+    "Project": "Layihə",
+    "Task": "Tapşırıq",
+    "Session": "Mentor sessiyası",
+    "MentorSession": "Mentor sessiyası",
+    "Document": "Sənəd",
+    "Checklist": "Checklist bəndi",
+    "ChecklistItem": "Checklist bəndi",
+    "Risk": "Risk",
+    "Evaluation": "Qiymətləndirmə",
+    "JuryAssignment": "Münsif təyinatı",
+    "MentorAssignment": "Mentor təyinatı",
+    "StageChange": "Mərhələ dəyişikliyi"
+  },
+  "activity": {
+    "title": "Fəaliyyət lenti",
+    "description": "Layihədə edilən dəyişikliklər və mərhələ keçidləri, günlər üzrə.",
+    "empty": "Hələ fəaliyyət qeydi yoxdur",
+    "emptyHint": "Tapşırıq, sənəd və sessiya dəyişiklikləri burada görünəcək.",
+    "stageChange": "Mərhələni dəyişdi",
+    "yesterday": "Dünən",
+    "more": "Daha köhnə qeydləri göstər",
+    "showing": "Son {count} qeyd göstərilir",
+    "events": "{count, plural, one {# hadisə} other {# hadisə}}"
+  }
+}

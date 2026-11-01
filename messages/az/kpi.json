@@ -1,1 +1,144 @@
-{}
+{
+  "title": "KPI və hesabatlar",
+  "description": "Layihə təklifinin B əlavəsindəki göstəricilər: qeydlərdən canlı hesablanır, təxmin edilmir.",
+  "snapshot": "Vəziyyət: {date}",
+  "printTitle": "Dövr hesabatı · KPI icmalı",
+  "print": "Dövr hesabatını çap et",
+  "footnote": "Bütün rəqəmlər platformadakı qeydlərdən hesablanır. Platforma seçim və ya münsif qərarı vermir; göstəricilər yalnız görünürlük üçündür.",
+  "export": {
+    "projects": "Portfel CSV",
+    "kpi": "KPI CSV"
+  },
+  "funnel": {
+    "title": "Proqram hunisi",
+    "subtitle": "Müraciətdən finala qədər hər mərhələ: faktiki say, hədəf və əvvəlki mərhələyə nisbətən keçid faizi",
+    "conversion": "əvvəlkindən {pct}%",
+    "legendActual": "Faktiki",
+    "legendTarget": "Hədəf",
+    "legendMet": "Hədəfə çatılıb",
+    "steps": {
+      "applicationsTotal": "Daxil olan müraciətlər",
+      "applicationsEvaluated": "Qiymətləndirilmiş müraciətlər",
+      "teamsAccepted": "Qəbul edilmiş komandalar",
+      "prototypes": "İşlək prototip / MVP",
+      "qcPackages": "QC-dən keçmiş müraciət paketi",
+      "submitted": "Yarışmaya göndərilmiş",
+      "finalists": "Finalçılar (pilot)"
+    }
+  },
+  "charts": {
+    "stage": "Mərhələyə görə layihələr",
+    "stageSub": "{count} aktiv layihə",
+    "turkic": "Türk dünyası üzrə yayılma",
+    "turkicSub": "{unis} universitet · {countries} ölkə (pilot ev sahibi və dəvət olunmuş tərəfdaşlar)",
+    "byCountry": "Ölkə",
+    "byUniversity": "Universitet",
+    "completion": "Həftəlik tapşırıq icrası",
+    "completionSub": "İnkubasiya həftəsinə görə tamamlanmış tapşırıqlar · cəmi {done}/{total} ({pct}%)",
+    "weekPrefix": "H",
+    "completedTasks": "Tamamlanmış tapşırıq",
+    "currentWeek": "cari həftə, davam edir",
+    "showTable": "Cədvəl kimi göstər",
+    "weekNote": "Solğun sütun cari (bitməmiş) həftədir. H0 — inkubasiyadan əvvəlki hazırlıq.",
+    "mentoring": "Mentorluq saatları",
+    "mentoringSub": "Keçirilmiş sessiyalar × müddət, həftəyə görə",
+    "category": "Kateqoriyaya görə layihələr",
+    "categorySub": "{count} texnologiya sahəsi"
+  },
+  "mentoring": {
+    "hours": "Mentorluq saatı",
+    "sessions": "Keçirilmiş sessiya",
+    "projects": "Dəstəklənən layihə",
+    "hoursPerWeek": "Mentorluq saatı",
+    "hUnit": " saat"
+  },
+  "definitions": {
+    "title": "KPI tərifləri (B əlavəsi)",
+    "subtitle": "Hər göstərici necə hesablanır, hansı sübutla təsdiqlənir və nə vaxt yenilənir",
+    "indicator": "Göstərici",
+    "definition": "Tərif",
+    "evidence": "Sübut",
+    "frequency": "Tezlik",
+    "rows": {
+      "applicationsEvaluated": {
+        "name": "Qiymətləndirilmiş müraciətlər",
+        "definition": "Seçim rubriki ilə ən azı bir göndərilmiş münsif qiymətləndirməsi olan unikal müraciətlərin sayı.",
+        "evidence": "Platformadakı rubrik qiymət vərəqələri; müraciət reyestri.",
+        "frequency": "Seçim dövründə həftəlik"
+      },
+      "teamsAccepted": {
+        "name": "Qəbul edilmiş komandalar",
+        "definition": "Koordinatorun qeyd etdiyi insan qərarı ilə qəbul edilib layihəyə çevrilmiş müraciətlər.",
+        "evidence": "Qərar əsaslandırması, iştirak öhdəlik forması.",
+        "frequency": "Seçim bitəndə bir dəfə"
+      },
+      "prototypes": {
+        "name": "İşlək prototip / MVP",
+        "definition": "Test sübutu ilə işləkliyi mentor və ya koordinator tərəfindən təsdiqlənmiş prototip/MVP-si olan layihələr.",
+        "evidence": "Test protokolu, demo video, sınaq nəticələri.",
+        "frequency": "Aylıq; ara münsifdə yoxlanılır"
+      },
+      "qcPackages": {
+        "name": "QC-dən keçmiş müraciət paketləri",
+        "definition": "Bütün məcburi checklist sənədləri təsdiqlənmiş və keyfiyyət yoxlamasından keçmiş yarışma paketləri.",
+        "evidence": "Sənəd checklist-i, rəyçi qeydləri, versiya tarixçəsi.",
+        "frequency": "Həftəlik (5–6-cı aylar)"
+      },
+      "finalists": {
+        "name": "Finalçı komandalar",
+        "definition": "Yarışma təşkilatçısı tərəfindən rəsmi olaraq finalçı elan edilmiş layihələr. Pilot hədəf 10, genişlənmə hədəfi 50.",
+        "evidence": "Təşkilatçının rəsmi elanı və ya məktubu.",
+        "frequency": "Nəticə elan edildikdə"
+      },
+      "mentoringHours": {
+        "name": "Mentorluq saatları",
+        "definition": "Keçirilmiş mentor sessiyalarının müddətlərinin cəmi (ləğv edilənlər daxil deyil).",
+        "evidence": "Sessiya qeydləri, mentor rəyi və növbəti addımlar.",
+        "frequency": "Həftəlik"
+      },
+      "taskCompletion": {
+        "name": "Tapşırıq icrası",
+        "definition": "Meyarı qarşılanaraq “Tamamlandı” statusuna keçirilmiş tapşırıqların həftəlik sayı və ümumi payı.",
+        "evidence": "Tapşırıq tarixçəsi, sübut linkləri, əməliyyat jurnalı.",
+        "frequency": "Həftəlik"
+      },
+      "turkicReach": {
+        "name": "Türk dünyası üzrə yayılma",
+        "definition": "Layihələri olan universitetlərin və ölkələrin sayı; pilot ev sahibi və dəvət olunmuş tərəfdaşlar ayrıca göstərilir.",
+        "evidence": "Tərəfdaşlıq məktubları, universitet reyestri.",
+        "frequency": "Dövr sonunda"
+      }
+    }
+  },
+  "csv": {
+    "indicator": "Göstərici",
+    "actual": "Faktiki",
+    "target": "Hədəf",
+    "pctTarget": "Hədəfə nisbət %",
+    "conversion": "Əvvəlki mərhələdən keçid %",
+    "finalistsScale": "Finalçılar (genişlənmə hədəfi)",
+    "tasksDone": "Tamamlanmış tapşırıqlar",
+    "generated": "Yaradılıb",
+    "yes": "Bəli",
+    "no": "Xeyr",
+    "cols": {
+      "code": "Kod",
+      "title": "Layihə",
+      "university": "Universitet",
+      "country": "Ölkə",
+      "category": "Kateqoriya",
+      "stage": "Mərhələ",
+      "health": "Vəziyyət",
+      "readiness": "Hazırlıq",
+      "openTasks": "Açıq tapşırıqlar",
+      "overdueTasks": "Gecikmiş tapşırıqlar",
+      "prototype": "Prototip təsdiqlənib",
+      "qc": "Paket QC-dən keçib",
+      "submittedAt": "Göndərilmə tarixi",
+      "result": "Nəticə",
+      "competition": "Yarışma",
+      "mentors": "Mentorlar",
+      "members": "Komanda üzvləri"
+    }
+  }
+}

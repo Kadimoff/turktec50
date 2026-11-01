@@ -1,1 +1,130 @@
-{}
+{
+  "title": "Applications",
+  "eyebrow": "Selection stage",
+  "description": "Team applications scored with the selection rubric. Scores are informative only; the coordinator records the admission decision.",
+  "listLabel": "Applications list",
+  "empty": "Change the filters or clear the search.",
+  "stats": {
+    "total": "Total applications",
+    "totalHint": "All applications received during the call",
+    "evaluated": "Evaluated",
+    "evaluatedHint": "At least 1 submitted rubric · target {target}",
+    "underReview": "Under review",
+    "underReviewHint": "Applications awaiting a decision",
+    "myTodo": "Awaiting my review",
+    "mySubmitted": "{count, plural, one {You submitted # evaluation} other {You submitted # evaluations}}",
+    "accepted": "Accepted",
+    "acceptedHint": "Waitlist: {waitlist} · Not accepted: {rejected}"
+  },
+  "filters": {
+    "status": "Filter by status",
+    "category": "Category",
+    "university": "University",
+    "searchPlaceholder": "Code, team or project title",
+    "myTodo": "Awaiting my review"
+  },
+  "table": {
+    "code": "Code",
+    "team": "Project & team",
+    "university": "University",
+    "category": "Category",
+    "evaluations": "Rubrics",
+    "score": "Avg. score",
+    "scoreHint": "The average score is the weighted mean of submitted rubrics (0–100) and is informative only — not a decision.",
+    "myReview": "My review",
+    "status": "Status"
+  },
+  "myReview": {
+    "none": "Not scored",
+    "draft": "Draft",
+    "submitted": "Submitted"
+  },
+  "detail": {
+    "content": "Application content",
+    "problem": "Problem",
+    "solution": "Proposed solution",
+    "facts": "Application details",
+    "category": "Category",
+    "university": "University",
+    "competition": "Target competition",
+    "deadline": "deadline {date}",
+    "teamSize": "Team size",
+    "submittedAt": "Submitted on",
+    "evaluations": "Submitted rubrics",
+    "evaluationsValue": "{count, plural, =0 {None yet} one {# juror} other {# jurors}}",
+    "contact": "Contact person",
+    "contactNote": "Contact details are visible to the coordinator only (data minimisation).",
+    "hasProject": "Project workspace {code} has been created from this application."
+  },
+  "rubric": {
+    "title": "Selection rubric",
+    "subtitle": "Score each criterion on a 1–5 scale. The evaluation is locked once submitted.",
+    "weight": "Weight {weight}%",
+    "criterionRequired": "Score this criterion to submit.",
+    "comment": "Comment",
+    "commentHint": "Strengths, weaknesses and advice for the team. Visible to the coordinator.",
+    "preview": "Weighted score (informative)",
+    "previewHint": "{scored}/{total} criteria scored. The score never makes a decision automatically — people decide.",
+    "submit": "Submit",
+    "draftSaved": "Draft saved",
+    "confirmTitle": "Submit this evaluation?",
+    "confirmBody": "Weighted score: {score} / 100. You will not be able to change the scores after submitting.",
+    "confirmAction": "Yes, submit",
+    "lockedNote": "Evaluation submitted on {date} and locked.",
+    "toastSubmitted": "Evaluation submitted",
+    "toastDraft": "Draft saved",
+    "errors": {
+      "invalid": "Invalid data. Please try again.",
+      "incomplete": "Score every criterion to submit.",
+      "locked": "This evaluation has already been submitted and cannot be changed.",
+      "notFound": "Application or rubric not found.",
+      "error": "Something went wrong. Please try again."
+    }
+  },
+  "panel": {
+    "title": "Scores from all jurors",
+    "subtitle": "{count, plural, one {# submitted evaluation} other {# submitted evaluations}}",
+    "drafts": "{count, plural, one {# draft not counted} other {# drafts not counted}}",
+    "average": "Average weighted score",
+    "empty": "No submitted evaluations yet",
+    "emptyHint": "Scores will appear here once jurors submit the rubric.",
+    "criterion": "Criterion",
+    "avg": "Avg.",
+    "weighted": "Weighted score (0–100)",
+    "noComment": "No comment."
+  },
+  "decision": {
+    "title": "Coordinator decision",
+    "subtitle": "A person makes the decision and records the rationale. Scores are a reference only.",
+    "choose": "Decision",
+    "note": "Rationale",
+    "noteHint": "Briefly explain the decision (at least 10 characters). Stored in the audit log.",
+    "saving": "Recording…",
+    "record": "Record decision",
+    "toast": "Decision recorded",
+    "lockedByProject": "The project workspace already exists, so the decision is locked.",
+    "errors": {
+      "invalid": "Choose a decision.",
+      "noteRequired": "The rationale must be at least 10 characters.",
+      "locked": "A project already exists; the decision cannot be changed.",
+      "notFound": "Application not found."
+    }
+  },
+  "workspace": {
+    "title": "Project workspace",
+    "hint": "Creates the project, the document checklist and the team lead's account for the accepted team.",
+    "create": "Create project workspace",
+    "open": "Open project {code}",
+    "confirmTitle": "Create the workspace?",
+    "confirmBody": "A new project in the Validation stage, a 13-item document checklist and a team lead account for {email} (demo password) will be created.",
+    "confirmAction": "Create",
+    "toast": "Project {code} created",
+    "toastUser": "Team account opened for {email}.",
+    "errors": {
+      "notAccepted": "A workspace can only be created for an accepted application.",
+      "exists": "A project already exists for this application.",
+      "notFound": "Application not found.",
+      "error": "The project could not be created. Please try again."
+    }
+  }
+}

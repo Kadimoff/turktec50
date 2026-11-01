@@ -26,8 +26,7 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
     select: { id: true, name: true, email: true, role: true, title: true, locale: true, universityId: true, active: true },
   });
   if (!user || !user.active) return null;
-  const { active: _active, ...rest } = user;
-  return rest;
+  return { id: user.id, name: user.name, email: user.email, role: user.role, title: user.title, locale: user.locale, universityId: user.universityId };
 });
 
 /** Use in server components / actions. Redirects to /login if not signed in, to /dashboard?denied=1 if role not allowed. */

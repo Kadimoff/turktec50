@@ -1,1 +1,165 @@
-{}
+{
+  "title": "Tasks",
+  "eyebrow": "Workspace",
+  "description": {
+    "ADMIN": "Tasks across all projects: owner, due date, priority and acceptance criterion. Spot delays early.",
+    "TEAM": "Your team's tasks. Update the status every week; a task is done when its acceptance criterion is met.",
+    "MENTOR": "Tasks of the projects you mentor. The team completes tasks; you review them and give feedback."
+  },
+  "projectSection": {
+    "title": "Project tasks",
+    "description": "Every task has an owner, due date, priority and acceptance criterion (definition of done). The team updates statuses weekly."
+  },
+  "stats": {
+    "open": "Open tasks",
+    "openHint": "All tasks not yet done",
+    "dueWeek": "Due this week",
+    "dueWeekHint": "Monday – Sunday, not done",
+    "overdue": "Overdue",
+    "overdueHint": "Past due date, not done",
+    "doneWeek": "Done this week",
+    "doneWeekHint": "Moved to DONE this week"
+  },
+  "views": {
+    "label": "View",
+    "board": "Board",
+    "table": "Table",
+    "week": "By week"
+  },
+  "filters": {
+    "label": "Task filters",
+    "search": "Search",
+    "searchPlaceholder": "Title or criterion…",
+    "project": "Project",
+    "allProjects": "All projects",
+    "assignee": "Owner",
+    "anyone": "Anyone",
+    "mine": "My tasks",
+    "unassigned": "Unassigned",
+    "status": "Status",
+    "anyStatus": "All statuses",
+    "open": "Not done",
+    "priority": "Priority",
+    "anyPriority": "All priorities",
+    "due": "Due",
+    "anyDue": "Any time",
+    "overdue": "Overdue",
+    "week": "This week",
+    "later": "Later",
+    "reset": "Clear",
+    "loading": "Loading…",
+    "active": "{count, plural, =0 {No filters applied} one {# filter applied} other {# filters applied}}"
+  },
+  "columns": {
+    "task": "Task and criterion",
+    "project": "Project",
+    "assignee": "Owner",
+    "due": "Due",
+    "priority": "Priority",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "criterion": "Criterion",
+  "noAssignee": "Unassigned",
+  "fromSession": "From mentor session",
+  "fromSessionTitle": "Created from a mentor session next step: {topic}",
+  "weekLabel": "Week {n}",
+  "noWeek": "No week set",
+  "due": {
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "daysLeft": "{count, plural, one {# day left} other {# days left}}",
+    "overdueDays": "{count, plural, one {# day overdue} other {# days overdue}}",
+    "overdueToday": "Today · overdue",
+    "completed": "Done · {date}"
+  },
+  "board": {
+    "label": "Task board",
+    "dragHint": "Change the status with the menu on each card; on desktop you can also drag cards between columns.",
+    "countLabel": "Number of tasks",
+    "dropHint": "Drop here",
+    "empty": "No tasks in this column",
+    "more": "{count, plural, one {# more task} other {# more tasks}}",
+    "showAllInTable": "show all in table"
+  },
+  "table": {
+    "caption": "Tasks table",
+    "pagination": "Pagination",
+    "showing": "{from}–{to} of {total} tasks",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "{page} / {pages}"
+  },
+  "status": {
+    "change": "Change status (current: {status})",
+    "menuLabel": "Change status",
+    "changed": "Status updated: {status}"
+  },
+  "actions": {
+    "new": "New task",
+    "edit": "Edit",
+    "delete": "Delete",
+    "more": "Actions: {title}",
+    "openProject": "Project tasks"
+  },
+  "form": {
+    "createTitle": "New task",
+    "createDescription": "Make owner, due date and criterion clear — a task counts as done when its criterion is met.",
+    "editTitle": "Edit task",
+    "editDescription": "Changes are recorded in the activity log.",
+    "project": "Project",
+    "projectPlaceholder": "Select a project",
+    "title": "Title",
+    "titlePlaceholder": "E.g. Field test of LoRa transmission range",
+    "criterion": "Acceptance criterion",
+    "criterionHint": "Definition of done: when does this task count as complete?",
+    "criterionPlaceholder": "E.g. RSSI measured at 3 points and tabulated",
+    "assignee": "Owner",
+    "assigneeHint": "Project team members only. The owner gets a notification.",
+    "noAssignee": "Unassigned",
+    "lead": "team lead",
+    "due": "Due date",
+    "priority": "Priority",
+    "week": "Program week",
+    "description": "Description",
+    "descriptionHint": "Optional: context, links, notes.",
+    "submitCreate": "Create task",
+    "submitEdit": "Save",
+    "pending": "Saving…"
+  },
+  "delete": {
+    "title": "Delete this task?",
+    "description": "“{title}” will be permanently deleted. The action is recorded in the activity log.",
+    "confirm": "Yes, delete",
+    "pending": "Deleting…"
+  },
+  "toast": {
+    "created": "Task created",
+    "updated": "Task updated",
+    "deleted": "Task deleted"
+  },
+  "errors": {
+    "forbidden": "You are not allowed to do this.",
+    "notFound": "Task not found.",
+    "invalid": "Some fields need your attention.",
+    "generic": "Something went wrong. Please try again.",
+    "required": "This field is required.",
+    "titleLength": "Title must be 3–160 characters.",
+    "tooLong": "Text is too long.",
+    "dateInvalid": "Invalid date.",
+    "assigneeNotMember": "The owner must be a member of the project team.",
+    "mentorNoDone": "The team completes tasks; mentors record feedback in session notes.",
+    "deleteForbidden": "Only the task's creator or the coordinator can delete it."
+  },
+  "empty": {
+    "title": "No tasks yet",
+    "description": "Create the first task or turn a mentor session next step into a task.",
+    "filtered": "No tasks match the filters",
+    "filteredDescription": "Change or clear the filters.",
+    "reset": "Clear filters"
+  },
+  "weekView": {
+    "progress": "{done}/{total} done",
+    "current": "Current week"
+  }
+}

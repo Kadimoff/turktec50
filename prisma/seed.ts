@@ -489,7 +489,7 @@ async function main() {
     const auditN = isShow ? 10 : 2;
     for (let k = 0; k < auditN; k++) {
       const act = pick(["task.create", "task.status", "document.upload", "session.complete", "checklist.review", "risk.create"]);
-      await prisma.auditLog.create({ data: { actorId: k % 3 === 0 ? pr.mentorIds[0] ?? adminId : pr.memberIds[k % pr.memberIds.length]!, action: act, entity: act.split(".")[0]!.replace(/^./, (c) => c.toUpperCase()), entityId: pr.id, projectId: pr.id, summary: pr.title, createdAt: days(-ri(0, 20), ri(9, 19), ri(0, 59)) } });
+      await prisma.auditLog.create({ data: { actorId: k % 3 === 0 ? pr.mentorIds[0] ?? adminId : pr.memberIds[k % pr.memberIds.length]!, action: act, entity: act.split(".")[0]!.replace(/^./, (c) => c.toUpperCase()), entityId: pr.id, projectId: pr.id, summary: pr.title, createdAt: new Date(Math.min(days(-ri(0, 20), ri(9, 19), ri(0, 59)).getTime(), NOW.getTime() - ri(5, 600) * 60000)) } });
     }
   }
 
