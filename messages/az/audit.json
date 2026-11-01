@@ -20,7 +20,8 @@
     "checklist": "Sənəd checklist-i",
     "risk": "Risklər",
     "evaluation": "Qiymətləndirmə",
-    "user": "İstifadəçilər"
+    "user": "İstifadəçilər",
+    "system": "Sistem (root)"
   },
   "listTitle": "Qeydlər",
   "found": "{count, plural, one {# qeyd} other {# qeyd}}",
@@ -101,6 +102,12 @@
       "update": "İstifadəçini yenilədi",
       "deactivate": "İstifadəçini deaktiv etdi",
       "activate": "İstifadəçini aktivləşdirdi"
+    },
+    "system": {
+      "delete_user": "İstifadəçi birdəfəlik silindi",
+      "delete_project": "Layihə birdəfəlik silindi",
+      "delete_application": "Müraciət birdəfəlik silindi",
+      "wipe": "Bütün proqram məlumatları silindi"
     }
   },
   "entities": {
@@ -117,7 +124,8 @@
     "Evaluation": "Qiymətləndirmə",
     "JuryAssignment": "Münsif təyinatı",
     "MentorAssignment": "Mentor təyinatı",
-    "StageChange": "Mərhələ dəyişikliyi"
+    "StageChange": "Mərhələ dəyişikliyi",
+    "System": "Sistem"
   },
   "activity": {
     "title": "Fəaliyyət lenti",

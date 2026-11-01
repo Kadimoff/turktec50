@@ -37,7 +37,9 @@
       "invalidEmail": "E-posta adresi geçersiz",
       "emailTaken": "Bu e-postayla bir kullanıcı zaten var",
       "passwordShort": "Şifre en az 8 karakter olmalıdır",
-      "invalid": "Girilen bilgi geçersiz"
+      "invalid": "Girilen bilgi geçersiz",
+      "rootOnly": "Bu işlemi yalnızca root (sistem sahibi) yapabilir.",
+      "rootProtected": "Root hesabı korumalıdır ve değiştirilemez."
     },
     "noUniversity": "Üniversite yok",
     "actionsFor": "{name} için işlemler",
@@ -66,6 +68,86 @@
       "lastLogin": "Son giriş",
       "actions": "İşlemler"
     },
-    "privacyNote": "Veri minimizasyonu: yalnızca programa katılım için gerekli olan ad, e-posta, rol, unvan ve üniversite saklanır. Kimlik numarası, telefon ve adres toplanmaz. İşlem kaydının eksiksiz kalması için pasif hesaplar silinmez."
+    "privacyNote": "Veri minimizasyonu: yalnızca programa katılım için gerekli olan ad, e-posta, rol, unvan ve üniversite saklanır. Kimlik numarası, telefon ve adres toplanmaz. İşlem kaydının eksiksiz kalması için pasif hesaplar silinmez.",
+    "root": {
+      "badge": "Root",
+      "cardEyebrow": "Sistem sahibi (root hesabı)",
+      "lockedRoot": "Root hesabı korumalıdır — yalnızca root kendisi düzenleyebilir",
+      "lockedAdmin": "Koordinatör hesaplarını yalnızca root yönetir",
+      "capabilities": {
+        "c1": "Koordinatör (admin) hesaplarını yalnızca root oluşturabilir, değiştirebilir ve devre dışı bırakabilir",
+        "c2": "Root hesabı kimse tarafından devre dışı bırakılamaz, rolü değiştirilemez",
+        "c3": "Demo şifresinden ayrı bir şifreyle korunur; tüm işlemleri kayıt altına alınır"
+      }
+    }
+  },
+  "system": {
+    "eyebrow": "Yalnızca root",
+    "title": "Sistem yönetimi",
+    "description": "Veritabanı özeti, rol atama ve geri alınamayan silme işlemleri. Bu sayfayı yalnızca sistem sahibi (root) görür.",
+    "choose": "Seçin…",
+    "confirmLabel": "Onay için yazın: {value}",
+    "db": {
+      "title": "Veritabanı",
+      "subtitle": "Tablolardaki güncel kayıt sayısı",
+      "tables": {
+        "users": "Kullanıcılar",
+        "applications": "Başvurular",
+        "projects": "Projeler",
+        "tasks": "Görevler",
+        "sessions": "Mentor oturumları",
+        "documents": "Belgeler",
+        "risks": "Riskler",
+        "evaluations": "Değerlendirmeler",
+        "audit": "İşlem kayıtları",
+        "notifications": "Bildirimler"
+      }
+    },
+    "roles": {
+      "title": "Rol atama",
+      "body": "Root herhangi bir kullanıcıya rol atayabilir; koordinatör (admin) rolünü verebilir ve geri alabilir. Kullanıcılar sayfasında satır menüsünden “Düzenle”yi seçin.",
+      "open": "Kullanıcılara git"
+    },
+    "project": {
+      "title": "Projeyi kalıcı olarak sil",
+      "body": "Projeyle birlikte görevler, oturumlar, kontrol listesi, belgeler (dosyalar dahil), riskler ve değerlendirmeler silinir. Başvuru kaydı kalır.",
+      "select": "Proje",
+      "hint": "Silmek için proje kodunu aynen yazın.",
+      "button": "Projeyi sil",
+      "done": "{code} silindi"
+    },
+    "application": {
+      "title": "Başvuruyu kalıcı olarak sil",
+      "body": "Başvuru ve seçim değerlendirmeleri silinir. Ondan oluşturulmuş bir proje varsa korunur.",
+      "select": "Başvuru",
+      "hint": "Silmek için başvuru kodunu aynen yazın.",
+      "button": "Başvuruyu sil",
+      "done": "{code} silindi"
+    },
+    "user": {
+      "menu": "Kalıcı olarak sil",
+      "title": "{name} kalıcı olarak silinsin mi?",
+      "body": "Hesap veritabanından silinir. Ekip üyeliği, mentor/jüri atamaları, mentor oturumları ve değerlendirmeleri de silinir; yüklediği belgeler projede kalır. Geri alınamaz — genellikle devre dışı bırakmak yeterlidir.",
+      "hint": "Silmek için e-posta adresini aynen yazın.",
+      "button": "Kullanıcıyı sil",
+      "done": "{email} silindi"
+    },
+    "wipe": {
+      "title": "Tüm program verisini sil",
+      "body": "Tüm kullanıcılar (root hariç), başvurular, projeler, görevler, belgeler, riskler, değerlendirmeler, bildirimler ve işlem kaydı silinir. Bu işlem geri alınamaz.",
+      "keeps": "Kalır: root hesabı, üniversiteler, yarışmalar, rubrikler",
+      "removes": "Silinir: diğer tüm veriler ve yüklenen dosyalar",
+      "hint": "Demo verisini yeniden yüklemek için sunucuda: npm run db:seed",
+      "button": "Tümünü sil",
+      "done": "Program verisi silindi ({count} kullanıcı)"
+    },
+    "errors": {
+      "rootOnly": "Bu işlemi yalnızca root yapabilir.",
+      "confirm": "Onay metni eşleşmiyor.",
+      "notFound": "Kayıt bulunamadı.",
+      "rootProtected": "Root hesabı silinemez.",
+      "error": "Bir hata oluştu. Tekrar deneyin."
+    },
+    "auditNote": "Tüm silme işlemleri işlem kaydına yazılır (kim, ne zaman, neyi)."
   }
 }

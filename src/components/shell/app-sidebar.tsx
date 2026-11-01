@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
   LayoutDashboard, FolderKanban, FileInput, Briefcase, ListChecks, Users, FileCheck2, TriangleAlert, Gavel,
-  BarChart3, CalendarDays, UserCog, ScrollText, type LucideIcon,
+  BarChart3, CalendarDays, UserCog, ScrollText, DatabaseZap, type LucideIcon,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader,
@@ -15,7 +15,7 @@ import type { NavGroup, NavIcon } from "@/lib/nav";
 const icons: Record<NavIcon, LucideIcon> = {
   dashboard: LayoutDashboard, project: Briefcase, applications: FileInput, projects: FolderKanban, tasks: ListChecks,
   mentors: Users, documents: FileCheck2, risks: TriangleAlert, jury: Gavel, kpi: BarChart3, calendar: CalendarDays,
-  users: UserCog, audit: ScrollText,
+  users: UserCog, audit: ScrollText, system: DatabaseZap,
 };
 
 export function AppSidebar({ groups, week }: { groups: NavGroup[]; week: string }) {

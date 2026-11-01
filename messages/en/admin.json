@@ -37,7 +37,9 @@
       "invalidEmail": "Invalid email address",
       "emailTaken": "A user with this email already exists",
       "passwordShort": "Password must be at least 8 characters",
-      "invalid": "Invalid value"
+      "invalid": "Invalid value",
+      "rootOnly": "Only root (the system owner) can perform this action.",
+      "rootProtected": "The root account is protected and cannot be changed."
     },
     "noUniversity": "No university",
     "actionsFor": "Actions for {name}",
@@ -66,6 +68,86 @@
       "lastLogin": "Last sign-in",
       "actions": "Actions"
     },
-    "privacyNote": "Data minimisation: only what is needed to take part in the programme is stored — name, email, role, title and university. No ID numbers, phone numbers or addresses are collected. Deactivated accounts are not deleted so that the audit log stays complete."
+    "privacyNote": "Data minimisation: only what is needed to take part in the programme is stored — name, email, role, title and university. No ID numbers, phone numbers or addresses are collected. Deactivated accounts are not deleted so that the audit log stays complete.",
+    "root": {
+      "badge": "Root",
+      "cardEyebrow": "System owner (root account)",
+      "lockedRoot": "Root account is protected — only root can edit it",
+      "lockedAdmin": "Coordinator accounts are managed by root only",
+      "capabilities": {
+        "c1": "Only root can create, change and deactivate coordinator (admin) accounts",
+        "c2": "The root account cannot be deactivated or have its role changed by anyone",
+        "c3": "Protected by its own password, separate from the demo password; every action is logged"
+      }
+    }
+  },
+  "system": {
+    "eyebrow": "Root only",
+    "title": "System administration",
+    "description": "Database overview, role assignment and irreversible delete operations. Only the system owner (root) can see this page.",
+    "choose": "Choose…",
+    "confirmLabel": "Type to confirm: {value}",
+    "db": {
+      "title": "Database",
+      "subtitle": "Current number of records per table",
+      "tables": {
+        "users": "Users",
+        "applications": "Applications",
+        "projects": "Projects",
+        "tasks": "Tasks",
+        "sessions": "Mentor sessions",
+        "documents": "Documents",
+        "risks": "Risks",
+        "evaluations": "Evaluations",
+        "audit": "Audit entries",
+        "notifications": "Notifications"
+      }
+    },
+    "roles": {
+      "title": "Role assignment",
+      "body": "Root can assign any role to any user, including granting and revoking the coordinator (admin) role. On the Users page, choose “Edit” from a row's menu.",
+      "open": "Go to users"
+    },
+    "project": {
+      "title": "Delete a project permanently",
+      "body": "Deletes the project with its tasks, sessions, checklist, documents (including files), risks and evaluations. The application record is kept.",
+      "select": "Project",
+      "hint": "Type the project code exactly to delete.",
+      "button": "Delete project",
+      "done": "{code} deleted"
+    },
+    "application": {
+      "title": "Delete an application permanently",
+      "body": "Deletes the application and its selection evaluations. A project created from it is kept.",
+      "select": "Application",
+      "hint": "Type the application code exactly to delete.",
+      "button": "Delete application",
+      "done": "{code} deleted"
+    },
+    "user": {
+      "menu": "Delete permanently",
+      "title": "Delete {name} permanently?",
+      "body": "The account is removed from the database, together with team membership, mentor/jury assignments, their mentor sessions and evaluations; documents they uploaded stay with the project. This cannot be undone — deactivating is usually enough.",
+      "hint": "Type the e-mail address exactly to delete.",
+      "button": "Delete user",
+      "done": "{email} deleted"
+    },
+    "wipe": {
+      "title": "Delete all program data",
+      "body": "Deletes all users (except root), applications, projects, tasks, documents, risks, evaluations, notifications and the audit log. This cannot be undone.",
+      "keeps": "Kept: root account, universities, competitions, rubrics",
+      "removes": "Deleted: everything else and uploaded files",
+      "hint": "To reload demo data, run on the server: npm run db:seed",
+      "button": "Delete everything",
+      "done": "Program data deleted ({count} users)"
+    },
+    "errors": {
+      "rootOnly": "Only root can perform this action.",
+      "confirm": "The confirmation text does not match.",
+      "notFound": "Record not found.",
+      "rootProtected": "The root account cannot be deleted.",
+      "error": "Something went wrong. Please try again."
+    },
+    "auditNote": "Every delete operation is written to the audit log (who, when, what)."
   }
 }

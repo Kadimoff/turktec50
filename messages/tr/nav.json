@@ -27,5 +27,6 @@
     "evaluations": "Değerlendirme",
     "activity": "Etkinlik"
   },
-  "toggleSidebar": "Menüyü aç/kapat"
+  "toggleSidebar": "Menüyü aç/kapat",
+  "system": "Sistem (root)"
 }

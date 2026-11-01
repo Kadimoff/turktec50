@@ -2,7 +2,8 @@
 import { useActionState, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Loader2, MoreHorizontal, Pencil, Power, PowerOff, UserPlus } from "lucide-react";
+import { Loader2, Lock, MoreHorizontal, Pencil, Power, PowerOff, Trash2, UserPlus } from "lucide-react";
+import { DeleteUserForm } from "@/components/admin/system-forms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -45,7 +46,7 @@ function useFieldError(state: UserFormState) {
   };
 }
 
-export function CreateUserDialog({ universities }: { universities: Uni[] }) {
+export function CreateUserDialog({ universities, canCreateAdmin }: { universities: Uni[]; canCreateAdmin: boolean }) {
   const t = useTranslations("admin.users");
   const tc = useTranslations("common");
   const te = useTranslations("enums");
@@ -84,7 +85,7 @@ export function CreateUserDialog({ universities }: { universities: Uni[] }) {
             </Field>
             <Field className="content-start" label={t("fields.role")} htmlFor="cu-role" required error={err("role")}>
               <NativeSelect id="cu-role" name="role" defaultValue="TEAM" required aria-invalid={!!err("role")} aria-describedby={err("role") ? "cu-role-error" : undefined}>
-                {ROLES.map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
+                {ROLES.filter((r) => canCreateAdmin || r !== "ADMIN").map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
               </NativeSelect>
             </Field>
             <Field className="content-start" label={t("fields.university")} htmlFor="cu-uni" error={err("universityId")}>
@@ -112,12 +113,26 @@ export function CreateUserDialog({ universities }: { universities: Uni[] }) {
 
 type RowUser = { id: string; name: string; email: string; role: (typeof ROLES)[number]; title: string | null; universityId: string | null; active: boolean };
 
-export function UserRowActions({ user, universities, isSelf }: { user: RowUser; universities: Uni[]; isSelf: boolean }) {
+/** Read-only marker for rows the current admin may not manage (root, or coordinators when not root). */
+export function LockedRow({ reason }: { reason: "root" | "admin" }) {
+  const t = useTranslations("admin.users.root");
+  const label = reason === "root" ? t("lockedRoot") : t("lockedAdmin");
+  return (
+    <span className="inline-grid size-9 place-items-center rounded-lg text-muted-foreground" title={label}>
+      <Lock className="size-4" aria-hidden />
+      <span className="sr-only">{label}</span>
+    </span>
+  );
+}
+
+export function UserRowActions({ user, universities, isSelf, canGrantAdmin = false, canDelete = false }: { user: RowUser; universities: Uni[]; isSelf: boolean; canGrantAdmin?: boolean; canDelete?: boolean }) {
   const t = useTranslations("admin.users");
   const tc = useTranslations("common");
   const te = useTranslations("enums");
   const [editOpen, setEditOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const ts = useTranslations("admin.system.user");
   const [pending, start] = useTransition();
   const [state, action, isPending] = useActionState(async (prev: UserFormState, fd: FormData) => {
     const res = await updateUser(prev, fd);
@@ -164,9 +179,30 @@ export function UserRowActions({ user, universities, isSelf }: { user: RowUser; 
             {user.active ? <PowerOff aria-hidden /> : <Power aria-hidden />}
             {user.active ? t("deactivate") : t("activate")}
           </DropdownMenuItem>
+          {canDelete && !isSelf && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem variant="destructive" onClick={() => setDeleteOpen(true)}>
+                <Trash2 aria-hidden />
+                {ts("menu")}
+              </DropdownMenuItem>
+            </>
+          )}
           {isSelf && <p className="px-1.5 pt-1 pb-1.5 text-xs text-muted-foreground">{t("selfNote")}</p>}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      {canDelete && !isSelf && (
+        <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>{ts("title", { name: user.name })}</DialogTitle>
+              <DialogDescription>{ts("body")}</DialogDescription>
+            </DialogHeader>
+            <DeleteUserForm userId={user.id} email={user.email} onDone={() => setDeleteOpen(false)} />
+          </DialogContent>
+        </Dialog>
+      )}
 
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent className="sm:max-w-md">
@@ -179,7 +215,7 @@ export function UserRowActions({ user, universities, isSelf }: { user: RowUser; 
             <Field label={t("fields.role")} htmlFor={`eu-role-${user.id}`} required error={err("role")} hint={isSelf ? t("selfRoleNote") : undefined}>
               {isSelf && <input type="hidden" name="role" value={user.role} />}
               <NativeSelect id={`eu-role-${user.id}`} name={isSelf ? undefined : "role"} defaultValue={user.role} disabled={isSelf} aria-invalid={!!err("role")} aria-describedby={err("role") ? `eu-role-${user.id}-error` : isSelf ? `eu-role-${user.id}-hint` : undefined}>
-                {ROLES.map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
+                {ROLES.filter((r) => canGrantAdmin || r !== "ADMIN" || user.role === "ADMIN").map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
               </NativeSelect>
             </Field>
             <Field label={t("fields.title")} htmlFor={`eu-title-${user.id}`} error={err("title")}>

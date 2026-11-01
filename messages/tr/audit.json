@@ -20,7 +20,8 @@
     "checklist": "Belge kontrol listesi",
     "risk": "Riskler",
     "evaluation": "Değerlendirme",
-    "user": "Kullanıcılar"
+    "user": "Kullanıcılar",
+    "system": "Sistem (root)"
   },
   "listTitle": "Kayıtlar",
   "found": "{count, plural, one {# kayıt} other {# kayıt}}",
@@ -101,6 +102,12 @@
       "update": "Kullanıcıyı güncelledi",
       "deactivate": "Kullanıcıyı devre dışı bıraktı",
       "activate": "Kullanıcıyı etkinleştirdi"
+    },
+    "system": {
+      "delete_user": "Kullanıcı kalıcı olarak silindi",
+      "delete_project": "Proje kalıcı olarak silindi",
+      "delete_application": "Başvuru kalıcı olarak silindi",
+      "wipe": "Tüm program verisi silindi"
     }
   },
   "entities": {
@@ -117,7 +124,8 @@
     "Evaluation": "Değerlendirme",
     "JuryAssignment": "Jüri ataması",
     "MentorAssignment": "Mentor ataması",
-    "StageChange": "Aşama değişikliği"
+    "StageChange": "Aşama değişikliği",
+    "System": "Sistem"
   },
   "activity": {
     "title": "Etkinlik akışı",

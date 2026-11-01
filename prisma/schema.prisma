@@ -121,6 +121,7 @@ model User {
   name               String
   passwordHash       String
   role               Role
+  isRoot             Boolean             @default(false) // system owner: protected, only root manages ADMIN accounts
   title              String? // e.g. "Proqram koordinatoru", "Professor", "Software engineer"
   expertise          String? // mentors/jury: comma separated tags
   locale             String             @default("az")

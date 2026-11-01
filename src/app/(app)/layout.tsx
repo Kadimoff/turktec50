@@ -43,7 +43,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
 
   return (
     <SidebarProvider>
-      <AppSidebar groups={navFor(user.role, myProject?.projectId)} week={weekLabel} />
+      <AppSidebar groups={navFor(user.role, myProject?.projectId, user.isRoot)} week={weekLabel} />
       <SidebarInset className="min-w-0 bg-background">
         <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b bg-background/85 px-3 backdrop-blur-md supports-[backdrop-filter]:bg-background/70 sm:px-4 no-print">
           <SidebarTrigger className="-ml-1" />

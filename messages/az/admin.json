@@ -37,7 +37,9 @@
       "invalidEmail": "E-poçt ünvanı düzgün deyil",
       "emailTaken": "Bu e-poçtla istifadəçi artıq mövcuddur",
       "passwordShort": "Şifrə ən azı 8 simvol olmalıdır",
-      "invalid": "Daxil edilən məlumat düzgün deyil"
+      "invalid": "Daxil edilən məlumat düzgün deyil",
+      "rootOnly": "Bu əməliyyatı yalnız root (sistem sahibi) edə bilər.",
+      "rootProtected": "Root hesabı qorunur və dəyişdirilə bilməz."
     },
     "noUniversity": "Universitet yoxdur",
     "actionsFor": "{name} üçün əməliyyatlar",
@@ -66,6 +68,86 @@
       "lastLogin": "Son giriş",
       "actions": "Əməliyyatlar"
     },
-    "privacyNote": "Minimum məlumat prinsipi: yalnız proqramda iştirak üçün zəruri olan ad, e-poçt, rol, vəzifə və universitet saxlanılır. Şəxsiyyət vəsiqəsi, telefon və ünvan toplanmır. Deaktiv edilmiş hesablar silinmir ki, əməliyyat jurnalı tam qalsın."
+    "privacyNote": "Minimum məlumat prinsipi: yalnız proqramda iştirak üçün zəruri olan ad, e-poçt, rol, vəzifə və universitet saxlanılır. Şəxsiyyət vəsiqəsi, telefon və ünvan toplanmır. Deaktiv edilmiş hesablar silinmir ki, əməliyyat jurnalı tam qalsın.",
+    "root": {
+      "badge": "Root",
+      "cardEyebrow": "Sistem sahibi (root hesabı)",
+      "lockedRoot": "Root hesabı qorunur — yalnız root özü redaktə edə bilər",
+      "lockedAdmin": "Koordinator hesablarını yalnız root idarə edir",
+      "capabilities": {
+        "c1": "Koordinator (admin) hesablarını yalnız root yarada, dəyişə və deaktiv edə bilər",
+        "c2": "Root hesabı heç kim tərəfindən deaktiv edilə və ya rolu dəyişdirilə bilməz",
+        "c3": "Ayrıca, demo şifrəsindən fərqli şifrə ilə qorunur; bütün əməliyyatları jurnala yazılır"
+      }
+    }
+  },
+  "system": {
+    "eyebrow": "Yalnız root",
+    "title": "Sistem idarəetməsi",
+    "description": "Verilənlər bazasına baxış, rolların təyini və geri qaytarılmayan silmə əməliyyatları. Bu səhifəni yalnız sistem sahibi (root) görür.",
+    "choose": "Seçin…",
+    "confirmLabel": "Təsdiq üçün yazın: {value}",
+    "db": {
+      "title": "Verilənlər bazası",
+      "subtitle": "Cədvəllərdəki cari qeyd sayı",
+      "tables": {
+        "users": "İstifadəçilər",
+        "applications": "Müraciətlər",
+        "projects": "Layihələr",
+        "tasks": "Tapşırıqlar",
+        "sessions": "Mentor sessiyaları",
+        "documents": "Sənədlər",
+        "risks": "Risklər",
+        "evaluations": "Qiymətləndirmələr",
+        "audit": "Jurnal qeydləri",
+        "notifications": "Bildirişlər"
+      }
+    },
+    "roles": {
+      "title": "Rolların təyini",
+      "body": "Root istənilən istifadəçiyə rol təyin edə bilər, o cümlədən koordinator (admin) rolunu verə və geri ala bilər. İstifadəçilər səhifəsində sətrin menyusundan “Redaktə et” seçin.",
+      "open": "İstifadəçilərə keç"
+    },
+    "project": {
+      "title": "Layihəni birdəfəlik sil",
+      "body": "Layihə ilə birlikdə tapşırıqlar, sessiyalar, checklist, sənədlər (fayllar daxil), risklər və qiymətləndirmələr silinir. Müraciət qeydi qalır.",
+      "select": "Layihə",
+      "hint": "Silmək üçün layihə kodunu dəqiq yazın.",
+      "button": "Layihəni sil",
+      "done": "{code} silindi"
+    },
+    "application": {
+      "title": "Müraciəti birdəfəlik sil",
+      "body": "Müraciət və onun seçim qiymətləndirmələri silinir. Ondan yaradılmış layihə varsa, saxlanılır.",
+      "select": "Müraciət",
+      "hint": "Silmək üçün müraciət kodunu dəqiq yazın.",
+      "button": "Müraciəti sil",
+      "done": "{code} silindi"
+    },
+    "user": {
+      "menu": "Birdəfəlik sil",
+      "title": "{name} birdəfəlik silinsin?",
+      "body": "Hesab bazadan silinir. Komanda üzvlüyü, mentor/münsif təyinatları, onun mentor sessiyaları və qiymətləndirmələri də silinir; yüklədiyi sənədlər layihədə qalır. Geri qaytarmaq mümkün deyil — adətən deaktiv etmək kifayətdir.",
+      "hint": "Silmək üçün e-poçt ünvanını dəqiq yazın.",
+      "button": "İstifadəçini sil",
+      "done": "{email} silindi"
+    },
+    "wipe": {
+      "title": "Bütün proqram məlumatlarını sil",
+      "body": "Bütün istifadəçilər (root istisna), müraciətlər, layihələr, tapşırıqlar, sənədlər, risklər, qiymətləndirmələr, bildirişlər və əməliyyat jurnalı silinir. Bu əməliyyat geri qaytarılmır.",
+      "keeps": "Qalır: root hesabı, universitetlər, yarışmalar, rubriklər",
+      "removes": "Silinir: digər bütün məlumatlar və yüklənmiş fayllar",
+      "hint": "Demo məlumatlarını yenidən yükləmək üçün serverdə: npm run db:seed",
+      "button": "Hamısını sil",
+      "done": "Proqram məlumatları silindi ({count} istifadəçi)"
+    },
+    "errors": {
+      "rootOnly": "Bu əməliyyatı yalnız root edə bilər.",
+      "confirm": "Təsdiq mətni uyğun gəlmir.",
+      "notFound": "Qeyd tapılmadı.",
+      "rootProtected": "Root hesabı silinə bilməz.",
+      "error": "Xəta baş verdi. Yenidən cəhd edin."
+    },
+    "auditNote": "Bütün silmə əməliyyatları əməliyyat jurnalına yazılır (kim, nə vaxt, nəyi)."
   }
 }

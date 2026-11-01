@@ -109,10 +109,15 @@ const COMPETITIONS = [
 ] as const;
 const COMP_BY_CAT: Record<string, string> = { agritech: "tf_agri", healthtech: "tf_health", edtech: "tf_edu", smartcity: "tf_human", transport: "tf_transport", cybersecurity: "tf_cyber", robotics: "tf_robot", aerospace: "tf_uav", energy: "az_energy", fintech: "az_fintech", ai: "turk_demo", environment: "tf_human" };
 
+// Root = system owner (separate credentials from .env, never the demo password)
+const ROOT = {
+  email: (process.env.ROOT_EMAIL ?? "qadim.qadimov@turktech50.az").toLowerCase(),
+  name: process.env.ROOT_NAME ?? "Qədim Qədimov",
+  title: "Sistem administratoru (root) · Rəqəmsal MVP texniki rəhbəri",
+};
 const ADMINS = [
   { email: "koordinator@turktech50.az", name: "Aysel Sadıqova", title: "Proqram koordinatoru · layihə yürütücüsü" },
   { email: "ahmad.ahmadzada@turktech50.az", name: "Əhməd Əhmədzadə", title: "Strateji koordinasiya" },
-  { email: "qadim.qadimov@turktech50.az", name: "Qədim Qədimov", title: "Rəqəmsal MVP · texniki rəhbər" },
   { email: "adila.habibova@turktech50.az", name: "Adilə Həbibova", title: "Sənədləşmə və müraciət paketi" },
   { email: "mehriban.mircafarova@turktech50.az", name: "Mehriban Mircəfərova", title: "Sənaye, Əqli mülkiyyət və kommersiyalaşma" },
 ];
@@ -254,6 +259,9 @@ async function main() {
   // staff users
   const userByEmail: Record<string, string> = {};
   const asoiu = uni.asoiu!.id;
+  const rootPassword = process.env.ROOT_PASSWORD;
+  if (!rootPassword || rootPassword.length < 12) throw new Error("ROOT_PASSWORD must be set in .env (min 12 chars)");
+  userByEmail[ROOT.email] = (await prisma.user.create({ data: { ...ROOT, isRoot: true, passwordHash: await bcrypt.hash(rootPassword, 12), role: "ADMIN", universityId: asoiu, lastLoginAt: days(-1) } })).id;
   for (const a of ADMINS) userByEmail[a.email] = (await prisma.user.create({ data: { ...a, passwordHash: hash, role: "ADMIN", universityId: asoiu, lastLoginAt: days(-1) } })).id;
   for (const m of MENTORS) userByEmail[m.email] = (await prisma.user.create({ data: { ...m, passwordHash: hash, role: "MENTOR", locale: m.email.includes("zeynep") || m.email.includes("emre") ? "tr" : m.email.includes("aidana") ? "en" : "az" } })).id;
   for (const j of JURY) userByEmail[j.email] = (await prisma.user.create({ data: { ...j, passwordHash: hash, role: "JURY", locale: j.email.includes("mehmet") || j.email.includes("ayse") ? "tr" : j.email.includes("nurlan") ? "en" : "az" } })).id;
@@ -348,9 +356,11 @@ async function main() {
 
     // members
     const memberIds: string[] = [];
+    const teamNames = new Set<string>([contactName]);
     for (let m = 0; m < memberCount; m++) {
       const isLead = m === 0;
-      const name = isLead ? contactName : nameFor(u.country);
+      let name = contactName;
+      if (!isLead) { do { name = nameFor(u.country); } while (teamNames.has(name)); teamNames.add(name); }
       const email = isLead && s ? s.lead.email : isLead ? app.contactEmail : uniqueEmail(name, p.uniKey);
       if (isLead && s) usedEmails.add(email);
       const user = await prisma.user.create({
@@ -521,9 +531,9 @@ async function main() {
     { title: "Mentor və laboratoriya tutumunun məhdud qalması", p: "MEDIUM", i: "HIGH", mit: "Mentor hovuzunu erkən təsdiqləmək; komandaları mövzular üzrə qruplaşdırıb ortaq sessiyalar; laboratoriya rezervasiya təqvimi.", owner: "koordinator@turktech50.az" },
     { title: "Prototip xərclərinin gözləniləndən yüksək olması", p: "MEDIUM", i: "MEDIUM", mit: "Erkən BOM baxışı; kiçik doğrulama prototipi; universitet avadanlığından natura istifadə.", owner: "ahmad.ahmadzada@turktech50.az" },
     { title: "Xarici yarışma təqvimi və ya qaydalarının dəyişməsi", p: "LOW", i: "HIGH", mit: "Bir neçə yarışma seçimi; təqvim izləyicisi; nəzarət edilə bilən çıxışlarla (test edilmiş prototip) birgə izləmə.", owner: "mehriban.mircafarova@turktech50.az" },
-    { title: "Rəqəmsal platformada şəxsi və ya gizli məlumatın açılması", p: "LOW", i: "HIGH", mit: "Minimum məlumat; rol əsaslı giriş; ehtiyat nüsxə; ticari sirr və patentləşdirilə bilən məzmunu açıq pitch materialından ayırmaq.", owner: "qadim.qadimov@turktech50.az" },
+    { title: "Rəqəmsal platformada şəxsi və ya gizli məlumatın açılması", p: "LOW", i: "HIGH", mit: "Minimum məlumat; rol əsaslı giriş; ehtiyat nüsxə; ticari sirr və patentləşdirilə bilən məzmunu açıq pitch materialından ayırmaq.", owner: ROOT.email },
     { title: "Türk Dünyası tərəfdaşlıqlarının vaxtında qurulmaması", p: "MEDIUM", i: "MEDIUM", mit: "İlk dövrü ADNSU mərkəzli aparmaq; onlayn iştirak; tərəfdaşlıqları mərhələli genişləndirmək.", owner: "ahmad.ahmadzada@turktech50.az" },
-    { title: "MVP-də texniki inteqrasiya gecikə bilər", p: "MEDIUM", i: "HIGH", mit: "İnteqrasiya sınağını erkən mərhələyə çəkmək və alternativ demo axını hazırlamaq.", owner: "qadim.qadimov@turktech50.az" },
+    { title: "MVP-də texniki inteqrasiya gecikə bilər", p: "MEDIUM", i: "HIGH", mit: "İnteqrasiya sınağını erkən mərhələyə çəkmək və alternativ demo axını hazırlamaq.", owner: ROOT.email },
   ];
   for (const r of programRisks) await prisma.risk.create({ data: { projectId: null, title: r.title, probability: r.p, impact: r.i, mitigation: r.mit, ownerId: userByEmail[r.owner]!, status: "MITIGATING", reviewDate: days(ri(2, 12)) } });
 
@@ -549,6 +559,7 @@ async function main() {
   const counts = await Promise.all([prisma.user.count(), prisma.application.count(), prisma.project.count(), prisma.task.count(), prisma.mentorSession.count(), prisma.document.count(), prisma.risk.count(), prisma.evaluation.count()]);
   console.log(`  users=${counts[0]} applications=${counts[1]} projects=${counts[2]} tasks=${counts[3]} sessions=${counts[4]} documents=${counts[5]} risks=${counts[6]} evaluations=${counts[7]}`);
   console.log(`Done. Demo password for all accounts: ${DEMO_PASSWORD}`);
+  console.log(`Root account: ${ROOT.email} (password from ROOT_PASSWORD in .env)`);
 }
 
 main()

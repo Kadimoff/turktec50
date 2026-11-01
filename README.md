@@ -54,6 +54,21 @@ Tüm hesapların şifresi `Demo2026!`. Giriş sayfasındaki "Demo hesaplar" kart
 
 Demo verisini sıfırlamak için: `npm run db:seed`
 
+### Root hesabı (sistem sahibi)
+
+| İsim | E-posta | Şifre |
+|---|---|---|
+| Qədim Qədimov | `ROOT_EMAIL` (qadim.qadimov@turktech50.az) | `.env` dosyasındaki `ROOT_PASSWORD` (demo şifresinden ayrı) |
+
+- **Hesabın korunması:** root hesabını kimse düzenleyemez, devre dışı bırakamaz ya da silemez. Rolü de değiştirilemez.
+- **Rol yetkisi:** koordinatör (ADMIN) hesaplarını yalnızca root oluşturur, düzenler ve devre dışı bırakır. ADMIN rolünü vermek ve geri almak da yalnızca root'a açıktır. Root, istediği kullanıcıya istediği rolü atayabilir.
+- **Veri silme:** yalnızca root'a açık **Sistem** sayfası (`/admin/system`) şunları sunar:
+  - veritabanı özeti;
+  - kullanıcı, proje veya başvuruyu kalıcı olarak silme (adı ya da kodu elle yazarak onay);
+  - tüm program verisini temizleme (onay ifadesi `DELETE ALL`; root hesabı, üniversiteler, yarışmalar ve rubrikler korunur).
+- **İzlenebilirlik:** her silme işlemi işlem kaydına yazılır.
+- **Şifre değiştirme:** `.env` dosyasında `ROOT_PASSWORD` değerini güncelleyip `npm run root:sync` çalıştırın. Bu komut veriyi silmez.
+
 ## Teknik yapı
 
 - Next.js 16 (App Router, Turbopack, Server Actions), React 19, TypeScript

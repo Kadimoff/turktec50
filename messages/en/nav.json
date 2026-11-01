@@ -27,5 +27,6 @@
     "evaluations": "Evaluation",
     "activity": "Activity"
   },
-  "toggleSidebar": "Toggle menu"
+  "toggleSidebar": "Toggle menu",
+  "system": "System (root)"
 }

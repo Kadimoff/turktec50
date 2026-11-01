@@ -11,6 +11,8 @@ export type CurrentUser = {
   name: string;
   email: string;
   role: Role;
+  /** system owner (root): an ADMIN that cannot be edited/deactivated by others; only root manages ADMIN accounts */
+  isRoot: boolean;
   title: string | null;
   locale: string;
   universityId: string | null;
@@ -23,10 +25,10 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
   if (!session) return null;
   const user = await prisma.user.findUnique({
     where: { id: session.uid },
-    select: { id: true, name: true, email: true, role: true, title: true, locale: true, universityId: true, active: true },
+    select: { id: true, name: true, email: true, role: true, isRoot: true, title: true, locale: true, universityId: true, active: true },
   });
   if (!user || !user.active) return null;
-  return { id: user.id, name: user.name, email: user.email, role: user.role, title: user.title, locale: user.locale, universityId: user.universityId };
+  return { id: user.id, name: user.name, email: user.email, role: user.role, isRoot: user.isRoot, title: user.title, locale: user.locale, universityId: user.universityId };
 });
 
 /** Use in server components / actions. Redirects to /login if not signed in, to /dashboard?denied=1 if role not allowed. */

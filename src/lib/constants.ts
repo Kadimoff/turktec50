@@ -126,3 +126,6 @@ export const UPLOAD = {
     "text/plain",
   ],
 } as const;
+
+/** Typed confirmation for the root-only "wipe all program data" operation. */
+export const WIPE_PHRASE = "DELETE ALL";

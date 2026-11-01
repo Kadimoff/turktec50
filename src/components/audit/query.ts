@@ -1,7 +1,7 @@
 import type { Prisma } from "@/generated/prisma/client";
 
 /** Action groups = prefix before the dot in audit action keys (see CONVENTIONS §3). */
-export const AUDIT_GROUPS = ["auth", "application", "project", "task", "session", "document", "checklist", "risk", "evaluation", "user"] as const;
+export const AUDIT_GROUPS = ["auth", "application", "project", "task", "session", "document", "checklist", "risk", "evaluation", "user", "system"] as const;
 export type AuditGroup = (typeof AUDIT_GROUPS)[number];
 
 export type AuditFilters = { group?: AuditGroup; actor?: string; project?: string; from?: string; to?: string };

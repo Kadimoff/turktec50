@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { Gavel, GraduationCap, ShieldCheck, ShieldUser, UserRoundSearch, UsersRound } from "lucide-react";
+import { Crown, Gavel, GraduationCap, KeyRound, ShieldCheck, ShieldUser, UserRoundSearch, UsersRound } from "lucide-react";
 import type { Prisma } from "@/generated/prisma/client";
 import type { Role } from "@/generated/prisma/enums";
 import { requireUser } from "@/lib/auth";
@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { FilterBar, FilterField } from "@/components/admin/filter-bar";
 import { Pagination, parsePage, str } from "@/components/admin/pagination";
-import { CreateUserDialog, UserRowActions } from "@/components/admin/user-dialogs";
+import { CreateUserDialog, LockedRow, UserRowActions } from "@/components/admin/user-dialogs";
 
 const PAGE_SIZE = 25;
 const ROLES: Role[] = ["ADMIN", "TEAM", "MENTOR", "JURY"];
@@ -31,7 +31,7 @@ export async function generateMetadata() {
 export default async function UsersPage(props: PageProps<"/admin/users">) {
   const me = await requireUser(["ADMIN"]);
   const sp = await props.searchParams;
-  const [t, tc, te, locale] = await Promise.all([getTranslations("admin.users"), getTranslations("common"), getTranslations("enums"), getLocale()]);
+  const [t, tc, te, tr, locale] = await Promise.all([getTranslations("admin.users"), getTranslations("common"), getTranslations("enums"), getTranslations("admin.users.root"), getLocale()]);
 
   const q = str(sp.q);
   const role = ROLES.find((r) => r === str(sp.role));
@@ -47,16 +47,17 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
     ...(q && { OR: [{ name: { contains: q, mode: "insensitive" } }, { email: { contains: q, mode: "insensitive" } }, { title: { contains: q, mode: "insensitive" } }] }),
   };
 
-  const [byRole, total, users, universities] = await Promise.all([
+  const [rootUser, byRole, total, users, universities] = await Promise.all([
+    prisma.user.findFirst({ where: { isRoot: true }, select: { id: true, name: true, email: true, title: true, lastLoginAt: true } }),
     prisma.user.groupBy({ by: ["role", "active"], _count: { _all: true } }),
     prisma.user.count({ where }),
     prisma.user.findMany({
       where,
-      orderBy: [{ name: "asc" }, { id: "asc" }],
+      orderBy: [{ isRoot: "desc" }, { name: "asc" }, { id: "asc" }],
       skip: (page - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
       select: {
-        id: true, name: true, email: true, role: true, title: true, active: true, lastLoginAt: true, universityId: true,
+        id: true, name: true, email: true, role: true, isRoot: true, title: true, active: true, lastLoginAt: true, universityId: true,
         university: { select: { shortName: true } },
         _count: { select: { memberships: true, mentorAssignments: true, juryAssignments: true } },
       },
@@ -68,6 +69,19 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
     byRole.filter((g) => g.role === r && (active === undefined || g.active === active)).reduce((a, g) => a + g._count._all, 0);
   const linked = (u: (typeof users)[number]) => u._count.memberships + u._count.mentorAssignments + u._count.juryAssignments;
   const filtered = !!(q || role || uni || status);
+  // root is untouchable for everyone else; coordinators (ADMIN) are managed by root only
+  const lockFor = (u: (typeof users)[number]): "root" | "admin" | null =>
+    u.isRoot && !me.isRoot ? "root" : !u.isRoot && u.role === "ADMIN" && !me.isRoot ? "admin" : null;
+  const actionsFor = (u: (typeof users)[number]) => {
+    const lock = lockFor(u);
+    return lock ? <LockedRow reason={lock} /> : <UserRowActions user={u} universities={universities} isSelf={u.id === me.id} canGrantAdmin={me.isRoot} canDelete={me.isRoot} />;
+  };
+  const RootBadge = () => (
+    <span className="inline-flex items-center gap-1 rounded-full bg-brand-navy px-2 py-0.5 text-[11px] font-bold text-background">
+      <Crown className="size-3" aria-hidden />
+      {tr("badge")}
+    </span>
+  );
 
   return (
     <div className="space-y-6">
@@ -75,8 +89,40 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
         eyebrow={t("eyebrow")}
         title={t("title")}
         description={t("description")}
-        actions={<CreateUserDialog universities={universities} />}
+        actions={<CreateUserDialog universities={universities} canCreateAdmin={me.isRoot} />}
       />
+
+      {rootUser && (
+        <section aria-labelledby="root-title" className="relative overflow-hidden rounded-xl border border-sidebar-border bg-sidebar p-5 text-sidebar-foreground shadow-card">
+          <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 size-56 rounded-full bg-sidebar-primary/15 blur-2xl" />
+          <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-4">
+              <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground" aria-hidden>
+                <Crown className="size-6" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold tracking-wide text-sidebar-primary">{tr("cardEyebrow")}</p>
+                <h2 id="root-title" className="text-lg font-bold text-white">
+                  {rootUser.name}
+                  {rootUser.id === me.id && <span className="ml-2 text-xs font-normal text-sidebar-foreground/80">({t("you")})</span>}
+                </h2>
+                <p className="truncate text-sm text-sidebar-foreground/85">{rootUser.email}</p>
+                <p className="mt-0.5 text-xs text-sidebar-foreground/75">
+                  {t("cols.lastLogin")}: {rootUser.lastLoginAt ? fmtRelative(rootUser.lastLoginAt, locale) : t("never")}
+                </p>
+              </div>
+            </div>
+            <ul className="grid gap-1.5 text-[13px] md:max-w-md">
+              {(["c1", "c2", "c3"] as const).map((k) => (
+                <li key={k} className="flex items-start gap-2">
+                  <KeyRound className="mt-0.5 size-3.5 shrink-0 text-sidebar-primary" aria-hidden />
+                  <span>{tr(`capabilities.${k}`)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         {ROLES.map((r) => (
@@ -133,7 +179,7 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
                 <li key={u.id} className="flex items-start gap-3 px-4 py-3">
                   <UserAvatar name={u.name} size="md" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold">{u.name}</p>
+                    <p className="flex items-center gap-1.5 truncate text-sm font-semibold">{u.name}{u.isRoot && <RootBadge />}</p>
                     <p className="truncate text-xs text-muted-foreground">{u.email}</p>
                     {u.title && <p className="truncate text-xs text-muted-foreground">{u.title}</p>}
                     <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
@@ -145,7 +191,7 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
                       {t("linkedShort", { count: linked(u) })} · {u.lastLoginAt ? fmtRelative(u.lastLoginAt, locale) : t("never")}
                     </p>
                   </div>
-                  <UserRowActions user={u} universities={universities} isSelf={u.id === me.id} />
+                  {actionsFor(u)}
                 </li>
               ))}
             </ul>
@@ -172,8 +218,9 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
                         <div className="flex items-center gap-3">
                           <UserAvatar name={u.name} size="sm" />
                           <div className="min-w-0">
-                            <p className="max-w-60 truncate font-medium text-foreground">
+                            <p className="flex max-w-72 items-center gap-1.5 truncate font-medium text-foreground">
                               {u.name}
+                              {u.isRoot && <RootBadge />}
                               {u.id === me.id && <span className="ml-1.5 text-xs font-normal text-muted-foreground">({t("you")})</span>}
                             </p>
                             <p className="max-w-60 truncate text-xs text-muted-foreground">{u.email}</p>
@@ -205,7 +252,7 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
                         {u.active ? <ToneBadge tone="success">{t("active")}</ToneBadge> : <ToneBadge tone="neutral">{t("inactive")}</ToneBadge>}
                       </TableCell>
                       <TableCell className="pr-5 text-right">
-                        <UserRowActions user={u} universities={universities} isSelf={u.id === me.id} />
+                        {actionsFor(u)}
                       </TableCell>
                     </TableRow>
                   ))}

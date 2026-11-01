@@ -20,7 +20,8 @@
     "checklist": "Document checklist",
     "risk": "Risks",
     "evaluation": "Evaluation",
-    "user": "Users"
+    "user": "Users",
+    "system": "System (root)"
   },
   "listTitle": "Entries",
   "found": "{count, plural, one {# entry} other {# entries}}",
@@ -101,6 +102,12 @@
       "update": "Updated a user",
       "deactivate": "Deactivated a user",
       "activate": "Activated a user"
+    },
+    "system": {
+      "delete_user": "User permanently deleted",
+      "delete_project": "Project permanently deleted",
+      "delete_application": "Application permanently deleted",
+      "wipe": "All program data deleted"
     }
   },
   "entities": {
@@ -117,7 +124,8 @@
     "Evaluation": "Evaluation",
     "JuryAssignment": "Jury assignment",
     "MentorAssignment": "Mentor assignment",
-    "StageChange": "Stage change"
+    "StageChange": "Stage change",
+    "System": "System"
   },
   "activity": {
     "title": "Activity feed",
