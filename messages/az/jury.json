@@ -1,1 +1,67 @@
-{}
+{
+  "criteria": {
+    "problem_relevance": {
+      "title": "Problemin aktuallığı",
+      "hint": "Problem real, ölçülə bilən və hədəf istifadəçi aydındır"
+    },
+    "innovation": {
+      "title": "Yenilik",
+      "hint": "Mövcud həllərdən fərqi və texniki yenilik"
+    },
+    "team_fit": {
+      "title": "Komanda uyğunluğu",
+      "hint": "Komandanın bacarıqları layihənin tələblərini qarşılayır"
+    },
+    "feasibility": {
+      "title": "İcra edilə bilənlik",
+      "hint": "6 ay və mövcud resurslarla prototip real görünür"
+    },
+    "turkic_impact": {
+      "title": "Türk Dünyası təsiri",
+      "hint": "Region üçün faydası və yayıla bilənliyi"
+    },
+    "technical_adequacy": {
+      "title": "Texniki yeterlilik",
+      "hint": "Arxitektura, test sübutu və işlək funksiyalar"
+    },
+    "applicability": {
+      "title": "Tətbiq oluna bilənlik",
+      "hint": "Real mühitdə istifadəyə hazırlıq və istifadəçi rəyi"
+    },
+    "turkic_contribution": {
+      "title": "Türk Dünyasına töhfə",
+      "hint": "Regional əməkdaşlıq və yayılma potensialı"
+    },
+    "application_completeness": {
+      "title": "Müraciət tamlığı",
+      "hint": "Sənəd paketi, büdcə və forma tələblərə uyğundur"
+    },
+    "commercialization_ip": {
+      "title": "Kommersiyalaşma və Əqli mülkiyyət",
+      "hint": "Biznes modeli və əqli mülkiyyətin qorunması yanaşması"
+    },
+    "pitch_clarity": {
+      "title": "Təqdimatın aydınlığı",
+      "hint": "Problem, həll və dəyər qısa və aydın çatdırılır"
+    },
+    "demo_quality": {
+      "title": "Demo keyfiyyəti",
+      "hint": "Canlı və ya qeydə alınmış demo əsas funksiyanı sübut edir"
+    },
+    "qa_handling": {
+      "title": "Sual-cavab",
+      "hint": "Münsif suallarına əsaslandırılmış cavablar"
+    },
+    "technical_depth": {
+      "title": "Texniki dərinlik",
+      "hint": "Mühəndislik qərarlarının əsaslandırılması"
+    }
+  },
+  "scale": {
+    "1": "Zəif",
+    "2": "Kifayət deyil",
+    "3": "Orta",
+    "4": "Yaxşı",
+    "5": "Əla"
+  }
+}

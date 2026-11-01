@@ -1,1 +1,67 @@
-{}
+{
+  "criteria": {
+    "problem_relevance": {
+      "title": "Problemin önemi",
+      "hint": "Problem gerçek, ölçülebilir ve hedef kullanıcı nettir"
+    },
+    "innovation": {
+      "title": "Yenilikçilik",
+      "hint": "Mevcut çözümlerden farkı ve teknik yenilik"
+    },
+    "team_fit": {
+      "title": "Ekip uygunluğu",
+      "hint": "Ekibin yetkinlikleri projenin gereksinimlerini karşılar"
+    },
+    "feasibility": {
+      "title": "Uygulanabilirlik",
+      "hint": "6 ay ve mevcut kaynaklarla prototip gerçekçi"
+    },
+    "turkic_impact": {
+      "title": "Türk Dünyası etkisi",
+      "hint": "Bölgeye faydası ve yaygınlaştırılabilirliği"
+    },
+    "technical_adequacy": {
+      "title": "Teknik yeterlilik",
+      "hint": "Mimari, test kanıtı ve çalışan işlevler"
+    },
+    "applicability": {
+      "title": "Uygulanabilirlik",
+      "hint": "Gerçek ortamda kullanıma hazırlık ve kullanıcı geri bildirimi"
+    },
+    "turkic_contribution": {
+      "title": "Türk Dünyasına katkı",
+      "hint": "Bölgesel iş birliği ve yaygınlaşma potansiyeli"
+    },
+    "application_completeness": {
+      "title": "Başvuru tamlığı",
+      "hint": "Belge paketi, bütçe ve form gereksinimlere uygun"
+    },
+    "commercialization_ip": {
+      "title": "Ticarileşme ve fikri mülkiyet",
+      "hint": "İş modeli ve fikri mülkiyetin korunması yaklaşımı"
+    },
+    "pitch_clarity": {
+      "title": "Sunumun netliği",
+      "hint": "Problem, çözüm ve değer kısa ve net anlatılır"
+    },
+    "demo_quality": {
+      "title": "Demo kalitesi",
+      "hint": "Canlı veya kayıtlı demo temel işlevi kanıtlar"
+    },
+    "qa_handling": {
+      "title": "Soru-cevap",
+      "hint": "Jüri sorularına gerekçeli yanıtlar"
+    },
+    "technical_depth": {
+      "title": "Teknik derinlik",
+      "hint": "Mühendislik kararlarının gerekçelendirilmesi"
+    }
+  },
+  "scale": {
+    "1": "Zayıf",
+    "2": "Yetersiz",
+    "3": "Orta",
+    "4": "İyi",
+    "5": "Mükemmel"
+  }
+}

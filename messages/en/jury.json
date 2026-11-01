@@ -1,1 +1,67 @@
-{}
+{
+  "criteria": {
+    "problem_relevance": {
+      "title": "Problem relevance",
+      "hint": "The problem is real, measurable and the target user is clear"
+    },
+    "innovation": {
+      "title": "Innovation",
+      "hint": "Difference from existing solutions and technical novelty"
+    },
+    "team_fit": {
+      "title": "Team fit",
+      "hint": "Team skills match what the project requires"
+    },
+    "feasibility": {
+      "title": "Feasibility",
+      "hint": "A prototype is realistic within 6 months and available resources"
+    },
+    "turkic_impact": {
+      "title": "Turkic world impact",
+      "hint": "Benefit for the region and potential to scale across it"
+    },
+    "technical_adequacy": {
+      "title": "Technical adequacy",
+      "hint": "Architecture, test evidence and working functionality"
+    },
+    "applicability": {
+      "title": "Applicability",
+      "hint": "Readiness for real-world use and user feedback"
+    },
+    "turkic_contribution": {
+      "title": "Contribution to the Turkic world",
+      "hint": "Regional collaboration and scaling potential"
+    },
+    "application_completeness": {
+      "title": "Application completeness",
+      "hint": "Document package, budget and form meet the requirements"
+    },
+    "commercialization_ip": {
+      "title": "Commercialisation & IP",
+      "hint": "Business model and approach to protecting IP"
+    },
+    "pitch_clarity": {
+      "title": "Pitch clarity",
+      "hint": "Problem, solution and value are communicated briefly and clearly"
+    },
+    "demo_quality": {
+      "title": "Demo quality",
+      "hint": "Live or recorded demo proves the core function"
+    },
+    "qa_handling": {
+      "title": "Q&A handling",
+      "hint": "Well-founded answers to jury questions"
+    },
+    "technical_depth": {
+      "title": "Technical depth",
+      "hint": "Justification of engineering decisions"
+    }
+  },
+  "scale": {
+    "1": "Weak",
+    "2": "Insufficient",
+    "3": "Adequate",
+    "4": "Good",
+    "5": "Excellent"
+  }
+}
