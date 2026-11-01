@@ -56,9 +56,9 @@ Demo verisini sıfırlamak için: `npm run db:seed`
 
 ### Root hesabı (sistem sahibi)
 
-| İsim | E-posta | Şifre |
+| İsim | Kullanıcı adı | Şifre |
 |---|---|---|
-| Qədim Qədimov | `ROOT_EMAIL` (qadim.qadimov@turktech50.az) | `.env` dosyasındaki `ROOT_PASSWORD` (demo şifresinden ayrı) |
+| Qədim Qədimov | `root` (veya qadim.qadimov@turktech50.az) | `.env` dosyasındaki `ROOT_PASSWORD` (demo şifresinden ayrı) |
 
 - **Hesabın korunması:** root hesabını kimse düzenleyemez, devre dışı bırakamaz ya da silemez. Rolü de değiştirilemez.
 - **Rol yetkisi:** koordinatör (ADMIN) hesaplarını yalnızca root oluşturur, düzenler ve devre dışı bırakır. ADMIN rolünü vermek ve geri almak da yalnızca root'a açıktır. Root, istediği kullanıcıya istediği rolü atayabilir.

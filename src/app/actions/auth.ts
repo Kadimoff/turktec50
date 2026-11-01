@@ -8,14 +8,19 @@ import { createSession, destroySession, getCurrentUser } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { LOCALE_COOKIE } from "@/lib/constants";
 
-const schema = z.object({ email: z.string().email(), password: z.string().min(1), next: z.string().optional() });
+// "email" field accepts an e-mail address, or the username "root" for the system owner account
+const schema = z.object({ email: z.string().trim().min(1).max(160), password: z.string().min(1), next: z.string().optional() });
 
 export type LoginState = { error?: "invalid" | "inactive" } | undefined;
 
 export async function login(_prev: LoginState, formData: FormData): Promise<LoginState> {
   const parsed = schema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { error: "invalid" };
-  const user = await prisma.user.findUnique({ where: { email: parsed.data.email.toLowerCase().trim() } });
+  const login = parsed.data.email.toLowerCase();
+  const user =
+    login === "root"
+      ? await prisma.user.findFirst({ where: { isRoot: true } })
+      : await prisma.user.findUnique({ where: { email: login } });
   if (!user || !(await bcrypt.compare(parsed.data.password, user.passwordHash))) return { error: "invalid" };
   if (!user.active) return { error: "inactive" };
   await createSession(user);

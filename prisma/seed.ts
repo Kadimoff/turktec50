@@ -260,7 +260,7 @@ async function main() {
   const userByEmail: Record<string, string> = {};
   const asoiu = uni.asoiu!.id;
   const rootPassword = process.env.ROOT_PASSWORD;
-  if (!rootPassword || rootPassword.length < 12) throw new Error("ROOT_PASSWORD must be set in .env (min 12 chars)");
+  if (!rootPassword || rootPassword.length < 8) throw new Error("ROOT_PASSWORD must be set in .env (min 8 chars)");
   userByEmail[ROOT.email] = (await prisma.user.create({ data: { ...ROOT, isRoot: true, passwordHash: await bcrypt.hash(rootPassword, 12), role: "ADMIN", universityId: asoiu, lastLoginAt: days(-1) } })).id;
   for (const a of ADMINS) userByEmail[a.email] = (await prisma.user.create({ data: { ...a, passwordHash: hash, role: "ADMIN", universityId: asoiu, lastLoginAt: days(-1) } })).id;
   for (const m of MENTORS) userByEmail[m.email] = (await prisma.user.create({ data: { ...m, passwordHash: hash, role: "MENTOR", locale: m.email.includes("zeynep") || m.email.includes("emre") ? "tr" : m.email.includes("aidana") ? "en" : "az" } })).id;

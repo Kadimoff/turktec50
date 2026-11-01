@@ -28,7 +28,7 @@ export function LoginForm({ next }: { next?: string }) {
       <form ref={formRef} action={action} className="mt-8 grid gap-4" noValidate>
         {next && <input type="hidden" name="next" value={next} />}
         <Field label={t("email")} htmlFor="email" required>
-          <Input id="email" name="email" type="email" autoComplete="username" required value={email} onChange={(e) => setEmail(e.target.value)} className="h-10" />
+          <Input id="email" name="email" type="text" inputMode="email" autoCapitalize="none" spellCheck={false} autoComplete="username" required value={email} onChange={(e) => setEmail(e.target.value)} className="h-10" />
         </Field>
         <Field label={t("password")} htmlFor="password" required error={state?.error ? t(state.error) : undefined}>
           <Input
