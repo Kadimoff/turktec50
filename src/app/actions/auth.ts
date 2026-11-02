@@ -19,7 +19,9 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
   const login = parsed.data.email.toLowerCase();
   const user =
     login === "root"
-      ? await prisma.user.findFirst({ where: { isRoot: true } })
+      ? // "root" = the primary (.env) root; additional root accounts sign in with their e-mail
+        ((await prisma.user.findFirst({ where: { isRoot: true, email: (process.env.ROOT_EMAIL ?? "").toLowerCase().trim() } })) ??
+        (await prisma.user.findFirst({ where: { isRoot: true }, orderBy: { createdAt: "asc" } })))
       : await prisma.user.findUnique({ where: { email: login } });
   if (!user || !(await bcrypt.compare(parsed.data.password, user.passwordHash))) return { error: "invalid" };
   if (!user.active) return { error: "inactive" };

@@ -15,6 +15,7 @@
     "db:reset": "prisma migrate reset --force && tsx prisma/seed.ts",
     "postinstall": "prisma generate",
     "root:sync": "tsx prisma/root-sync.ts",
+    "root:add": "tsx prisma/add-root.ts",
     "workflow:sync": "tsx prisma/workflow-sync.ts",
     "test": "node --import tsx --test tests/*.test.ts"
   },
