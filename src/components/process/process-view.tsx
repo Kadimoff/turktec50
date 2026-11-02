@@ -50,7 +50,8 @@ export function ProcessView({ data, canManage, initialSelected }: { data: Proces
   const svgRef = useRef<SVGSVGElement>(null);
   const [selected, setSelected] = useState<string | null>(initialSelected);
   const [presenting, setPresenting] = useState(false);
-  const [zoom, setZoom] = useState<number | "fit">(1);
+  // default: the whole workflow fits the available width (owner request); zoom buttons switch to pixel size
+  const [zoom, setZoom] = useState<number | "fit">("fit");
   const listRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -82,14 +83,14 @@ export function ProcessView({ data, canManage, initialSelected }: { data: Proces
   };
   const exit = useCallback(async () => {
     setPresenting(false);
-    setZoom(1);
+    setZoom("fit");
     if (document.fullscreenElement) { try { await document.exitFullscreen(); } catch { /* ignore */ } }
   }, []);
 
   useEffect(() => {
     if (!presenting) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") void exit(); };
-    const onFs = () => { if (!document.fullscreenElement) { setPresenting(false); setZoom(1); } };
+    const onFs = () => { if (!document.fullscreenElement) { setPresenting(false); setZoom("fit"); } };
     window.addEventListener("keydown", onKey);
     document.addEventListener("fullscreenchange", onFs);
     document.body.style.overflow = "hidden";
@@ -172,8 +173,9 @@ export function ProcessView({ data, canManage, initialSelected }: { data: Proces
             <Button size="lg" onClick={exit} data-testid="present-exit"><X aria-hidden />{t("actions.exitPresent")}</Button>
           </div>
         </div>
-        <div className="min-h-0 flex-1 overflow-auto p-4 lg:p-6">
-          <div className={cn("mx-auto rounded-xl border bg-card shadow-card", zoom === "fit" ? "w-full" : "w-max")}>{diagram}</div>
+        <div className={cn("min-h-0 flex-1 p-4 lg:p-6", zoom === "fit" ? "flex flex-col overflow-hidden" : "overflow-auto")}>
+          {/* fit = whole diagram inside the screen (width AND height); zoomed = scroll */}
+          <div className={cn("mx-auto rounded-xl border bg-card shadow-card", zoom === "fit" ? "min-h-0 w-full flex-1 p-2" : "w-max")}>{diagram}</div>
           {stage && (
             <p className="mx-auto mt-4 max-w-5xl text-center text-xl">
               <span className="font-bold">{stage.name}</span>
@@ -188,7 +190,7 @@ export function ProcessView({ data, canManage, initialSelected }: { data: Proces
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-full-width>
       {toolbar}
       <section className="min-w-0 rounded-xl border bg-card shadow-card" aria-labelledby="proc-diagram">
         <div className="flex flex-wrap items-start justify-between gap-2 border-b p-4 sm:p-5">
@@ -204,7 +206,7 @@ export function ProcessView({ data, canManage, initialSelected }: { data: Proces
         </div>
         {/* horizontal scroll inside the card on small screens; the page itself never overflows */}
         <div ref={scrollRef} className="overflow-x-auto p-2 sm:p-3" data-testid="diagram-scroll">
-          <div className={cn(zoom === "fit" ? "min-w-[1100px]" : "w-max")}>{diagram}</div>
+          <div className={cn(zoom === "fit" ? "min-w-[960px]" : "w-max")}>{diagram}</div>
         </div>
       </section>
 
