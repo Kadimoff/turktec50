@@ -6,6 +6,7 @@ import { requireUser } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { CATEGORIES, CHECKLIST_TEMPLATE } from "@/lib/constants";
 import { nextProjectCode } from "@/components/projects/server";
+import { syncProjectWorkflow } from "@/lib/workflow";
 
 export type CreateProjectState =
   | { ok: true; projectId: string; code: string; at: number }
@@ -53,6 +54,7 @@ export async function createProject(_prev: CreateProjectState, formData: FormDat
       });
     });
     await logAudit({ actorId: user.id, action: "project.create", entity: "Project", entityId: project.id, projectId: project.id, summary: `${project.code} · ${project.title}` });
+    await syncProjectWorkflow(project.id, user.id);
     revalidatePath("/projects");
     return { ok: true, projectId: project.id, code: project.code, at };
   } catch {

@@ -9,6 +9,7 @@ import bcrypt from "bcryptjs";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { CHECKLIST_TEMPLATE, RUBRICS } from "../src/lib/constants";
+import { syncWorkflow } from "../src/lib/workflow-core";
 import type {
   ProjectStage, ProjectHealth, TaskStatus, Priority, ChecklistStatus, RiskLevel, ApplicationStatus,
 } from "../src/generated/prisma/enums";
@@ -271,7 +272,7 @@ async function main() {
   const usedEmails = new Set(Object.keys(userByEmail));
   function uniqueEmail(name: string, uniKey: string) {
     const domain = uniKey === "asoiu" ? "student.asoiu.az" : uniKey === "bdu" ? "student.bsu.az" : `student.${uniKey}.edu`;
-    let base = tr(name.replace(/^(Prof\.|Dr\.|Doç\.)\s*/g, "")); let e = `${base}@${domain}`; let i = 2;
+    const base = tr(name.replace(/^(Prof\.|Dr\.|Doç\.)\s*/g, "")); let e = `${base}@${domain}`; let i = 2;
     while (usedEmails.has(e)) e = `${base}${i++}@${domain}`;
     usedEmails.add(e); return e;
   }
@@ -555,6 +556,10 @@ async function main() {
       { userId: adminId, type: "evaluation_submitted", params: { project: "CaspiGuard" }, href: `/projects/${byCode["T50-005"]!.id}/evaluations`, createdAt: days(-1, 15) },
     ],
   });
+
+  // ---------- process (workflow) stages: default stages + current stage and starting history for every record ----------
+  const wf = await syncWorkflow(prisma);
+  console.log(`  workflow: stages=${wf.stagesCreated} applications=${wf.applicationsMapped} projects=${wf.projectsMapped} history=${wf.historyRows}`);
 
   const counts = await Promise.all([prisma.user.count(), prisma.application.count(), prisma.project.count(), prisma.task.count(), prisma.mentorSession.count(), prisma.document.count(), prisma.risk.count(), prisma.evaluation.count()]);
   console.log(`  users=${counts[0]} applications=${counts[1]} projects=${counts[2]} tasks=${counts[3]} sessions=${counts[4]} documents=${counts[5]} risks=${counts[6]} evaluations=${counts[7]}`);

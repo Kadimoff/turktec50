@@ -135,7 +135,7 @@
   "manage": {
     "title": "Koordinator idarəetməsi",
     "subtitle": "Mərhələ, vəziyyət, KPI sübutları və təyinatlar. Hər dəyişiklik əməliyyat jurnalına yazılır.",
-    "stageTitle": "Mərhələni dəyiş",
+    "stageTitle": "İnkubasiya mərhələsi (aşama)",
     "healthTitle": "Layihə vəziyyəti",
     "flagsTitle": "KPI sübutları və yarışma",
     "toStage": "Yeni mərhələ",

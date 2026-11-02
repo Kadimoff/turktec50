@@ -103,6 +103,22 @@ enum EvaluationStatus {
   SUBMITTED
 }
 
+// Configurable process (workflow) stages. System stages (systemKey != null) are bound to existing enum values
+// (ApplicationStatus / ProjectStage / CompetitionResult / FINAL rubric) and are moved automatically;
+// custom stages (systemKey = null) are reached only by a manual move (ADMIN/root, with a note).
+enum WorkflowScope {
+  APPLICATION
+  PROJECT
+}
+
+enum WorkflowStageKind {
+  NORMAL // main line
+  DECISION // positive outcome of a human decision point
+  WAITING // waitlist / on hold (side path)
+  REJECTED // rejected / not selected (side path)
+  DONE // terminal success
+}
+
 model University {
   id           String        @id @default(cuid())
   name         String
@@ -116,32 +132,33 @@ model University {
 }
 
 model User {
-  id                 String             @id @default(cuid())
-  email              String             @unique
+  id                 String               @id @default(cuid())
+  email              String               @unique
   name               String
   passwordHash       String
   role               Role
-  isRoot             Boolean             @default(false) // system owner: protected, only root manages ADMIN accounts
+  isRoot             Boolean              @default(false) // system owner: protected, only root manages ADMIN accounts
   title              String? // e.g. "Proqram koordinatoru", "Professor", "Software engineer"
   expertise          String? // mentors/jury: comma separated tags
-  locale             String             @default("az")
-  active             Boolean            @default(true)
+  locale             String               @default("az")
+  active             Boolean              @default(true)
   universityId       String?
-  university         University?        @relation(fields: [universityId], references: [id])
-  createdAt          DateTime           @default(now())
+  university         University?          @relation(fields: [universityId], references: [id])
+  createdAt          DateTime             @default(now())
   lastLoginAt        DateTime?
   memberships        ProjectMember[]
   mentorAssignments  MentorAssignment[]
   juryAssignments    JuryAssignment[]
-  assignedTasks      Task[]             @relation("TaskAssignee")
-  createdTasks       Task[]             @relation("TaskCreator")
+  assignedTasks      Task[]               @relation("TaskAssignee")
+  createdTasks       Task[]               @relation("TaskCreator")
   mentorSessions     MentorSession[]
   ownedRisks         Risk[]
   documents          Document[]
   evaluations        Evaluation[]
   auditLogs          AuditLog[]
   notifications      Notification[]
-  reviewedChecklists ChecklistItem[]    @relation("ChecklistReviewer")
+  reviewedChecklists ChecklistItem[]      @relation("ChecklistReviewer")
+  workflowMoves      WorkflowTransition[]
 }
 
 model Competition {
@@ -158,48 +175,53 @@ model Competition {
 }
 
 model Application {
-  id            String            @id @default(cuid())
-  code          String            @unique // APP-0001
-  teamName      String
-  projectTitle  String
-  problem       String
-  solution      String
-  category      String // see lib/constants CATEGORIES
-  memberCount   Int
-  contactName   String
-  contactEmail  String
-  universityId  String
-  university    University        @relation(fields: [universityId], references: [id])
-  competitionId String?
-  competition   Competition?      @relation(fields: [competitionId], references: [id])
-  status        ApplicationStatus @default(SUBMITTED)
-  decisionNote  String? // human decision rationale (admin)
-  decidedAt     DateTime?
-  submittedAt   DateTime          @default(now())
-  projectId     String?           @unique
-  project       Project?          @relation(fields: [projectId], references: [id])
-  evaluations   Evaluation[]
+  id              String               @id @default(cuid())
+  code            String               @unique // APP-0001
+  teamName        String
+  projectTitle    String
+  problem         String
+  solution        String
+  category        String // see lib/constants CATEGORIES
+  memberCount     Int
+  contactName     String
+  contactEmail    String
+  universityId    String
+  university      University           @relation(fields: [universityId], references: [id])
+  competitionId   String?
+  competition     Competition?         @relation(fields: [competitionId], references: [id])
+  status          ApplicationStatus    @default(SUBMITTED)
+  decisionNote    String? // human decision rationale (admin)
+  decidedAt       DateTime?
+  submittedAt     DateTime             @default(now())
+  projectId       String?              @unique
+  project         Project?             @relation(fields: [projectId], references: [id])
+  evaluations     Evaluation[]
+  workflowStageId String?
+  workflowStage   WorkflowStage?       @relation(fields: [workflowStageId], references: [id], onDelete: SetNull)
+  workflowHistory WorkflowTransition[]
+
+  @@index([workflowStageId])
 }
 
 model Project {
-  id                String             @id @default(cuid())
-  code              String             @unique // T50-001
+  id                String               @id @default(cuid())
+  code              String               @unique // T50-001
   title             String
   tagline           String
   summary           String
   category          String
   universityId      String
-  university        University         @relation(fields: [universityId], references: [id])
+  university        University           @relation(fields: [universityId], references: [id])
   competitionId     String?
-  competition       Competition?       @relation(fields: [competitionId], references: [id])
-  stage             ProjectStage       @default(VALIDATION)
-  health            ProjectHealth      @default(ON_TRACK)
-  prototypeVerified Boolean            @default(false) // KPI: functional prototype/MVP with test evidence
-  packageQcPassed   Boolean            @default(false) // KPI: application package passed QC checklist
+  competition       Competition?         @relation(fields: [competitionId], references: [id])
+  stage             ProjectStage         @default(VALIDATION)
+  health            ProjectHealth        @default(ON_TRACK)
+  prototypeVerified Boolean              @default(false) // KPI: functional prototype/MVP with test evidence
+  packageQcPassed   Boolean              @default(false) // KPI: application package passed QC checklist
   submittedAt       DateTime? // competition application sent
-  result            CompetitionResult  @default(PENDING)
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
+  result            CompetitionResult    @default(PENDING)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
   application       Application?
   members           ProjectMember[]
   mentors           MentorAssignment[]
@@ -212,6 +234,11 @@ model Project {
   evaluations       Evaluation[]
   auditLogs         AuditLog[]
   stageHistory      StageChange[]
+  workflowStageId   String?
+  workflowStage     WorkflowStage?       @relation(fields: [workflowStageId], references: [id], onDelete: SetNull)
+  workflowHistory   WorkflowTransition[]
+
+  @@index([workflowStageId])
 }
 
 model StageChange {
@@ -432,4 +459,50 @@ model Notification {
   createdAt DateTime @default(now())
 
   @@index([userId, read])
+}
+
+model WorkflowStage {
+  id               String               @id @default(cuid())
+  scope            WorkflowScope
+  systemKey        String?              @unique // e.g. "APP_SUBMITTED", "VALIDATION", "MOCK_FINAL", "RESULT_FINALIST"; null = custom
+  nameAz           String
+  nameTr           String
+  nameEn           String
+  descriptionAz    String?
+  descriptionTr    String?
+  descriptionEn    String?
+  order            Int // position inside its scope (applications first, then projects)
+  kind             WorkflowStageKind    @default(NORMAL)
+  responsibleRoles Role[] // first = primary lane in the process diagram
+  active           Boolean              @default(true)
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  projects         Project[]
+  applications     Application[]
+  transitionsFrom  WorkflowTransition[] @relation("WorkflowFrom")
+  transitionsTo    WorkflowTransition[] @relation("WorkflowTo")
+
+  @@index([scope, order])
+}
+
+/// History of workflow moves (automatic = triggered by an existing flow, manual = ADMIN/root with a note).
+model WorkflowTransition {
+  id            String         @id @default(cuid())
+  scope         WorkflowScope
+  projectId     String?
+  project       Project?       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  applicationId String?
+  application   Application?   @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  fromStageId   String?
+  fromStage     WorkflowStage? @relation("WorkflowFrom", fields: [fromStageId], references: [id], onDelete: SetNull)
+  toStageId     String?
+  toStage       WorkflowStage? @relation("WorkflowTo", fields: [toStageId], references: [id], onDelete: SetNull)
+  actorId       String?
+  actor         User?          @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  auto          Boolean        @default(false)
+  note          String?
+  createdAt     DateTime       @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([applicationId, createdAt])
 }

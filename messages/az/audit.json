@@ -21,6 +21,7 @@
     "risk": "Risklər",
     "evaluation": "Qiymətləndirmə",
     "user": "İstifadəçilər",
+    "workflow": "Proses mərhələləri",
     "system": "Sistem (root)"
   },
   "listTitle": "Qeydlər",
@@ -108,6 +109,16 @@
       "delete_project": "Layihə birdəfəlik silindi",
       "delete_application": "Müraciət birdəfəlik silindi",
       "wipe": "Bütün proqram məlumatları silindi"
+    },
+    "workflow": {
+      "auto": "Proses mərhələsi avtomatik dəyişdi",
+      "move": "Proses mərhələsini əl ilə dəyişdi",
+      "stage_create": "Proses mərhələsi əlavə etdi",
+      "stage_update": "Proses mərhələsini yenilədi",
+      "stage_reorder": "Mərhələlərin sırasını dəyişdi",
+      "stage_deactivate": "Proses mərhələsini deaktiv etdi",
+      "stage_activate": "Proses mərhələsini aktivləşdirdi",
+      "stage_delete": "Proses mərhələsini sildi"
     }
   },
   "entities": {
@@ -125,7 +136,8 @@
     "JuryAssignment": "Münsif təyinatı",
     "MentorAssignment": "Mentor təyinatı",
     "StageChange": "Mərhələ dəyişikliyi",
-    "System": "Sistem"
+    "System": "Sistem",
+    "WorkflowStage": "Proses mərhələsi"
   },
   "activity": {
     "title": "Fəaliyyət lenti",

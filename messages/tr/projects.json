@@ -135,7 +135,7 @@
   "manage": {
     "title": "Koordinatör yönetimi",
     "subtitle": "Aşama, durum, KPI kanıtları ve atamalar. Her değişiklik işlem kaydına yazılır.",
-    "stageTitle": "Aşamayı değiştir",
+    "stageTitle": "Kuluçka aşaması",
     "healthTitle": "Proje durumu",
     "flagsTitle": "KPI kanıtları ve yarışma",
     "toStage": "Yeni aşama",

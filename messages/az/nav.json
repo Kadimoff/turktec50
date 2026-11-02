@@ -28,5 +28,7 @@
     "activity": "Fəaliyyət"
   },
   "toggleSidebar": "Menyunu aç/bağla",
-  "system": "Sistem (root)"
+  "system": "Sistem (root)",
+  "process": "Proses xəritəsi",
+  "workflow": "Proses mərhələləri"
 }

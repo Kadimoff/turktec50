@@ -21,6 +21,7 @@
     "risk": "Risks",
     "evaluation": "Evaluation",
     "user": "Users",
+    "workflow": "Process stages",
     "system": "System (root)"
   },
   "listTitle": "Entries",
@@ -108,6 +109,16 @@
       "delete_project": "Project permanently deleted",
       "delete_application": "Application permanently deleted",
       "wipe": "All program data deleted"
+    },
+    "workflow": {
+      "auto": "Process stage changed automatically",
+      "move": "Moved the process stage manually",
+      "stage_create": "Added a process stage",
+      "stage_update": "Updated a process stage",
+      "stage_reorder": "Reordered process stages",
+      "stage_deactivate": "Deactivated a process stage",
+      "stage_activate": "Activated a process stage",
+      "stage_delete": "Deleted a process stage"
     }
   },
   "entities": {
@@ -125,7 +136,8 @@
     "JuryAssignment": "Jury assignment",
     "MentorAssignment": "Mentor assignment",
     "StageChange": "Stage change",
-    "System": "System"
+    "System": "System",
+    "WorkflowStage": "Process stage"
   },
   "activity": {
     "title": "Activity feed",

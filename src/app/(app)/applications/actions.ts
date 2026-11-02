@@ -8,6 +8,7 @@ import { logAudit, notify } from "@/lib/audit";
 import { weightedScore } from "@/lib/kpi";
 import { CHECKLIST_TEMPLATE } from "@/lib/constants";
 import { nextProjectCode } from "@/components/projects/server";
+import { syncApplicationWorkflow, syncProjectWorkflow } from "@/lib/workflow";
 
 export type EvalState =
   | { ok: true; intent: "draft" | "submit"; at: number }
@@ -81,6 +82,7 @@ export async function saveSelectionEvaluation(_prev: EvalState, formData: FormDa
     return ev;
   });
 
+  if (status === "SUBMITTED" && app.status === "SUBMITTED") await syncApplicationWorkflow(app.id, user.id);
   const score = weightedScore(rubric.criteria, scores);
   await logAudit({
     actorId: user.id,
@@ -140,6 +142,7 @@ export async function decideApplication(_prev: DecisionState, formData: FormData
     summary: `${app.code} · ${app.teamName}: ${app.status} → ${status}`,
     meta: { from: app.status, to: status, note },
   });
+  await syncApplicationWorkflow(app.id, user.id, note);
   await notify(
     app.evaluations.map((e) => e.evaluatorId).filter((id) => id !== user.id),
     "application_decided",
@@ -215,6 +218,8 @@ export async function createWorkspaceFromApplication(applicationId: string): Pro
       summary: `${result.project.code} · ${result.project.title} (${app.code})`,
       meta: { applicationId: app.id, leadEmail: email, newUser: result.newUser },
     });
+    await syncApplicationWorkflow(app.id, user.id);
+    await syncProjectWorkflow(result.project.id, user.id);
     revalidatePath(`/applications/${app.id}`);
     revalidatePath("/applications");
     revalidatePath("/projects");

@@ -135,7 +135,7 @@
     "wipe": {
       "title": "Delete all program data",
       "body": "Deletes all users (except root), applications, projects, tasks, documents, risks, evaluations, notifications and the audit log. This cannot be undone.",
-      "keeps": "Kept: root account, universities, competitions, rubrics",
+      "keeps": "Kept: root account, universities, competitions, rubrics, process stages",
       "removes": "Deleted: everything else and uploaded files",
       "hint": "To reload demo data, run on the server: npm run db:seed",
       "button": "Delete everything",

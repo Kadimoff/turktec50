@@ -7,6 +7,7 @@ import { assertProjectAccess } from "@/lib/rbac";
 import { logAudit, notify } from "@/lib/audit";
 import { STAGE_ORDER } from "@/lib/constants";
 import { enumLabelByLocale } from "@/components/projects/server";
+import { syncProjectWorkflow } from "@/lib/workflow";
 
 export type ManageState = { ok: true; at: number } | { ok: false; error: "invalid" | "forbidden" | "noteRequired" | "sameStage" | "notFound" | "duplicate"; at: number } | undefined;
 
@@ -48,6 +49,8 @@ export async function changeStage(_prev: ManageState, formData: FormData): Promi
     actorId: user.id, action: "project.stage", entity: "Project", entityId: project.id, projectId: project.id,
     summary: `${project.code}: ${project.stage} → ${toStage}`, meta: { from: project.stage, to: toStage, note },
   });
+  // keep the process (workflow) stage in step with the incubation stage
+  await syncProjectWorkflow(project.id, user.id, note);
 
   // notify team members (+ assigned mentors), each in their own language
   const recipients = await prisma.user.findMany({
@@ -118,6 +121,7 @@ export async function updateFlags(_prev: ManageState, formData: FormData): Promi
   if (before.packageQcPassed !== d.packageQcPassed) changed.push(`packageQcPassed=${d.packageQcPassed}`);
   if ((before.submittedAt ? new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Baku" }).format(before.submittedAt) : "") !== (d.submittedAt || "")) changed.push(`submittedAt=${d.submittedAt || "—"}`);
   if (before.result !== d.result) changed.push(`result=${d.result}`);
+  if (before.result !== d.result) await syncProjectWorkflow(project.id, user.id, `result=${d.result}`);
   if (changed.length) {
     await logAudit({
       actorId: user.id, action: "project.flags", entity: "Project", entityId: project.id, projectId: project.id,

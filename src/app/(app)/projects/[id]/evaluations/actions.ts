@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { assertProjectAccess } from "@/lib/rbac";
 import { logAudit, notify } from "@/lib/audit";
+import { syncProjectWorkflow } from "@/lib/workflow";
 import { weightedScore } from "@/lib/kpi";
 
 const schema = z.object({
@@ -90,6 +91,7 @@ export async function saveEvaluation(input: z.input<typeof schema>): Promise<Sav
       meta: { kind, scored: Object.keys(scores).length, of: rubric.criteria.length, weighted: total },
     });
 
+    if (intent === "submit" && kind === "FINAL") await syncProjectWorkflow(projectId, user.id);
     if (intent === "submit") {
       const admins = await prisma.user.findMany({ where: { role: "ADMIN", active: true }, select: { id: true } });
       await notify(

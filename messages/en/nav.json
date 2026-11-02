@@ -28,5 +28,7 @@
     "activity": "Activity"
   },
   "toggleSidebar": "Toggle menu",
-  "system": "System (root)"
+  "system": "System (root)",
+  "process": "Process map",
+  "workflow": "Process stages"
 }

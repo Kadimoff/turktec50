@@ -21,6 +21,7 @@
     "risk": "Riskler",
     "evaluation": "Değerlendirme",
     "user": "Kullanıcılar",
+    "workflow": "Süreç aşamaları",
     "system": "Sistem (root)"
   },
   "listTitle": "Kayıtlar",
@@ -108,6 +109,16 @@
       "delete_project": "Proje kalıcı olarak silindi",
       "delete_application": "Başvuru kalıcı olarak silindi",
       "wipe": "Tüm program verisi silindi"
+    },
+    "workflow": {
+      "auto": "Süreç aşaması otomatik değişti",
+      "move": "Süreç aşamasını elle değiştirdi",
+      "stage_create": "Süreç aşaması ekledi",
+      "stage_update": "Süreç aşamasını güncelledi",
+      "stage_reorder": "Aşama sırasını değiştirdi",
+      "stage_deactivate": "Süreç aşamasını pasifleştirdi",
+      "stage_activate": "Süreç aşamasını etkinleştirdi",
+      "stage_delete": "Süreç aşamasını sildi"
     }
   },
   "entities": {
@@ -125,7 +136,8 @@
     "JuryAssignment": "Jüri ataması",
     "MentorAssignment": "Mentor ataması",
     "StageChange": "Aşama değişikliği",
-    "System": "Sistem"
+    "System": "Sistem",
+    "WorkflowStage": "Süreç aşaması"
   },
   "activity": {
     "title": "Etkinlik akışı",

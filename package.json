@@ -14,7 +14,9 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force && tsx prisma/seed.ts",
     "postinstall": "prisma generate",
-    "root:sync": "tsx prisma/root-sync.ts"
+    "root:sync": "tsx prisma/root-sync.ts",
+    "workflow:sync": "tsx prisma/workflow-sync.ts",
+    "test": "node --import tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

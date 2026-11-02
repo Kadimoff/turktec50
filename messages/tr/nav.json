@@ -28,5 +28,7 @@
     "activity": "Etkinlik"
   },
   "toggleSidebar": "Menüyü aç/kapat",
-  "system": "Sistem (root)"
+  "system": "Sistem (root)",
+  "process": "Süreç haritası",
+  "workflow": "Süreç aşamaları"
 }

@@ -1,0 +1,235 @@
+{
+  "title": "Process map",
+  "eyebrow": "Program process",
+  "description": "Every stage from application to competition result: who does what, and how many applications and projects are in each stage. Click a stage to open its list.",
+  "scopeNote": {
+    "admin": "Coordinator view: all applications and projects.",
+    "team": "Team view: you only see where your own project and application are.",
+    "mentor": "Mentor view: only the projects assigned to you are counted.",
+    "jury": "Jury view: projects assigned to you and applications in the selection stage."
+  },
+  "actions": {
+    "present": "Presentation mode",
+    "exitPresent": "Exit presentation",
+    "downloadSvg": "Download SVG",
+    "downloadPng": "Download PNG",
+    "manage": "Manage stages",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "fit": "Fit to screen",
+    "actualSize": "Actual size",
+    "downloaded": "File downloaded",
+    "downloadFailed": "Could not create the file"
+  },
+  "present": {
+    "label": "Presentation mode",
+    "subtitle": "Process, roles and KPI funnel from application to finalists"
+  },
+  "diagramCard": {
+    "title": "Live workflow diagram",
+    "hint": "Role lanes, decision points, waitlist and rejection paths. Numbers are live; click a stage."
+  },
+  "diagram": {
+    "title": "TÜRKTECH 50 — process map",
+    "subtitle": "Swim-lane workflow · live counts · {date}",
+    "phaseApplications": "Selection · applications",
+    "phaseProjects": "Incubation · projects",
+    "branchLane": "Side paths",
+    "branchLaneHint": "waitlist, rejected, not selected",
+    "streamsLane": "Parallel streams",
+    "streamsLaneHint": "throughout incubation",
+    "funnelLane": "KPI funnel",
+    "funnelLaneHint": "plan vs actual",
+    "funnelPlanOnly": "plan (actual numbers: coordinator)",
+    "decision": "Decision",
+    "decisionPoint": "Decision point (a human decides)",
+    "participates": {
+      "TEAM": "team work",
+      "ADMIN": "coordinator oversight",
+      "MENTOR": "mentor support",
+      "JURY": "jury feedback"
+    },
+    "participatesLegend": "Participating role",
+    "you": "You are here",
+    "customStage": "Custom stage"
+  },
+  "lanes": {
+    "TEAM": "Team",
+    "ADMIN": "Coordinator",
+    "MENTOR": "Mentor",
+    "JURY": "Jury"
+  },
+  "laneHints": {
+    "TEAM": "application, work, documents, pitch",
+    "ADMIN": "decision, assignments, quality check",
+    "MENTOR": "meetings, feedback, next steps",
+    "JURY": "rubric scores (advisory)"
+  },
+  "kinds": {
+    "NORMAL": "Main stage",
+    "DECISION": "Decision outcome",
+    "WAITING": "Waiting path",
+    "REJECTED": "Rejected / not selected",
+    "DONE": "Completion"
+  },
+  "scopes": {
+    "APPLICATION": "Application",
+    "PROJECT": "Project"
+  },
+  "streams": {
+    "sessions": "Mentor meetings",
+    "sessionsValue": "{done} / {total} held",
+    "tasks": "Tasks",
+    "tasksValue": "{done} / {total} done",
+    "checklist": "Document checklist",
+    "checklistValue": "{done} / {total} required items approved",
+    "risks": "Risks",
+    "risksValue": "{done} open / {total} logged"
+  },
+  "funnel": {
+    "applicationsEvaluated": "Applications evaluated",
+    "teamsAccepted": "Teams accepted",
+    "prototypes": "Working prototype / MVP",
+    "qcPackages": "Packages passed QC",
+    "finalists": "Finalists",
+    "planActual": "Plan {plan} · actual {actual} ({pct}%)",
+    "planOnly": "Plan {plan}"
+  },
+  "list": {
+    "title": "Items in the stage",
+    "pick": "No stage selected",
+    "pickHint": "Click a stage in the diagram or the table to see its list.",
+    "responsible": "Responsible",
+    "projects": "{count, plural, one {# project} other {# projects}}",
+    "applications": "{count, plural, one {# application} other {# applications}}",
+    "empty": "Nothing in this stage",
+    "hiddenHint": "The items in this stage are outside your visibility.",
+    "since": "In stage since",
+    "noDescription": "no description"
+  },
+  "table": {
+    "title": "Stage table",
+    "hint": "Text version of the diagram: order, responsible roles and live count."
+  },
+  "stepper": {
+    "title": "Process stage",
+    "hintProject": "Passed, current and upcoming stages; the date of every transition and the responsible role.",
+    "hintApplication": "Where the application is in the process, and its transition history.",
+    "openProcess": "View on the process map",
+    "current": "Current",
+    "passed": "Passed",
+    "upcoming": "Upcoming",
+    "nextTitle": "Next step",
+    "responsible": "Responsible",
+    "noStage": "No stage assigned yet.",
+    "finished": "The process has been completed successfully.",
+    "waiting": "On the waitlist: the coordinator will update the decision if a place opens up.",
+    "stopped": "The process stopped on this path (rejected / not selected).",
+    "last": "This is the last stage of the process.",
+    "nowLabel": "Now",
+    "history": "Transition history",
+    "noHistory": "No transitions recorded yet.",
+    "auto": "Automatic",
+    "manual": "Manual",
+    "system": "System",
+    "deletedStage": "deleted stage",
+    "move": {
+      "title": "Change stage",
+      "stage": "New stage",
+      "choose": "Choose a stage…",
+      "systemHint": "Moving to a system stage also updates the bound status (stage, result, decision); a custom stage only changes the place in the process.",
+      "note": "Note",
+      "noteHint": "Why is it changing? The note is written to the audit log and the team is notified.",
+      "submit": "Change stage",
+      "saving": "Saving…",
+      "saved": "Stage changed",
+      "errors": {
+        "invalid": "Invalid input.",
+        "forbidden": "You are not allowed to do this.",
+        "noteRequired": "A note is required (at least 5 characters; 10 for decision stages).",
+        "sameStage": "The item is already in this stage.",
+        "notFound": "Stage or item not found.",
+        "inactive": "Items cannot be moved to an inactive stage.",
+        "locked": "The project workspace exists: the application decision is locked, continue on the project.",
+        "useWorkspace": "This stage is reached only with the “Create project workspace” button."
+      }
+    }
+  },
+  "admin": {
+    "title": "Process stages",
+    "eyebrow": "Administration",
+    "description": "Add stages, rename them and edit descriptions in three languages, reorder or deactivate them. The process map and steppers update immediately.",
+    "openProcess": "Process map",
+    "rules": "System stages are bound to existing statuses and filled automatically: they cannot be deleted or deactivated, but their name, description, responsible roles and order can change. Custom stages are reached only by a manual move. Every change is written to the audit log.",
+    "scopeTitle": {
+      "APPLICATION": "Application stages",
+      "PROJECT": "Project stages"
+    },
+    "scopeHint": {
+      "APPLICATION": "Selection period: from application to opening the project workspace.",
+      "PROJECT": "Incubation: from validation to the competition result."
+    },
+    "add": "New stage",
+    "addTitle": "Add a new stage",
+    "addHint": "A custom stage is inserted where you choose. Items are moved into it manually only.",
+    "create": "Add",
+    "save": "Save",
+    "saving": "Saving…",
+    "editLabel": "Edit {name}",
+    "editTitle": "Edit stage: {name}",
+    "systemHint": "System stage: name, description and responsible roles can change; its kind is fixed.",
+    "customHint": "Custom stage: every field can change.",
+    "fields": {
+      "scope": "Scope",
+      "after": "Position",
+      "afterHint": "Inserted after this stage.",
+      "first": "At the beginning",
+      "nameAz": "Name (AZ)",
+      "nameTr": "Name (TR)",
+      "nameEn": "Name (EN)",
+      "fallbackHint": "If empty, the AZ name is shown.",
+      "descriptionAz": "Description (AZ)",
+      "descriptionTr": "Description (TR)",
+      "descriptionEn": "Description (EN)",
+      "kind": "Kind",
+      "kindHint": "Waiting and rejected kinds are drawn as side paths branching from the previous stage's decision point.",
+      "kindLocked": "The kind of a system stage does not change.",
+      "roles": "Responsible roles",
+      "rolesHint": "The first selected role is the main lane in the diagram."
+    },
+    "system": "System",
+    "custom": "Custom",
+    "inactive": "Inactive",
+    "deactivateLabel": "Deactivate {name}",
+    "deleteLabel": "Delete {name}",
+    "activateLabel": "Activate {name}",
+    "deactivateTitle": "Deactivate: {name}",
+    "deleteTitle": "Delete: {name}",
+    "hasItemsHint": "This stage holds {count} items. Move them to another active stage first.",
+    "deactivateHint": "The stage is removed from the diagram and pickers; history is kept. You can activate it again later.",
+    "deleteHint": "The stage is deleted permanently; it stays in the transition history as “deleted stage”.",
+    "moveTo": "Move items to",
+    "moveToHint": "Every move is written to the history and the audit log.",
+    "deactivateConfirm": "Deactivate",
+    "deleteConfirm": "Delete",
+    "moveUp": "Move {name} up",
+    "moveDown": "Move {name} down",
+    "toasts": {
+      "created": "Stage added",
+      "saved": "Stage updated",
+      "deactivated": "Stage deactivated",
+      "activated": "Stage activated",
+      "deleted": "Stage deleted",
+      "reordered": "Order changed"
+    },
+    "errors": {
+      "invalid": "Check the fields.",
+      "system": "A system stage cannot be deleted or deactivated.",
+      "hasItems": "The stage holds items: choose where to move them.",
+      "notFound": "Stage not found.",
+      "target": "Choose another active stage of the same scope.",
+      "required": "This field is required.",
+      "tooLong": "Text is too long."
+    }
+  }
+}
