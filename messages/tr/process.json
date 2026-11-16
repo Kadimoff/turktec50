@@ -1,0 +1,235 @@
+{
+  "title": "Süreç haritası",
+  "eyebrow": "Program süreci",
+  "description": "Başvurudan yarışma sonucuna kadar tüm aşamalar: kim ne yapar, her aşamada kaç başvuru ve proje var. Listeyi açmak için bir aşamaya tıklayın.",
+  "scopeNote": {
+    "admin": "Koordinatör görünümü: tüm başvurular ve projeler.",
+    "team": "Ekip görünümü: yalnızca kendi projenizin ve başvurunuzun nerede olduğunu görürsünüz.",
+    "mentor": "Mentor görünümü: yalnızca size atanan projeler sayılır.",
+    "jury": "Jüri görünümü: size atanan projeler ve seçim aşamasındaki başvurular."
+  },
+  "actions": {
+    "present": "Sunum modu",
+    "exitPresent": "Sunumdan çık",
+    "downloadSvg": "SVG indir",
+    "downloadPng": "PNG indir",
+    "manage": "Aşamaları yönet",
+    "zoomIn": "Büyüt",
+    "zoomOut": "Küçült",
+    "fit": "Ekrana sığdır",
+    "actualSize": "Gerçek boyut",
+    "downloaded": "Dosya indirildi",
+    "downloadFailed": "Dosya oluşturulamadı"
+  },
+  "present": {
+    "label": "Sunum modu",
+    "subtitle": "Başvurudan finalistlere süreç, roller ve KPI hunisi"
+  },
+  "diagramCard": {
+    "title": "Canlı iş akışı diyagramı",
+    "hint": "Rol kulvarları, karar noktaları, bekleme ve ret yolları. Sayılar canlıdır; bir aşamaya tıklayın."
+  },
+  "diagram": {
+    "title": "TÜRKTECH 50 — süreç haritası",
+    "subtitle": "Rol kulvarlı iş akışı · canlı sayılar · {date}",
+    "phaseApplications": "Seçim · başvurular",
+    "phaseProjects": "Kuluçka · projeler",
+    "branchLane": "Alternatif yollar",
+    "branchLaneHint": "yedek liste, ret, seçilmedi",
+    "streamsLane": "Paralel akışlar",
+    "streamsLaneHint": "kuluçka boyunca",
+    "funnelLane": "KPI hunisi",
+    "funnelLaneHint": "plan ve gerçekleşen",
+    "funnelPlanOnly": "plan (gerçekleşen sayılar koordinatörde)",
+    "decision": "Karar",
+    "decisionPoint": "Karar noktası (kararı insan verir)",
+    "participates": {
+      "TEAM": "ekip çalışması",
+      "ADMIN": "koordinatör denetimi",
+      "MENTOR": "mentor desteği",
+      "JURY": "jüri görüşü"
+    },
+    "participatesLegend": "Katılan rol",
+    "you": "Buradasınız",
+    "customStage": "Özel aşama"
+  },
+  "lanes": {
+    "TEAM": "Ekip",
+    "ADMIN": "Koordinatör",
+    "MENTOR": "Mentor",
+    "JURY": "Jüri"
+  },
+  "laneHints": {
+    "TEAM": "başvuru, çalışma, belgeler, sunum",
+    "ADMIN": "karar, atama, kalite kontrol",
+    "MENTOR": "görüşmeler, geri bildirim, sonraki adımlar",
+    "JURY": "rubrik puanları (tavsiye niteliğinde)"
+  },
+  "kinds": {
+    "NORMAL": "Ana aşama",
+    "DECISION": "Karar sonucu",
+    "WAITING": "Bekleme yolu",
+    "REJECTED": "Ret / seçilmedi",
+    "DONE": "Tamamlanma"
+  },
+  "scopes": {
+    "APPLICATION": "Başvuru",
+    "PROJECT": "Proje"
+  },
+  "streams": {
+    "sessions": "Mentor görüşmeleri",
+    "sessionsValue": "{done} / {total} yapıldı",
+    "tasks": "Görevler",
+    "tasksValue": "{done} / {total} tamamlandı",
+    "checklist": "Belge kontrol listesi",
+    "checklistValue": "{done} / {total} zorunlu madde onaylandı",
+    "risks": "Riskler",
+    "risksValue": "{done} açık / {total} kayıtlı"
+  },
+  "funnel": {
+    "applicationsEvaluated": "Değerlendirilen başvurular",
+    "teamsAccepted": "Kabul edilen ekipler",
+    "prototypes": "Çalışan prototip / MVP",
+    "qcPackages": "Kalite kontrolden geçen paketler",
+    "finalists": "Finalistler",
+    "planActual": "Plan {plan} · gerçekleşen {actual} (%{pct})",
+    "planOnly": "Plan {plan}"
+  },
+  "list": {
+    "title": "Aşamadaki kayıtlar",
+    "pick": "Aşama seçilmedi",
+    "pickHint": "Listeyi görmek için diyagramda veya tabloda bir aşamaya tıklayın.",
+    "responsible": "Sorumlu",
+    "projects": "{count, plural, one {# proje} other {# proje}}",
+    "applications": "{count, plural, one {# başvuru} other {# başvuru}}",
+    "empty": "Bu aşamada kayıt yok",
+    "hiddenHint": "Bu aşamadaki kayıtlar görme yetkinizin dışında.",
+    "since": "Aşamada",
+    "noDescription": "açıklama yok"
+  },
+  "table": {
+    "title": "Aşamalar tablosu",
+    "hint": "Diyagramın metin sürümü: sıra, sorumlu roller ve canlı sayı."
+  },
+  "stepper": {
+    "title": "Süreç aşaması",
+    "hintProject": "Geçilen, mevcut ve sonraki aşamalar; her geçişin tarihi ve sorumlu rol.",
+    "hintApplication": "Başvurunun süreçteki yeri ve geçiş geçmişi.",
+    "openProcess": "Süreç haritasında gör",
+    "current": "Mevcut",
+    "passed": "Geçildi",
+    "upcoming": "Sonraki",
+    "nextTitle": "Sonraki adım",
+    "responsible": "Sorumlu",
+    "noStage": "Henüz aşama atanmadı.",
+    "finished": "Süreç başarıyla tamamlandı.",
+    "waiting": "Yedek listede: yer açılırsa koordinatör kararı güncelleyecek.",
+    "stopped": "Süreç bu yolda durdu (ret / seçilmedi).",
+    "last": "Bu, sürecin son aşamasıdır.",
+    "nowLabel": "Şimdi",
+    "history": "Geçiş geçmişi",
+    "noHistory": "Henüz geçiş kaydı yok.",
+    "auto": "Otomatik",
+    "manual": "Elle",
+    "system": "Sistem",
+    "deletedStage": "silinmiş aşama",
+    "move": {
+      "title": "Aşamayı değiştir",
+      "stage": "Yeni aşama",
+      "choose": "Aşama seçin…",
+      "systemHint": "Sistem aşamasına geçiş bağlı durumu da (aşama, sonuç, karar) günceller; özel aşama yalnızca süreçteki yeri değiştirir.",
+      "note": "Not",
+      "noteHint": "Neden değişiyor? Not işlem kaydına yazılır, ekip bildirim alır.",
+      "submit": "Aşamayı değiştir",
+      "saving": "Kaydediliyor…",
+      "saved": "Aşama değiştirildi",
+      "errors": {
+        "invalid": "Bilgiler geçersiz.",
+        "forbidden": "Bu işlem için yetkiniz yok.",
+        "noteRequired": "Not zorunludur (en az 5 karakter; karar aşamaları için 10).",
+        "sameStage": "Kayıt zaten bu aşamada.",
+        "notFound": "Aşama veya kayıt bulunamadı.",
+        "inactive": "Pasif bir aşamaya taşınamaz.",
+        "locked": "Proje alanı açıldı: başvuru kararı kilitli, proje üzerinden devam edin.",
+        "useWorkspace": "Bu aşamaya yalnızca “Proje alanı oluştur” düğmesiyle geçilir."
+      }
+    }
+  },
+  "admin": {
+    "title": "Süreç aşamaları",
+    "eyebrow": "Yönetim",
+    "description": "Aşama ekleyin, adını ve açıklamasını üç dilde değiştirin, sırasını değiştirin veya pasifleştirin. Süreç haritası ve aşama göstergeleri hemen güncellenir.",
+    "openProcess": "Süreç haritası",
+    "rules": "Sistem aşamaları mevcut durumlara bağlıdır ve otomatik doldurulur: silinemez ve pasifleştirilemez, ancak adı, açıklaması, sorumlu rolleri ve sırası değiştirilebilir. Özel aşamalara yalnızca elle geçilir. Her değişiklik işlem kaydına yazılır.",
+    "scopeTitle": {
+      "APPLICATION": "Başvuru aşamaları",
+      "PROJECT": "Proje aşamaları"
+    },
+    "scopeHint": {
+      "APPLICATION": "Seçim dönemi: başvurudan proje alanının açılmasına kadar.",
+      "PROJECT": "Kuluçka: doğrulamadan yarışma sonucuna kadar."
+    },
+    "add": "Yeni aşama",
+    "addTitle": "Yeni aşama ekle",
+    "addHint": "Özel aşama seçtiğiniz yere eklenir. Kayıtlar ona yalnızca elle taşınır.",
+    "create": "Ekle",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor…",
+    "editLabel": "{name} — düzenle",
+    "editTitle": "Aşamayı düzenle: {name}",
+    "systemHint": "Sistem aşaması: ad, açıklama ve sorumlu roller değişebilir; türü sabittir.",
+    "customHint": "Özel aşama: tüm alanlar değişebilir.",
+    "fields": {
+      "scope": "Alan",
+      "after": "Konum",
+      "afterHint": "Bu aşamadan sonra eklenir.",
+      "first": "En başa",
+      "nameAz": "Ad (AZ)",
+      "nameTr": "Ad (TR)",
+      "nameEn": "Ad (EN)",
+      "fallbackHint": "Boş kalırsa AZ adı gösterilir.",
+      "descriptionAz": "Açıklama (AZ)",
+      "descriptionTr": "Açıklama (TR)",
+      "descriptionEn": "Açıklama (EN)",
+      "kind": "Tür",
+      "kindHint": "Bekleme ve ret türleri diyagramda önceki aşamanın karar noktasından ayrılan yan yol olarak gösterilir.",
+      "kindLocked": "Sistem aşamasının türü değişmez.",
+      "roles": "Sorumlu roller",
+      "rolesHint": "İlk seçilen rol diyagramda ana kulvardır."
+    },
+    "system": "Sistem",
+    "custom": "Özel",
+    "inactive": "Pasif",
+    "deactivateLabel": "{name} — pasifleştir",
+    "deleteLabel": "{name} — sil",
+    "activateLabel": "{name} — etkinleştir",
+    "deactivateTitle": "Pasifleştir: {name}",
+    "deleteTitle": "Sil: {name}",
+    "hasItemsHint": "Bu aşamada {count} kayıt var. Önce onları başka bir etkin aşamaya taşıyın.",
+    "deactivateHint": "Aşama diyagramdan ve seçeneklerden kaldırılır; geçmiş korunur. Daha sonra yeniden etkinleştirebilirsiniz.",
+    "deleteHint": "Aşama kalıcı olarak silinir; geçiş geçmişinde “silinmiş aşama” olarak kalır.",
+    "moveTo": "Kayıtları taşı",
+    "moveToHint": "Her taşıma geçmişe ve işlem kaydına yazılır.",
+    "deactivateConfirm": "Pasifleştir",
+    "deleteConfirm": "Sil",
+    "moveUp": "{name} — yukarı",
+    "moveDown": "{name} — aşağı",
+    "toasts": {
+      "created": "Aşama eklendi",
+      "saved": "Aşama güncellendi",
+      "deactivated": "Aşama pasifleştirildi",
+      "activated": "Aşama etkinleştirildi",
+      "deleted": "Aşama silindi",
+      "reordered": "Sıra değiştirildi"
+    },
+    "errors": {
+      "invalid": "Alanları kontrol edin.",
+      "system": "Sistem aşaması silinemez veya pasifleştirilemez.",
+      "hasItems": "Aşamada kayıt var: taşınacak aşamayı seçin.",
+      "notFound": "Aşama bulunamadı.",
+      "target": "Taşıma için aynı alandan başka bir etkin aşama seçin.",
+      "required": "Bu alan zorunludur.",
+      "tooLong": "Metin çok uzun."
+    }
+  }
+}

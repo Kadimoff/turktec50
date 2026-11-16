@@ -63,7 +63,8 @@ export default async function LoginPage(props: PageProps<"/login">) {
           <div className="w-full max-w-md">
             <h1 className="text-2xl font-bold tracking-tight">{t("title")}</h1>
             <p className="mt-1.5 text-sm text-muted-foreground">{t("subtitle")}</p>
-            <LoginForm next={next} />
+            {/* DEMO_LOGIN=0 hides the one-click demo cards (public server where demo passwords are rotated). */}
+            <LoginForm next={next} showDemo={process.env.DEMO_LOGIN !== "0"} />
             <div className="mt-6 rounded-xl border bg-card p-4 shadow-card">
               <Link href="/apply" className="group flex items-center justify-between gap-3 rounded-md text-sm font-semibold text-primary focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none">
                 {t("applyCta")}
@@ -71,7 +72,7 @@ export default async function LoginPage(props: PageProps<"/login">) {
               </Link>
               <p className="mt-1 text-xs text-muted-foreground">{t("applyHint")}</p>
             </div>
-            <p className="mt-8 text-xs text-muted-foreground">{tc("demoNotice")}</p>
+            {process.env.DEMO_LOGIN !== "0" && <p className="mt-8 text-xs text-muted-foreground">{tc("demoNotice")}</p>}
           </div>
         </div>
       </main>

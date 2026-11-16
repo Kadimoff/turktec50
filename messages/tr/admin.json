@@ -150,7 +150,7 @@
     "wipe": {
       "title": "Tüm program verisini sil",
       "body": "Tüm kullanıcılar (root hariç), akademi öğrencileri, ekipleri, eğitimleri ve duyuruları, başvurular, projeler, görevler, belgeler, riskler, kaynak talepleri, değerlendirmeler, bildirimler ve işlem kaydı silinir. Bu işlem geri alınamaz.",
-      "keeps": "Kalır: root hesabı, üniversiteler, yarışmalar (katalog ve kural takibi), rubrikler, fakülte, laboratuvar ve ortak kayıtları",
+      "keeps": "Kalır: root hesabı, üniversiteler, yarışmalar (katalog ve kural takibi), rubrikler, fakülte, laboratuvar ve ortak kayıtları, süreç aşamaları",
       "removes": "Silinir: diğer tüm veriler ve yüklenen dosyalar",
       "hint": "Demo verisini yeniden yüklemek için sunucuda: npm run db:seed",
       "button": "Tümünü sil",

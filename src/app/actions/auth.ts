@@ -34,7 +34,9 @@ export async function login(_prev: ActionState, formData: FormData): Promise<Act
 
   const user =
     login === "root"
-      ? await prisma.user.findFirst({ where: { isRoot: true } })
+      ? // "root" = the primary (.env) root; additional root accounts sign in with their e-mail
+        ((await prisma.user.findFirst({ where: { isRoot: true, email: (process.env.ROOT_EMAIL ?? "").toLowerCase().trim() } })) ??
+        (await prisma.user.findFirst({ where: { isRoot: true }, orderBy: { createdAt: "asc" } })))
       : await prisma.user.findUnique({ where: { email: login } });
   if (!user || !(await verifyPassword(parsed.data.password, user.passwordHash))) {
     await Promise.all([recordEvent(LOGIN_BUCKET, login), useIp ? recordEvent(LOGIN_IP_BUCKET, ip) : null]);

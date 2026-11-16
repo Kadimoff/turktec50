@@ -1,0 +1,235 @@
+{
+  "title": "Proses xəritəsi",
+  "eyebrow": "Proqram prosesi",
+  "description": "Müraciətdən müsabiqə nəticəsinə qədər bütün mərhələlər: kim nə edir, hər mərhələdə neçə müraciət və layihə var. Mərhələyə klikləyərək siyahını açın.",
+  "scopeNote": {
+    "admin": "Koordinator görünüşü: bütün müraciətlər və layihələr.",
+    "team": "Komanda görünüşü: yalnız öz layihənizin və müraciətinizin harada olduğunu görürsünüz.",
+    "mentor": "Mentor görünüşü: yalnız sizə təyin olunmuş layihələr sayılır.",
+    "jury": "Münsif görünüşü: sizə təyin olunmuş layihələr və seçim mərhələsindəki müraciətlər."
+  },
+  "actions": {
+    "present": "Təqdimat rejimi",
+    "exitPresent": "Təqdimatdan çıx",
+    "downloadSvg": "SVG yüklə",
+    "downloadPng": "PNG yüklə",
+    "manage": "Mərhələləri idarə et",
+    "zoomIn": "Böyüt",
+    "zoomOut": "Kiçilt",
+    "fit": "Ekrana sığdır",
+    "actualSize": "Əsl ölçü",
+    "downloaded": "Fayl yükləndi",
+    "downloadFailed": "Faylı yaratmaq alınmadı"
+  },
+  "present": {
+    "label": "Təqdimat rejimi",
+    "subtitle": "Müraciətdən finalçılara qədər proses, rollar və KPI hunisi"
+  },
+  "diagramCard": {
+    "title": "Canlı workflow diaqramı",
+    "hint": "Rol zolaqları, qərar nöqtələri, gözləmə və rədd yolları. Rəqəmlər canlıdır; mərhələyə klikləyin."
+  },
+  "diagram": {
+    "title": "TÜRKTECH 50 — proses xəritəsi",
+    "subtitle": "Rol zolaqlı workflow · canlı saylar · {date}",
+    "phaseApplications": "Seçim · müraciətlər",
+    "phaseProjects": "İnkubasiya · layihələr",
+    "branchLane": "Alternativ yollar",
+    "branchLaneHint": "gözləmə siyahısı, rədd, seçilmədi",
+    "streamsLane": "Paralel axınlar",
+    "streamsLaneHint": "bütün inkubasiya boyunca",
+    "funnelLane": "KPI hunisi",
+    "funnelLaneHint": "plan və faktiki",
+    "funnelPlanOnly": "plan (faktiki rəqəmlər koordinatorda)",
+    "decision": "Qərar",
+    "decisionPoint": "Qərar nöqtəsi (insan qərar verir)",
+    "participates": {
+      "TEAM": "komanda işi",
+      "ADMIN": "koordinator nəzarəti",
+      "MENTOR": "mentor dəstəyi",
+      "JURY": "münsif rəyi"
+    },
+    "participatesLegend": "İştirak edən rol",
+    "you": "Siz buradasınız",
+    "customStage": "Fərdi mərhələ"
+  },
+  "lanes": {
+    "TEAM": "Komanda",
+    "ADMIN": "Koordinator",
+    "MENTOR": "Mentor",
+    "JURY": "Münsif"
+  },
+  "laneHints": {
+    "TEAM": "müraciət, iş, sənədlər, pitch",
+    "ADMIN": "qərar, təyinat, keyfiyyət yoxlaması",
+    "MENTOR": "görüşlər, rəy, növbəti addımlar",
+    "JURY": "rubrik balları (məsləhət xarakterli)"
+  },
+  "kinds": {
+    "NORMAL": "Əsas mərhələ",
+    "DECISION": "Qərar nəticəsi",
+    "WAITING": "Gözləmə yolu",
+    "REJECTED": "Rədd / seçilmədi",
+    "DONE": "Tamamlanma"
+  },
+  "scopes": {
+    "APPLICATION": "Müraciət",
+    "PROJECT": "Layihə"
+  },
+  "streams": {
+    "sessions": "Mentor görüşləri",
+    "sessionsValue": "{done} / {total} keçirilib",
+    "tasks": "Tapşırıqlar",
+    "tasksValue": "{done} / {total} tamamlanıb",
+    "checklist": "Sənəd yoxlama siyahısı",
+    "checklistValue": "{done} / {total} məcburi bənd təsdiqlənib",
+    "risks": "Risklər",
+    "risksValue": "{done} açıq / {total} qeydə alınıb"
+  },
+  "funnel": {
+    "applicationsEvaluated": "Qiymətləndirilmiş müraciətlər",
+    "teamsAccepted": "Qəbul edilmiş komandalar",
+    "prototypes": "İşlək prototip / MVP",
+    "qcPackages": "QC-dən keçmiş paketlər",
+    "finalists": "Finalçılar",
+    "planActual": "Plan {plan} · faktiki {actual} ({pct}%)",
+    "planOnly": "Plan {plan}"
+  },
+  "list": {
+    "title": "Mərhələdəki elementlər",
+    "pick": "Mərhələ seçilməyib",
+    "pickHint": "Siyahını görmək üçün diaqramda və ya cədvəldə mərhələyə klikləyin.",
+    "responsible": "Məsul",
+    "projects": "{count, plural, one {# layihə} other {# layihə}}",
+    "applications": "{count, plural, one {# müraciət} other {# müraciət}}",
+    "empty": "Bu mərhələdə heç nə yoxdur",
+    "hiddenHint": "Bu mərhələdəki elementlər sizin görmə sahənizdən kənardadır.",
+    "since": "Mərhələdə",
+    "noDescription": "təsvir yoxdur"
+  },
+  "table": {
+    "title": "Mərhələlər cədvəli",
+    "hint": "Diaqramın mətn versiyası: sıra, məsul rollar və canlı say."
+  },
+  "stepper": {
+    "title": "Proses mərhələsi",
+    "hintProject": "Keçilmiş, cari və növbəti mərhələlər; hər keçidin tarixi və məsul rol.",
+    "hintApplication": "Müraciətin prosesdəki yeri və keçid tarixçəsi.",
+    "openProcess": "Proses xəritəsində bax",
+    "current": "Cari",
+    "passed": "Keçilib",
+    "upcoming": "Növbəti",
+    "nextTitle": "Növbəti addım",
+    "responsible": "Məsul",
+    "noStage": "Mərhələ hələ təyin edilməyib.",
+    "finished": "Proses uğurla tamamlanıb.",
+    "waiting": "Gözləmə siyahısındadır: yer boşalarsa koordinator qərarı yeniləyəcək.",
+    "stopped": "Proses bu yolda dayanıb (rədd / seçilmədi).",
+    "last": "Bu, prosesin son mərhələsidir.",
+    "nowLabel": "İndi",
+    "history": "Keçid tarixçəsi",
+    "noHistory": "Hələ keçid qeydə alınmayıb.",
+    "auto": "Avtomatik",
+    "manual": "Əl ilə",
+    "system": "Sistem",
+    "deletedStage": "silinmiş mərhələ",
+    "move": {
+      "title": "Mərhələni dəyiş",
+      "stage": "Yeni mərhələ",
+      "choose": "Mərhələ seçin…",
+      "systemHint": "Sistem mərhələsinə keçid bağlı statusu da (aşama, nəticə, qərar) yeniləyir; fərdi mərhələ yalnız prosesdə yeri dəyişir.",
+      "note": "Qeyd",
+      "noteHint": "Niyə dəyişir? Qeyd əməliyyat jurnalına yazılır, komanda bildiriş alır.",
+      "submit": "Mərhələni dəyiş",
+      "saving": "Yadda saxlanılır…",
+      "saved": "Mərhələ dəyişdirildi",
+      "errors": {
+        "invalid": "Məlumat düzgün deyil.",
+        "forbidden": "Bu əməliyyat üçün icazəniz yoxdur.",
+        "noteRequired": "Qeyd tələb olunur (ən azı 5 simvol; qərar mərhələləri üçün 10).",
+        "sameStage": "Element artıq bu mərhələdədir.",
+        "notFound": "Mərhələ və ya element tapılmadı.",
+        "inactive": "Deaktiv mərhələyə köçürmək olmaz.",
+        "locked": "Layihə sahəsi açılıb: müraciətin qərarı bağlanıb, layihə üzrə davam edin.",
+        "useWorkspace": "Bu mərhələyə yalnız “Layihə sahəsi yarat” düyməsi ilə keçilir."
+      }
+    }
+  },
+  "admin": {
+    "title": "Proses mərhələləri",
+    "eyebrow": "İdarəetmə",
+    "description": "Mərhələ əlavə edin, adını və təsvirini üç dildə dəyişin, sırasını dəyişin və ya deaktiv edin. Proses xəritəsi və stepper-lər dərhal yenilənir.",
+    "openProcess": "Proses xəritəsi",
+    "rules": "Sistem mərhələləri mövcud statuslara bağlıdır və avtomatik doldurulur: onları silmək və deaktiv etmək olmaz, amma adını, təsvirini, məsul rolları və sırasını dəyişə bilərsiniz. Fərdi mərhələlərə yalnız əl ilə keçilir. Hər dəyişiklik əməliyyat jurnalına yazılır.",
+    "scopeTitle": {
+      "APPLICATION": "Müraciət mərhələləri",
+      "PROJECT": "Layihə mərhələləri"
+    },
+    "scopeHint": {
+      "APPLICATION": "Seçim dövrü: müraciətdən layihə sahəsinin açılmasına qədər.",
+      "PROJECT": "İnkubasiya: validasiyadan müsabiqə nəticəsinə qədər."
+    },
+    "add": "Yeni mərhələ",
+    "addTitle": "Yeni mərhələ əlavə et",
+    "addHint": "Fərdi mərhələ seçdiyiniz yerə əlavə olunur. Elementlər ona yalnız əl ilə köçürülür.",
+    "create": "Əlavə et",
+    "save": "Yadda saxla",
+    "saving": "Yadda saxlanılır…",
+    "editLabel": "{name} — redaktə et",
+    "editTitle": "Mərhələni redaktə et: {name}",
+    "systemHint": "Sistem mərhələsi: ad, təsvir və məsul rollar dəyişə bilər; növü sabitdir.",
+    "customHint": "Fərdi mərhələ: bütün sahələr dəyişə bilər.",
+    "fields": {
+      "scope": "Sahə",
+      "after": "Yeri",
+      "afterHint": "Bu mərhələdən sonra əlavə olunur.",
+      "first": "Ən əvvələ",
+      "nameAz": "Ad (AZ)",
+      "nameTr": "Ad (TR)",
+      "nameEn": "Ad (EN)",
+      "fallbackHint": "Boş qalsa AZ adı göstərilir.",
+      "descriptionAz": "Təsvir (AZ)",
+      "descriptionTr": "Təsvir (TR)",
+      "descriptionEn": "Təsvir (EN)",
+      "kind": "Növ",
+      "kindHint": "Gözləmə və rədd növləri diaqramda əvvəlki mərhələnin qərar nöqtəsindən ayrılan yan yol kimi göstərilir.",
+      "kindLocked": "Sistem mərhələsinin növü dəyişmir.",
+      "roles": "Məsul rollar",
+      "rolesHint": "Birinci seçilən rol diaqramda əsas zolaqdır."
+    },
+    "system": "Sistem",
+    "custom": "Fərdi",
+    "inactive": "Deaktiv",
+    "deactivateLabel": "{name} — deaktiv et",
+    "deleteLabel": "{name} — sil",
+    "activateLabel": "{name} — aktivləşdir",
+    "deactivateTitle": "Deaktiv et: {name}",
+    "deleteTitle": "Sil: {name}",
+    "hasItemsHint": "Bu mərhələdə {count} element var. Əvvəlcə onları başqa aktiv mərhələyə köçürün.",
+    "deactivateHint": "Mərhələ diaqramdan və seçimlərdən çıxarılır; tarixçə qalır. Sonra yenidən aktivləşdirə bilərsiniz.",
+    "deleteHint": "Mərhələ birdəfəlik silinir; keçid tarixçəsində “silinmiş mərhələ” kimi qalır.",
+    "moveTo": "Elementləri köçür",
+    "moveToHint": "Hər köçürmə tarixçəyə və əməliyyat jurnalına yazılır.",
+    "deactivateConfirm": "Deaktiv et",
+    "deleteConfirm": "Sil",
+    "moveUp": "{name} — yuxarı",
+    "moveDown": "{name} — aşağı",
+    "toasts": {
+      "created": "Mərhələ əlavə edildi",
+      "saved": "Mərhələ yeniləndi",
+      "deactivated": "Mərhələ deaktiv edildi",
+      "activated": "Mərhələ aktivləşdirildi",
+      "deleted": "Mərhələ silindi",
+      "reordered": "Sıra dəyişdirildi"
+    },
+    "errors": {
+      "invalid": "Sahələri yoxlayın.",
+      "system": "Sistem mərhələsini silmək və ya deaktiv etmək olmaz.",
+      "hasItems": "Mərhələdə element var: köçürüləcək mərhələni seçin.",
+      "notFound": "Mərhələ tapılmadı.",
+      "target": "Köçürmə üçün eyni sahədən başqa aktiv mərhələ seçin.",
+      "required": "Bu sahə tələb olunur.",
+      "tooLong": "Mətn çox uzundur."
+    }
+  }
+}

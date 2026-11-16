@@ -10,6 +10,7 @@ import { done, fail, failFromZod, formStr, isUniqueViolation, RuleError, type Ac
 import { nextProjectCode, withUniqueRetry } from "@/lib/codes";
 import { generateTempPassword, hashPassword } from "@/lib/passwords";
 import { revalidateSets } from "@/lib/revalidate";
+import { syncApplicationWorkflow, syncProjectWorkflow } from "@/lib/workflow";
 
 function revalidateApplication(id: string) {
   revalidateSets("applications", "dashboard");
@@ -86,6 +87,7 @@ export async function saveSelectionEvaluation(_prev: EvalState, formData: FormDa
     throw e;
   }
 
+  if (status === "SUBMITTED" && app.status === "SUBMITTED") await syncApplicationWorkflow(app.id, user.id);
   const score = weightedScore(rubric.criteria, scores);
   await logAudit({
     actorId: user.id,
@@ -142,6 +144,7 @@ export async function decideApplication(_prev: ActionState, formData: FormData):
     summary: `${app.code} · ${app.teamName}: ${app.status} → ${status}`,
     meta: { from: app.status, to: status, note },
   });
+  await syncApplicationWorkflow(app.id, user.id, note);
   await notify(
     app.evaluations.map((e) => e.evaluatorId).filter((id) => id !== user.id),
     "application_decided",
@@ -242,6 +245,9 @@ export async function createWorkspaceFromApplication(applicationId: string): Pro
     summary: `${result.project.code} · ${result.project.title} (${app.code})`,
     meta: { applicationId: app.id, leadEmail: email, newUser: result.lead.isNew },
   });
+  // process map: application → "workspace created", new project → its first stage (+ history)
+  await syncApplicationWorkflow(app.id, user.id);
+  await syncProjectWorkflow(result.project.id, user.id);
   revalidateApplication(app.id);
   revalidateSets("projects", "admin");
   return done("toast", {

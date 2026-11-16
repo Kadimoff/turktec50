@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1760" height="930" viewBox="0 0 1760 930" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" role="img" aria-label="TÜRKTECH 50 — platformanın arxitekturası">
+<title>TÜRKTECH 50 — platformanın arxitekturası</title>
+<defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A96A3"/></marker>
+  <marker id="ar-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A5A00"/></marker>
+  <marker id="ar-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B42335"/></marker>
+</defs>
+<rect width="1760" height="930" fill="#FFFFFF"/>
+<text x="32" y="38" font-size="26" font-weight="800" fill="#1F4E8C" dominant-baseline="central">TÜRKTECH 50 — platformanın arxitekturası</text>
+<text x="32" y="68" font-size="14" font-weight="400" fill="#4A6485" dominant-baseline="central">İştirakçılar → rol əsaslı platforma və modullar → nəticə; altda texniki qat</text>
+<text x="32" y="112" font-size="16" font-weight="800" fill="#1F4E8C" dominant-baseline="central">İştirakçılar</text>
+<rect x="32" y="136" width="330" height="84" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="52" y="168" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Universitetlər və komandalar</text>
+<text x="52" y="193" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">ADNSU, ASOİU və tərəfdaş universitetlər</text>
+<rect x="32" y="238" width="330" height="84" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="52" y="270" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Mentorlar</text>
+<text x="52" y="295" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">texniki, biznes, əqli mülkiyyət</text>
+<rect x="32" y="340" width="330" height="84" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="52" y="372" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Münsiflər</text>
+<text x="52" y="397" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">seçim, ara münsif, sınaq finalı</text>
+<rect x="32" y="442" width="330" height="84" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="52" y="474" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Koordinatorlar</text>
+<text x="52" y="499" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">Startap və Texnologiya Transferi Şöbəsi</text>
+<rect x="32" y="544" width="330" height="84" rx="12" fill="#FFFFFF" stroke="#C9DDF2" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="52" y="576" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Tərəfdaşlar və investorlar</text>
+<text x="52" y="601" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">KPI hesabatı və təqdimat materialı</text>
+<text x="440" y="112" font-size="16" font-weight="800" fill="#1F4E8C" dominant-baseline="central">Platforma və modullar</text>
+<rect x="440" y="136" width="880" height="492" rx="18" fill="#F5F9FE" stroke="#1F4E8C" stroke-width="2"/>
+<text x="464" y="166" font-size="20" font-weight="800" fill="#1F4E8C" dominant-baseline="central">TÜRKTECH 50 platforması</text>
+<text x="464" y="191" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">rol əsaslı layihə izləmə · proses xəritəsi · KPI</text>
+<rect x="464" y="214" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="482" y="246" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Müraciətlər</text>
+<text x="482" y="272" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">seçim rubriki, insan qərarı</text>
+<rect x="746.6666666666667" y="214" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="764.6666666666667" y="246" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Layihələr</text>
+<text x="764.6666666666667" y="272" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">mərhələlər, stepper, təyinatlar</text>
+<rect x="1029.3333333333335" y="214" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1047.3333333333335" y="246" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Tapşırıqlar</text>
+<text x="1047.3333333333335" y="272" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">Kanban, məsul, Meyar</text>
+<rect x="464" y="314" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="482" y="346" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Mentorlar</text>
+<text x="482" y="372" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">sessiyalar, qeydlər, növbəti addım</text>
+<rect x="746.6666666666667" y="314" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="764.6666666666667" y="346" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Sənədlər</text>
+<text x="764.6666666666667" y="372" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">checklist, versiya, gizlilik</text>
+<rect x="1029.3333333333335" y="314" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1047.3333333333335" y="346" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Risklər</text>
+<text x="1047.3333333333335" y="372" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">3×3 matris, yumşaltma</text>
+<rect x="464" y="414" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="482" y="446" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Jüri</text>
+<text x="482" y="472" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">ara münsif, sınaq finalı</text>
+<rect x="746.6666666666667" y="414" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="764.6666666666667" y="446" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">KPI</text>
+<text x="764.6666666666667" y="472" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">huni 150 → 10, CSV</text>
+<rect x="1029.3333333333335" y="414" width="266.6666666666667" height="86" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1047.3333333333335" y="446" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">İdarəetmə və audit</text>
+<text x="1047.3333333333335" y="472" font-size="12.5" font-weight="400" fill="#4A6485" dominant-baseline="central">istifadəçilər, jurnal, mərhələlər</text>
+<rect x="464" y="514" width="832" height="46" rx="12" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="880" y="537" font-size="14" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Proses xəritəsi · konfiqurasiya edilə bilən mərhələlər · avtomatik + əl ilə keçidlər</text>
+<text x="1400" y="112" font-size="16" font-weight="800" fill="#1F4E8C" dominant-baseline="central">Nəticə</text>
+<rect x="1400" y="176" width="328" height="104" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1420" y="216" font-size="17" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Müsabiqə müraciəti</text>
+<text x="1420" y="246" font-size="12.5" font-weight="400" fill="#4A6485" text-anchor="start" dominant-baseline="central">QC-dən keçmiş paket (TEKNOFEST və s.)</text>
+<rect x="1400" y="320" width="328" height="104" rx="12" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1.5"/>
+<text x="1420" y="360" font-size="17" font-weight="700" fill="#1F7A52" dominant-baseline="central">Finalçılar</text>
+<text x="1420" y="390" font-size="12.5" font-weight="400" fill="#4A6485" text-anchor="start" dominant-baseline="central">pilot hədəf: 10 komanda</text>
+<rect x="1400" y="464" width="328" height="104" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1420" y="504" font-size="17" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Hesabat və izlənəbilirlik</text>
+<text x="1420" y="534" font-size="12.5" font-weight="400" fill="#4A6485" text-anchor="start" dominant-baseline="central">KPI, audit izi, təqdimat</text>
+<path d="M362,178 H438" stroke="#8A96A3" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M362,280 H438" stroke="#8A96A3" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M362,382 H438" stroke="#8A96A3" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M362,484 H438" stroke="#8A96A3" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M362,586 H438" stroke="#8A96A3" stroke-width="1.6" fill="none" marker-end="url(#ar)" stroke-dasharray="6 4"/>
+<path d="M1320,228 H1398" stroke="#8A96A3" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M1320,372 H1398" stroke="#8A96A3" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M1320,516 H1398" stroke="#8A96A3" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M1564,568 V654 H197 V630" stroke="#8A96A3" stroke-width="1.3" stroke-dasharray="5 4" fill="none" marker-end="url(#ar)"/>
+<text x="32" y="698" font-size="16" font-weight="800" fill="#1F4E8C" dominant-baseline="central">Texniki qat</text>
+<rect x="32" y="718" width="1696" height="140" rx="16" fill="#FAFBFD" stroke="#E3EAF2" stroke-width="1.5"/>
+<rect x="52" y="742" width="318.4" height="92" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="70" y="776" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Next.js 16</text>
+<text x="70" y="806" font-size="12.5" font-weight="400" fill="#4A6485" text-anchor="start" dominant-baseline="central">App Router, Server Actions, React 19</text>
+<rect x="386.4" y="742" width="318.4" height="92" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="404.4" y="776" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">PostgreSQL 16</text>
+<text x="404.4" y="806" font-size="12.5" font-weight="400" fill="#4A6485" text-anchor="start" dominant-baseline="central">Prisma 7 ORM, miqrasiyalar</text>
+<rect x="720.8" y="742" width="318.4" height="92" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="738.8" y="776" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Fayl anbarı</text>
+<text x="738.8" y="806" font-size="12.5" font-weight="400" fill="#4A6485" text-anchor="start" dominant-baseline="central">yüklənən sənədlər, versiyalar</text>
+<rect x="1055.1999999999998" y="742" width="318.4" height="92" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1073.1999999999998" y="776" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Audit log</text>
+<text x="1073.1999999999998" y="806" font-size="12.5" font-weight="400" fill="#4A6485" text-anchor="start" dominant-baseline="central">hər dəyişiklik qeyd olunur</text>
+<rect x="1389.6" y="742" width="318.4" height="92" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1407.6" y="776" font-size="16" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Təhlükəsizlik</text>
+<text x="1407.6" y="806" font-size="12.5" font-weight="400" fill="#4A6485" text-anchor="start" dominant-baseline="central">JWT sessiya, RBAC, root hesabı</text>
+<path d="M880,628 V716" stroke="#8A96A3" stroke-width="1.6" stroke-dasharray="6 4" fill="none" marker-end="url(#ar)"/>
+<text x="32" y="900" font-size="13" font-weight="400" fill="#4A6485" font-style="italic" dominant-baseline="central">Tərəfdaşlar və investorlar platformada ayrıca rol deyil: onlara KPI hesabatı, proses xəritəsi (təqdimat rejimi, SVG/PNG) və finalçılar təqdim olunur.</text>
+</svg>

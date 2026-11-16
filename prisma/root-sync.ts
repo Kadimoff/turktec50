@@ -14,8 +14,7 @@ async function main() {
   const password = process.env.ROOT_PASSWORD ?? "";
   if (!email || password.length < 8) throw new Error("Set ROOT_EMAIL and ROOT_PASSWORD (min 8 chars) in .env");
   const passwordHash = await bcrypt.hash(password, 12);
-  // exactly one root: demote any other root flag
-  await prisma.user.updateMany({ where: { isRoot: true, NOT: { email } }, data: { isRoot: false } });
+  // Additional root accounts (prisma/add-root.ts) are kept; only the primary root is synced from .env.
   const user = await prisma.user.upsert({
     where: { email },
     update: { name, passwordHash, role: "ADMIN", isRoot: true, active: true },

@@ -47,7 +47,7 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
   };
 
   const [rootUser, byRole, total, users, universities] = await Promise.all([
-    prisma.user.findFirst({ where: { isRoot: true }, select: { id: true, name: true, email: true, title: true, lastLoginAt: true } }),
+    prisma.user.findFirst({ where: { isRoot: true }, orderBy: { createdAt: "asc" }, select: { id: true, name: true, email: true, title: true, lastLoginAt: true } }),
     prisma.user.groupBy({ by: ["role", "active"], _count: { _all: true } }),
     prisma.user.count({ where }),
     prisma.user.findMany({

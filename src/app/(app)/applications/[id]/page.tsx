@@ -14,6 +14,7 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { SelectionRubricForm } from "@/components/applications/rubric-form";
 import { DecisionForm, WorkspacePanel } from "@/components/applications/decision-panel";
+import { WorkflowStepper } from "@/components/process/workflow-stepper";
 
 export async function generateMetadata(props: PageProps<"/applications/[id]">) {
   const { id } = await props.params;
@@ -76,6 +77,8 @@ export default async function ApplicationDetailPage(props: PageProps<"/applicati
         actions={<EnumBadge enumName="ApplicationStatus" value={app.status} />}
       />
       <HumanControlNote />
+
+      <WorkflowStepper scope="APPLICATION" entityId={app.id} canManage={isAdmin} compact />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">

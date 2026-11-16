@@ -36,7 +36,8 @@
     "training": "Təlimlər",
     "resource": "Resurs sorğuları",
     "announcement": "Elanlar",
-    "intake": "Hazırlıq müraciətləri"
+    "intake": "Hazırlıq müraciətləri",
+    "workflow": "Proses mərhələləri"
   },
   "listTitle": "Qeydlər",
   "found": "{count, plural, one {# qeyd} other {# qeyd}}",
@@ -172,6 +173,16 @@
       "review": "Hazırlıq müraciətinin statusunu dəyişdi",
       "accept": "Hazırlıq müraciətini qəbul etdi",
       "reject": "Hazırlıq müraciətini rədd etdi"
+    },
+    "workflow": {
+      "auto": "Proses mərhələsi avtomatik dəyişdi",
+      "move": "Proses mərhələsini əl ilə dəyişdi",
+      "stage_create": "Proses mərhələsi əlavə etdi",
+      "stage_update": "Proses mərhələsini yenilədi",
+      "stage_reorder": "Mərhələlərin sırasını dəyişdi",
+      "stage_deactivate": "Proses mərhələsini deaktiv etdi",
+      "stage_activate": "Proses mərhələsini aktivləşdirdi",
+      "stage_delete": "Proses mərhələsini sildi"
     }
   },
   "entities": {
@@ -199,7 +210,8 @@
     "Training": "Təlim",
     "ResourceRequest": "Resurs sorğusu",
     "Announcement": "Elan",
-    "IntakeRequest": "Hazırlıq müraciəti"
+    "IntakeRequest": "Hazırlıq müraciəti",
+    "WorkflowStage": "Proses mərhələsi"
   },
   "activity": {
     "title": "Fəaliyyət lenti",

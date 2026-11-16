@@ -150,7 +150,7 @@
     "wipe": {
       "title": "Bütün proqram məlumatlarını sil",
       "body": "Bütün istifadəçilər (root istisna), akademiya tələbələri, komandaları, təlimləri və elanları, müraciətlər, layihələr, tapşırıqlar, sənədlər, risklər, resurs sorğuları, qiymətləndirmələr, bildirişlər və əməliyyat jurnalı silinir. Bu əməliyyat geri qaytarılmır.",
-      "keeps": "Qalır: root hesabı, universitetlər, yarışmalar (kataloq və qayda izləməsi), rubriklər, fakültə, laboratoriya və tərəfdaş reyestri",
+      "keeps": "Qalır: root hesabı, universitetlər, yarışmalar (kataloq və qayda izləməsi), rubriklər, fakültə, laboratoriya və tərəfdaş reyestri, proses mərhələləri",
       "removes": "Silinir: digər bütün məlumatlar və yüklənmiş fayllar",
       "hint": "Demo məlumatlarını yenidən yükləmək üçün serverdə: npm run db:seed",
       "button": "Hamısını sil",

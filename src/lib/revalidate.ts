@@ -6,12 +6,12 @@ import { revalidatePath } from "next/cache";
 const SETS = {
   dashboard: ["/dashboard", "/kpi"],
   calendar: ["/calendar"],
-  projects: ["/projects"],
+  projects: ["/projects", "/process"], // process map counts projects per stage
   tasks: ["/tasks"],
   mentors: ["/mentors"],
   documents: ["/documents"],
   risks: ["/risks"],
-  applications: ["/applications"],
+  applications: ["/applications", "/process"],
   jury: ["/jury"],
   academy: ["/academy"],
   catalog: ["/academy/catalog", "/apply"],
@@ -21,7 +21,7 @@ const SETS = {
   trainings: ["/academy/trainings"],
   announcements: ["/announcements"],
   intake: ["/academy/intake"],
-  admin: ["/admin/users", "/admin/audit", "/admin/system"],
+  admin: ["/admin/users", "/admin/workflow", "/admin/audit", "/admin/system"],
 } as const;
 
 export type RevalidateSet = keyof typeof SETS;

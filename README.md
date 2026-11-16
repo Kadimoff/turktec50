@@ -18,6 +18,7 @@ ADNSU/ASOIU Startup ve Teknoloji Transferi Şubesi pilotu · TÜRK FORUM 2026.
 | Belgeler | Başvuru paketi kontrol listesi, sürümlü yükleme, inceleme (onay / düzeltme), gizli belge koruması |
 | Riskler | 3×3 olasılık × etki matrisi, program ve proje riskleri |
 | Jüri | Ara jüri ve deneme finali rubrikleri, bilgilendirici ağırlıklı puan, görüş ayrılığı uyarısı |
+| Süreç haritası | Yapılandırılabilir süreç aşamaları (`/admin/workflow`), canlı rol kulvarlı iş akışı diyagramı + KPI hunisi (`/process`), sunum modu, SVG/PNG indirme, proje ve başvuru aşama göstergesi (stepper) |
 | Yönetim | Kullanıcılar, işlem kaydı (audit log), CSV dışa aktarma |
 | Akademi · genel bakış | Hazırlık stratejisi (6 rol, 6 aşama), öğrenci/ekip/başvuru sayıları, yaklaşan resmî tarihler, açık kaynak talepleri |
 | Akademi · yarışma kataloğu | TEKNOFEST 2026 arşivinden 61 resmî yarışma kartı (yön, alt kategori, resmî sayfa), 2027 kural takibi (sorumlu, son kontrol, resmî son tarih, HTTPS şartname bağlantısı; *Onaylandı* için bağlantı zorunlu) |
@@ -50,6 +51,8 @@ npm install
 npm run db:up                     # PostgreSQL 17 → 127.0.0.1:5433
 npx prisma migrate deploy
 npm run db:seed                   # demo verisi (tüm tabloları sıfırlar)
+npm run workflow:sync             # süreç aşamaları (idempotent, veri silmez; mevcut veritabanında da güvenli)
+npm run academy:catalog           # TEKNOFEST kataloğunu yükler/tazeler (idempotent, veri silmez; canlı veritabanında db:seed yerine)
 npm run dev                       # http://localhost:3000
 ```
 
@@ -93,3 +96,5 @@ Tüm demo kullanıcıların listesi: [`docs/USERS.md`](docs/USERS.md)
 - Her değişiklik `AuditLog` tablosuna yazılır. Bildirimler uygulama içindedir.
 
 Geliştirme kuralları için: [`docs/CONVENTIONS.md`](docs/CONVENTIONS.md)
+
+Süreç aşamaları, roller ve sunum diyagramları (AZ/TR, SVG + PNG): [`docs/PROCESS.md`](docs/PROCESS.md), [`docs/diagrams/`](docs/diagrams/). Testler: `npm test`.

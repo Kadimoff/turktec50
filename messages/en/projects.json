@@ -136,7 +136,7 @@
   "manage": {
     "title": "Coordinator management",
     "subtitle": "Stage, health, KPI evidence and assignments. Every change is written to the audit log.",
-    "stageTitle": "Change stage",
+    "stageTitle": "Incubation stage",
     "healthTitle": "Project health",
     "flagsTitle": "KPI evidence and competition",
     "toStage": "New stage",

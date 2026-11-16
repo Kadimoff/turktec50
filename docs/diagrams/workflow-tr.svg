@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2280" height="1274" viewBox="0 0 2280 1274" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" role="img" aria-label="TÜRKTECH 50 — süreç akışı">
+<title>TÜRKTECH 50 — süreç akışı</title>
+<defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A96A3"/></marker>
+  <marker id="ar-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A5A00"/></marker>
+  <marker id="ar-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B42335"/></marker>
+</defs>
+<rect width="2280" height="1274" fill="#FFFFFF"/>
+<text x="28" y="34" font-size="26" font-weight="800" fill="#1F4E8C" dominant-baseline="central">TÜRKTECH 50 — süreç akışı</text>
+<text x="28" y="64" font-size="14" font-weight="400" fill="#4A6485" dominant-baseline="central">Başvurudan yarışma sonucuna: roller, karar noktaları, bekleme ve ret yolları, paralel akışlar ve KPI hunisi</text>
+<rect x="204" y="92" width="736" height="644" rx="14" fill="#F1F7FE" stroke="none" stroke-width="1.5"/>
+<rect x="948" y="92" width="1294" height="644" rx="14" fill="#F4F9F6" stroke="none" stroke-width="1.5"/>
+<text x="218" y="111" font-size="14" font-weight="700" fill="#1F4E8C" dominant-baseline="central">1. Seçim · başvurular</text>
+<text x="962" y="111" font-size="14" font-weight="700" fill="#1F7A52" dominant-baseline="central">2. Kuluçka ve final · projeler</text>
+<line x1="16" x2="2264" y1="128" y2="128" stroke="#E3EAF2"/>
+<text x="24" y="163" font-size="15" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Ekip</text><text x="24" y="182" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">başvuru, çalışma,</text><text x="24" y="196" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">belgeler, sunum</text>
+<line x1="16" x2="2264" y1="232" y2="232" stroke="#E3EAF2"/>
+<text x="24" y="267" font-size="15" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Koordinatör</text><text x="24" y="286" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">karar, atama, kalite</text><text x="24" y="300" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">kontrol</text>
+<line x1="16" x2="2264" y1="336" y2="336" stroke="#E3EAF2"/>
+<text x="24" y="364" font-size="15" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Mentor</text><text x="24" y="383" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">görüşmeler, geri</text><text x="24" y="397" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">bildirim, sonraki</text><text x="24" y="411" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">adımlar</text>
+<line x1="16" x2="2264" y1="440" y2="440" stroke="#E3EAF2"/>
+<text x="24" y="475" font-size="15" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Jüri</text><text x="24" y="494" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">rubrik puanları (tavsiye</text><text x="24" y="508" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">niteliğinde)</text>
+<line x1="16" x2="2264" y1="544" y2="544" stroke="#E3EAF2"/>
+<text x="24" y="623" font-size="15" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Alternatif yollar</text><text x="24" y="642" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">yedek liste, ret,</text><text x="24" y="656" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">seçilmedi</text>
+<line x1="16" x2="2264" y1="736" y2="736" stroke="#E3EAF2"/>
+<text x="24" y="815" font-size="15" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Paralel akışlar</text><text x="24" y="834" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">kuluçka boyunca</text>
+<line x1="16" x2="2264" y1="914" y2="914" stroke="#E3EAF2"/>
+<text x="24" y="979" font-size="15" font-weight="700" fill="#1F4E8C" dominant-baseline="central">KPI hunisi</text><text x="24" y="998" font-size="11.5" font-weight="400" fill="#6B7F99" dominant-baseline="central">pilot hedefleri</text>
+<path d="M479,457 V298" stroke="#8A96A3" stroke-width="1.2" stroke-dasharray="2 3" fill="none"/>
+<rect x="408" y="270" width="142" height="28" rx="14" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="479" y="284" font-size="11.5" font-weight="400" fill="#4A6485" text-anchor="middle" dominant-baseline="central">koordinatör denetimi</text>
+<path d="M851,249 V194" stroke="#8A96A3" stroke-width="1.2" stroke-dasharray="2 3" fill="none"/>
+<rect x="780" y="166" width="142" height="28" rx="14" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="851" y="180" font-size="11.5" font-weight="400" fill="#4A6485" text-anchor="middle" dominant-baseline="central">ekip çalışması</text>
+<path d="M1037,215 V374" stroke="#8A96A3" stroke-width="1.2" stroke-dasharray="2 3" fill="none"/>
+<rect x="966" y="374" width="142" height="28" rx="14" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1037" y="388" font-size="11.5" font-weight="400" fill="#4A6485" text-anchor="middle" dominant-baseline="central">mentor desteği</text>
+<path d="M1223,215 V374" stroke="#8A96A3" stroke-width="1.2" stroke-dasharray="2 3" fill="none"/>
+<rect x="1152" y="374" width="142" height="28" rx="14" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1223" y="388" font-size="11.5" font-weight="400" fill="#4A6485" text-anchor="middle" dominant-baseline="central">mentor desteği</text>
+<path d="M1409,215 V374" stroke="#8A96A3" stroke-width="1.2" stroke-dasharray="2 3" fill="none"/>
+<rect x="1338" y="374" width="142" height="28" rx="14" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1409" y="388" font-size="11.5" font-weight="400" fill="#4A6485" text-anchor="middle" dominant-baseline="central">mentor desteği</text>
+<path d="M1595,457 V298" stroke="#8A96A3" stroke-width="1.2" stroke-dasharray="2 3" fill="none"/>
+<rect x="1524" y="270" width="142" height="28" rx="14" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1595" y="284" font-size="11.5" font-weight="400" fill="#4A6485" text-anchor="middle" dominant-baseline="central">koordinatör denetimi</text>
+<path d="M1781,457 V194" stroke="#8A96A3" stroke-width="1.2" stroke-dasharray="2 3" fill="none"/>
+<rect x="1710" y="166" width="142" height="28" rx="14" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1781" y="180" font-size="11.5" font-weight="400" fill="#4A6485" text-anchor="middle" dominant-baseline="central">ekip çalışması</text>
+<path d="M1967,215 V270" stroke="#8A96A3" stroke-width="1.2" stroke-dasharray="2 3" fill="none"/>
+<rect x="1896" y="270" width="142" height="28" rx="14" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1967" y="284" font-size="11.5" font-weight="400" fill="#4A6485" text-anchor="middle" dominant-baseline="central">koordinatör denetimi</text>
+<path d="M368,180 H380 V492 H402" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M554,492 H566 V284 H588" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M740,284 H774" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M926,284 H938 V180 H960" fill="none" stroke="#8A96A3" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+<path d="M1112,180 H1146" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M1298,180 H1332" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M1484,180 H1496 V492 H1518" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M1670,492 H1704" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M1856,492 H1868 V180 H1890" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M2042,180 H2054 V284 H2076" fill="none" stroke="#8A96A3" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M570,294 V679" stroke="#8A96A3" stroke-width="1.4" fill="none"/>
+<path d="M570,593 H588" stroke="#8A5A00" stroke-width="1.8" stroke-dasharray="5 3" fill="none" marker-end="url(#ar-w)"/>
+<rect x="590" y="558" width="150" height="70" rx="12" fill="#FFF6DB" stroke="#EACB7C" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="665" y="585" font-size="13.5" font-weight="700" fill="#8A5A00" text-anchor="middle" dominant-baseline="central">Yedek liste</text>
+<text x="665" y="615" font-size="10.5" font-weight="400" fill="#8A5A00" text-anchor="middle" dominant-baseline="central">WAITLIST</text>
+<path d="M570,679 H588" stroke="#B42335" stroke-width="1.8" stroke-dasharray="5 3" fill="none" marker-end="url(#ar-r)"/>
+<rect x="590" y="644" width="150" height="70" rx="12" fill="#FDECEC" stroke="#EFB7B7" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="665" y="671" font-size="13.5" font-weight="700" fill="#B42335" text-anchor="middle" dominant-baseline="central">Reddedildi</text>
+<text x="665" y="701" font-size="10.5" font-weight="400" fill="#B42335" text-anchor="middle" dominant-baseline="central">REJECTED</text>
+<polygon points="570,274 580,284 570,294 560,284" fill="#FFFFFF" stroke="#1F4E8C" stroke-width="1.8"/>
+<text x="570" y="265" font-size="11" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Karar</text>
+<path d="M2058,294 V593" stroke="#8A96A3" stroke-width="1.4" fill="none"/>
+<path d="M2058,593 H2076" stroke="#B42335" stroke-width="1.8" stroke-dasharray="5 3" fill="none" marker-end="url(#ar-r)"/>
+<rect x="2078" y="558" width="150" height="70" rx="12" fill="#FDECEC" stroke="#EFB7B7" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="2153" y="585" font-size="13.5" font-weight="700" fill="#B42335" text-anchor="middle" dominant-baseline="central">Sonuç: seçilmedi</text>
+<text x="2153" y="615" font-size="10.5" font-weight="400" fill="#B42335" text-anchor="middle" dominant-baseline="central">NOT_SELECTED</text>
+<polygon points="2058,274 2068,284 2058,294 2048,284" fill="#FFFFFF" stroke="#1F4E8C" stroke-width="1.8"/>
+<text x="2058" y="265" font-size="11" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Karar</text>
+<rect x="218" y="145" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="293" y="172" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Başvuru</text>
+<text x="293" y="204" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">SUBMITTED</text>
+<rect x="404" y="457" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="479" y="478" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Ön değerlendirme</text><text x="479" y="494" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">— seçim rubriği</text>
+<text x="479" y="516" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">UNDER_REVIEW</text>
+<rect x="590" y="249" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#1F4E8C" stroke-width="1.8"/>
+<text x="665" y="276" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Karar: kabul</text>
+<text x="665" y="308" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">ACCEPTED</text>
+<rect x="776" y="249" width="150" height="70" rx="12" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1.5"/>
+<text x="851" y="270" font-size="13.5" font-weight="700" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Proje alanı</text><text x="851" y="286" font-size="13.5" font-weight="700" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">açılır</text>
+<text x="851" y="308" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">proje + kontrol listesi</text>
+<rect x="962" y="145" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1037" y="172" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Doğrulama</text>
+<text x="1037" y="204" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">VALIDATION</text>
+<rect x="1148" y="145" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1223" y="172" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Prototip</text>
+<text x="1223" y="204" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">PROTOTYPE</text>
+<rect x="1334" y="145" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1409" y="172" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">MVP</text>
+<text x="1409" y="204" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">MVP</text>
+<rect x="1520" y="457" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1595" y="484" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Ara jüri</text>
+<text x="1595" y="516" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">QA · MIDTERM rubriği</text>
+<rect x="1706" y="457" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1781" y="484" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Deneme finali</text>
+<text x="1781" y="516" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">FINAL rubriği</text>
+<rect x="1892" y="145" width="150" height="70" rx="12" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1967" y="172" font-size="13.5" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Yarışmaya başvuru</text>
+<text x="1967" y="204" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">SUBMITTED</text>
+<rect x="2078" y="249" width="150" height="70" rx="12" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1.5"/>
+<text x="2153" y="276" font-size="13.5" font-weight="700" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Sonuç: finalist</text>
+<text x="2153" y="308" font-size="10.5" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">FINALIST</text>
+<rect x="954" y="750" width="1096" height="30" rx="15" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="970" y="765" font-size="13" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Mentor görüşmeleri</text>
+<text x="1184" y="765" font-size="12" font-weight="400" fill="#4A6485" dominant-baseline="central">plan → görüşme notu → sonraki adım göreve dönüşür</text>
+<rect x="954" y="788" width="1096" height="30" rx="15" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="970" y="803" font-size="13" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Görevler</text>
+<text x="1184" y="803" font-size="12" font-weight="400" fill="#4A6485" dominant-baseline="central">Kanban · sorumlu · son tarih · kabul ölçütü</text>
+<rect x="954" y="826" width="1096" height="30" rx="15" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="970" y="841" font-size="13" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Belge kontrol listesi</text>
+<text x="1184" y="841" font-size="12" font-weight="400" fill="#4A6485" dominant-baseline="central">13 madde · sürümler · koordinatör/mentor incelemesi · QC</text>
+<rect x="954" y="864" width="1096" height="30" rx="15" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="970" y="879" font-size="13" font-weight="700" fill="#1F4E8C" dominant-baseline="central">Riskler</text>
+<text x="1184" y="879" font-size="12" font-weight="400" fill="#4A6485" dominant-baseline="central">3×3 olasılık × etki · azaltma · sorumlu</text>
+<polygon points="216,931 610,946.3333333333334 610,1037.6666666666667 216,1053" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="413" y="992" font-size="28" font-weight="800" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">150</text>
+<text x="616" y="992" font-size="18" font-weight="400" fill="#8A96A3" text-anchor="middle" dominant-baseline="central">→</text>
+<text x="413" y="1084" font-size="14" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Değerlendirilen başvuru</text>
+<text x="413" y="1106" font-size="12" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">Ön değerlendirme</text>
+<polygon points="622,946.3333333333334 1016,961.6666666666666 1016,1022.3333333333334 622,1037.6666666666667" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="819" y="992" font-size="28" font-weight="800" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">100</text>
+<text x="1022" y="992" font-size="18" font-weight="400" fill="#8A96A3" text-anchor="middle" dominant-baseline="central">→</text>
+<text x="819" y="1084" font-size="14" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Kabul edilen ekip</text>
+<text x="819" y="1106" font-size="12" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">Karar: kabul</text>
+<polygon points="1028,961.6666666666666 1422,961.6666666666666 1422,1022.3333333333334 1028,1022.3333333333334" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1225" y="992" font-size="28" font-weight="800" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">50</text>
+<text x="1428" y="992" font-size="18" font-weight="400" fill="#8A96A3" text-anchor="middle" dominant-baseline="central">→</text>
+<text x="1225" y="1084" font-size="14" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Çalışan prototip / MVP</text>
+<text x="1225" y="1106" font-size="12" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">MVP · test kanıtı</text>
+<polygon points="1434,961.6666666666666 1828,973.9333333333333 1828,1010.0666666666667 1434,1022.3333333333334" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/>
+<text x="1631" y="992" font-size="28" font-weight="800" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">50</text>
+<text x="1834" y="992" font-size="18" font-weight="400" fill="#8A96A3" text-anchor="middle" dominant-baseline="central">→</text>
+<text x="1631" y="1084" font-size="14" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Kalite kontrolden geçen paket</text>
+<text x="1631" y="1106" font-size="12" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">Yarışmaya başvuru</text>
+<polygon points="1840,973.9333333333333 2234,977.5466666666666 2234,1006.4533333333334 1840,1010.0666666666667" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1.5"/>
+<text x="2037" y="992" font-size="28" font-weight="800" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">10</text>
+<text x="2037" y="1084" font-size="14" font-weight="700" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Finalist (pilot)</text>
+<text x="2037" y="1106" font-size="12" font-weight="400" fill="#6B7F99" text-anchor="middle" dominant-baseline="central">Sonuç</text>
+<g transform="translate(28,1190)"><rect x="0" y="-10" width="28" height="20" rx="6" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1.5"/><text x="44" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Ana aşama</text></g>
+<g transform="translate(154.60000000000002,1190)"><polygon points="14,-10 24,0 14,10 4,0" fill="#FFFFFF" stroke="#1F4E8C" stroke-width="1.8"/><text x="44" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Karar noktası (kararı insan verir)</text></g>
+<g transform="translate(466.20000000000005,1190)"><rect x="0" y="-10" width="28" height="20" rx="6" fill="#FFF6DB" stroke="#EACB7C" stroke-width="1.5" stroke-dasharray="5 3"/><text x="44" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Bekleme yolu</text></g>
+<g transform="translate(615,1190)"><rect x="0" y="-10" width="28" height="20" rx="6" fill="#FDECEC" stroke="#EFB7B7" stroke-width="1.5" stroke-dasharray="5 3"/><text x="44" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Ret / seçilmedi</text></g>
+<g transform="translate(786,1190)"><rect x="0" y="-10" width="28" height="20" rx="6" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1.5"/><text x="44" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Başarılı sonuç</text></g>
+<g transform="translate(949.6,1190)"><rect x="0" y="-10" width="34" height="20" rx="10" fill="#FFFFFF" stroke="#8A96A3" stroke-width="1" stroke-dasharray="4 3"/><text x="44" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Katılan rol</text></g>
+<text x="28" y="1234" font-size="13" font-weight="400" fill="#4A6485" font-style="italic" dominant-baseline="central">Sistem karar vermez: seçim ve jüri kararlarını insanlar verir; platform kaydeder, süreci görünür kılar ve raporlar. Aşamalar platformda yapılandırılabilir.</text>
+<line x1="16" x2="2264" y1="1164" y2="1164" stroke="#E3EAF2"/>
+</svg>

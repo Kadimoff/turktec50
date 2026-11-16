@@ -150,7 +150,7 @@
     "wipe": {
       "title": "Delete all program data",
       "body": "Deletes all users (except root), Academy students, teams, trainings and announcements, applications, projects, tasks, documents, risks, resource requests, evaluations, notifications and the audit log. This cannot be undone.",
-      "keeps": "Kept: root account, universities, competitions (catalog and rule tracking), rubrics, the faculty, lab and partner registry",
+      "keeps": "Kept: root account, universities, competitions (catalog and rule tracking), rubrics, the faculty, lab and partner registry, process stages",
       "removes": "Deleted: everything else and uploaded files",
       "hint": "To reload demo data, run on the server: npm run db:seed",
       "button": "Delete everything",

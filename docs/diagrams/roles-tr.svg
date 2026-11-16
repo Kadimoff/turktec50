@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="974" viewBox="0 0 1560 974" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" role="img" aria-label="TÜRKTECH 50 — roller ve yetkiler">
+<title>TÜRKTECH 50 — roller ve yetkiler</title>
+<defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A96A3"/></marker>
+  <marker id="ar-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A5A00"/></marker>
+  <marker id="ar-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B42335"/></marker>
+</defs>
+<rect width="1560" height="974" fill="#FFFFFF"/>
+<text x="32" y="38" font-size="26" font-weight="800" fill="#1F4E8C" dominant-baseline="central">TÜRKTECH 50 — roller ve yetkiler</text>
+<text x="32" y="68" font-size="14" font-weight="400" fill="#4A6485" dominant-baseline="central">Kim neyi görür ve ne yapabilir (rol tabanlı erişim, her değişiklik denetim kaydına yazılır)</text>
+<rect x="32" y="100" width="1496" height="50" rx="12" fill="#1F4E8C" stroke="#1F4E8C" stroke-width="1.5"/>
+<text x="52" y="125" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="start" dominant-baseline="central">Modül / işlem</text>
+<text x="568.6" y="125" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">Root (sistem sahibi)</text>
+<text x="781.8000000000001" y="125" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">Koordinatör (ADMIN)</text>
+<text x="995" y="125" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">Ekip (TEAM)</text>
+<text x="1208.1999999999998" y="125" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">Mentor</text>
+<text x="1421.3999999999999" y="125" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">Jüri (JURY)</text>
+<rect x="32" y="150" width="1496" height="44" fill="#F7FAFD"/>
+<text x="52" y="172" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Genel bakış (dashboard)</text>
+<rect x="545.5" y="158" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="172" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="158" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="172" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="934.9" y="158" width="120.2" height="28" rx="14" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1"/>
+<text x="995" y="172" font-size="12.5" font-weight="600" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Kendi projesi</text>
+<rect x="1166.6" y="158" width="83.2" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1208.1999999999998" y="172" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Atandığı</text>
+<rect x="1379.8" y="158" width="83.2" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1421.3999999999999" y="172" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Atandığı</text>
+<text x="52" y="216" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Süreç haritası</text>
+<rect x="545.5" y="202" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="216" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="202" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="216" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="934.9" y="202" width="120.2" height="28" rx="14" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1"/>
+<text x="995" y="216" font-size="12.5" font-weight="600" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Kendi projesi</text>
+<rect x="1166.6" y="202" width="83.2" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1208.1999999999998" y="216" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Atandığı</text>
+<rect x="1331.6999999999998" y="202" width="179.4" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1421.3999999999999" y="216" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Atandığı + başvurular</text>
+<rect x="32" y="238" width="1496" height="44" fill="#F7FAFD"/>
+<text x="52" y="260" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Başvurular ve seçim rubriği</text>
+<rect x="545.5" y="246" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="260" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="246" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="260" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<text x="995" y="260" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1208.1999999999998" y="260" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<rect x="1346.4999999999998" y="246" width="149.8" height="28" rx="14" fill="#F2F5F9" stroke="#DCE3EC" stroke-width="1"/>
+<text x="1421.3999999999999" y="260" font-size="12.5" font-weight="600" fill="#4A6485" text-anchor="middle" dominant-baseline="central">Puanlar (tavsiye)</text>
+<text x="52" y="304" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Başvuru kararı (kabul / yedek / ret)</text>
+<rect x="545.5" y="290" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="304" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="290" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="304" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<text x="995" y="304" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1208.1999999999998" y="304" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1421.3999999999999" y="304" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<rect x="32" y="326" width="1496" height="44" fill="#F7FAFD"/>
+<text x="52" y="348" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Projeler</text>
+<rect x="545.5" y="334" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="348" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="334" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="348" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="934.9" y="334" width="120.2" height="28" rx="14" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1"/>
+<text x="995" y="348" font-size="12.5" font-weight="600" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Kendi projesi</text>
+<rect x="1166.6" y="334" width="83.2" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1208.1999999999998" y="348" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Atandığı</text>
+<rect x="1331.6999999999998" y="334" width="179.4" height="28" rx="14" fill="#F2F5F9" stroke="#DCE3EC" stroke-width="1"/>
+<text x="1421.3999999999999" y="348" font-size="12.5" font-weight="600" fill="#4A6485" text-anchor="middle" dominant-baseline="central">Atandığı, salt okunur</text>
+<text x="52" y="392" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Görevler</text>
+<rect x="545.5" y="378" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="392" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="378" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="392" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="934.9" y="378" width="120.2" height="28" rx="14" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1"/>
+<text x="995" y="392" font-size="12.5" font-weight="600" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Kendi projesi</text>
+<rect x="1166.6" y="378" width="83.2" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1208.1999999999998" y="392" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Atandığı</text>
+<text x="1421.3999999999999" y="392" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<rect x="32" y="414" width="1496" height="44" fill="#F7FAFD"/>
+<text x="52" y="436" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Mentor oturumları</text>
+<rect x="545.5" y="422" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="436" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="422" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="436" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="934.9" y="422" width="120.2" height="28" rx="14" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1"/>
+<text x="995" y="436" font-size="12.5" font-weight="600" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Kendi projesi</text>
+<rect x="1166.6" y="422" width="83.2" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1208.1999999999998" y="436" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Atandığı</text>
+<text x="1421.3999999999999" y="436" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="52" y="480" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Belgeler ve kontrol listesi</text>
+<rect x="545.5" y="466" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="480" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="466" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="480" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="960.8" y="466" width="68.4" height="28" rx="14" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1"/>
+<text x="995" y="480" font-size="12.5" font-weight="600" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Yükler</text>
+<rect x="1170.2999999999997" y="466" width="75.80000000000001" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1208.1999999999998" y="480" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">İnceler</text>
+<rect x="1331.6999999999998" y="466" width="179.4" height="28" rx="14" fill="#F2F5F9" stroke="#DCE3EC" stroke-width="1"/>
+<text x="1421.3999999999999" y="480" font-size="12.5" font-weight="600" fill="#4A6485" text-anchor="middle" dominant-baseline="central">Atandığı, salt okunur</text>
+<rect x="32" y="502" width="1496" height="44" fill="#F7FAFD"/>
+<text x="52" y="524" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Riskler</text>
+<rect x="545.5" y="510" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="524" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="510" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="524" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="934.9" y="510" width="120.2" height="28" rx="14" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1"/>
+<text x="995" y="524" font-size="12.5" font-weight="600" fill="#1F7A52" text-anchor="middle" dominant-baseline="central">Kendi projesi</text>
+<rect x="1166.6" y="510" width="83.2" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1208.1999999999998" y="524" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Atandığı</text>
+<text x="1421.3999999999999" y="524" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="52" y="568" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Ara jüri / deneme finali değerlendirmesi</text>
+<rect x="545.5" y="554" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="568" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="554" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="568" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="912.7" y="554" width="164.6" height="28" rx="14" fill="#F2F5F9" stroke="#DCE3EC" stroke-width="1"/>
+<text x="995" y="568" font-size="12.5" font-weight="600" fill="#4A6485" text-anchor="middle" dominant-baseline="central">Geri bildirimi okur</text>
+<rect x="1125.8999999999999" y="554" width="164.6" height="28" rx="14" fill="#F2F5F9" stroke="#DCE3EC" stroke-width="1"/>
+<text x="1208.1999999999998" y="568" font-size="12.5" font-weight="600" fill="#4A6485" text-anchor="middle" dominant-baseline="central">Geri bildirimi okur</text>
+<rect x="1383.4999999999998" y="554" width="75.80000000000001" height="28" rx="14" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/>
+<text x="1421.3999999999999" y="568" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Puanlar</text>
+<rect x="32" y="590" width="1496" height="44" fill="#F7FAFD"/>
+<text x="52" y="612" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Aşamayı değiştirme (notla)</text>
+<rect x="545.5" y="598" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="612" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="598" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="612" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<text x="995" y="612" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1208.1999999999998" y="612" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1421.3999999999999" y="612" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="52" y="656" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Aşamaları yapılandırma</text>
+<rect x="545.5" y="642" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="656" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="642" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="656" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<text x="995" y="656" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1208.1999999999998" y="656" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1421.3999999999999" y="656" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<rect x="32" y="678" width="1496" height="44" fill="#F7FAFD"/>
+<text x="52" y="700" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">KPI ve raporlar</text>
+<rect x="545.5" y="686" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="700" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="686" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="700" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<text x="995" y="700" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1208.1999999999998" y="700" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1421.3999999999999" y="700" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="52" y="744" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Kullanıcılar</text>
+<rect x="545.5" y="730" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="744" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="729.1" y="730" width="105.4" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="744" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">ADMIN hariç</text>
+<text x="995" y="744" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1208.1999999999998" y="744" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1421.3999999999999" y="744" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<rect x="32" y="766" width="1496" height="44" fill="#F7FAFD"/>
+<text x="52" y="788" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">İşlem kaydı (denetim)</text>
+<rect x="545.5" y="774" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="788" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<rect x="758.7" y="774" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="781.8000000000001" y="788" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<text x="995" y="788" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1208.1999999999998" y="788" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1421.3999999999999" y="788" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="52" y="832" font-size="14" font-weight="600" fill="#1F4E8C" dominant-baseline="central">Sistem: kalıcı silme, temizleme</text>
+<rect x="545.5" y="818" width="46.2" height="28" rx="14" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/>
+<text x="568.6" y="832" font-size="12.5" font-weight="600" fill="#1F4E8C" text-anchor="middle" dominant-baseline="central">Tam</text>
+<text x="781.8000000000001" y="832" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="995" y="832" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1208.1999999999998" y="832" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<text x="1421.3999999999999" y="832" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text>
+<line x1="32" x2="1528" y1="854" y2="854" stroke="#E3EAF2"/>
+<g transform="translate(32,894)"><rect x="0" y="-10" width="30" height="20" rx="10" fill="#D4E6FA" stroke="#C9DDF2" stroke-width="1"/><text x="40" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Tam erişim</text></g>
+<g transform="translate(174,894)"><rect x="0" y="-10" width="30" height="20" rx="10" fill="#E6F5EC" stroke="#B3DCC3" stroke-width="1"/><text x="40" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Yalnızca kendi projesi</text></g>
+<g transform="translate(402.4,894)"><rect x="0" y="-10" width="30" height="20" rx="10" fill="#E6F1FC" stroke="#C9DDF2" stroke-width="1"/><text x="40" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Yalnızca atandığı projeler</text></g>
+<g transform="translate(659.6,894)"><rect x="0" y="-10" width="30" height="20" rx="10" fill="#F2F5F9" stroke="#DCE3EC" stroke-width="1"/><text x="40" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Okuma / tavsiye</text></g>
+<g transform="translate(837.6,894)"><text x="15" y="0" font-size="14" font-weight="400" fill="#A8B4C3" text-anchor="middle" dominant-baseline="central">—</text><text x="40" y="0" font-size="13" font-weight="400" fill="#4A6485" dominant-baseline="central">Erişim yok</text></g>
+<text x="32" y="940" font-size="13" font-weight="400" fill="#4A6485" font-style="italic" dominant-baseline="central">Sistem karar vermez: seçim ve jüri kararlarını insanlar verir. Ortaklar / yatırımcılar için ayrı rol yoktur — onlara rapor ve sunum materyali verilir.</text>
+</svg>

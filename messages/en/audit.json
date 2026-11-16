@@ -36,7 +36,8 @@
     "training": "Trainings",
     "resource": "Resource requests",
     "announcement": "Announcements",
-    "intake": "Preparation requests"
+    "intake": "Preparation requests",
+    "workflow": "Process stages"
   },
   "listTitle": "Entries",
   "found": "{count, plural, one {# entry} other {# entries}}",
@@ -172,6 +173,16 @@
       "review": "Changed a preparation request status",
       "accept": "Accepted a preparation request",
       "reject": "Rejected a preparation request"
+    },
+    "workflow": {
+      "auto": "Process stage changed automatically",
+      "move": "Moved the process stage manually",
+      "stage_create": "Added a process stage",
+      "stage_update": "Updated a process stage",
+      "stage_reorder": "Reordered process stages",
+      "stage_deactivate": "Deactivated a process stage",
+      "stage_activate": "Activated a process stage",
+      "stage_delete": "Deleted a process stage"
     }
   },
   "entities": {
@@ -199,7 +210,8 @@
     "Training": "Training",
     "ResourceRequest": "Resource request",
     "Announcement": "Announcement",
-    "IntakeRequest": "Preparation request"
+    "IntakeRequest": "Preparation request",
+    "WorkflowStage": "Process stage"
   },
   "activity": {
     "title": "Activity feed",

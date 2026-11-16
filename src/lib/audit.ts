@@ -26,6 +26,9 @@ export const AUDIT_ACTIONS = [
   "resource.create", "resource.update", "resource.decide",
   "announcement.create", "announcement.update", "announcement.publish", "announcement.delete",
   "intake.submit", "intake.update", "intake.withdraw", "intake.review", "intake.accept", "intake.reject",
+  // configurable process (workflow) stages: automatic sync, manual move, stage admin
+  "workflow.auto", "workflow.move",
+  "workflow.stage_create", "workflow.stage_update", "workflow.stage_reorder", "workflow.stage_deactivate", "workflow.stage_activate", "workflow.stage_delete",
 ] as const;
 export type AuditAction = (typeof AUDIT_ACTIONS)[number];
 

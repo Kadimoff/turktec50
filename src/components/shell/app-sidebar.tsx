@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import {
   LayoutDashboard, FolderKanban, FileInput, Briefcase, ListChecks, Users, FileCheck2, TriangleAlert, Gavel,
   BarChart3, CalendarDays, UserCog, ScrollText, DatabaseZap, School, Trophy, GraduationCap, UsersRound, Building2, Presentation,
-  Megaphone, Inbox, type LucideIcon,
+  Megaphone, Inbox, Workflow, ListOrdered, type LucideIcon,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader,
@@ -16,7 +16,7 @@ import type { NavGroup, NavIcon } from "@/lib/nav";
 const icons: Record<NavIcon, LucideIcon> = {
   dashboard: LayoutDashboard, project: Briefcase, applications: FileInput, projects: FolderKanban, tasks: ListChecks,
   mentors: Users, documents: FileCheck2, risks: TriangleAlert, jury: Gavel, kpi: BarChart3, calendar: CalendarDays,
-  users: UserCog, audit: ScrollText, system: DatabaseZap,
+  users: UserCog, audit: ScrollText, system: DatabaseZap, process: Workflow, workflow: ListOrdered,
   academy: School, catalog: Trophy, students: GraduationCap, teams: UsersRound, registry: Building2, trainings: Presentation,
   announcements: Megaphone, intake: Inbox,
 };

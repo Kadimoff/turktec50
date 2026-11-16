@@ -11,6 +11,7 @@ import {
 } from "@/lib/academy/rules";
 import { nextApplicationCode, withUniqueRetry } from "@/lib/codes";
 import { revalidateLayout, revalidateSets } from "@/lib/revalidate";
+import { syncApplicationWorkflow } from "@/lib/workflow";
 import { OPEN_APPLICATION_STATUSES, type ApplicationActionState } from "@/components/academy/teams/types";
 
 /** Every page that shows teams, rosters or the counts derived from them (catalog cards count target teams). */
@@ -242,6 +243,7 @@ export async function createTeamApplication(_prev: ApplicationActionState, fd: F
       summary: `${app.code} · ${app.teamName}`,
       meta: { teamId: v.teamId, projectTitle: v.projectTitle, category: v.category },
     });
+    await syncApplicationWorkflow(app.id, user.id); // process map: new application → its first stage (+ history)
     revalidateSets("applications", "teams", "academy", "dashboard");
     return done("toast.applicationCreated", { applicationId: app.id, code: app.code });
   } catch (e) {

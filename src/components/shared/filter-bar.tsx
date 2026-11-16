@@ -79,7 +79,8 @@ export function FilterBar({
         if (el.tagName === "SELECT" || (el as HTMLInputElement).type === "date") go(e.currentTarget);
       }}
       className={cn(
-        "grid grid-cols-2 gap-3 sm:items-end lg:flex lg:flex-nowrap",
+        // lg:flex-wrap: bars with many filters (audit: 4 selects + 2 dates + buttons) wrap instead of overflowing at ≤1440px
+        "grid grid-cols-2 gap-3 sm:items-end lg:flex lg:flex-wrap",
         variant === "card" ? "rounded-xl border bg-card p-4 shadow-card" : "border-b p-4",
         className,
       )}

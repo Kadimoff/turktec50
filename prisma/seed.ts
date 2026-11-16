@@ -10,6 +10,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { CHECKLIST_TEMPLATE, RUBRICS } from "../src/lib/constants";
+import { syncWorkflow } from "../src/lib/workflow-core";
 import type {
   ProjectStage, ProjectHealth, TaskStatus, Priority, ChecklistStatus, RiskLevel, ApplicationStatus,
 } from "../src/generated/prisma/enums";
@@ -592,6 +593,11 @@ async function main() {
 
   await seedAcademy({ asoiu, adminId, userByEmail, comp, usedEmails, projects: projects.map((p) => ({ id: p.id, code: p.code, category: p.category, leadId: p.leadId })) });
   const intakeLinks = await seedIntake({ asoiu, adminId, usedEmails });
+
+  // ---------- process (workflow) stages: default stages + current stage and starting history for every record ----------
+  // runs after the Academy seed so applications created from Academy teams get their stage too
+  const wf = await syncWorkflow(prisma);
+  console.log(`  workflow: stages=${wf.stagesCreated} applications=${wf.applicationsMapped} projects=${wf.projectsMapped} history=${wf.historyRows}`);
 
   const counts = await Promise.all([prisma.user.count(), prisma.application.count(), prisma.project.count(), prisma.task.count(), prisma.mentorSession.count(), prisma.document.count(), prisma.risk.count(), prisma.evaluation.count()]);
   console.log(`  users=${counts[0]} applications=${counts[1]} projects=${counts[2]} tasks=${counts[3]} sessions=${counts[4]} documents=${counts[5]} risks=${counts[6]} evaluations=${counts[7]}`);

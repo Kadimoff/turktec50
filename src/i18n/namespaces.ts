@@ -27,4 +27,5 @@ export const NAMESPACES = [
   // Public preparation requests (students) + coordinator review
   "intake",
   "intakeAdmin",
+  "process",
 ] as const;

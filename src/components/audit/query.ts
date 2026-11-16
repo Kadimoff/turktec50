@@ -5,7 +5,7 @@ import { pick, str, type SearchParams } from "@/lib/search-params";
 /** Action groups = prefix before the dot in audit action keys (see CONVENTIONS §3). */
 export const AUDIT_GROUPS = [
   "auth", "application", "project", "task", "session", "document", "checklist", "risk", "evaluation",
-  "intake", "competition", "registry", "student", "team", "training", "resource", "announcement", "user", "system",
+  "intake", "competition", "registry", "student", "team", "training", "resource", "announcement", "user", "workflow", "system",
 ] as const;
 export type AuditGroup = (typeof AUDIT_GROUPS)[number];
 

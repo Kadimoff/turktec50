@@ -16,7 +16,7 @@ const DEMO = [
   { role: "JURY", email: "sebine.kerimova@jury.turktech50.az", icon: Gavel },
 ] as const;
 
-export function LoginForm({ next }: { next?: string }) {
+export function LoginForm({ next, showDemo = true }: { next?: string; showDemo?: boolean }) {
   const t = useTranslations("auth");
   const te = useTranslations("enums.Role");
   const { state, pending, onSubmit } = useFormAction(login);
@@ -42,6 +42,7 @@ export function LoginForm({ next }: { next?: string }) {
         <SubmitButton pending={pending} className="h-10 w-full" pendingLabel={t("signingIn")}>{t("signIn")}</SubmitButton>
       </form>
 
+      {showDemo && (
       <section className="mt-8" aria-labelledby="demo-accounts">
         <div className="flex items-center gap-3">
           <h2 id="demo-accounts" className="text-xs font-semibold text-muted-foreground">{t("demoAccounts")}</h2>
@@ -74,6 +75,7 @@ export function LoginForm({ next }: { next?: string }) {
           ))}
         </div>
       </section>
+      )}
     </>
   );
 }

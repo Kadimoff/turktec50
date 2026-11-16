@@ -1,7 +1,7 @@
 import type { getTranslations } from "next-intl/server";
 import {
   AlertTriangle, Building2, ClipboardCheck, DatabaseZap, FileInput, FileText, FolderKanban, Gavel, GraduationCap, History, ListChecks, LogIn,
-  Inbox, Megaphone, Package, Presentation, Trophy, UserCog, UsersRound, type LucideIcon,
+  Inbox, Megaphone, Package, Presentation, Trophy, UserCog, UsersRound, Workflow, type LucideIcon,
 } from "lucide-react";
 import type { Tone } from "@/lib/tones";
 import { toneClasses } from "@/lib/tones";
@@ -22,13 +22,13 @@ export function entityLabel(t: T, entity: string) {
 
 const groupIcon: Record<string, LucideIcon> = {
   auth: LogIn, application: FileInput, project: FolderKanban, task: ListChecks, session: UsersRound, document: FileText,
-  checklist: ClipboardCheck, risk: AlertTriangle, evaluation: Gavel, user: UserCog, stage: History, system: DatabaseZap,
+  checklist: ClipboardCheck, risk: AlertTriangle, evaluation: Gavel, user: UserCog, stage: History, system: DatabaseZap, workflow: Workflow,
   competition: Trophy, registry: Building2, student: GraduationCap, team: UsersRound, training: Presentation, resource: Package,
   announcement: Megaphone, intake: Inbox,
 };
 const groupTone: Record<string, Tone> = {
   auth: "neutral", application: "info", project: "brand", task: "info", session: "success", document: "neutral",
-  checklist: "success", risk: "danger", evaluation: "warning", user: "brand", stage: "brand", system: "danger",
+  checklist: "success", risk: "danger", evaluation: "warning", user: "brand", stage: "brand", system: "danger", workflow: "info",
   competition: "warning", registry: "neutral", student: "info", team: "brand", training: "success", resource: "info", announcement: "brand", intake: "info",
 };
 

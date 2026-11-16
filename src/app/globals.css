@@ -246,3 +246,8 @@
     background: #fff;
   }
 }
+
+/* Process map uses the full screen width (no 1440px content cap) — owner request. */
+main#main:has([data-full-width]) {
+  max-width: none;
+}

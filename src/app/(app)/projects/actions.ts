@@ -8,6 +8,7 @@ import { done, fail, failFromZod, formStr, RuleError, type ActionState } from "@
 import { nextProjectCode, withUniqueRetry } from "@/lib/codes";
 import { assertCompetitionEligible } from "@/lib/academy/rules";
 import { revalidateSets } from "@/lib/revalidate";
+import { syncProjectWorkflow } from "@/lib/workflow";
 
 /** Keys are relative to the `projects.create` namespace. */
 export type CreateProjectState = ActionState & { projectId?: string; code?: string };
@@ -53,6 +54,7 @@ export async function createProject(_prev: CreateProjectState, formData: FormDat
       }),
     );
     await logAudit({ actorId: user.id, action: "project.create", entity: "Project", entityId: project.id, projectId: project.id, summary: `${project.code} · ${project.title}` });
+    await syncProjectWorkflow(project.id, user.id);
     revalidateSets("projects", "dashboard");
     return done("toast", { projectId: project.id, code: project.code });
   } catch (e) {

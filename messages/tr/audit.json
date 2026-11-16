@@ -36,7 +36,8 @@
     "training": "Eğitimler",
     "resource": "Kaynak talepleri",
     "announcement": "Duyurular",
-    "intake": "Hazırlık başvuruları"
+    "intake": "Hazırlık başvuruları",
+    "workflow": "Süreç aşamaları"
   },
   "listTitle": "Kayıtlar",
   "found": "{count, plural, one {# kayıt} other {# kayıt}}",
@@ -172,6 +173,16 @@
       "review": "Hazırlık başvurusunun durumunu değiştirdi",
       "accept": "Hazırlık başvurusunu kabul etti",
       "reject": "Hazırlık başvurusunu reddetti"
+    },
+    "workflow": {
+      "auto": "Süreç aşaması otomatik değişti",
+      "move": "Süreç aşamasını elle değiştirdi",
+      "stage_create": "Süreç aşaması ekledi",
+      "stage_update": "Süreç aşamasını güncelledi",
+      "stage_reorder": "Aşama sırasını değiştirdi",
+      "stage_deactivate": "Süreç aşamasını pasifleştirdi",
+      "stage_activate": "Süreç aşamasını etkinleştirdi",
+      "stage_delete": "Süreç aşamasını sildi"
     }
   },
   "entities": {
@@ -199,7 +210,8 @@
     "Training": "Eğitim",
     "ResourceRequest": "Kaynak talebi",
     "Announcement": "Duyuru",
-    "IntakeRequest": "Hazırlık başvurusu"
+    "IntakeRequest": "Hazırlık başvurusu",
+    "WorkflowStage": "Süreç aşaması"
   },
   "activity": {
     "title": "Etkinlik akışı",

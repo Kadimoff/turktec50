@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import {
-  Activity, AlertTriangle, ArrowRight, CalendarClock, Check, CheckCircle2, CircleDashed, ClipboardList, FileCheck2, FlaskConical,
+  Activity, AlertTriangle, ArrowRight, CalendarClock, CheckCircle2, CircleDashed, ClipboardList, FileCheck2, FlaskConical,
   Gauge, GraduationCap, Handshake, ListChecks, MessagesSquare, Package, Scale, ShieldAlert, Star,
 } from "lucide-react";
 import { requireUser } from "@/lib/auth";
@@ -11,13 +11,13 @@ import { readinessFromChecklist } from "@/lib/kpi";
 import { STAGE_ORDER } from "@/lib/constants";
 import { fmtDate, fmtDateTime, fmtRelative } from "@/lib/format";
 import { bakuYmd } from "@/lib/dates";
-import { cn } from "@/lib/utils";
 import { StatCard } from "@/components/shared/stat-card";
 import { EnumBadge } from "@/components/shared/enum-badge";
 import { ToneBadge } from "@/components/shared/tone-badge";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { EmptyState } from "@/components/shared/empty-state";
 import { AcademyLinksForm, AssignForm, FlagsForm, HealthForm, StageForm, UnassignButton } from "@/components/projects/manage-forms";
+import { WorkflowStepper } from "@/components/process/workflow-stepper";
 
 export async function generateMetadata(props: PageProps<"/projects/[id]">) {
   const { id } = await props.params;
@@ -53,7 +53,6 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
         // juror identities are shown to the coordinator only
         jurors: { where: access.isAdmin ? {} : { id: "__hidden__" }, orderBy: { createdAt: "asc" }, select: { id: true, jury: { select: { id: true, name: true, title: true } } } },
         checklist: { select: { required: true, status: true } },
-        stageHistory: { orderBy: { createdAt: "desc" }, select: { id: true, fromStage: true, toStage: true, note: true, actorId: true, createdAt: true } },
       },
     }),
     prisma.task.count({ where: { projectId: id } }),
@@ -67,9 +66,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
     }),
   ]);
 
-  const actorIds = [...new Set(project.stageHistory.map((s) => s.actorId).filter((v): v is string => !!v))];
-  const [actors, mentorPool, juryPool, facultyPool, labPool, partnerPool] = await Promise.all([
-    actorIds.length ? prisma.user.findMany({ where: { id: { in: actorIds } }, select: { id: true, name: true } }) : Promise.resolve([]),
+  const [mentorPool, juryPool, facultyPool, labPool, partnerPool] = await Promise.all([
     access.canManage
       ? prisma.user.findMany({ where: { role: "MENTOR", active: true, mentorAssignments: { none: { projectId: id } } }, orderBy: { name: "asc" }, select: { id: true, name: true, expertise: true } })
       : Promise.resolve([]),
@@ -91,15 +88,12 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
         })
       : Promise.resolve([]),
   ]);
-  const actorName = new Map(actors.map((a) => [a.id, a.name]));
 
   const [t, te, tn] = await Promise.all([getTranslations("projects"), getTranslations("enums"), getTranslations("nav.projectTabs")]);
   const readiness = readinessFromChecklist(project.checklist);
   const reqTotal = project.checklist.filter((c) => c.required).length;
   const reqApproved = project.checklist.filter((c) => c.required && c.status === "APPROVED").length;
   const stageIdx = STAGE_ORDER.indexOf(project.stage);
-  // most recent arrival at a stage (history is sorted newest first); VALIDATION starts at creation
-  const reachedAt = (s: string) => (s === "VALIDATION" ? project.createdAt : project.stageHistory.find((h) => h.toStage === s)?.createdAt);
   const defaultTarget = STAGE_ORDER[stageIdx + 1] ?? STAGE_ORDER[stageIdx - 1];
   const quickTabs = access.tabs.filter((tab): tab is Exclude<ProjectTab, "overview"> => tab !== "overview");
 
@@ -136,64 +130,8 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
             )}
           </section>
 
-          {/* stage stepper */}
-          <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-stage">
-            <h2 id="ov-stage" className="text-sm font-semibold">{t("overview.stage")}</h2>
-            <p className="text-xs text-muted-foreground">{t("overview.stageHint")}</p>
-            <ol className="mt-4 grid gap-2 sm:grid-cols-5 sm:gap-0">
-              {STAGE_ORDER.map((s, i) => {
-                const done = i < stageIdx;
-                const current = i === stageIdx;
-                const at = reachedAt(s);
-                return (
-                  <li key={s} aria-current={current ? "step" : undefined} className="relative flex items-center gap-3 sm:flex-col sm:items-center sm:gap-2 sm:text-center">
-                    {i > 0 && (
-                      <span aria-hidden className={cn("absolute top-4 right-1/2 hidden h-0.5 w-full -translate-y-1/2 sm:block", i <= stageIdx ? "bg-primary" : "bg-border")} />
-                    )}
-                    <span
-                      className={cn(
-                        "relative z-10 grid size-8 shrink-0 place-items-center rounded-full border-2 text-xs font-bold",
-                        done && "border-primary bg-primary text-primary-foreground",
-                        current && "border-primary bg-card text-primary ring-4 ring-primary/15",
-                        !done && !current && "border-border bg-card text-muted-foreground",
-                      )}
-                    >
-                      {done ? <Check className="size-4" aria-hidden /> : i + 1}
-                    </span>
-                    <span className="min-w-0">
-                      <span className={cn("block text-sm font-medium sm:text-xs", current ? "text-foreground" : "text-muted-foreground")}>{te(`ProjectStage.${s}`)}</span>
-                      <span className="block text-xs text-muted-foreground sm:text-2xs">
-                        {current ? t("overview.current") : done ? (at ? fmtDate(at, locale) : "") : t("overview.upcoming")}
-                      </span>
-                    </span>
-                  </li>
-                );
-              })}
-            </ol>
-
-            <h3 className="mt-6 text-xs font-semibold text-muted-foreground">{t("overview.history")}</h3>
-            {project.stageHistory.length === 0 ? (
-              <p className="mt-2 text-sm text-muted-foreground">{t("overview.noHistory")}</p>
-            ) : (
-              <ol className="mt-2 space-y-3 border-l pl-4">
-                {project.stageHistory.map((h) => (
-                  <li key={h.id} className="relative">
-                    <span aria-hidden className="absolute top-1.5 -left-[21px] size-2.5 rounded-full border-2 border-card bg-primary" />
-                    <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm">
-                      <span className="font-medium">{te(`ProjectStage.${h.fromStage}`)}</span>
-                      <ArrowRight className="size-3.5 text-muted-foreground" aria-label="→" />
-                      <span className="font-medium">{te(`ProjectStage.${h.toStage}`)}</span>
-                      {STAGE_ORDER.indexOf(h.toStage) < STAGE_ORDER.indexOf(h.fromStage) && <ToneBadge tone="warning">{t("overview.movedBack")}</ToneBadge>}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {(h.actorId && actorName.get(h.actorId)) || t("overview.system")} · <time dateTime={h.createdAt.toISOString()}>{fmtDateTime(h.createdAt, locale)}</time>
-                    </p>
-                    {h.note && <p className="mt-1 text-sm text-pretty text-muted-foreground">{h.note}</p>}
-                  </li>
-                ))}
-              </ol>
-            )}
-          </section>
+          {/* process stage stepper (configurable workflow) */}
+          <WorkflowStepper scope="PROJECT" entityId={project.id} canManage={access.canManage} />
 
           {/* KPI evidence */}
           <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-kpi">
