@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { addDays, format } from "date-fns";
 import { getLocale, getTranslations } from "next-intl/server";
 import {
   BadgeCheck, CalendarClock, ClipboardCheck, Cpu, FileX2, FolderClock, Gavel, ShieldAlert, Trophy, TriangleAlert, Users,
@@ -7,7 +6,8 @@ import {
 import { prisma } from "@/lib/db";
 import { getProgramKpis } from "@/lib/kpi";
 import { PROGRAM, currentWeek } from "@/lib/constants";
-import { fmtDateTime, fmtDay, fmtRelative } from "@/lib/format";
+import { fmtDateTime, fmtDay, fmtRelative, fmtTime } from "@/lib/format";
+import { bakuAddDays } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 import { StatCard } from "@/components/shared/stat-card";
 import { EnumBadge } from "@/components/shared/enum-badge";
@@ -25,11 +25,11 @@ const OPEN_SESSION = ["PLANNED", "CONFIRMED"] as const;
 
 export async function AdminDashboard() {
   const now = new Date();
-  const in7 = addDays(now, 7);
+  const in7 = bakuAddDays(now, 7);
   // current program week window (falls back to the calendar week outside incubation)
   const cw = currentWeek(now);
-  const wkStart = cw > 0 ? addDays(PROGRAM.incubationStart, (cw - 1) * 7) : weekStart(now);
-  const wk = { start: wkStart, end: addDays(wkStart, 7) };
+  const wkStart = cw > 0 ? bakuAddDays(PROGRAM.incubationStart, (cw - 1) * 7) : weekStart(now);
+  const wk = { start: wkStart, end: bakuAddDays(wkStart, 7) };
   const [t, tc, te, locale, labels] = await Promise.all([
     getTranslations("dashboard"),
     getTranslations("common"),
@@ -90,7 +90,7 @@ export async function AdminDashboard() {
     }),
     prisma.mentorSession.count({ where: { scheduledAt: { gte: now, lte: in7 }, status: { in: [...OPEN_SESSION] } } }),
     prisma.competition.findMany({
-      where: { applicationDeadline: { gte: now, lte: addDays(now, 30) } },
+      where: { applicationDeadline: { gte: now, lte: bakuAddDays(now, 30) } },
       select: { id: true, name: true, applicationDeadline: true, _count: { select: { projects: true } } },
       orderBy: { applicationDeadline: "asc" },
       take: 3,
@@ -197,8 +197,8 @@ export async function AdminDashboard() {
         <Panel id="timeline" title={t("timeline.title")} subtitle={t("timeline.subtitle")} className="xl:col-span-2" action={<PanelLink href="/calendar">{t("timeline.calendar")}</PanelLink>}>
           <ProgramTimeline>
             <div className="border-t pt-4">
-              <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">
-                {t("pulse.title", { range: `${fmtDay(wk.start, locale)} – ${fmtDay(addDays(wk.end, -1), locale)}` })}
+              <h3 className="text-xs font-semibold text-muted-foreground">
+                {t("pulse.title", { range: `${fmtDay(wk.start, locale)} – ${fmtDay(bakuAddDays(wk.end, -1), locale)}` })}
               </h3>
               <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
                 {[
@@ -296,10 +296,10 @@ export async function AdminDashboard() {
                       href={r.project ? `/projects/${r.project.id}/risks` : "/risks"}
                       meta={
                         <span className="flex gap-1">
-                          <ToneBadge tone={r.probability === "HIGH" ? "danger" : "warning"} dot={false} className="px-1.5 text-[11px]">
+                          <ToneBadge tone={r.probability === "HIGH" ? "danger" : "warning"} dot={false} className="px-1.5 text-2xs">
                             {t("attention.probShort")} {te(`RiskLevel.${r.probability}`)}
                           </ToneBadge>
-                          <ToneBadge tone={r.impact === "HIGH" ? "danger" : "warning"} dot={false} className="hidden px-1.5 text-[11px] sm:inline-flex">
+                          <ToneBadge tone={r.impact === "HIGH" ? "danger" : "warning"} dot={false} className="hidden px-1.5 text-2xs sm:inline-flex">
                             {t("attention.impactShort")} {te(`RiskLevel.${r.impact}`)}
                           </ToneBadge>
                         </span>
@@ -335,7 +335,7 @@ export async function AdminDashboard() {
                       <div className="min-w-0">
                         <p className="truncate text-sm font-medium">{u.title}</p>
                         <p className="truncate text-xs text-muted-foreground">
-                          <span className="tabular">{format(u.date, "HH:mm")}</span> · {u.sub}
+                          <span className="tabular">{fmtTime(u.date)}</span> · {u.sub}
                         </p>
                       </div>
                     </div>
@@ -347,9 +347,10 @@ export async function AdminDashboard() {
               )}
               {deadlines.length > 0 && (
                 <div className="mt-4 border-t pt-3">
-                  <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">{t("upcoming.deadlines")}</h3>
+                  <h3 className="text-xs font-semibold text-muted-foreground">{t("upcoming.deadlines")}</h3>
                   <ul className="mt-1">
                     {deadlines.map((c) => {
+                      if (!c.applicationDeadline) return null; // query filters on gte/lte, so always set
                       const left = daysUntil(c.applicationDeadline);
                       return (
                         <RowLink
@@ -478,7 +479,7 @@ function AttentionBlock({
         <span className={cn("grid size-6 place-items-center rounded-md", tone === "danger" ? "bg-danger-soft text-danger" : "bg-warning-soft text-warning")} aria-hidden>
           <Icon className="size-3.5" />
         </span>
-        <h3 className="flex-1 text-[13px] font-semibold">
+        <h3 className="flex-1 text-label font-semibold">
           {title}
           <span className="tabular ml-1.5 text-muted-foreground">{count}</span>
         </h3>

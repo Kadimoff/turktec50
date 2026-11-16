@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function PrintButton({ label }: { label: string }) {
   return (
-    <Button variant="outline" size="lg" className="h-10 px-3" onClick={() => window.print()}>
+    <Button variant="outline" size="lg" onClick={() => window.print()}>
       <Printer aria-hidden />
       {label}
     </Button>

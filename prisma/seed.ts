@@ -6,6 +6,7 @@ import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 import bcrypt from "bcryptjs";
+import { createHash, randomBytes } from "node:crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { CHECKLIST_TEMPLATE, RUBRICS } from "../src/lib/constants";
@@ -94,20 +95,34 @@ const UNIVERSITIES = [
 const UNI_WEIGHTS: [string, number][] = [["asoiu", 62], ["bdu", 9], ["aztu", 9], ["ada", 6], ["itu", 5], ["odtu", 4], ["kbtu", 3], ["tuit", 2]];
 function pickUni() { const total = UNI_WEIGHTS.reduce((a, [, w]) => a + w, 0); let r = rnd() * total; for (const [k, w] of UNI_WEIGHTS) { if ((r -= w) < 0) return k; } return "asoiu"; }
 
+// Non-catalog (demo) competitions. TEKNOFEST competitions come from the real catalog below.
 const COMPETITIONS = [
-  { key: "tf_agri", name: "TEKNOFEST 2027 · Tarım Teknolojileri", organizer: "T3 Vakfı / TEKNOFEST", category: "agritech", country: "TR", deadline: 52, final: 290 },
-  { key: "tf_health", name: "TEKNOFEST 2027 · Sağlıkta Yapay Zekâ", organizer: "T3 Vakfı / TEKNOFEST", category: "healthtech", country: "TR", deadline: 59, final: 290 },
-  { key: "tf_edu", name: "TEKNOFEST 2027 · Eğitim Teknolojileri", organizer: "T3 Vakfı / TEKNOFEST", category: "edtech", country: "TR", deadline: 52, final: 290 },
-  { key: "tf_human", name: "TEKNOFEST 2027 · İnsanlık Yararına Teknoloji", organizer: "T3 Vakfı / TEKNOFEST", category: "smartcity", country: "TR", deadline: 66, final: 290 },
-  { key: "tf_transport", name: "TEKNOFEST 2027 · Akıllı Ulaşım", organizer: "T3 Vakfı / TEKNOFEST", category: "transport", country: "TR", deadline: 66, final: 290 },
-  { key: "tf_cyber", name: "TEKNOFEST 2027 · Siber Güvenlik", organizer: "T3 Vakfı / TEKNOFEST", category: "cybersecurity", country: "TR", deadline: 45, final: 290 },
-  { key: "tf_robot", name: "TEKNOFEST 2027 · Robotaksi & Otonom Sistemler", organizer: "T3 Vakfı / TEKNOFEST", category: "robotics", country: "TR", deadline: 73, final: 290 },
-  { key: "tf_uav", name: "TEKNOFEST 2027 · Savaşan / Uluslararası İHA", organizer: "T3 Vakfı / TEKNOFEST", category: "aerospace", country: "TR", deadline: 24, final: 290 },
   { key: "az_energy", name: "Green Energy Startup Challenge 2027", organizer: "Regional Innovation Network (demo)", category: "energy", country: "AZ", deadline: 38, final: 120 },
   { key: "az_fintech", name: "Caspian FinTech Hackathon 2027", organizer: "Fintech Community (demo)", category: "fintech", country: "AZ", deadline: 31, final: 95 },
   { key: "turk_demo", name: "TÜRK FORUM 2026 · Demo Day", organizer: "TÜRK FORUM", category: "ai", country: "AZ", deadline: 40, final: 46 },
 ] as const;
-const COMP_BY_CAT: Record<string, string> = { agritech: "tf_agri", healthtech: "tf_health", edtech: "tf_edu", smartcity: "tf_human", transport: "tf_transport", cybersecurity: "tf_cyber", robotics: "tf_robot", aerospace: "tf_uav", energy: "az_energy", fintech: "az_fintech", ai: "turk_demo", environment: "tf_human" };
+const COMP_BY_CAT: Record<string, string> = { agritech: "tf_agri", healthtech: "tf_health", edtech: "tf_edu", smartcity: "tf_human", transport: "tf_transport", cybersecurity: "tf_cyber", robotics: "tf_robot", aerospace: "tf_uav", energy: "az_energy", fintech: "az_fintech", ai: "turk_demo", environment: "tf_env" };
+
+// ---------- TEKNOFEST catalog (2026 archive, copied from the ADNSU TEKNOFEST 2027 Academy panel) ----------
+type CatalogCard = { id: number; name: string; url: string; theme: string; categories: string[] };
+const CATALOG: CatalogCard[] = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "prisma/data/teknofest-catalog-2026.json"), "utf8"));
+const THEME_KEY: Record<string, string> = {
+  "Aviasiya": "aviation", "Enerji və ətraf mühit": "energy_environment", "Kosmos və raket": "space_rocketry",
+  "Müdafiə və rabitə": "defense_comms", "Proqram təminatı və elektronika": "software_electronics",
+  "Robototexnika və mobil sistemlər": "robotics_mobility", "Süni intellekt": "ai", "Səhiyyə": "health", "Tədqiqat və dizayn": "research_design",
+};
+/** Catalog cards the demo programme tracks for 2027 (demo deadline offsets in days; NOT official dates → status stays TRACKING/CHANGED). */
+const TRACKED: { key: string; catalogId: number; deadline: number; status: "TRACKING" | "CHANGED"; owner: string; checked: number }[] = [
+  { key: "tf_agri", catalogId: 60, deadline: 52, status: "TRACKING", owner: "koordinator@turktech50.az", checked: -4 },
+  { key: "tf_health", catalogId: 53, deadline: 59, status: "TRACKING", owner: "koordinator@turktech50.az", checked: -6 },
+  { key: "tf_edu", catalogId: 70, deadline: 52, status: "TRACKING", owner: "adila.habibova@turktech50.az", checked: -9 },
+  { key: "tf_human", catalogId: 26, deadline: 66, status: "TRACKING", owner: "ahmad.ahmadzada@turktech50.az", checked: -5 },
+  { key: "tf_env", catalogId: 74, deadline: 66, status: "TRACKING", owner: "mehriban.mircafarova@turktech50.az", checked: -3 },
+  { key: "tf_transport", catalogId: 68, deadline: 66, status: "TRACKING", owner: "ahmad.ahmadzada@turktech50.az", checked: -8 },
+  { key: "tf_cyber", catalogId: 50, deadline: 45, status: "CHANGED", owner: "mehriban.mircafarova@turktech50.az", checked: -2 },
+  { key: "tf_robot", catalogId: 51, deadline: 73, status: "TRACKING", owner: "koordinator@turktech50.az", checked: -7 },
+  { key: "tf_uav", catalogId: 69, deadline: 24, status: "TRACKING", owner: "koordinator@turktech50.az", checked: -1 },
+];
 
 // Root = system owner (separate credentials from .env, never the demo password)
 const ROOT = {
@@ -249,6 +264,24 @@ async function main() {
     });
     comp[c.key] = row.id;
   }
+  for (const card of CATALOG) {
+    const tracked = TRACKED.find((x) => x.catalogId === card.id);
+    const row = await prisma.competition.create({
+      data: {
+        catalogId: card.id, name: card.name, url: card.url, organizer: "T3 Vakfı / TEKNOFEST", country: "TR",
+        theme: THEME_KEY[card.theme] ?? null, subcategories: card.categories,
+        ...(tracked
+          ? {
+              applicationDeadline: days(tracked.deadline, 23, 59), finalDate: days(290), ruleStatus: tracked.status, ruleCheckedAt: days(tracked.checked),
+              ruleNotes: tracked.status === "CHANGED"
+                ? "Demo: 2026 şərtnaməsi ilə müqayisədə kateqoriya bölgüsündə dəyişiklik gözlənilir. 2027 şərtnaməsi hələ dərc olunmayıb."
+                : "Demo: son tarix 2026 təcrübəsinə əsasən planlaşdırılıb. 2027 şərtnaməsi dərc olunanda rəsmi mənbə ilə təsdiqlənəcək.",
+            }
+          : {}),
+      },
+    });
+    if (tracked) comp[tracked.key] = row.id;
+  }
   // rubrics
   const rubric: Record<string, { id: string; criteria: { id: string; weight: number; maxScore: number }[] }> = {};
   for (const kind of ["SELECTION", "MIDTERM", "FINAL"] as const) {
@@ -266,12 +299,13 @@ async function main() {
   for (const m of MENTORS) userByEmail[m.email] = (await prisma.user.create({ data: { ...m, passwordHash: hash, role: "MENTOR", locale: m.email.includes("zeynep") || m.email.includes("emre") ? "tr" : m.email.includes("aidana") ? "en" : "az" } })).id;
   for (const j of JURY) userByEmail[j.email] = (await prisma.user.create({ data: { ...j, passwordHash: hash, role: "JURY", locale: j.email.includes("mehmet") || j.email.includes("ayse") ? "tr" : j.email.includes("nurlan") ? "en" : "az" } })).id;
   const adminId = userByEmail["koordinator@turktech50.az"]!;
+  for (const t of TRACKED) await prisma.competition.update({ where: { id: comp[t.key]! }, data: { ruleOwnerId: userByEmail[t.owner]! } });
   const mentorIds = MENTORS.map((m) => userByEmail[m.email]!);
   const juryIds = JURY.map((j) => userByEmail[j.email]!);
   const usedEmails = new Set(Object.keys(userByEmail));
   function uniqueEmail(name: string, uniKey: string) {
     const domain = uniKey === "asoiu" ? "student.asoiu.az" : uniKey === "bdu" ? "student.bsu.az" : `student.${uniKey}.edu`;
-    let base = tr(name.replace(/^(Prof\.|Dr\.|Doç\.)\s*/g, "")); let e = `${base}@${domain}`; let i = 2;
+    const base = tr(name.replace(/^(Prof\.|Dr\.|Doç\.)\s*/g, "")); let e = `${base}@${domain}`; let i = 2;
     while (usedEmails.has(e)) e = `${base}${i++}@${domain}`;
     usedEmails.add(e); return e;
   }
@@ -556,10 +590,276 @@ async function main() {
     ],
   });
 
+  await seedAcademy({ asoiu, adminId, userByEmail, comp, usedEmails, projects: projects.map((p) => ({ id: p.id, code: p.code, category: p.category, leadId: p.leadId })) });
+  const intakeLinks = await seedIntake({ asoiu, adminId, usedEmails });
+
   const counts = await Promise.all([prisma.user.count(), prisma.application.count(), prisma.project.count(), prisma.task.count(), prisma.mentorSession.count(), prisma.document.count(), prisma.risk.count(), prisma.evaluation.count()]);
   console.log(`  users=${counts[0]} applications=${counts[1]} projects=${counts[2]} tasks=${counts[3]} sessions=${counts[4]} documents=${counts[5]} risks=${counts[6]} evaluations=${counts[7]}`);
+  const ac = await Promise.all([prisma.competition.count({ where: { catalogId: { not: null } } }), prisma.faculty.count(), prisma.lab.count(), prisma.partner.count(), prisma.student.count(), prisma.team.count(), prisma.training.count(), prisma.resourceRequest.count(), prisma.announcement.count()]);
+  console.log(`  academy: catalog=${ac[0]} faculties=${ac[1]} labs=${ac[2]} partners=${ac[3]} students=${ac[4]} teams=${ac[5]} trainings=${ac[6]} resources=${ac[7]} announcements=${ac[8]}`);
+  console.log(`  intake: requests=${await prisma.intakeRequest.count()} (demo tracking links, valid until the next seed:)`);
+  for (const l of intakeLinks) console.log(`    ${l.code} ${l.status.padEnd(13)} /apply/status/${l.token}`);
   console.log(`Done. Demo password for all accounts: ${DEMO_PASSWORD}`);
   console.log(`Root account: ${ROOT.email} (password from ROOT_PASSWORD in .env)`);
+}
+
+// ---------- Academy demo data (ADNSU TEKNOFEST 2027 Academy, merged) ----------
+// Generated after the TÜRKTECH 50 data with its own random stream, so the existing demo numbers stay unchanged.
+async function seedAcademy(ctx: {
+  asoiu: string; adminId: string; userByEmail: Record<string, string>; comp: Record<string, string>; usedEmails: Set<string>;
+  projects: { id: string; code: string; category: string; leadId: string }[];
+}) {
+  let seed = 20271116;
+  const r = () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const pk = <T,>(arr: readonly T[]) => arr[Math.floor(r() * arr.length)]!;
+  const { asoiu, adminId, userByEmail, comp, usedEmails } = ctx;
+  const mentor = (key: string) => userByEmail[`${key}@mentor.turktech50.az`]!;
+
+  // faculties (ADNSU) — names from the Academy panel
+  const FACULTIES = [
+    ["digital", "Rəqəmsal texnologiyalar fakültəsi", "ACTIVE"], ["geo", "Yer elmləri və neft mühəndisliyi fakültəsi", "ACTIVE"],
+    ["chem", "Kimya texnologiyaları fakültəsi", "ACTIVE"], ["industry", "Sənaye mühəndisliyi fakültəsi", "ACTIVE"],
+    ["energy", "Energetika fakültəsi", "ACTIVE"], ["business", "Biznes və idarəetmə fakültəsi", "ACTIVE"],
+    ["sabah", "SABAH Mərkəzi", "ACTIVE"], ["ufaz", "UFAZ", "PLANNED"],
+  ] as const;
+  const fac: Record<string, string> = {};
+  for (const [key, name, status] of FACULTIES) {
+    fac[key] = (await prisma.faculty.create({ data: { universityId: asoiu, name, status, coordinator: key === "ufaz" ? null : `${azNameR(pk, r)} (demo)` } })).id;
+  }
+  // labs
+  const LABS = [
+    ["proto", "Prototip dizayn laboratoriyası", "industry", "AVAILABLE"], ["aim", "ADNSU-AIM innovasiya mərkəzi", null, "AVAILABLE"],
+    ["eco", "Ekoloji monitorinq laboratoriyası", "chem", "AVAILABLE"], ["renew", "Bərpa olunan enerji laboratoriyası", "energy", "LIMITED"],
+    ["ai", "Süni intellekt laboratoriyası", "digital", "AVAILABLE"], ["cyber", "Kibertəhlükəsizlik mərkəzi", "digital", "AVAILABLE"],
+  ] as const;
+  const lab: Record<string, string> = {};
+  for (const [key, name, f, status] of LABS) {
+    lab[key] = (await prisma.lab.create({ data: { universityId: asoiu, facultyId: f ? fac[f]! : null, name, status, notes: status === "LIMITED" ? "Demo: avadanlıq təmirdədir, həftədə 2 gün açıqdır." : null } })).id;
+  }
+  // industry partners (generic demo names)
+  const PARTNERS = [
+    ["energy", "Bərpa olunan enerji şirkəti (demo)", "Enerji", "ACTIVE"], ["robot", "Robototexnika istehsalçısı (demo)", "Sənaye avtomatlaşdırması", "NEGOTIATING"],
+    ["agro", "Aqrar texnologiya şirkəti (demo)", "Kənd təsərrüfatı", "ACTIVE"], ["logistics", "Logistika operatoru (demo)", "Nəqliyyat və logistika", "CANDIDATE"],
+  ] as const;
+  const partner: Record<string, string> = {};
+  for (const [key, name, sector, status] of PARTNERS) partner[key] = (await prisma.partner.create({ data: { name, sector, status } })).id;
+
+  // students (ADNSU)
+  const facKeys = ["digital", "geo", "chem", "industry", "energy", "business"] as const;
+  const students: { id: string; facultyKey: string }[] = [];
+  const studentEmail = (name: string) => { const base = tr(name); let e = `${base}@student.asoiu.az`; let i = 2; while (usedEmails.has(e)) e = `${base}${i++}@student.asoiu.az`; usedEmails.add(e); return e; };
+  for (let i = 0; i < 30; i++) {
+    const name = azNameR(pk, r);
+    const facultyKey = facKeys[i % facKeys.length]!;
+    const row = await prisma.student.create({
+      data: {
+        universityId: asoiu, facultyId: fac[facultyKey]!, name, email: studentEmail(name),
+        status: i >= 27 ? "CANDIDATE" : "SEEKING_TEAM",
+        skills: pk(["Embedded, PCB", "Python, ML", "CAD, 3D çap", "Biznes modeli", "UI/UX", "Kimyəvi analiz", "Enerji sistemləri", "Kibertəhlükəsizlik"]),
+      },
+    });
+    students.push({ id: row.id, facultyKey });
+  }
+  let cursor = 0;
+  const take = (n: number) => students.slice(cursor, (cursor += n));
+
+  async function makeTeam(t: { name: string; faculty: string; status: "FORMING" | "ACTIVE" | "ARCHIVED"; mentor?: string; comp?: string; size: number; notes?: string }) {
+    const members = take(t.size);
+    const team = await prisma.team.create({
+      data: {
+        universityId: asoiu, facultyId: fac[t.faculty]!, name: t.name, status: t.status, notes: t.notes ?? null,
+        mentorId: t.mentor ? mentor(t.mentor) : null, competitionId: t.comp ? comp[t.comp]! : null,
+      },
+    });
+    if (t.status === "ARCHIVED") return team; // archived teams release their members (they stay SEEKING_TEAM)
+    await prisma.student.updateMany({ where: { id: { in: members.map((m) => m.id) } }, data: { teamId: team.id, status: "IN_TEAM" } });
+    await prisma.team.update({ where: { id: team.id }, data: { captainId: members[0]!.id } });
+    return team;
+  }
+  await makeTeam({ name: "Caspian Volt", faculty: "energy", status: "ACTIVE", mentor: "aidana.bekova", comp: "tf_env", size: 4 });
+  await makeTeam({ name: "AeroLab", faculty: "industry", status: "ACTIVE", mentor: "elvin.quliyev", comp: "tf_uav", size: 4 });
+  await makeTeam({ name: "EcoTrace", faculty: "chem", status: "FORMING", mentor: "nigar.rzayeva", comp: "tf_env", size: 3 });
+  await makeTeam({ name: "CodeShield", faculty: "digital", status: "FORMING", mentor: "tural.safarov", comp: "tf_cyber", size: 3 });
+  await makeTeam({ name: "SmartAgro", faculty: "business", status: "ARCHIVED", size: 0, notes: "Demo: komanda dağıldı; üzvlər komanda axtaranlar siyahısına qayıtdı." });
+
+  // one team that already applied: attach it to an existing ADNSU application that is still under review
+  const pending = await prisma.application.findFirst({ where: { universityId: asoiu, status: "UNDER_REVIEW" }, orderBy: { code: "asc" } });
+  if (pending) {
+    const team = await prisma.team.create({ data: { universityId: asoiu, facultyId: fac.digital!, name: pending.teamName, status: "ACTIVE", mentorId: mentor("lala.abbasova"), competitionId: pending.competitionId } });
+    const captain = await prisma.student.create({ data: { universityId: asoiu, facultyId: fac.digital!, name: pending.contactName, email: pending.contactEmail.toLowerCase(), status: "IN_TEAM", teamId: team.id, skills: "Komanda kapitanı" } });
+    const rest = take(Math.max(0, pending.memberCount - 1));
+    await prisma.student.updateMany({ where: { id: { in: rest.map((m) => m.id) } }, data: { teamId: team.id, status: "IN_TEAM" } });
+    await prisma.team.update({ where: { id: team.id }, data: { captainId: captain.id } });
+    await prisma.application.update({ where: { id: pending.id }, data: { teamId: team.id } });
+  }
+  // one archived student
+  const last = students[students.length - 1];
+  if (last) await prisma.student.update({ where: { id: last.id }, data: { status: "ARCHIVED", notes: "Demo: təhsilini başa vurub." } });
+
+  // trainings
+  const TRAININGS = [
+    { title: "PCB dizaynı və lehimləmə əsasları", d: 3, h: 14, status: "REGISTRATION_OPEN", mentor: "fuad.huseynov", lab: "proto" },
+    { title: "TEKNOFEST texniki hesabatının yazılması", d: 6, h: 11, status: "PLANNED", mentor: "gunel.ismayilova", lab: "aim" },
+    { title: "Kompüter görməsi: verilənlərin hazırlanması", d: 10, h: 15, status: "PLANNED", mentor: "lala.abbasova", lab: "ai" },
+    { title: "İHA telemetriyası və sınaq təhlükəsizliyi", d: 14, h: 10, status: "REGISTRATION_OPEN", mentor: "emre.yildiz", lab: "proto" },
+    { title: "Laboratoriya təhlükəsizliyi təlimatı", d: -5, h: 10, status: "COMPLETED", mentor: null, lab: "eco" },
+  ] as const;
+  for (const t of TRAININGS) {
+    await prisma.training.create({ data: { title: t.title, startsAt: days(t.d, t.h), status: t.status, mentorId: t.mentor ? mentor(t.mentor) : null, labId: lab[t.lab]!, durationMin: 90 } });
+  }
+
+  // projects of ADNSU: faculty / lab / partner + resource requests
+  const asoiuProjects = await prisma.project.findMany({ where: { universityId: asoiu }, orderBy: { code: "asc" }, select: { id: true, code: true, category: true } });
+  const LINK: Record<string, { faculty: string; lab: string; partner?: string }> = {
+    agritech: { faculty: "chem", lab: "eco", partner: "agro" }, energy: { faculty: "energy", lab: "renew", partner: "energy" },
+    robotics: { faculty: "industry", lab: "proto", partner: "robot" }, aerospace: { faculty: "industry", lab: "proto" },
+    ai: { faculty: "digital", lab: "ai" }, cybersecurity: { faculty: "digital", lab: "cyber" }, transport: { faculty: "industry", lab: "proto", partner: "logistics" },
+    environment: { faculty: "chem", lab: "eco" }, healthtech: { faculty: "digital", lab: "ai" }, edtech: { faculty: "business", lab: "aim" },
+    smartcity: { faculty: "digital", lab: "aim" }, fintech: { faculty: "business", lab: "aim" },
+  };
+  for (const p of asoiuProjects.slice(0, 24)) {
+    const l = LINK[p.category];
+    if (l) await prisma.project.update({ where: { id: p.id }, data: { facultyId: fac[l.faculty]!, labId: lab[l.lab]!, partnerId: l.partner ? partner[l.partner]! : null } });
+  }
+  const leadOf = new Map(ctx.projects.map((p) => [p.id, p.leadId]));
+  const REQUESTS = [
+    { title: "Torpaq rütubəti sensorları (10 ədəd)", status: "APPROVED", note: "Laboratoriya ehtiyatından verilir; təhvil-təslim aktı ilə." },
+    { title: "Prototip korpusu üçün 3D çap vaxtı (6 saat)", status: "UNDER_REVIEW" },
+    { title: "Sahə sınağı üçün tərəfdaş təsərrüfatına giriş", status: "NEW" },
+    { title: "GPU serverində 40 saat təlim vaxtı", status: "APPROVED", note: "Həftəlik 10 saat limit; növbə cədvəlinə əlavə edildi." },
+    { title: "Lehim stansiyası və osiloqraf (2 həftə)", status: "DONE", note: "Avadanlıq qaytarıldı." },
+    { title: "Su keyfiyyəti test dəsti", status: "REJECTED", note: "Büdcə bu dövr üçün kifayət etmir; tərəfdaş vasitəsilə alternativ araşdırılsın." },
+    { title: "Batareya hüceyrələri (18650, 24 ədəd)", status: "NEW" },
+    { title: "Kibertəhlükəsizlik test mühiti (izolə şəbəkə)", status: "UNDER_REVIEW" },
+    { title: "Pitch məşqi üçün auditoriya (2 saat)", status: "APPROVED", note: "Akt zalı cümə günü 15:00-17:00 ayrıldı." },
+    { title: "Mexaniki emal xidməti (alüminium çərçivə)", status: "NEW" },
+  ] as const;
+  for (const [i, q] of REQUESTS.entries()) {
+    const p = asoiuProjects[i % Math.min(asoiuProjects.length, 8)];
+    if (!p) break;
+    const l = LINK[p.category];
+    const decided = q.status === "APPROVED" || q.status === "REJECTED" || q.status === "DONE";
+    await prisma.resourceRequest.create({
+      data: {
+        projectId: p.id, title: q.title, status: q.status, labId: l ? lab[l.lab]! : null, partnerId: l?.partner && i % 3 === 2 ? partner[l.partner]! : null,
+        requestedById: leadOf.get(p.id) ?? null, neededBy: days(7 + i * 2), createdAt: days(-12 + i),
+        // decided two days after the request, never in the future
+        ...(decided ? { decidedById: adminId, decisionNote: "note" in q ? q.note : null, decidedAt: days(Math.min(-1, -10 + i)) } : {}),
+      },
+    });
+  }
+
+  // announcements (audience = roles that see it)
+  await prisma.announcement.create({ data: { title: "Ara münsif baxışı: 23 noyabr 2026", body: "Bütün komandalar ara münsif baxışına texniki təqdimat və işlək prototip nümayişi ilə qatılır. Təqdimat 10 dəqiqə, suallar 5 dəqiqədir. Cədvəl təqvimdə yerləşdirilib.", status: "PUBLISHED", audience: ["ADMIN", "TEAM", "MENTOR", "JURY"], authorId: adminId, publishedAt: days(-2, 9) } });
+  await prisma.announcement.create({ data: { title: "Prototip laboratoriyasında açıq saatlar", body: "Çərşənbə və cümə günləri 14:00-18:00 arası Prototip dizayn laboratoriyası komandalar üçün açıqdır. Avadanlıq ehtiyacını layihənin “Resurs sorğuları” bölməsindən bildirin.", status: "PUBLISHED", audience: ["TEAM", "MENTOR"], authorId: adminId, publishedAt: days(-5, 12) } });
+  await prisma.announcement.create({ data: { title: "TEKNOFEST 2027 şərtnamələri dərc olunanda", body: "Rəsmi 2027 şərtnamələri dərc olunduqca yarışma kataloqunda qayda izləməsi yenilənəcək və komandalara ayrıca bildiriş göndəriləcək.", status: "DRAFT", audience: ["TEAM", "MENTOR"], authorId: adminId } });
+
+  // a few notifications for the demo accounts
+  const rena = ctx.projects.find((p) => p.code === "T50-001")?.leadId;
+  const elvin = mentor("elvin.quliyev");
+  await prisma.notification.createMany({
+    data: [
+      ...(rena ? [{ userId: rena, type: "announcement", params: { title: "Prototip laboratoriyasında açıq saatlar" }, href: "/announcements", createdAt: days(-5, 12) }] : []),
+      { userId: elvin, type: "team_mentor", params: { team: "AeroLab" }, href: "/academy/teams", createdAt: days(-3, 10) },
+    ],
+  });
+}
+
+// ---------- public preparation requests (intake) demo ----------
+// Own random stream (names only); tokens come from crypto so a demo link is never derivable from the seed.
+async function seedIntake(ctx: { asoiu: string; adminId: string; usedEmails: Set<string> }) {
+  let seed = 20271201;
+  const r = () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const pk = <T,>(arr: readonly T[]) => arr[Math.floor(r() * arr.length)]!;
+  const { asoiu, adminId, usedEmails } = ctx;
+  const faculties = await prisma.faculty.findMany({ where: { universityId: asoiu }, select: { id: true, name: true } });
+  const fac = (prefix: string) => faculties.find((f) => f.name.startsWith(prefix))?.id ?? null;
+  const card = async (catalogId: number) => (await prisma.competition.findUniqueOrThrow({ where: { catalogId }, select: { id: true, subcategories: true } }));
+  const email = (name: string) => { const base = tr(name); let e = `${base}@student.asoiu.az`; let i = 2; while (usedEmails.has(e)) e = `${base}${i++}@student.asoiu.az`; usedEmails.add(e); return e; };
+  const ROLES = ["Kapitan · sistem dizaynı", "Proqram təminatı", "Elektronika", "Mexanika", "Sənədləşmə və pitch", "Data / ML"];
+  const links: { code: string; status: string; token: string }[] = [];
+  let n = 0;
+
+  type Ev = { to: "SUBMITTED" | "UNDER_REVIEW" | "NEEDS_CHANGES" | "ACCEPTED" | "REJECTED"; d: number; note?: string };
+  async function make(o: {
+    team: string; catalogId: number; sub?: number; faculty: string; idea: string; needs: string[]; needsNote?: string; size: number;
+    events: Ev[]; teamId?: string; members?: { name: string; email: string }[]; conflictEmail?: string;
+  }) {
+    const c = await card(o.catalogId);
+    const token = randomBytes(32).toString("base64url");
+    const last = o.events[o.events.length - 1]!;
+    const decided = o.events.filter((e) => e.to !== "SUBMITTED");
+    const lastReview = decided[decided.length - 1];
+    const people = o.members ?? Array.from({ length: o.size }, () => { const name = azNameR(pk, r); return { name, email: email(name) }; });
+    if (o.conflictEmail && people[1]) people[1] = { ...people[1], email: o.conflictEmail };
+    const row = await prisma.intakeRequest.create({
+      data: {
+        code: `HZ-${String(++n).padStart(4, "0")}`, tokenHash: createHash("sha256").update(token).digest("hex"), status: last.to,
+        teamName: o.team, universityId: asoiu, facultyId: fac(o.faculty), competitionId: c.id,
+        subcategory: o.sub !== undefined ? (c.subcategories[o.sub] ?? null) : null,
+        projectIdea: o.idea, needs: o.needs, needsNote: o.needsNote ?? null, consentAt: days(o.events[0]!.d, 11),
+        submittedAt: days(o.events[0]!.d, 11), teamId: o.teamId ?? null,
+        ...(lastReview ? { reviewerId: adminId, reviewNote: lastReview.note ?? null, reviewedAt: days(lastReview.d, 15) } : {}),
+        members: { create: people.map((p, i) => ({ name: p.name, email: p.email, facultyId: fac(o.faculty), role: ROLES[i % ROLES.length], isCaptain: i === 0, order: i })) },
+        events: {
+          create: o.events.map((e, i) => ({
+            from: i === 0 ? null : o.events[i - 1]!.to, to: e.to, note: e.note ?? null, at: days(e.d, e.to === "SUBMITTED" ? 11 : 15),
+            source: e.to === "SUBMITTED" ? "public" : "admin", actorId: e.to === "SUBMITTED" ? null : adminId,
+          })),
+        },
+      },
+    });
+    links.push({ code: row.code, status: row.status, token });
+  }
+
+  const volt = await prisma.team.findFirst({ where: { name: "Caspian Volt" }, select: { id: true, members: { select: { name: true, email: true }, orderBy: { name: "asc" } }, captain: { select: { name: true, email: true } } } });
+  const voltMembers = volt ? [volt.captain!, ...volt.members.filter((m) => m.email !== volt.captain?.email)] : undefined;
+  const aero = await prisma.team.findFirst({ where: { name: "AeroLab" }, select: { members: { select: { email: true }, take: 1, orderBy: { name: "asc" } } } });
+
+  await make({
+    team: "Caspian Volt", catalogId: 74, sub: 0, faculty: "Energetika", size: 4, teamId: volt?.id, members: voltMembers,
+    idea: "Günəş panellərinin səmərəliliyini real vaxtda izləyən və tozlanma səbəbilə itkini proqnozlaşdıran aşağı qiymətli monitorinq qurğusu.",
+    needs: ["mentor", "lab", "materials"], needsNote: "Bərpa olunan enerji laboratoriyasında həftədə 4 saat sınaq vaxtı.",
+    events: [{ to: "SUBMITTED", d: -24 }, { to: "UNDER_REVIEW", d: -22 }, { to: "ACCEPTED", d: -20, note: "Komanda tərkibi və ideya uyğundur. Mentor təyin olundu, yarışmanın 2027 qaydaları izlənir." }],
+  });
+  await make({
+    team: "QuickBot", catalogId: 63, faculty: "Rəqəmsal", size: 2,
+    idea: "Robolig üçün sürətli xətt izləyən robot; hazır dəstdən yığılıb, öz həllimiz hələ yoxdur.",
+    needs: ["materials"],
+    events: [{ to: "SUBMITTED", d: -15 }, { to: "UNDER_REVIEW", d: -13 }, { to: "REJECTED", d: -12, note: "Hazır dəstlə iştirak Akademiyanın hazırlıq proqramına uyğun deyil; öz texniki həlliniz olduqda yenidən müraciət edin." }],
+  });
+  await make({
+    team: "AquaSense", catalogId: 40, sub: 1, faculty: "Kimya", size: 3,
+    idea: "Su altı dronu ilə Xəzər sahilində neft çirklənməsinin xəritələnməsi; sensor modulu və görüntü emalı.",
+    needs: ["mentor", "lab", "training"],
+    events: [{ to: "SUBMITTED", d: -9 }, { to: "NEEDS_CHANGES", d: -7, note: "Layihə ideyasına sınaq planını əlavə edin və hər üzvün rolunu yazın. Ən azı bir mexanika üzrə üzv tövsiyə olunur." }],
+  });
+  await make({
+    team: "SkyMap", catalogId: 47, faculty: "Sənaye", size: 4,
+    idea: "Model peyk üçün telemetriya və eniş sistemi; paraşüt açılma sınağı universitet həyətində planlaşdırılır.",
+    needs: ["mentor", "materials", "application_package"], needsNote: "Texniki hesabat şablonu ilə köməyə ehtiyacımız var.",
+    events: [{ to: "SUBMITTED", d: -5 }, { to: "UNDER_REVIEW", d: -3 }],
+  });
+  await make({
+    team: "MedAI Lab", catalogId: 53, sub: 0, faculty: "Rəqəmsal", size: 3,
+    idea: "Rentgen görüntülərində pnevmoniya əlamətlərini qeyd edən köməkçi model; qərarı həkim verir, sistem yalnız işarələyir.",
+    needs: ["mentor", "training", "partner"],
+    events: [{ to: "SUBMITTED", d: -2 }],
+  });
+  await make({
+    team: "GreenGrid", catalogId: 48, sub: 2, faculty: "Energetika", size: 3, conflictEmail: aero?.members[0]?.email,
+    idea: "Kiçik modul reaktorlar üçün soyutma dövrəsinin sadələşdirilmiş simulyasiya modeli.",
+    needs: ["mentor", "lab"],
+    events: [{ to: "SUBMITTED", d: -1 }],
+  });
+  // one unread notification for the demo coordinator
+  await prisma.notification.create({ data: { userId: adminId, type: "intake_submitted", params: { team: "GreenGrid" }, href: "/academy/intake", createdAt: days(-1, 11) } });
+  return links;
+}
+
+function azNameR(pk: <T>(arr: readonly T[]) => T, r: () => number) {
+  const f = r() < 0.5;
+  return `${f ? pk(AZ_F) : pk(AZ_M)} ${pk(AZ_L)}${f ? "a" : ""}`;
 }
 
 main()

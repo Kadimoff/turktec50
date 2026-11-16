@@ -23,10 +23,10 @@ export function PriorityBadge({ priority }: { priority: TaskItem["priority"] }) 
 
 export function Assignee({ task, compact }: { task: TaskItem; compact?: boolean }) {
   const t = useTranslations("tasks");
-  if (!task.assignee) return <span className="text-xs text-muted-foreground italic">{t("noAssignee")}</span>;
+  if (!task.assignee) return <span className="text-xs text-muted-foreground">{t("noAssignee")}</span>;
   return (
     <span className="inline-flex min-w-0 items-center gap-1.5">
-      <UserAvatar name={task.assignee.name} size="sm" className={cn(compact && "size-6 text-[10px]")} />
+      <UserAvatar name={task.assignee.name} size="sm" className={cn(compact && "size-6 text-2xs")} />
       <span aria-hidden className="truncate text-xs font-medium">{task.assignee.name}</span>
     </span>
   );
@@ -39,7 +39,7 @@ export function SourceSessionChip({ task }: { task: TaskItem }) {
     <Link
       href={`/projects/${task.projectId}/sessions#session-${task.source.id}`}
       title={t("fromSessionTitle", { topic: task.source.topic })}
-      className="inline-flex max-w-full items-center gap-1 rounded-md bg-info-soft px-1.5 py-0.5 text-[11px] font-medium text-info transition-opacity hover:opacity-80 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+      className="inline-flex max-w-full items-center gap-1 rounded-md bg-info-soft px-1.5 py-0.5 text-2xs font-medium text-info transition-opacity hover:opacity-80 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
     >
       <MessagesSquare className="size-3 shrink-0" aria-hidden />
       <span className="truncate">{t("fromSession")}</span>
@@ -63,7 +63,7 @@ export function ProjectCode({ task }: { task: TaskItem }) {
     <Link
       href={`/projects/${task.projectId}/tasks`}
       title={task.projectTitle}
-      className="font-mono text-[11px] font-semibold text-primary hover:underline focus-visible:underline focus-visible:outline-none"
+      className="font-mono text-2xs font-semibold text-primary hover:underline focus-visible:underline focus-visible:outline-none"
     >
       {task.projectCode}
       <span className="sr-only"> · {task.projectTitle}</span>

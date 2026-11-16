@@ -1,0 +1,82 @@
+{
+  "eyebrow": "Akademiya",
+  "title": "Təlimlər",
+  "descriptionAdmin": "Akademiya təlimlərini planlayın: tarix, laboratoriya və mentor. Təlimlər təqvimdə və akademiya icmalında da görünür.",
+  "descriptionMentor": "Akademiya təlimlərinin cədvəli. Apardığınız təlimlər işarələnib; dəyişiklik üçün proqram koordinatoru ilə əlaqə saxlayın.",
+  "descriptionTeam": "Komandalar üçün akademiya təlimləri. Qeydiyyatı açıq olan təlimlərə qatılmaq üçün proqram koordinatoru ilə əlaqə saxlayın.",
+  "timezoneNote": "Bütün vaxtlar Bakı vaxtı ilə (UTC+4) göstərilir.",
+  "timezone": "Bakı vaxtı",
+  "sections": {
+    "upcoming": "Qarşıdakı təlimlər",
+    "past": "Keçmiş təlimlər"
+  },
+  "count": "{count, plural, one {# təlim} other {# təlim}}",
+  "empty": {
+    "upcoming": "Qarşıdakı təlim yoxdur",
+    "upcomingAdmin": "Yeni təlim əlavə edin — o, təqvimdə də görünəcək.",
+    "upcomingHint": "Yeni təlimlər planlaşdırıldıqda burada görünəcək.",
+    "past": "Keçmiş təlim yoxdur",
+    "pastHint": "Keçirilmiş təlimlər burada arxivləşir."
+  },
+  "ongoing": "İndi gedir",
+  "youLead": "Siz aparırsınız",
+  "statusStale": "Təlim başa çatıb — statusu “Tamamlandı” olaraq yeniləyin.",
+  "noLab": "Laboratoriya təyin edilməyib",
+  "noMentor": "Mentor təyin edilməyib",
+  "duration": "{count, plural, one {# dəq} other {# dəq}}",
+  "meta": {
+    "time": "Vaxt",
+    "lab": "Laboratoriya",
+    "mentor": "Mentor"
+  },
+  "actions": {
+    "edit": "Redaktə et",
+    "editLabel": "Redaktə et: {title}",
+    "delete": "Sil",
+    "deleteLabel": "Sil: {title}"
+  },
+  "delete": {
+    "title": "“{title}” təlimi silinsin?",
+    "body": "Təlim cədvəldən və təqvimdən silinəcək. Bu əməliyyat geri qaytarılmır, lakin əməliyyat jurnalında qalır."
+  },
+  "form": {
+    "create": "Yeni təlim",
+    "createTitle": "Təlim əlavə et",
+    "editTitle": "Təlimi redaktə et",
+    "description": "Tarix və vaxt Bakı vaxtı ilə daxil edilir. Bağlı laboratoriyalar və deaktiv mentorlar siyahıda göstərilmir.",
+    "title": "Təlimin adı",
+    "date": "Tarix",
+    "time": "Başlama vaxtı",
+    "timeHint": "Bakı vaxtı (UTC+4)",
+    "duration": "Müddət (dəq)",
+    "durationHint": "15–600 dəqiqə",
+    "mentor": "Mentor",
+    "mentorHint": "Yalnız aktiv mentorlar.",
+    "noMentor": "Mentor təyin edilməyib",
+    "lab": "Laboratoriya",
+    "labHint": "Bağlı laboratoriyalar göstərilmir.",
+    "noLab": "Laboratoriya təyin edilməyib",
+    "status": "Status",
+    "notes": "Qeydlər",
+    "notesHint": "İştirakçılar üçün məlumat: tələblər, özünüzlə nə gətirməli və s. Hamı görür.",
+    "pending": "Yadda saxlanılır…"
+  },
+  "errors": {
+    "titleShort": "Ad ən azı 3 simvol olmalıdır.",
+    "titleLong": "Ad 160 simvoldan uzun ola bilməz.",
+    "date": "Düzgün tarix daxil edin.",
+    "time": "Düzgün vaxt daxil edin (SS:dd).",
+    "duration": "Müddət 15 ilə 600 dəqiqə arasında olmalıdır.",
+    "invalid": "Daxil edilən məlumat düzgün deyil.",
+    "notesLong": "Qeyd 2000 simvoldan uzun ola bilməz.",
+    "notFound": "Təlim tapılmadı — səhifəni yeniləyin.",
+    "mentor": "Aktiv mentor seçin.",
+    "lab": "Bu laboratoriya bağlıdır və ya tapılmadı.",
+    "generic": "Xəta baş verdi. Yenidən cəhd edin."
+  },
+  "toast": {
+    "created": "Təlim əlavə edildi",
+    "updated": "Təlim yeniləndi",
+    "deleted": "Təlim silindi"
+  }
+}

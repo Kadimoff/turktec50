@@ -139,6 +139,32 @@
       "competition": "Yarışma",
       "mentors": "Mentorlar",
       "members": "Komanda üzvləri"
-    }
+    },
+    "academySection": "Akademiya axını — ayrıca bölmə (nəfər və komanda ayrıca sayılır, keçid faizi yoxdur)",
+    "unitPeople": "nəfər",
+    "unitTeams": "komanda",
+    "unitApplications": "müraciət",
+    "unitCompetitions": "yarışma"
+  },
+  "academy": {
+    "title": "Akademiya axını",
+    "subtitle": "Tələbə qeydiyyatından komanda müraciətinə qədər. Proqram hunisindən ayrıdır: nəfər və komanda fərqli vahidlərdir, aralarında keçid faizi hesablanmır.",
+    "link": "Akademiya icmalı",
+    "note": "Bu göstəricilər ADNSU TEKNOFEST 2027 Akademiyasının qeydlərindən hesablanır və B əlavəsinin hədəflərinə daxil deyil.",
+    "groups": {
+      "people": "Tələbələr (nəfər)",
+      "teams": "Komandalar və müraciətlər",
+      "competitions": "Yarışmalar"
+    },
+    "studentsRegistered": "Qeydiyyatdakı tələbələr",
+    "studentsRegisteredHint": "Arxivdəkilər daxil deyil",
+    "studentsInTeams": "Komandada olan tələbələr",
+    "studentsInTeamsHint": "Qeydiyyatdakıların {pct}%-i",
+    "teamsFormed": "Formalaşmış komandalar",
+    "teamsFormedHint": "{active} aktiv · {forming} formalaşır",
+    "applicationsFromTeams": "Komandalardan müraciətlər",
+    "applicationsFromTeamsHint": "Akademiya komandasından yaradılmış müraciətlər",
+    "trackedCompetitions": "İzlənən yarışmalar",
+    "trackedCompetitionsHint": "2027 qaydaları: {confirmed} təsdiqlənib · {changed} dəyişib"
   }
 }

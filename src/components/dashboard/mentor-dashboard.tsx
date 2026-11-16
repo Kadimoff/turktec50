@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { addDays, format } from "date-fns";
 import { getLocale, getTranslations } from "next-intl/server";
 import { CalendarClock, FileSearch, FolderKanban, NotebookPen } from "lucide-react";
 import type { CurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { projectScope } from "@/lib/rbac";
 import { readinessFromChecklist } from "@/lib/kpi";
-import { fmtDate, fmtDay, fmtRelative } from "@/lib/format";
+import { fmtDate, fmtDay, fmtRelative, fmtTime } from "@/lib/format";
+import { bakuAddDays } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 import { StatCard } from "@/components/shared/stat-card";
 import { EnumBadge } from "@/components/shared/enum-badge";
@@ -40,7 +40,7 @@ export async function MentorDashboard({ user }: { user: CurrentUser }) {
       take: 6,
     }),
     prisma.mentorSession.count({
-      where: { mentorId: user.id, project: scope, scheduledAt: { gte: now, lte: addDays(now, 7) }, status: { in: ["PLANNED", "CONFIRMED"] } },
+      where: { mentorId: user.id, project: scope, scheduledAt: { gte: now, lte: bakuAddDays(now, 7) }, status: { in: ["PLANNED", "CONFIRMED"] } },
     }),
     prisma.checklistItem.findMany({
       where: { project: scope, status: { in: ["UPLOADED", "IN_REVIEW"] } },
@@ -165,7 +165,7 @@ export async function MentorDashboard({ user }: { user: CurrentUser }) {
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">{s.topic}</p>
                       <p className="truncate text-xs text-muted-foreground">
-                        <span className="tabular">{format(s.scheduledAt, "HH:mm")}</span> · {s.project.code} · {te(`SessionStatus.${s.status}`)}
+                        <span className="tabular">{fmtTime(s.scheduledAt)}</span> · {s.project.code} · {te(`SessionStatus.${s.status}`)}
                       </p>
                       {!s.agenda && <p className="text-xs font-medium text-warning">{t("mentor.noAgenda")}</p>}
                     </div>

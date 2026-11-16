@@ -110,7 +110,8 @@
       "invalid": "Invalid data. Please reload the page.",
       "incomplete": "All criteria must be scored.",
       "locked": "This evaluation has already been submitted and cannot be changed.",
-      "error": "Something went wrong. Please try again."
+      "error": "Something went wrong. Please try again.",
+      "retry": "The evaluation was just saved from another window. Please save again."
     }
   },
   "panel": {

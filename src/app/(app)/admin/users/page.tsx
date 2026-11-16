@@ -11,11 +11,10 @@ import { StatCard } from "@/components/shared/stat-card";
 import { ToneBadge } from "@/components/shared/tone-badge";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { EmptyState } from "@/components/shared/empty-state";
-import { NativeSelect } from "@/components/shared/form";
-import { Input } from "@/components/ui/input";
+import { FilterBar } from "@/components/shared/filter-bar";
+import { Pagination } from "@/components/shared/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FilterBar, FilterField } from "@/components/admin/filter-bar";
-import { Pagination, parsePage, str } from "@/components/admin/pagination";
+import { parsePage, pick, str } from "@/lib/search-params";
 import { CreateUserDialog, LockedRow, UserRowActions } from "@/components/admin/user-dialogs";
 
 const PAGE_SIZE = 25;
@@ -33,17 +32,17 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
   const sp = await props.searchParams;
   const [t, tc, te, tr, locale] = await Promise.all([getTranslations("admin.users"), getTranslations("common"), getTranslations("enums"), getTranslations("admin.users.root"), getLocale()]);
 
-  const q = str(sp.q);
-  const role = ROLES.find((r) => r === str(sp.role));
-  const uni = str(sp.uni);
-  const status = (["active", "inactive"] as const).find((s) => s === str(sp.status));
+  const q = str(sp.q, 80);
+  const role = pick(sp.role, ROLES);
+  const uni = str(sp.uni, 40);
+  const status = pick(sp.status, ["active", "inactive", "password"] as const);
   const page = parsePage(sp.page);
   const params = { q, role, uni, status };
 
   const where: Prisma.UserWhereInput = {
     ...(role && { role }),
     ...(uni && { universityId: uni === "none" ? null : uni }),
-    ...(status && { active: status === "active" }),
+    ...(status === "password" ? { mustChangePassword: true } : status && { active: status === "active" }),
     ...(q && { OR: [{ name: { contains: q, mode: "insensitive" } }, { email: { contains: q, mode: "insensitive" } }, { title: { contains: q, mode: "insensitive" } }] }),
   };
 
@@ -57,7 +56,7 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
       skip: (page - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
       select: {
-        id: true, name: true, email: true, role: true, isRoot: true, title: true, active: true, lastLoginAt: true, universityId: true,
+        id: true, name: true, email: true, role: true, isRoot: true, title: true, active: true, mustChangePassword: true, lastLoginAt: true, universityId: true,
         university: { select: { shortName: true } },
         _count: { select: { memberships: true, mentorAssignments: true, juryAssignments: true } },
       },
@@ -68,7 +67,6 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
   const count = (r: Role, active?: boolean) =>
     byRole.filter((g) => g.role === r && (active === undefined || g.active === active)).reduce((a, g) => a + g._count._all, 0);
   const linked = (u: (typeof users)[number]) => u._count.memberships + u._count.mentorAssignments + u._count.juryAssignments;
-  const filtered = !!(q || role || uni || status);
   // root is untouchable for everyone else; coordinators (ADMIN) are managed by root only
   const lockFor = (u: (typeof users)[number]): "root" | "admin" | null =>
     u.isRoot && !me.isRoot ? "root" : !u.isRoot && u.role === "ADMIN" && !me.isRoot ? "admin" : null;
@@ -77,7 +75,7 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
     return lock ? <LockedRow reason={lock} /> : <UserRowActions user={u} universities={universities} isSelf={u.id === me.id} canGrantAdmin={me.isRoot} canDelete={me.isRoot} />;
   };
   const RootBadge = () => (
-    <span className="inline-flex items-center gap-1 rounded-full bg-brand-navy px-2 py-0.5 text-[11px] font-bold text-background">
+    <span className="inline-flex items-center gap-1 rounded-full bg-brand-deep px-2 py-0.5 text-2xs font-bold text-background">
       <Crown className="size-3" aria-hidden />
       {tr("badge")}
     </span>
@@ -94,14 +92,13 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
 
       {rootUser && (
         <section aria-labelledby="root-title" className="relative overflow-hidden rounded-xl border border-sidebar-border bg-sidebar p-5 text-sidebar-foreground shadow-card">
-          <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 size-56 rounded-full bg-sidebar-primary/15 blur-2xl" />
           <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
               <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground" aria-hidden>
                 <Crown className="size-6" />
               </span>
               <div className="min-w-0">
-                <p className="text-xs font-semibold tracking-wide text-sidebar-primary">{tr("cardEyebrow")}</p>
+                <p className="text-xs font-semibold text-sidebar-primary">{tr("cardEyebrow")}</p>
                 <h2 id="root-title" className="text-lg font-bold text-white">
                   {rootUser.name}
                   {rootUser.id === me.id && <span className="ml-2 text-xs font-normal text-sidebar-foreground/80">({t("you")})</span>}
@@ -112,7 +109,7 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
                 </p>
               </div>
             </div>
-            <ul className="grid gap-1.5 text-[13px] md:max-w-md">
+            <ul className="grid gap-1.5 text-label md:max-w-md">
               {(["c1", "c2", "c3"] as const).map((k) => (
                 <li key={k} className="flex items-start gap-2">
                   <KeyRound className="mt-0.5 size-3.5 shrink-0 text-sidebar-primary" aria-hidden />
@@ -137,31 +134,25 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
         ))}
       </div>
 
-      <FilterBar action="/admin/users" clearHref="/admin/users" active={filtered}>
-        <FilterField label={tc("actions.search")} htmlFor="f-q" className="lg:min-w-64 lg:flex-1">
-          <Input id="f-q" name="q" type="search" defaultValue={q} placeholder={t("searchPlaceholder")} className="h-9" />
-        </FilterField>
-        <FilterField label={t("fields.role")} htmlFor="f-role">
-          <NativeSelect id="f-role" name="role" defaultValue={role ?? ""}>
-            <option value="">{tc("actions.all")}</option>
-            {ROLES.map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
-          </NativeSelect>
-        </FilterField>
-        <FilterField label={t("fields.university")} htmlFor="f-uni">
-          <NativeSelect id="f-uni" name="uni" defaultValue={uni ?? ""}>
-            <option value="">{tc("actions.all")}</option>
-            <option value="none">{t("noUniversity")}</option>
-            {universities.map((u) => <option key={u.id} value={u.id}>{u.shortName}</option>)}
-          </NativeSelect>
-        </FilterField>
-        <FilterField label={t("fields.status")} htmlFor="f-status">
-          <NativeSelect id="f-status" name="status" defaultValue={status ?? ""}>
-            <option value="">{tc("actions.all")}</option>
-            <option value="active">{t("active")}</option>
-            <option value="inactive">{t("inactive")}</option>
-          </NativeSelect>
-        </FilterField>
-      </FilterBar>
+      <FilterBar
+        action="/admin/users"
+        search={{ label: tc("filters.search"), placeholder: t("searchPlaceholder"), value: q }}
+        selects={[
+          { name: "role", label: t("fields.role"), allLabel: tc("actions.all"), value: role, options: ROLES.map((r) => ({ value: r, label: te(`Role.${r}`) })) },
+          {
+            name: "uni", label: t("fields.university"), allLabel: tc("actions.all"), value: uni,
+            options: [{ value: "none", label: t("noUniversity") }, ...universities.map((u) => ({ value: u.id, label: u.shortName }))],
+          },
+          {
+            name: "status", label: t("fields.status"), allLabel: tc("actions.all"), value: status, wide: true,
+            options: [
+              { value: "active", label: t("active") },
+              { value: "inactive", label: t("inactive") },
+              { value: "password", label: t("pendingPassword") },
+            ],
+          },
+        ]}
+      />
 
       <section className="rounded-xl border bg-card shadow-card" aria-labelledby="users-title">
         <div className="flex items-center justify-between gap-3 border-b px-4 py-3 sm:px-5">
@@ -185,6 +176,7 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
                     <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                       <ToneBadge tone={roleTone[u.role]}>{te(`Role.${u.role}`)}</ToneBadge>
                       {!u.active && <ToneBadge tone="neutral">{t("inactive")}</ToneBadge>}
+                      {u.mustChangePassword && <ToneBadge tone="warning">{t("pendingPassword")}</ToneBadge>}
                       {u.university && <span className="text-xs text-muted-foreground">{u.university.shortName}</span>}
                     </div>
                     <p className="mt-1 text-xs text-muted-foreground">
@@ -249,7 +241,10 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
                         )}
                       </TableCell>
                       <TableCell>
-                        {u.active ? <ToneBadge tone="success">{t("active")}</ToneBadge> : <ToneBadge tone="neutral">{t("inactive")}</ToneBadge>}
+                        <span className="flex flex-col items-start gap-1">
+                          {u.active ? <ToneBadge tone="success">{t("active")}</ToneBadge> : <ToneBadge tone="neutral">{t("inactive")}</ToneBadge>}
+                          {u.mustChangePassword && <ToneBadge tone="warning">{t("pendingPassword")}</ToneBadge>}
+                        </span>
                       </TableCell>
                       <TableCell className="pr-5 text-right">
                         {actionsFor(u)}
@@ -261,9 +256,11 @@ export default async function UsersPage(props: PageProps<"/admin/users">) {
             </div>
           </>
         )}
-        <div className="border-t px-4 py-3 sm:px-5">
-          <Pagination basePath="/admin/users" params={params} page={page} pageSize={PAGE_SIZE} total={total} />
-        </div>
+        {total > 0 && (
+          <div className="border-t px-4 py-3 sm:px-5">
+            <Pagination basePath="/admin/users" params={params} page={page} pageSize={PAGE_SIZE} total={total} />
+          </div>
+        )}
       </section>
 
       <p className="flex items-start gap-2 rounded-lg border border-dashed bg-card px-3 py-2.5 text-xs text-muted-foreground">

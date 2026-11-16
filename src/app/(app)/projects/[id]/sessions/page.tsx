@@ -49,7 +49,7 @@ export default async function ProjectSessionsPage(props: PageProps<"/projects/[i
             {t("visibility")}
           </p>
         </div>
-        <PlanSessionButton projects={planProjects} mode={user.role === "TEAM" ? "request" : "plan"} defaultProjectId={id} size="default" />
+        <PlanSessionButton projects={planProjects} mode={user.role === "TEAM" ? "request" : "plan"} defaultProjectId={id} />
       </div>
       <CadenceStrip last={c.last} next={c.next} />
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">

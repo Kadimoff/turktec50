@@ -62,12 +62,12 @@ export function RubricForm({ projectId, kind, criteria, initial }: Props) {
       setPendingIntent(null);
       setConfirmOpen(false);
       if (res.ok) {
-        setStatus(res.status);
-        setSubmittedAt(res.submittedAt);
+        setStatus(res.status ?? (intent === "submit" ? "SUBMITTED" : "DRAFT"));
+        setSubmittedAt(res.submittedAt ?? null);
         setDirty(false);
-        toast.success(intent === "submit" ? t("form.toastSubmitted") : t("form.toastSaved"));
+        toast.success(t(res.message ?? (intent === "submit" ? "form.toastSubmitted" : "form.toastSaved")));
       } else {
-        toast.error(t(`form.errors.${res.error}`));
+        toast.error(t(res.message ?? "form.errors.error"));
       }
     });
   }
@@ -132,7 +132,7 @@ export function RubricForm({ projectId, kind, criteria, initial }: Props) {
                           )}
                         >
                           <span className="tabular text-base font-bold leading-none">{n}</span>
-                          <span className="line-clamp-2 text-[10.5px] leading-tight font-medium opacity-90 sm:text-[11px]">
+                          <span className="line-clamp-2 text-2xs leading-tight font-medium opacity-90 sm:text-2xs">
                             {t(`scale.${n}` as never)}
                           </span>
                         </span>
@@ -147,7 +147,7 @@ export function RubricForm({ projectId, kind, criteria, initial }: Props) {
 
         <div className="space-y-4 rounded-xl border bg-card p-4 shadow-card sm:p-5">
           <div className="grid gap-1.5">
-            <Label htmlFor="eval-comment" className="text-[13px] font-medium">{t("form.comment")}</Label>
+            <Label htmlFor="eval-comment" className="text-label font-medium">{t("form.comment")}</Label>
             <Textarea
               id="eval-comment"
               value={comment}
@@ -161,7 +161,7 @@ export function RubricForm({ projectId, kind, criteria, initial }: Props) {
             <p id="eval-comment-hint" className="text-xs text-muted-foreground">{t("form.commentHint")}</p>
           </div>
           <div className="grid gap-1.5">
-            <Label htmlFor="eval-rec" className="text-[13px] font-medium">{t("form.recommendation")}</Label>
+            <Label htmlFor="eval-rec" className="text-label font-medium">{t("form.recommendation")}</Label>
             <Textarea
               id="eval-rec"
               value={recommendation}
@@ -210,7 +210,6 @@ export function RubricForm({ projectId, kind, criteria, initial }: Props) {
                 type="button"
                 variant="outline"
                 size="lg"
-                className="h-10"
                 onClick={() => run("save")}
                 disabled={pending}
                 aria-busy={pendingIntent === "save"}
@@ -219,7 +218,7 @@ export function RubricForm({ projectId, kind, criteria, initial }: Props) {
                 {pendingIntent === "save" ? tc("states.loading") : tc("actions.saveDraft")}
               </Button>
               <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-                <AlertDialogTrigger render={<Button type="button" size="lg" className="h-10" disabled={pending || !complete} />}>
+                <AlertDialogTrigger render={<Button type="button" size="lg" disabled={pending || !complete} />}>
                   <Send className="size-4" aria-hidden />
                   {t("form.submit")}
                 </AlertDialogTrigger>

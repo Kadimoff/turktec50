@@ -1,10 +1,11 @@
 "use client";
-import { useActionState, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Briefcase, Gavel, ShieldCheck, Users } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Field, SubmitButton } from "@/components/shared/form";
-import { login, type LoginState } from "@/app/actions/auth";
+import { useFormAction } from "@/components/shared/use-form-action";
+import { login } from "@/app/actions/auth";
 import { cn } from "@/lib/utils";
 
 export const DEMO_PASSWORD = "Demo2026!";
@@ -18,31 +19,32 @@ const DEMO = [
 export function LoginForm({ next }: { next?: string }) {
   const t = useTranslations("auth");
   const te = useTranslations("enums.Role");
-  const [state, action] = useActionState<LoginState, FormData>(login, undefined);
+  const { state, pending, onSubmit } = useFormAction(login);
+  const error = !state.ok && state.message ? t(state.message as "invalid" | "inactive" | "rateLimited") : undefined;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
     <>
-      <form ref={formRef} action={action} className="mt-8 grid gap-4" noValidate>
+      <form ref={formRef} onSubmit={onSubmit} className="mt-8 grid gap-4" noValidate>
         {next && <input type="hidden" name="next" value={next} />}
         <Field label={t("email")} htmlFor="email" required>
           <Input id="email" name="email" type="text" inputMode="email" autoCapitalize="none" spellCheck={false} autoComplete="username" required value={email} onChange={(e) => setEmail(e.target.value)} className="h-10" />
         </Field>
-        <Field label={t("password")} htmlFor="password" required error={state?.error ? t(state.error) : undefined}>
+        <Field label={t("password")} htmlFor="password" required error={error}>
           <Input
             id="password" name="password" type="password" autoComplete="current-password" required value={password}
-            onChange={(e) => setPassword(e.target.value)} className="h-10" aria-invalid={!!state?.error}
-            aria-describedby={state?.error ? "password-error" : undefined}
+            onChange={(e) => setPassword(e.target.value)} className="h-10" aria-invalid={!!error}
+            aria-describedby={error ? "password-error" : undefined}
           />
         </Field>
-        <SubmitButton className="h-10 w-full" pendingLabel={t("signingIn")}>{t("signIn")}</SubmitButton>
+        <SubmitButton pending={pending} className="h-10 w-full" pendingLabel={t("signingIn")}>{t("signIn")}</SubmitButton>
       </form>
 
       <section className="mt-8" aria-labelledby="demo-accounts">
         <div className="flex items-center gap-3">
-          <h2 id="demo-accounts" className="text-xs font-semibold tracking-wide text-muted-foreground">{t("demoAccounts")}</h2>
+          <h2 id="demo-accounts" className="text-xs font-semibold text-muted-foreground">{t("demoAccounts")}</h2>
           <span className="h-px flex-1 bg-border" aria-hidden />
         </div>
         <p className="mt-1.5 text-xs text-muted-foreground">{t("demoHint")}</p>

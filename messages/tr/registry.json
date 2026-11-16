@@ -1,0 +1,153 @@
+{
+  "eyebrow": "Akademi",
+  "title": "Fakülte, laboratuvar ve ortak kaydı",
+  "description": "ADNSU fakülteleri, laboratuvarları ve sanayi ortakları tek yerde. Projeler, öğrenciler ve kaynak talepleri bu kayıtlara bağlanır; kullanımdaki bir kayıt silinmez, arşivlenir.",
+  "tabsLabel": "Kayıt bölümleri",
+  "tabs": {
+    "faculties": "Fakülteler",
+    "labs": "Laboratuvarlar",
+    "partners": "Ortaklar"
+  },
+  "search": {
+    "faculties": "Ad, koordinatör veya not",
+    "labs": "Ad, fakülte, iletişim veya not",
+    "partners": "Ad, sektör, iletişim veya not"
+  },
+  "found": "{count, plural, one {# kayıt} other {# kayıt}}",
+  "noCoordinator": "Koordinatör atanmadı",
+  "noFaculty": "Bir fakülteye bağlı değil",
+  "noSector": "Sektör belirtilmedi",
+  "empty": {
+    "noResults": "Sonuç bulunamadı",
+    "noResultsHint": "Arama kelimesini veya durum filtresini değiştirin.",
+    "faculties": "Henüz fakülte eklenmedi",
+    "facultiesHint": "Öğrenci, ekip ve projeleri bağlayabilmek için pilot üniversitenin fakültelerini ekleyin.",
+    "labs": "Henüz laboratuvar eklenmedi",
+    "labsHint": "Ekiplerin kullandığı laboratuvarları ekleyin — eğitimler ve kaynak talepleri onlara bağlanır.",
+    "partners": "Henüz sanayi ortağı yok",
+    "partnersHint": "Aday veya aktif ortakları ekleyin; projeler ve kaynak talepleri onlara bağlanabilir."
+  },
+  "cols": {
+    "faculty": "Fakülte",
+    "coordinator": "Koordinatör",
+    "students": "Öğrenciler",
+    "teams": "Ekipler",
+    "projects": "Projeler",
+    "labs": "Laboratuvarlar",
+    "status": "Durum",
+    "actions": "İşlemler",
+    "lab": "Laboratuvar",
+    "contact": "İletişim",
+    "openRequests": "Açık talepler",
+    "upcomingTrainings": "Yaklaşan eğitimler",
+    "partner": "Ortak",
+    "sector": "Sektör",
+    "requests": "Kaynak talepleri"
+  },
+  "usage": {
+    "students": "{count, plural, one {# öğrenci} other {# öğrenci}}",
+    "teams": "{count, plural, one {# ekip} other {# ekip}}",
+    "projects": "{count, plural, one {# proje} other {# proje}}",
+    "labs": "{count, plural, one {# laboratuvar} other {# laboratuvar}}",
+    "users": "{count, plural, one {# kullanıcı} other {# kullanıcı}}",
+    "intakeRequests": "{count, plural, one {# hazırlık başvurusu} other {# hazırlık başvurusu}}",
+    "intakeMembers": "{count, plural, one {# başvuru üyesi} other {# başvuru üyesi}}",
+    "trainings": "{count, plural, one {# eğitim} other {# eğitim}}",
+    "requests": "{count, plural, one {# kaynak talebi} other {# kaynak talebi}}",
+    "openRequests": "{count, plural, one {# açık talep} other {# açık talep}}",
+    "upcomingTrainings": "{count, plural, one {# yaklaşan eğitim} other {# yaklaşan eğitim}}"
+  },
+  "faculty": {
+    "create": "Yeni fakülte",
+    "createTitle": "Fakülte ekle",
+    "editTitle": "Fakülteyi düzenle",
+    "dialogDescription": "Fakülte adı üniversite içinde tekrarlanamaz. Koordinatör sisteme giriş yapmaz — yalnızca iletişim için kaydedilir."
+  },
+  "lab": {
+    "create": "Yeni laboratuvar",
+    "createTitle": "Laboratuvar ekle",
+    "editTitle": "Laboratuvarı düzenle",
+    "dialogDescription": "Laboratuvarın durumu eğitim planlamasında dikkate alınır: kapalı laboratuvarlar yeni eğitimler için önerilmez."
+  },
+  "partner": {
+    "create": "Yeni ortak",
+    "createTitle": "Sanayi ortağı ekle",
+    "editTitle": "Ortağı düzenle",
+    "dialogDescription": "Durum, ortaklık görüşmelerinin aşamasını gösterir; kararları koordinatör verir."
+  },
+  "actions": {
+    "edit": "Düzenle",
+    "editLabel": "Düzenle: {name}",
+    "delete": "Sil",
+    "deleteLabel": "Sil: {name}"
+  },
+  "delete": {
+    "title": "“{name}” silinsin mi?",
+    "body": "Kayıt kalıcı olarak silinecek. Bu işlem geri alınamaz, ancak işlem kaydında kalır.",
+    "inUseTitle": "“{name}” kullanımda",
+    "inUseBody": {
+      "faculty": "Bu fakülteye hâlâ kayıtlar bağlı, bu yüzden silinemez. Fakülteyi arşivleyin — geçmiş korunur, yeni bağlantılar için önerilmez.",
+      "lab": "Bu laboratuvara projeler, eğitimler veya kaynak talepleri bağlı, bu yüzden silinemez. Durumunu “Kapalı” yapın — yeni eğitimler için önerilmez.",
+      "partner": "Bu ortağa projeler veya kaynak talepleri bağlı, bu yüzden silinemez. Ortağı arşivleyin — geçmiş korunur."
+    },
+    "usedBy": "Bağlı kayıtlar",
+    "alreadyRetired": {
+      "faculty": "Fakülte zaten arşivde.",
+      "lab": "Laboratuvar zaten kapalı.",
+      "partner": "Ortak zaten arşivde."
+    },
+    "retire": {
+      "faculty": "Arşivle",
+      "lab": "Kapalı yap",
+      "partner": "Arşivle"
+    }
+  },
+  "form": {
+    "pending": "Kaydediliyor…"
+  },
+  "fields": {
+    "university": "Üniversite",
+    "universityHint": "Varsayılan olarak pilot üniversite seçilir.",
+    "chooseUniversity": "Üniversite seçin",
+    "facultyName": "Fakülte adı",
+    "facultyNameHint": "Örn.: Dijital Teknolojiler Fakültesi",
+    "coordinator": "Koordinatör",
+    "coordinatorHint": "Ad veya iletişim; sistem hesabı gerekmez.",
+    "status": "Durum",
+    "notes": "Notlar",
+    "notesHint": "Dahili not, yalnızca koordinatörler görür.",
+    "faculty": "Fakülte",
+    "facultyHint": "Laboratuvar bir fakülteye ait değilse boş bırakın.",
+    "facultyNone": "Bir fakülteye bağlı değil",
+    "facultyNoneAvailable": "Bu üniversite için kayıtlı fakülte yok.",
+    "labName": "Laboratuvar adı",
+    "contact": "İletişim",
+    "contactHint": "Sorumlu kişi, telefon veya e-posta.",
+    "labStatusHint": "“Kapalı” laboratuvarlar yeni eğitimler için önerilmez.",
+    "partnerName": "Ortak adı",
+    "sector": "Sektör",
+    "sectorHint": "Örn.: Enerji, Lojistik",
+    "partnerContactHint": "İletişim kişisi, telefon veya e-posta."
+  },
+  "errors": {
+    "nameShort": "Ad en az 2 karakter olmalıdır.",
+    "nameLong": "Ad 160 karakterden uzun olamaz.",
+    "nameTaken": "Bu üniversitede bu adla bir fakülte zaten var.",
+    "partnerTaken": "Bu adla bir ortak zaten kayıtlı.",
+    "universityRequired": "Üniversite seçin.",
+    "universityLocked": "Bu fakülteye kayıtlar bağlı — üniversite değiştirilemez.",
+    "facultyMismatch": "Seçilen fakülte bu üniversiteye ait değil.",
+    "notFound": "Kayıt bulunamadı — sayfayı yenileyin.",
+    "inUse": "Kayıt kullanımda ve silinemez.",
+    "invalid": "Girilen bilgi geçersiz.",
+    "generic": "Bir hata oluştu. Tekrar deneyin.",
+    "tooLong": "Metin çok uzun."
+  },
+  "toast": {
+    "created": "Kayıt eklendi",
+    "updated": "Değişiklikler kaydedildi",
+    "deleted": "Kayıt silindi",
+    "archived": "Arşivlendi",
+    "closed": "Laboratuvar kapalı durumuna alındı"
+  }
+}

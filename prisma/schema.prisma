@@ -103,16 +103,89 @@ enum EvaluationStatus {
   SUBMITTED
 }
 
+// ---------- Academy (ADNSU TEKNOFEST 2027 Academy, merged) ----------
+
+enum RuleStatus {
+  TRACKING // 2027 rules being watched
+  CHANGED // official rules changed since last check
+  CONFIRMED // confirmed against the official HTTPS source (source URL mandatory)
+}
+
+enum RegistryStatus {
+  PLANNED
+  ACTIVE
+  ARCHIVED
+}
+
+enum LabStatus {
+  AVAILABLE
+  LIMITED
+  CLOSED
+}
+
+enum PartnerStatus {
+  CANDIDATE
+  NEGOTIATING
+  ACTIVE
+  ARCHIVED
+}
+
+enum StudentStatus {
+  CANDIDATE
+  SEEKING_TEAM
+  IN_TEAM
+  ARCHIVED
+}
+
+enum TeamStatus {
+  FORMING
+  ACTIVE
+  ARCHIVED
+}
+
+enum TrainingStatus {
+  PLANNED
+  REGISTRATION_OPEN
+  COMPLETED
+}
+
+enum ResourceStatus {
+  NEW
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  DONE
+}
+
+enum AnnouncementStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum IntakeStatus {
+  SUBMITTED // sent by students through the public /apply form
+  UNDER_REVIEW // a coordinator took it into review
+  NEEDS_CHANGES // returned to the students with a note (they edit via their tracking link)
+  ACCEPTED // became an ACTIVE Academy team
+  REJECTED
+  WITHDRAWN // withdrawn by the students before a decision
+}
+
 model University {
-  id           String        @id @default(cuid())
-  name         String
-  shortName    String
-  country      String // ISO-2: AZ, TR, KZ, UZ, KG, TM
-  city         String
-  isPartner    Boolean       @default(false) // false = pilot host / confirmed; true = invited partner
-  users        User[]
-  projects     Project[]
-  applications Application[]
+  id             String          @id @default(cuid())
+  name           String
+  shortName      String
+  country        String // ISO-2: AZ, TR, KZ, UZ, KG, TM
+  city           String
+  isPartner      Boolean         @default(false) // false = pilot host / confirmed; true = invited partner
+  users          User[]
+  projects       Project[]
+  applications   Application[]
+  faculties      Faculty[]
+  labs           Lab[]
+  students       Student[]
+  teams          Team[]
+  intakeRequests IntakeRequest[]
 }
 
 model User {
@@ -121,13 +194,17 @@ model User {
   name               String
   passwordHash       String
   role               Role
-  isRoot             Boolean             @default(false) // system owner: protected, only root manages ADMIN accounts
+  isRoot             Boolean            @default(false) // system owner: protected, only root manages ADMIN accounts
+  mustChangePassword Boolean            @default(false) // generated temporary password: must be changed at next sign-in
+  passwordChangedAt  DateTime? // sessions issued before this instant are rejected (password change / reset signs out other sessions)
   title              String? // e.g. "Proqram koordinatoru", "Professor", "Software engineer"
   expertise          String? // mentors/jury: comma separated tags
   locale             String             @default("az")
   active             Boolean            @default(true)
   universityId       String?
   university         University?        @relation(fields: [universityId], references: [id])
+  facultyId          String? // mentors / staff: home faculty (Academy registry)
+  faculty            Faculty?           @relation(fields: [facultyId], references: [id], onDelete: SetNull)
   createdAt          DateTime           @default(now())
   lastLoginAt        DateTime?
   memberships        ProjectMember[]
@@ -142,19 +219,41 @@ model User {
   auditLogs          AuditLog[]
   notifications      Notification[]
   reviewedChecklists ChecklistItem[]    @relation("ChecklistReviewer")
+  ruleOwnerships     Competition[]      @relation("RuleOwner")
+  mentoredTeams      Team[]             @relation("TeamMentor")
+  trainings          Training[]         @relation("TrainingMentor")
+  resourceRequests   ResourceRequest[]  @relation("ResourceRequester")
+  resourceDecisions  ResourceRequest[]  @relation("ResourceDecider")
+  announcements      Announcement[]
+  studentProfile     Student?
+  intakeReviews      IntakeRequest[]    @relation("IntakeReviewer")
+  intakeEvents       IntakeEvent[]
 }
 
 model Competition {
-  id                  String        @id @default(cuid())
-  name                String // e.g. "TEKNOFEST 2027 — Sağlıkta Teknoloji"
+  id                  String          @id @default(cuid())
+  name                String // e.g. "Sağlıkta Yapay Zeka Yarışması"
   organizer           String
-  category            String
+  category            String? // lib/constants CATEGORIES key; null for catalog cards (they carry `theme`)
   country             String
-  applicationDeadline DateTime
+  applicationDeadline DateTime? // official deadline — unknown (null) until the 2027 rules are published
   finalDate           DateTime?
   url                 String?
+  // TEKNOFEST catalog card (2026 archive) — null for non-catalog competitions
+  catalogId           Int?            @unique
+  theme               String? // lib/constants COMPETITION_THEMES key
+  subcategories       String[]
+  // 2027 rule tracking (null ruleStatus = not tracked)
+  ruleStatus          RuleStatus?
+  ruleOwnerId         String?
+  ruleOwner           User?           @relation("RuleOwner", fields: [ruleOwnerId], references: [id], onDelete: SetNull)
+  ruleSourceUrl       String? // official 2027 şartname link (HTTPS), mandatory for CONFIRMED
+  ruleCheckedAt       DateTime?
+  ruleNotes           String?
   projects            Project[]
   applications        Application[]
+  teams               Team[]
+  intakeRequests      IntakeRequest[]
 }
 
 model Application {
@@ -179,6 +278,8 @@ model Application {
   projectId     String?           @unique
   project       Project?          @relation(fields: [projectId], references: [id])
   evaluations   Evaluation[]
+  teamId        String? // Academy team this application was created from (a rejected team may apply again)
+  team          Team?             @relation(fields: [teamId], references: [id], onDelete: SetNull)
 }
 
 model Project {
@@ -192,6 +293,12 @@ model Project {
   university        University         @relation(fields: [universityId], references: [id])
   competitionId     String?
   competition       Competition?       @relation(fields: [competitionId], references: [id])
+  facultyId         String?
+  faculty           Faculty?           @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  labId             String?
+  lab               Lab?               @relation(fields: [labId], references: [id], onDelete: SetNull)
+  partnerId         String?
+  partner           Partner?           @relation(fields: [partnerId], references: [id], onDelete: SetNull)
   stage             ProjectStage       @default(VALIDATION)
   health            ProjectHealth      @default(ON_TRACK)
   prototypeVerified Boolean            @default(false) // KPI: functional prototype/MVP with test evidence
@@ -212,6 +319,7 @@ model Project {
   evaluations       Evaluation[]
   auditLogs         AuditLog[]
   stageHistory      StageChange[]
+  resourceRequests  ResourceRequest[]
 }
 
 model StageChange {
@@ -235,6 +343,7 @@ model ProjectMember {
   isLead    Boolean @default(false)
 
   @@unique([projectId, userId])
+  @@index([userId])
 }
 
 model MentorAssignment {
@@ -247,6 +356,7 @@ model MentorAssignment {
   createdAt DateTime @default(now())
 
   @@unique([projectId, mentorId])
+  @@index([mentorId])
 }
 
 model JuryAssignment {
@@ -258,6 +368,7 @@ model JuryAssignment {
   createdAt DateTime @default(now())
 
   @@unique([projectId, juryId])
+  @@index([juryId])
 }
 
 model Task {
@@ -281,6 +392,9 @@ model Task {
   completedAt        DateTime?
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
+
+  @@index([projectId, status, dueDate])
+  @@index([assigneeId, status])
 }
 
 model MentorSession {
@@ -299,6 +413,9 @@ model MentorSession {
   online      Boolean       @default(false)
   createdAt   DateTime      @default(now())
   tasks       Task[]
+
+  @@index([projectId, scheduledAt])
+  @@index([mentorId, scheduledAt])
 }
 
 model ChecklistItem {
@@ -317,6 +434,8 @@ model ChecklistItem {
   order        Int               @default(0)
   documents    Document[]
   updatedAt    DateTime          @updatedAt
+
+  @@index([projectId])
 }
 
 model Document {
@@ -334,6 +453,8 @@ model Document {
   uploadedById    String?
   uploadedBy      User?          @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
   createdAt       DateTime       @default(now())
+
+  @@index([projectId, checklistItemId])
 }
 
 model Risk {
@@ -351,6 +472,8 @@ model Risk {
   reviewDate  DateTime?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+
+  @@index([projectId, status])
 }
 
 model Rubric {
@@ -412,7 +535,7 @@ model AuditLog {
   entity    String // "Task", "Project", ...
   entityId  String
   projectId String?
-  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull) // keep the trail when a project is deleted
   summary   String? // short human readable detail (e.g. task title)
   meta      Json?
   createdAt DateTime @default(now())
@@ -432,4 +555,237 @@ model Notification {
   createdAt DateTime @default(now())
 
   @@index([userId, read])
+  @@index([userId, createdAt])
+}
+
+// ---------- Academy models (merged from the ADNSU TEKNOFEST 2027 Academy panel) ----------
+
+model Faculty {
+  id             String          @id @default(cuid())
+  universityId   String
+  university     University      @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  name           String
+  coordinator    String? // faculty coordinator name / contact (no login in MVP)
+  status         RegistryStatus  @default(ACTIVE)
+  notes          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  labs           Lab[]
+  students       Student[]
+  teams          Team[]
+  projects       Project[]
+  users          User[]
+  intakeRequests IntakeRequest[]
+  intakeMembers  IntakeMember[]
+
+  @@unique([universityId, name])
+}
+
+model Lab {
+  id               String            @id @default(cuid())
+  universityId     String
+  university       University        @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  facultyId        String?
+  faculty          Faculty?          @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  name             String
+  contact          String?
+  status           LabStatus         @default(AVAILABLE)
+  notes            String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  projects         Project[]
+  trainings        Training[]
+  resourceRequests ResourceRequest[]
+}
+
+model Partner {
+  id               String            @id @default(cuid())
+  name             String
+  sector           String?
+  contact          String?
+  status           PartnerStatus     @default(CANDIDATE)
+  notes            String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  projects         Project[]
+  resourceRequests ResourceRequest[]
+}
+
+/// Student registry (no login). One student belongs to at most one team (single FK).
+model Student {
+  id           String        @id @default(cuid())
+  universityId String
+  university   University    @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  facultyId    String?
+  faculty      Faculty?      @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  name         String
+  email        String        @unique // stored lower-case
+  status       StudentStatus @default(SEEKING_TEAM)
+  skills       String? // free text: "Embedded, CAD"
+  notes        String?
+  teamId       String?
+  team         Team?         @relation("TeamMembers", fields: [teamId], references: [id], onDelete: SetNull)
+  captainOf    Team?         @relation("TeamCaptain")
+  userId       String?       @unique // linked TEAM account once the team's project workspace exists
+  user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([teamId])
+}
+
+/// Academy team formed before applying. Becomes an Application (then a Project) through the normal selection flow.
+model Team {
+  id            String         @id @default(cuid())
+  universityId  String
+  university    University     @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  facultyId     String?
+  faculty       Faculty?       @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  name          String
+  status        TeamStatus     @default(FORMING)
+  mentorId      String?
+  mentor        User?          @relation("TeamMentor", fields: [mentorId], references: [id], onDelete: SetNull)
+  competitionId String?
+  competition   Competition?   @relation(fields: [competitionId], references: [id], onDelete: SetNull)
+  captainId     String?        @unique
+  captain       Student?       @relation("TeamCaptain", fields: [captainId], references: [id], onDelete: SetNull)
+  members       Student[]      @relation("TeamMembers")
+  applications  Application[]
+  intakeRequest IntakeRequest? // public preparation request this team was accepted from
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Training {
+  id          String         @id @default(cuid())
+  title       String
+  startsAt    DateTime
+  durationMin Int            @default(90)
+  status      TrainingStatus @default(PLANNED)
+  mentorId    String?
+  mentor      User?          @relation("TrainingMentor", fields: [mentorId], references: [id], onDelete: SetNull)
+  labId       String?
+  lab         Lab?           @relation(fields: [labId], references: [id], onDelete: SetNull)
+  notes       String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([startsAt])
+}
+
+/// Material / equipment / lab-time request of a project. Approval is a human decision with a mandatory note.
+model ResourceRequest {
+  id            String         @id @default(cuid())
+  projectId     String
+  project       Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title         String
+  details       String?
+  labId         String?
+  lab           Lab?           @relation(fields: [labId], references: [id], onDelete: SetNull)
+  partnerId     String?
+  partner       Partner?       @relation(fields: [partnerId], references: [id], onDelete: SetNull)
+  neededBy      DateTime?
+  status        ResourceStatus @default(NEW)
+  requestedById String?
+  requestedBy   User?          @relation("ResourceRequester", fields: [requestedById], references: [id], onDelete: SetNull)
+  decidedById   String?
+  decidedBy     User?          @relation("ResourceDecider", fields: [decidedById], references: [id], onDelete: SetNull)
+  decisionNote  String?
+  decidedAt     DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([projectId, status])
+}
+
+model Announcement {
+  id          String             @id @default(cuid())
+  title       String
+  body        String
+  status      AnnouncementStatus @default(DRAFT)
+  audience    Role[] // roles that see it (at least one)
+  authorId    String?
+  author      User?              @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  publishedAt DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@index([status, publishedAt])
+}
+
+// ---------- Public "preparation request" intake (students apply to the Academy without an account) ----------
+
+/// Submitted through the public /apply form. Nothing is written to the Student/Team registry until a coordinator accepts it.
+model IntakeRequest {
+  id            String         @id @default(cuid())
+  code          String         @unique // HZ-0001
+  tokenHash     String         @unique // sha256 (hex) of the secret tracking token; the raw token is only in the student's link
+  status        IntakeStatus   @default(SUBMITTED)
+  teamName      String
+  universityId  String
+  university    University     @relation(fields: [universityId], references: [id])
+  facultyId     String?
+  faculty       Faculty?       @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  competitionId String // TEKNOFEST catalog card
+  competition   Competition    @relation(fields: [competitionId], references: [id])
+  subcategory   String? // one of competition.subcategories
+  projectIdea   String
+  needs         String[] // INTAKE_NEEDS keys (src/components/intake/shared.ts)
+  needsNote     String?
+  consentAt     DateTime
+  reviewerId    String?
+  reviewer      User?          @relation("IntakeReviewer", fields: [reviewerId], references: [id], onDelete: SetNull)
+  reviewNote    String? // latest coordinator note (full history in IntakeEvent)
+  reviewedAt    DateTime?
+  teamId        String?        @unique
+  team          Team?          @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  submittedAt   DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  members       IntakeMember[]
+  events        IntakeEvent[]
+
+  @@index([status, submittedAt])
+}
+
+model IntakeMember {
+  id        String        @id @default(cuid())
+  requestId String
+  request   IntakeRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  name      String
+  email     String // lower-case
+  facultyId String?
+  faculty   Faculty?      @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  role      String?
+  isCaptain Boolean       @default(false)
+  order     Int           @default(0)
+
+  @@index([email])
+}
+
+/// Status history of an intake request (shown to the students on their tracking page and to coordinators).
+model IntakeEvent {
+  id        String        @id @default(cuid())
+  requestId String
+  request   IntakeRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  from      IntakeStatus?
+  to        IntakeStatus
+  note      String?
+  actorId   String?
+  actor     User?         @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  source    String // "public" | "admin"
+  at        DateTime      @default(now())
+
+  @@index([requestId, at])
+}
+
+/// Database-backed rate limiting (login attempts, public intake). Old rows are pruned on write.
+model RateEvent {
+  id        String   @id @default(cuid())
+  bucket    String // "login" | "intake" | "intake-lookup" | "intake-global"
+  key       String // e.g. lower-case e-mail + IP, or "*" for a global bucket
+  createdAt DateTime @default(now())
+
+  @@index([bucket, key, createdAt])
+  @@index([createdAt])
 }

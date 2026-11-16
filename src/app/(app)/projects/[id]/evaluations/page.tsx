@@ -14,7 +14,7 @@ import { AggregatePanel } from "@/components/jury/aggregate-panel";
 import { FeedbackView } from "@/components/jury/feedback-view";
 import { ViewTabs } from "@/components/jury/view-tabs";
 import { getProjectAggregate, getRubric, parseKind } from "@/components/jury/data";
-import { daysUntil } from "@/components/jury/dates";
+import { bakuDaysUntil } from "@/lib/dates";
 
 export async function generateMetadata() {
   const t = await getTranslations("nav.projectTabs");
@@ -38,7 +38,7 @@ export default async function EvaluationsPage(props: PageProps<"/projects/[id]/e
   ]);
   const basePath = `/projects/${id}/evaluations`;
   const date = kind === "FINAL" ? PROGRAM.mockFinal : PROGRAM.midtermJury;
-  const days = daysUntil(date);
+  const days = bakuDaysUntil(date);
 
   const header = (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">

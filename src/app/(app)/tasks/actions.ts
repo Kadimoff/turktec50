@@ -1,19 +1,20 @@
 "use server";
-import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { requireUser, type CurrentUser } from "@/lib/auth";
 import { assertProjectAccess } from "@/lib/rbac";
 import { logAudit, notify } from "@/lib/audit";
-import { TASK_STATUSES, PRIORITIES, type ActionState } from "@/components/tasks/types";
-import type { TaskStatus } from "@/generated/prisma/enums";
+import { done, fail, zodErrors, type ActionState } from "@/lib/actions";
+import { parseBakuDate } from "@/lib/dates";
+import { revalidateProject, revalidateSets } from "@/lib/revalidate";
+import { TASK_STATUSES, PRIORITIES } from "@/components/tasks/types";
 
 const WORK_ROLES = ["ADMIN", "TEAM", "MENTOR"] as const;
 
+/** Pages that show tasks: lists, calendar deadlines, dashboards/KPIs, project overview, sessions (converted steps). */
 function revalidateTasks(projectId: string) {
-  revalidatePath("/tasks");
-  revalidatePath(`/projects/${projectId}`, "layout");
-  revalidatePath("/dashboard");
+  revalidateSets("tasks", "calendar", "dashboard", "projects", "mentors");
+  revalidateProject(projectId, "tasks", "sessions", "activity");
 }
 
 const optionalText = (max: number) =>
@@ -43,20 +44,13 @@ const taskSchema = z.object({
   description: optionalText(2000),
 });
 
-function fieldErrors(error: z.ZodError): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const issue of error.issues) {
-    const k = String(issue.path[0] ?? "form");
-    if (!out[k]) out[k] = issue.message.startsWith("errors.") ? issue.message : "errors.invalid";
-  }
-  return out;
-}
+const idSchema = z.string().min(1).max(64);
+const statusSchema = z.object({ id: idSchema, status: z.enum(TASK_STATUSES) });
 
-/** Due date is stored at 18:00 Baku time of the chosen day (consistent with seeded data). */
-function parseDue(d: string) {
-  const date = new Date(`${d}T18:00:00+04:00`);
-  return Number.isNaN(date.getTime()) ? null : date;
-}
+/** Due date is stored at 18:00 Baku time of the chosen day (consistent with seeded data and converted session steps). */
+const parseDue = (ymd: string) => parseBakuDate(ymd, "18:00");
+
+const invalid = (error: z.ZodError) => fail("errors.invalid", zodErrors(error.issues));
 
 async function assertAssignee(projectId: string, assigneeId: string | null) {
   if (!assigneeId) return true;
@@ -76,12 +70,12 @@ async function canWorkOn(user: CurrentUser, projectId: string) {
 export async function createTask(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const user = await requireUser([...WORK_ROLES]);
   const parsed = taskSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { ok: false, error: "errors.invalid", fieldErrors: fieldErrors(parsed.error) };
+  if (!parsed.success) return invalid(parsed.error);
   const d = parsed.data;
-  if (!(await canWorkOn(user, d.projectId))) return { ok: false, error: "errors.forbidden" };
-  if (!(await assertAssignee(d.projectId, d.assigneeId))) return { ok: false, fieldErrors: { assigneeId: "errors.assigneeNotMember" } };
+  if (!(await canWorkOn(user, d.projectId))) return fail("errors.forbidden");
+  if (!(await assertAssignee(d.projectId, d.assigneeId))) return fail("errors.assigneeNotMember", { assigneeId: "errors.assigneeNotMember" });
   const due = parseDue(d.dueDate);
-  if (!due) return { ok: false, fieldErrors: { dueDate: "errors.dateInvalid" } };
+  if (!due) return fail("errors.dateInvalid", { dueDate: "errors.dateInvalid" });
 
   const task = await prisma.task.create({
     data: {
@@ -102,26 +96,27 @@ export async function createTask(_prev: ActionState, formData: FormData): Promis
     await notify([d.assigneeId], "task_assigned", { title: task.title }, `/projects/${d.projectId}/tasks`);
   }
   revalidateTasks(d.projectId);
-  return { ok: true };
+  return done("toast.created");
 }
 
 export async function updateTask(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const user = await requireUser([...WORK_ROLES]);
-  const id = String(formData.get("id") ?? "");
-  const existing = await prisma.task.findUnique({ where: { id }, select: { id: true, projectId: true, assigneeId: true } });
-  if (!existing) return { ok: false, error: "errors.notFound" };
+  const id = idSchema.safeParse(formData.get("id"));
+  if (!id.success) return fail("errors.notFound");
+  const existing = await prisma.task.findUnique({ where: { id: id.data }, select: { id: true, projectId: true, assigneeId: true } });
+  if (!existing) return fail("errors.notFound");
   // the project of an existing task cannot be changed
   formData.set("projectId", existing.projectId);
   const parsed = taskSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { ok: false, error: "errors.invalid", fieldErrors: fieldErrors(parsed.error) };
+  if (!parsed.success) return invalid(parsed.error);
   const d = parsed.data;
-  if (!(await canWorkOn(user, existing.projectId))) return { ok: false, error: "errors.forbidden" };
-  if (!(await assertAssignee(existing.projectId, d.assigneeId))) return { ok: false, fieldErrors: { assigneeId: "errors.assigneeNotMember" } };
+  if (!(await canWorkOn(user, existing.projectId))) return fail("errors.forbidden");
+  if (!(await assertAssignee(existing.projectId, d.assigneeId))) return fail("errors.assigneeNotMember", { assigneeId: "errors.assigneeNotMember" });
   const due = parseDue(d.dueDate);
-  if (!due) return { ok: false, fieldErrors: { dueDate: "errors.dateInvalid" } };
+  if (!due) return fail("errors.dateInvalid", { dueDate: "errors.dateInvalid" });
 
   const task = await prisma.task.update({
-    where: { id },
+    where: { id: existing.id },
     data: {
       title: d.title,
       acceptanceCriteria: d.acceptanceCriteria,
@@ -138,18 +133,20 @@ export async function updateTask(_prev: ActionState, formData: FormData): Promis
     await notify([d.assigneeId], "task_assigned", { title: task.title }, `/projects/${existing.projectId}/tasks`);
   }
   revalidateTasks(existing.projectId);
-  return { ok: true };
+  return done("toast.updated");
 }
 
-export async function setTaskStatus(id: string, status: TaskStatus): Promise<ActionState> {
+export async function setTaskStatus(rawId: unknown, rawStatus: unknown): Promise<ActionState> {
   const user = await requireUser([...WORK_ROLES]);
-  if (!(TASK_STATUSES as readonly string[]).includes(status)) return { ok: false, error: "errors.invalid" };
+  const parsed = statusSchema.safeParse({ id: rawId, status: rawStatus });
+  if (!parsed.success) return fail("errors.invalid");
+  const { id, status } = parsed.data;
   const task = await prisma.task.findUnique({ where: { id }, select: { id: true, title: true, status: true, projectId: true, createdById: true } });
-  if (!task) return { ok: false, error: "errors.notFound" };
-  if (!(await canWorkOn(user, task.projectId))) return { ok: false, error: "errors.forbidden" };
+  if (!task) return fail("errors.notFound");
+  if (!(await canWorkOn(user, task.projectId))) return fail("errors.forbidden");
   // Completing a task is the team's act; mentors record feedback in sessions instead.
-  if (status === "DONE" && user.role === "MENTOR") return { ok: false, error: "errors.mentorNoDone" };
-  if (task.status === status) return { ok: true };
+  if (status === "DONE" && user.role === "MENTOR") return fail("errors.mentorNoDone");
+  if (task.status === status) return done("status.changed");
 
   await prisma.task.update({
     where: { id },
@@ -168,17 +165,20 @@ export async function setTaskStatus(id: string, status: TaskStatus): Promise<Act
     await notify([task.createdById], "task_done", { title: task.title }, `/projects/${task.projectId}/tasks`);
   }
   revalidateTasks(task.projectId);
-  return { ok: true };
+  return done("status.changed");
 }
 
-export async function deleteTask(id: string): Promise<ActionState> {
+export async function deleteTask(rawId: unknown): Promise<ActionState> {
   const user = await requireUser([...WORK_ROLES]);
+  const parsed = idSchema.safeParse(rawId);
+  if (!parsed.success) return fail("errors.invalid");
+  const id = parsed.data;
   const task = await prisma.task.findUnique({ where: { id }, select: { id: true, title: true, projectId: true, createdById: true } });
-  if (!task) return { ok: false, error: "errors.notFound" };
-  if (!(await canWorkOn(user, task.projectId))) return { ok: false, error: "errors.forbidden" };
-  if (user.role !== "ADMIN" && task.createdById !== user.id) return { ok: false, error: "errors.deleteForbidden" };
+  if (!task) return fail("errors.notFound");
+  if (!(await canWorkOn(user, task.projectId))) return fail("errors.forbidden");
+  if (user.role !== "ADMIN" && task.createdById !== user.id) return fail("errors.deleteForbidden");
   await prisma.task.delete({ where: { id } });
   await logAudit({ actorId: user.id, action: "task.delete", entity: "Task", entityId: id, projectId: task.projectId, summary: task.title });
   revalidateTasks(task.projectId);
-  return { ok: true };
+  return done("toast.deleted");
 }

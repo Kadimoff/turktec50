@@ -1,5 +1,8 @@
 import { format, formatDistanceToNow, type Locale as DfLocale } from "date-fns";
 import { az, tr, enGB } from "date-fns/locale";
+import { toBakuWallClock } from "@/lib/dates";
+
+// All calendar formatting is in Baku time (see src/lib/dates.ts), independent of the server time zone.
 
 const map: Record<string, DfLocale> = { az, tr, en: enGB };
 
@@ -10,18 +13,29 @@ export function dfLocale(locale: string): DfLocale {
 /** 20 okt 2026 */
 export function fmtDate(d: Date | string | null | undefined, locale: string) {
   if (!d) return "—";
-  return format(new Date(d), "d MMM yyyy", { locale: dfLocale(locale) });
+  return format(toBakuWallClock(d), "d MMM yyyy", { locale: dfLocale(locale) });
 }
 
 /** 20 okt */
 export function fmtDay(d: Date | string, locale: string) {
-  return format(new Date(d), "d MMM", { locale: dfLocale(locale) });
+  return format(toBakuWallClock(d), "d MMM", { locale: dfLocale(locale) });
 }
 
 /** 20 okt 2026, 10:30 */
 export function fmtDateTime(d: Date | string | null | undefined, locale: string) {
   if (!d) return "—";
-  return format(new Date(d), "d MMM yyyy, HH:mm", { locale: dfLocale(locale) });
+  return format(toBakuWallClock(d), "d MMM yyyy, HH:mm", { locale: dfLocale(locale) });
+}
+
+/** 10:30 (Baku) */
+export function fmtTime(d: Date | string | null | undefined) {
+  if (!d) return "—";
+  return format(toBakuWallClock(d), "HH:mm");
+}
+
+/** Format any date-fns pattern in Baku time (weekday names, custom layouts). */
+export function fmtBaku(d: Date | string, pattern: string, locale: string) {
+  return format(toBakuWallClock(d), pattern, { locale: dfLocale(locale) });
 }
 
 export function fmtRelative(d: Date | string, locale: string) {

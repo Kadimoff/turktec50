@@ -3,7 +3,8 @@
     "workspace": "Workspace",
     "evaluation": "Evaluation",
     "program": "Program",
-    "admin": "Administration"
+    "admin": "Administration",
+    "academy": "Academy"
   },
   "dashboard": "Overview",
   "myProject": "My project",
@@ -25,8 +26,19 @@
     "documents": "Document checklist",
     "risks": "Risks",
     "evaluations": "Evaluation",
-    "activity": "Activity"
+    "activity": "Activity",
+    "resources": "Resource requests"
   },
   "toggleSidebar": "Toggle menu",
-  "system": "System (root)"
+  "system": "System (root)",
+  "academy": "Academy overview",
+  "catalog": "Competition catalog",
+  "students": "Students",
+  "teams": "Teams",
+  "registry": "Faculties, labs, partners",
+  "trainings": "Trainings",
+  "announcements": "Announcements",
+  "myAcademyTeams": "My academy teams",
+  "intake": "Preparation requests",
+  "applyPrep": "Preparation request"
 }

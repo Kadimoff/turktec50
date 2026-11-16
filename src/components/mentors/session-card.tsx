@@ -21,6 +21,7 @@ import { sessionTone, taskStatusTone } from "@/lib/tones";
 import { cn } from "@/lib/utils";
 import { cancelSession, confirmSession, convertStep } from "@/app/(app)/mentors/actions";
 import { AgendaDialog, CompleteSessionDialog, RescheduleDialog } from "./session-dialogs";
+import type { ActionState } from "@/lib/action-state";
 import type { SessionItem, SessionStep } from "./types";
 
 export function SessionStatusBadge({ session }: { session: SessionItem }) {
@@ -41,10 +42,10 @@ export function DateTile({ session, className }: { session: SessionItem; classNa
       )}
       aria-hidden
     >
-      <span className="text-[10px] font-semibold text-muted-foreground">{session.weekday}</span>
+      <span className="text-2xs font-semibold text-muted-foreground">{session.weekday}</span>
       <span className="tabular text-lg leading-tight font-bold">{session.day}</span>
-      <span className="text-[11px] font-medium text-muted-foreground">{session.month}</span>
-      <span className="tabular mt-0.5 border-t px-1 pt-0.5 text-[11px] font-semibold text-primary">{session.time}</span>
+      <span className="text-2xs font-medium text-muted-foreground">{session.month}</span>
+      <span className="tabular mt-0.5 border-t px-1 pt-0.5 text-2xs font-semibold text-primary">{session.time}</span>
     </div>
   );
 }
@@ -62,7 +63,7 @@ function Meta({ session, showProject, showMentor }: { session: SessionItem; show
       )}
       {showMentor && (
         <span className="inline-flex items-center gap-1.5">
-          <UserAvatar name={session.mentor.name} size="sm" className="size-5 text-[9px]" />
+          <UserAvatar name={session.mentor.name} size="sm" className="size-5 text-2xs" />
           <span aria-hidden>{session.mentor.name}</span>
         </span>
       )}
@@ -91,13 +92,13 @@ export function SessionActions({ session, compact }: { session: SessionItem; com
   const { can } = session;
   if (!can.confirm && !can.reschedule && !can.cancel && !can.complete && !can.editAgenda) return null;
 
-  const run = (fn: () => Promise<{ ok: boolean; error?: string }>, ok: string) =>
+  const run = (fn: () => Promise<ActionState>, ok: string) =>
     start(async () => {
       const r = await fn();
       if (r.ok) {
         toast.success(ok);
         setDialog(null);
-      } else toast.error(t(r.error ?? "errors.generic"));
+      } else toast.error(t(r.message ?? "errors.generic"));
     });
 
   const primary = can.complete ? "complete" : can.confirm ? "confirm" : !compact && can.editAgenda && !session.agenda ? "agenda" : null;
@@ -131,7 +132,7 @@ export function SessionActions({ session, compact }: { session: SessionItem; com
       {menuItems.length > 0 && (
         <DropdownMenu>
           <DropdownMenuTrigger
-            render={<Button variant="ghost" size="icon-sm" className="size-8 text-muted-foreground" aria-label={t("actions.more", { topic: session.topic })} disabled={pending} />}
+            render={<Button variant="ghost" size="icon" className="text-muted-foreground" aria-label={t("actions.more", { topic: session.topic })} disabled={pending} />}
           >
             {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <MoreHorizontal className="size-4" aria-hidden />}
           </DropdownMenuTrigger>
@@ -199,13 +200,13 @@ function StepRow({ session, step }: { session: SessionItem; step: SessionStep })
     start(async () => {
       const r = await convertStep(session.id, step.index);
       if (r.ok) toast.success(t("toast.converted"));
-      else toast.error(t(r.error ?? "errors.generic"));
+      else toast.error(t(r.message ?? "errors.generic"));
     });
   const taskHref = `/projects/${session.projectId}/tasks?view=table&q=${encodeURIComponent(step.text.slice(0, 60))}`;
   return (
     <li className="flex flex-col gap-2 rounded-lg border bg-background px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
       <p className="flex min-w-0 items-start gap-2 text-sm">
-        <span aria-hidden className="tabular mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-accent text-[10px] font-semibold text-accent-foreground">
+        <span aria-hidden className="tabular mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-accent text-2xs font-semibold text-accent-foreground">
           {step.index + 1}
         </span>
         <span className="text-pretty">{step.text}</span>
@@ -223,7 +224,7 @@ function StepRow({ session, step }: { session: SessionItem; step: SessionStep })
           <span className="sr-only">— {t("session.viewTask")}</span>
         </Link>
       ) : session.can.convert ? (
-        <Button size="sm" variant="outline" className="h-8 shrink-0 self-start sm:self-auto" disabled={pending} aria-busy={pending} onClick={convert}>
+        <Button variant="outline" className="shrink-0 self-start sm:self-auto" disabled={pending} aria-busy={pending} onClick={convert}>
           {pending ? <Loader2 className="animate-spin" aria-hidden /> : <ListPlus aria-hidden />}
           {pending ? t("session.converting") : t("session.convert")}
           <span className="sr-only">: {step.text}</span>
@@ -261,7 +262,7 @@ export function SessionCard({
         <DateTile session={session} />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-start justify-between gap-2">
-            <h3 id={`session-${session.id}-title`} className={cn("text-sm font-semibold text-pretty sm:text-[15px]", session.status === "CANCELLED" && "text-muted-foreground line-through")}>
+            <h3 id={`session-${session.id}-title`} className={cn("text-sm font-semibold text-pretty sm:text-base", session.status === "CANCELLED" && "text-muted-foreground line-through")}>
               {session.topic}
             </h3>
             <SessionStatusBadge session={session} />
@@ -276,7 +277,7 @@ export function SessionCard({
             {session.agenda ? (
               <p className="whitespace-pre-line text-muted-foreground">{session.agenda}</p>
             ) : (
-              <p className="text-muted-foreground italic">{t("session.noAgenda")}</p>
+              <p className="text-muted-foreground">{t("session.noAgenda")}</p>
             )}
           </Block>
           {done && defaultExpanded && (
@@ -300,7 +301,7 @@ export function SessionCard({
               ))}
             </ul>
           ) : (
-            <p className="text-xs text-muted-foreground italic">{t("session.noSteps")}</p>
+            <p className="text-xs text-muted-foreground">{t("session.noSteps")}</p>
           )}
         </div>
       )}

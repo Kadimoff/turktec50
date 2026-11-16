@@ -3,7 +3,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useLocale, useTranslations } from "next-intl";
-import { Bell, Check, Languages, LogOut, Monitor, Moon, Sun } from "lucide-react";
+import { Bell, Check, KeyRound, Languages, LogOut, Monitor, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
@@ -83,7 +83,7 @@ export function NotificationBell({ items, unread }: { items: NotificationView[];
       >
         <Bell className="size-4" aria-hidden />
         {unread > 0 && (
-          <span className="tabular absolute -top-0.5 -right-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-danger px-1 text-[10px] font-bold text-white">
+          <span className="tabular absolute -top-0.5 -right-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-danger px-1 text-2xs font-bold text-white">
             {unread > 9 ? "9+" : unread}
           </span>
         )}
@@ -105,8 +105,8 @@ export function NotificationBell({ items, unread }: { items: NotificationView[];
               <DropdownMenuItem key={n.id} className="items-start gap-2 px-3 py-2" render={n.href ? <Link href={n.href} /> : undefined}>
                 <span aria-hidden className={`mt-1.5 size-2 shrink-0 rounded-full ${n.read ? "bg-transparent" : "bg-primary"}`} />
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] leading-snug whitespace-normal">{n.text}</span>
-                  <span className="mt-0.5 block text-[11px] text-muted-foreground">{n.when}</span>
+                  <span className="block text-label leading-snug whitespace-normal">{n.text}</span>
+                  <span className="mt-0.5 block text-2xs text-muted-foreground">{n.when}</span>
                 </span>
               </DropdownMenuItem>
             ))
@@ -124,8 +124,8 @@ export function UserMenu({ name, email, roleLabel }: { name: string; email: stri
       <DropdownMenuTrigger render={<Button variant="ghost" className="h-9 gap-2 px-1.5 sm:pr-3" aria-label={name} />}>
         <UserAvatarClient name={name} />
         <span className="hidden text-left sm:block">
-          <span className="block max-w-36 truncate text-[13px] font-semibold leading-tight">{name}</span>
-          <span className="block max-w-36 truncate text-[11px] leading-tight text-muted-foreground">{roleLabel}</span>
+          <span className="block max-w-36 truncate text-label font-semibold leading-tight">{name}</span>
+          <span className="block max-w-36 truncate text-2xs leading-tight text-muted-foreground">{roleLabel}</span>
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-60">
@@ -135,6 +135,11 @@ export function UserMenu({ name, email, roleLabel }: { name: string; email: stri
             <span className="block truncate text-sm font-semibold text-foreground">{email}</span>
           </DropdownMenuLabel>
         </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem render={<Link href="/account/password" />}>
+          <KeyRound className="size-4" aria-hidden />
+          {t("changePassword")}
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={() => logout()}>
           <LogOut className="size-4" aria-hidden />

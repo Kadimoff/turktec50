@@ -139,6 +139,32 @@
       "competition": "Yarışma",
       "mentors": "Mentorlar",
       "members": "Ekip üyeleri"
-    }
+    },
+    "academySection": "Akademi akışı — ayrı bölüm (kişi ve ekip ayrı sayılır, geçiş oranı yok)",
+    "unitPeople": "kişi",
+    "unitTeams": "ekip",
+    "unitApplications": "başvuru",
+    "unitCompetitions": "yarışma"
+  },
+  "academy": {
+    "title": "Akademi akışı",
+    "subtitle": "Öğrenci kaydından ekip başvurusuna kadar. Program hunisinden ayrıdır: kişi ve ekip farklı birimlerdir, aralarında geçiş oranı hesaplanmaz.",
+    "link": "Akademi genel bakış",
+    "note": "Bu göstergeler ADNSU TEKNOFEST 2027 Akademisi kayıtlarından hesaplanır ve B ekindeki hedeflere dahil değildir.",
+    "groups": {
+      "people": "Öğrenciler (kişi)",
+      "teams": "Ekipler ve başvurular",
+      "competitions": "Yarışmalar"
+    },
+    "studentsRegistered": "Kayıtlı öğrenciler",
+    "studentsRegisteredHint": "Arşivdekiler dahil değil",
+    "studentsInTeams": "Ekipteki öğrenciler",
+    "studentsInTeamsHint": "Kayıtlıların %{pct}'i",
+    "teamsFormed": "Oluşturulan ekipler",
+    "teamsFormedHint": "{active} aktif · {forming} oluşuyor",
+    "applicationsFromTeams": "Ekiplerden başvurular",
+    "applicationsFromTeamsHint": "Akademi ekibinden oluşturulan başvurular",
+    "trackedCompetitions": "Takip edilen yarışmalar",
+    "trackedCompetitionsHint": "2027 kuralları: {confirmed} onaylandı · {changed} değişti"
   }
 }

@@ -1,9 +1,9 @@
 // Small server-safe building blocks shared by dashboard / kpi / calendar views.
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { differenceInCalendarDays, format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { dfLocale, fmtDate, fmtDay } from "@/lib/format";
+import { fmtBaku, fmtDate, fmtDay } from "@/lib/format";
+import { bakuDaysUntil } from "@/lib/dates";
 import type { Tone } from "@/lib/tones";
 
 export function Panel({
@@ -54,9 +54,9 @@ export function PanelLink({ href, children }: { href: string; children: React.Re
 
 type Tr = (key: string, values?: Record<string, string | number>) => string;
 
-/** Relative + absolute date label: "2 gün qalıb · 20 okt" / "Gecikib · 18 okt". */
+/** Relative + absolute date label: "2 gün qalıb · 20 okt" / "Gecikib · 18 okt" (Baku calendar days). */
 export function dueLabel(d: Date, tc: Tr, locale: string, now = new Date()): { text: string; tone: Tone; overdue: boolean } {
-  const diff = differenceInCalendarDays(d, now);
+  const diff = bakuDaysUntil(d, now);
   const day = fmtDay(d, locale);
   if (d < now) return { text: `${tc("overdue")} · ${day}`, tone: "danger", overdue: true };
   if (diff === 0) return { text: `${tc("today")} · ${day}`, tone: "warning", overdue: false };
@@ -96,10 +96,10 @@ export function MiniEmpty({ children }: { children: React.ReactNode }) {
 }
 
 export function ProjectCode({ children }: { children: React.ReactNode }) {
-  return <span className="tabular rounded bg-muted px-1.5 py-px font-mono text-[11px] font-medium text-muted-foreground">{children}</span>;
+  return <span className="tabular rounded bg-muted px-1.5 py-px font-mono text-2xs font-medium text-muted-foreground">{children}</span>;
 }
 
-/** Calendar-style day chip (weekday + day number) with an sr-only full date. */
+/** Calendar-style day chip (weekday + day number, Baku) with an sr-only full date. */
 export function DayChip({ date, locale, highlight, className }: { date: Date; locale: string; highlight?: boolean; className?: string }) {
   return (
     <span
@@ -109,8 +109,8 @@ export function DayChip({ date, locale, highlight, className }: { date: Date; lo
         className,
       )}
     >
-      <span aria-hidden className="text-[10px] font-semibold text-muted-foreground">{format(date, "EEEEEE", { locale: dfLocale(locale) })}</span>
-      <span aria-hidden className="tabular mt-0.5 text-base font-bold">{format(date, "d")}</span>
+      <span aria-hidden className="text-2xs font-semibold text-muted-foreground">{fmtBaku(date, "EEEEEE", locale)}</span>
+      <span aria-hidden className="tabular mt-0.5 text-base font-bold">{fmtBaku(date, "d", locale)}</span>
       <span className="sr-only">{fmtDate(date, locale)}</span>
     </span>
   );

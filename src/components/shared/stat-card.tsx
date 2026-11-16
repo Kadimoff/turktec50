@@ -27,14 +27,14 @@ export function StatCard({
   return (
     <div className={cn("rounded-xl border bg-card p-4 shadow-card", className)}>
       <div className="flex items-start justify-between gap-3">
-        <p className="text-[13px] font-medium text-muted-foreground">{label}</p>
+        <p className="text-label font-medium text-muted-foreground">{label}</p>
         {Icon && (
           <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg", toneClasses[tone])} aria-hidden>
             <Icon className="size-4" />
           </span>
         )}
       </div>
-      <p className="tabular mt-1 text-[1.75rem] font-bold leading-tight tracking-tight">{value}</p>
+      <p className="tabular mt-1 text-3xl leading-tight font-semibold tracking-tight">{value}</p>
       {pct !== null && (
         <div
           className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted"

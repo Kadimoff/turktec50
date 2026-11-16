@@ -33,14 +33,14 @@ export function TaskRowActions({ task }: { task: TaskItem }) {
       if (r.ok) {
         toast.success(t("toast.deleted"));
         setDeleteOpen(false);
-      } else toast.error(t(r.error ?? "errors.generic"));
+      } else toast.error(t(r.message ?? "errors.generic"));
     });
 
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger
-          render={<Button variant="ghost" size="icon-sm" aria-label={t("actions.more", { title: task.title })} className="size-8 text-muted-foreground" />}
+          render={<Button variant="ghost" size="icon" aria-label={t("actions.more", { title: task.title })} className="text-muted-foreground" />}
         >
           <MoreHorizontal className="size-4" aria-hidden />
         </DropdownMenuTrigger>

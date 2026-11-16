@@ -1,9 +1,10 @@
 "use client";
-import { useActionState, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Loader2, Lock, MoreHorizontal, Pencil, Power, PowerOff, Trash2, UserPlus } from "lucide-react";
+import { KeyRound, Loader2, Lock, MoreHorizontal, Pencil, Power, PowerOff, Trash2, UserPlus } from "lucide-react";
 import { DeleteUserForm } from "@/components/admin/system-forms";
+import { TempPasswordBox } from "@/components/account/temp-password";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -12,100 +13,102 @@ import {
   AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Field, NativeSelect } from "@/components/shared/form";
-import { createUser, setUserActive, updateUser, type UserFormState } from "@/app/(app)/admin/users/actions";
+import { Field, NativeSelect, SubmitButton } from "@/components/shared/form";
+import { useFormAction } from "@/components/shared/use-form-action";
+import { createUser, resetUserPassword, setUserActive, updateUser, type UserActionState } from "@/app/(app)/admin/users/actions";
 
 const ROLES = ["ADMIN", "TEAM", "MENTOR", "JURY"] as const;
 type Uni = { id: string; shortName: string; name: string };
+type Issued = { email: string; password: string };
 
-/** Submit via onSubmit + transition so React does not auto-reset the form when validation fails. */
-function useSubmitWith(dispatch: (fd: FormData) => void) {
-  const [, startSubmit] = useTransition();
-  return (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    startSubmit(() => dispatch(fd));
-  };
-}
-
-function PendingButton({ pending, children, pendingLabel }: { pending: boolean; children: React.ReactNode; pendingLabel: string }) {
-  return (
-    <Button type="submit" disabled={pending} aria-busy={pending}>
-      {pending && <Loader2 className="size-4 animate-spin" aria-hidden />}
-      {pending ? pendingLabel : children}
-    </Button>
-  );
-}
-
-function useFieldError(state: UserFormState) {
-  const t = useTranslations("admin.users.errors");
-  return (k: string) => {
-    if (!state || state.ok || !state.fields) return undefined;
-    const code = state.fields[k as keyof typeof state.fields];
-    return code ? t(code as never) : undefined;
-  };
-}
+const DIALOG = "max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-lg";
 
 export function CreateUserDialog({ universities, canCreateAdmin }: { universities: Uni[]; canCreateAdmin: boolean }) {
   const t = useTranslations("admin.users");
   const tc = useTranslations("common");
   const te = useTranslations("enums");
   const [open, setOpen] = useState(false);
-  const [state, action, isPending] = useActionState(async (prev: UserFormState, fd: FormData) => {
-    const res = await createUser(prev, fd);
-    if (res?.ok) {
+  const [issued, setIssued] = useState<Issued | null>(null);
+  const { pending, onSubmit, error } = useFormAction<UserActionState>(createUser, {
+    onDone: (s) => {
       toast.success(t("toastCreated"));
-      setOpen(false);
-    } else if (res?.error) {
-      toast.error(t(`errors.${res.error}`));
-    }
-    return res;
-  }, undefined);
-  const err = useFieldError(state);
-  const onSubmit = useSubmitWith(action);
+      if (s.tempPassword && s.email) setIssued({ email: s.email, password: s.tempPassword });
+      else setOpen(false);
+    },
+    onFail: (s) => {
+      if (s.message && !s.errors) toast.error(t(s.message as never));
+    },
+  });
+  const err = (k: string) => (error(k) ? t(error(k) as never) : undefined);
+  const aria = (id: string, k: string, hint?: boolean) => ({
+    "aria-invalid": !!err(k),
+    "aria-describedby": err(k) ? `${id}-error` : hint ? `${id}-hint` : undefined,
+  });
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button size="lg" className="h-10" />}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o);
+        if (!o) setIssued(null);
+      }}
+    >
+      <DialogTrigger render={<Button size="lg" />}>
         <UserPlus className="size-4" aria-hidden />
         {t("create")}
       </DialogTrigger>
-      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>{t("createTitle")}</DialogTitle>
-          <DialogDescription>{t("createHint")}</DialogDescription>
-        </DialogHeader>
-        <form onSubmit={onSubmit} className="grid gap-4" noValidate>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field className="content-start" label={t("fields.name")} htmlFor="cu-name" required error={err("name")}>
-              <Input id="cu-name" name="name" required autoComplete="off" aria-invalid={!!err("name")} aria-describedby={err("name") ? "cu-name-error" : undefined} />
-            </Field>
-            <Field className="content-start" label={t("fields.email")} htmlFor="cu-email" required error={err("email")}>
-              <Input id="cu-email" name="email" type="email" required autoComplete="off" aria-invalid={!!err("email")} aria-describedby={err("email") ? "cu-email-error" : undefined} />
-            </Field>
-            <Field className="content-start" label={t("fields.role")} htmlFor="cu-role" required error={err("role")}>
-              <NativeSelect id="cu-role" name="role" defaultValue="TEAM" required aria-invalid={!!err("role")} aria-describedby={err("role") ? "cu-role-error" : undefined}>
-                {ROLES.filter((r) => canCreateAdmin || r !== "ADMIN").map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
-              </NativeSelect>
-            </Field>
-            <Field className="content-start" label={t("fields.university")} htmlFor="cu-uni" error={err("universityId")}>
-              <NativeSelect id="cu-uni" name="universityId" defaultValue="" aria-invalid={!!err("universityId")} aria-describedby={err("universityId") ? "cu-uni-error" : undefined}>
-                <option value="">{t("noUniversity")}</option>
-                {universities.map((u) => <option key={u.id} value={u.id}>{u.shortName} — {u.name}</option>)}
-              </NativeSelect>
-            </Field>
-          </div>
-          <Field label={t("fields.title")} htmlFor="cu-title" hint={t("fields.titleHint")} error={err("title")}>
-            <Input id="cu-title" name="title" autoComplete="off" aria-invalid={!!err("title")} aria-describedby={err("title") ? "cu-title-error" : "cu-title-hint"} />
-          </Field>
-          <Field label={t("fields.password")} htmlFor="cu-password" required hint={t("fields.passwordHint")} error={err("password")}>
-            <Input id="cu-password" name="password" defaultValue="Demo2026!" required autoComplete="new-password" aria-invalid={!!err("password")} aria-describedby={err("password") ? "cu-password-error" : "cu-password-hint"} />
-          </Field>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>{tc("actions.cancel")}</Button>
-            <PendingButton pending={isPending} pendingLabel={tc("states.loading")}>{tc("actions.create")}</PendingButton>
-          </DialogFooter>
-        </form>
+      <DialogContent className={DIALOG}>
+        {issued ? (
+          <>
+            <DialogHeader>
+              <DialogTitle>{t("created.title")}</DialogTitle>
+              <DialogDescription>{t("created.body", { email: issued.email })}</DialogDescription>
+            </DialogHeader>
+            <TempPasswordBox password={issued.password} email={issued.email} />
+            <DialogFooter>
+              <Button type="button" size="lg" onClick={() => { setOpen(false); setIssued(null); }}>{t("done")}</Button>
+            </DialogFooter>
+          </>
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle>{t("createTitle")}</DialogTitle>
+              <DialogDescription>{t("createHint")}</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={onSubmit} className="grid gap-4" noValidate>
+              <div className="grid items-start gap-4 sm:grid-cols-2">
+                <Field label={t("fields.name")} htmlFor="cu-name" required error={err("name")}>
+                  <Input id="cu-name" name="name" required autoComplete="off" {...aria("cu-name", "name")} />
+                </Field>
+                <Field label={t("fields.email")} htmlFor="cu-email" required error={err("email")}>
+                  <Input id="cu-email" name="email" type="email" required autoComplete="off" spellCheck={false} {...aria("cu-email", "email")} />
+                </Field>
+                <Field label={t("fields.role")} htmlFor="cu-role" required error={err("role")}>
+                  <NativeSelect id="cu-role" name="role" defaultValue="TEAM" required {...aria("cu-role", "role")}>
+                    {ROLES.filter((r) => canCreateAdmin || r !== "ADMIN").map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
+                  </NativeSelect>
+                </Field>
+                <Field label={t("fields.university")} htmlFor="cu-uni" error={err("universityId")}>
+                  <NativeSelect id="cu-uni" name="universityId" defaultValue="" {...aria("cu-uni", "universityId")}>
+                    <option value="">{t("noUniversity")}</option>
+                    {universities.map((u) => <option key={u.id} value={u.id}>{u.shortName} — {u.name}</option>)}
+                  </NativeSelect>
+                </Field>
+              </div>
+              <Field label={t("fields.title")} htmlFor="cu-title" hint={t("fields.titleHint")} error={err("title")}>
+                <Input id="cu-title" name="title" autoComplete="off" {...aria("cu-title", "title", true)} />
+              </Field>
+              <p className="flex items-start gap-2 rounded-lg border border-dashed px-3 py-2.5 text-xs text-muted-foreground">
+                <KeyRound className="mt-px size-3.5 shrink-0" aria-hidden />
+                <span>{t("fields.passwordNote")}</span>
+              </p>
+              <DialogFooter>
+                <Button type="button" variant="outline" size="lg" onClick={() => setOpen(false)}>{tc("actions.cancel")}</Button>
+                <SubmitButton pending={pending} pendingLabel={tc("states.loading")}>{tc("actions.create")}</SubmitButton>
+              </DialogFooter>
+            </form>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );
@@ -125,44 +128,142 @@ export function LockedRow({ reason }: { reason: "root" | "admin" }) {
   );
 }
 
-export function UserRowActions({ user, universities, isSelf, canGrantAdmin = false, canDelete = false }: { user: RowUser; universities: Uni[]; isSelf: boolean; canGrantAdmin?: boolean; canDelete?: boolean }) {
+function EditUserDialog({ user, universities, isSelf, canGrantAdmin, open, onOpenChange }: {
+  user: RowUser; universities: Uni[]; isSelf: boolean; canGrantAdmin: boolean; open: boolean; onOpenChange: (o: boolean) => void;
+}) {
   const t = useTranslations("admin.users");
   const tc = useTranslations("common");
   const te = useTranslations("enums");
+  const { pending, onSubmit, error } = useFormAction<UserActionState>(updateUser, {
+    onDone: () => {
+      toast.success(tc("states.saved"));
+      onOpenChange(false);
+    },
+    onFail: (s) => {
+      if (s.message && !s.errors) toast.error(t(s.message as never));
+    },
+  });
+  const err = (k: string) => (error(k) ? t(error(k) as never) : undefined);
+  const id = (k: string) => `eu-${k}-${user.id}`;
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className={DIALOG}>
+        <DialogHeader>
+          <DialogTitle>{t("editTitle")}</DialogTitle>
+          <DialogDescription>{user.name} · {user.email}</DialogDescription>
+        </DialogHeader>
+        <form onSubmit={onSubmit} className="grid gap-4" noValidate>
+          <input type="hidden" name="id" value={user.id} />
+          <div className="grid items-start gap-4 sm:grid-cols-2">
+            <Field label={t("fields.role")} htmlFor={id("role")} required error={err("role")} hint={isSelf ? t("selfRoleNote") : undefined}>
+              {isSelf && <input type="hidden" name="role" value={user.role} />}
+              <NativeSelect
+                id={id("role")} name={isSelf ? undefined : "role"} defaultValue={user.role} disabled={isSelf} aria-invalid={!!err("role")}
+                aria-describedby={err("role") ? `${id("role")}-error` : isSelf ? `${id("role")}-hint` : undefined}
+              >
+                {ROLES.filter((r) => canGrantAdmin || r !== "ADMIN" || user.role === "ADMIN").map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
+              </NativeSelect>
+            </Field>
+            <Field label={t("fields.university")} htmlFor={id("uni")} error={err("universityId")}>
+              <NativeSelect
+                id={id("uni")} name="universityId" defaultValue={user.universityId ?? ""} aria-invalid={!!err("universityId")}
+                aria-describedby={err("universityId") ? `${id("uni")}-error` : undefined}
+              >
+                <option value="">{t("noUniversity")}</option>
+                {universities.map((u) => <option key={u.id} value={u.id}>{u.shortName} — {u.name}</option>)}
+              </NativeSelect>
+            </Field>
+          </div>
+          <Field label={t("fields.title")} htmlFor={id("title")} hint={t("fields.titleHint")} error={err("title")}>
+            <Input
+              id={id("title")} name="title" defaultValue={user.title ?? ""} autoComplete="off" aria-invalid={!!err("title")}
+              aria-describedby={err("title") ? `${id("title")}-error` : `${id("title")}-hint`}
+            />
+          </Field>
+          <DialogFooter>
+            <Button type="button" variant="outline" size="lg" onClick={() => onOpenChange(false)}>{tc("actions.cancel")}</Button>
+            <SubmitButton pending={pending} pendingLabel={tc("states.loading")}>{tc("actions.save")}</SubmitButton>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/** Confirm → generate a temporary password → show it once. */
+function ResetPasswordDialog({ user, open, onOpenChange }: { user: RowUser; open: boolean; onOpenChange: (o: boolean) => void }) {
+  const t = useTranslations("admin.users");
+  const tc = useTranslations("common");
+  const [issued, setIssued] = useState<Issued | null>(null);
+  const [pending, start] = useTransition();
+  const close = (o: boolean) => {
+    onOpenChange(o);
+    if (!o) setIssued(null);
+  };
+
+  function generate() {
+    start(async () => {
+      const res = await resetUserPassword({ id: user.id });
+      if (res.ok && res.tempPassword && res.email) {
+        toast.success(t("toastReset"));
+        setIssued({ email: res.email, password: res.tempPassword });
+      } else toast.error(t((res.message ?? "errors.error") as never));
+    });
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => !pending && close(o)}>
+      <DialogContent className={DIALOG}>
+        <DialogHeader>
+          <DialogTitle>{issued ? t("reset.doneTitle", { name: user.name }) : t("reset.title", { name: user.name })}</DialogTitle>
+          <DialogDescription>{issued ? t("reset.doneBody") : t("reset.body")}</DialogDescription>
+        </DialogHeader>
+        {issued && <TempPasswordBox password={issued.password} email={issued.email} />}
+        <DialogFooter>
+          {issued ? (
+            <Button type="button" size="lg" onClick={() => close(false)}>{t("done")}</Button>
+          ) : (
+            <>
+              <Button type="button" variant="outline" size="lg" onClick={() => close(false)} disabled={pending}>{tc("actions.cancel")}</Button>
+              <Button type="button" size="lg" onClick={generate} disabled={pending} aria-busy={pending}>
+                {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <KeyRound aria-hidden />}
+                {pending ? t("reset.pending") : t("reset.confirm")}
+              </Button>
+            </>
+          )}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export function UserRowActions({ user, universities, isSelf, canGrantAdmin = false, canDelete = false }: { user: RowUser; universities: Uni[]; isSelf: boolean; canGrantAdmin?: boolean; canDelete?: boolean }) {
+  const t = useTranslations("admin.users");
+  const tc = useTranslations("common");
+  const ts = useTranslations("admin.system.user");
   const [editOpen, setEditOpen] = useState(false);
+  const [resetOpen, setResetOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const ts = useTranslations("admin.system.user");
   const [pending, start] = useTransition();
-  const [state, action, isPending] = useActionState(async (prev: UserFormState, fd: FormData) => {
-    const res = await updateUser(prev, fd);
-    if (res?.ok) {
-      toast.success(tc("states.saved"));
-      setEditOpen(false);
-    } else if (res?.error) {
-      toast.error(t(`errors.${res.error}`));
-    }
-    return res;
-  }, undefined);
-  const err = useFieldError(state);
-  const onSubmit = useSubmitWith(action);
 
   function toggle() {
     start(async () => {
       const res = await setUserActive({ id: user.id, active: !user.active });
       setConfirmOpen(false);
-      if (res.ok) toast.success(user.active ? t("toastDeactivated") : t("toastActivated"));
-      else toast.error(t(`errors.${res.error ?? "error"}`));
+      if (res.ok) toast.success(t((res.message ?? "toastActivated") as never));
+      else toast.error(t((res.message ?? "errors.error") as never));
     });
   }
 
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger render={<Button variant="ghost" size="icon" aria-label={t("actionsFor", { name: user.name })} />}>
+        <DropdownMenuTrigger render={<Button variant="ghost" size="icon-lg" aria-label={t("actionsFor", { name: user.name })} />}>
           <MoreHorizontal className="size-4" aria-hidden />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-52">
+        <DropdownMenuContent align="end" className="w-60">
           <DropdownMenuGroup>
             <DropdownMenuLabel className="truncate">{user.name}</DropdownMenuLabel>
           </DropdownMenuGroup>
@@ -171,11 +272,13 @@ export function UserRowActions({ user, universities, isSelf, canGrantAdmin = fal
             <Pencil aria-hidden />
             {tc("actions.edit")}
           </DropdownMenuItem>
-          <DropdownMenuItem
-            variant={user.active ? "destructive" : "default"}
-            disabled={isSelf}
-            onClick={() => setConfirmOpen(true)}
-          >
+          {!isSelf && (
+            <DropdownMenuItem onClick={() => setResetOpen(true)}>
+              <KeyRound aria-hidden />
+              {t("resetPassword")}
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuItem variant={user.active ? "destructive" : "default"} disabled={isSelf} onClick={() => setConfirmOpen(true)}>
             {user.active ? <PowerOff aria-hidden /> : <Power aria-hidden />}
             {user.active ? t("deactivate") : t("activate")}
           </DropdownMenuItem>
@@ -194,46 +297,18 @@ export function UserRowActions({ user, universities, isSelf, canGrantAdmin = fal
 
       {canDelete && !isSelf && (
         <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className={DIALOG}>
             <DialogHeader>
               <DialogTitle>{ts("title", { name: user.name })}</DialogTitle>
               <DialogDescription>{ts("body")}</DialogDescription>
             </DialogHeader>
-            <DeleteUserForm userId={user.id} email={user.email} onDone={() => setDeleteOpen(false)} />
+            <DeleteUserForm userId={user.id} email={user.email} onDone={() => setDeleteOpen(false)} onCancel={() => setDeleteOpen(false)} />
           </DialogContent>
         </Dialog>
       )}
 
-      <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{t("editTitle")}</DialogTitle>
-            <DialogDescription>{user.name} · {user.email}</DialogDescription>
-          </DialogHeader>
-          <form onSubmit={onSubmit} className="grid gap-4" noValidate>
-            <input type="hidden" name="id" value={user.id} />
-            <Field label={t("fields.role")} htmlFor={`eu-role-${user.id}`} required error={err("role")} hint={isSelf ? t("selfRoleNote") : undefined}>
-              {isSelf && <input type="hidden" name="role" value={user.role} />}
-              <NativeSelect id={`eu-role-${user.id}`} name={isSelf ? undefined : "role"} defaultValue={user.role} disabled={isSelf} aria-invalid={!!err("role")} aria-describedby={err("role") ? `eu-role-${user.id}-error` : isSelf ? `eu-role-${user.id}-hint` : undefined}>
-                {ROLES.filter((r) => canGrantAdmin || r !== "ADMIN" || user.role === "ADMIN").map((r) => <option key={r} value={r}>{te(`Role.${r}`)}</option>)}
-              </NativeSelect>
-            </Field>
-            <Field label={t("fields.title")} htmlFor={`eu-title-${user.id}`} error={err("title")}>
-              <Input id={`eu-title-${user.id}`} name="title" defaultValue={user.title ?? ""} autoComplete="off" aria-invalid={!!err("title")} aria-describedby={err("title") ? `eu-title-${user.id}-error` : undefined} />
-            </Field>
-            <Field label={t("fields.university")} htmlFor={`eu-uni-${user.id}`} error={err("universityId")}>
-              <NativeSelect id={`eu-uni-${user.id}`} name="universityId" defaultValue={user.universityId ?? ""} aria-invalid={!!err("universityId")} aria-describedby={err("universityId") ? `eu-uni-${user.id}-error` : undefined}>
-                <option value="">{t("noUniversity")}</option>
-                {universities.map((u) => <option key={u.id} value={u.id}>{u.shortName} — {u.name}</option>)}
-              </NativeSelect>
-            </Field>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setEditOpen(false)}>{tc("actions.cancel")}</Button>
-              <PendingButton pending={isPending} pendingLabel={tc("states.loading")}>{tc("actions.save")}</PendingButton>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <EditUserDialog user={user} universities={universities} isSelf={isSelf} canGrantAdmin={canGrantAdmin} open={editOpen} onOpenChange={setEditOpen} />
+      {!isSelf && <ResetPasswordDialog user={user} open={resetOpen} onOpenChange={setResetOpen} />}
 
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent>

@@ -19,6 +19,14 @@ ADNSU/ASOIU Startup ve Teknoloji Transferi Şubesi pilotu · TÜRK FORUM 2026.
 | Riskler | 3×3 olasılık × etki matrisi, program ve proje riskleri |
 | Jüri | Ara jüri ve deneme finali rubrikleri, bilgilendirici ağırlıklı puan, görüş ayrılığı uyarısı |
 | Yönetim | Kullanıcılar, işlem kaydı (audit log), CSV dışa aktarma |
+| Akademi · genel bakış | Hazırlık stratejisi (6 rol, 6 aşama), öğrenci/ekip/başvuru sayıları, yaklaşan resmî tarihler, açık kaynak talepleri |
+| Akademi · yarışma kataloğu | TEKNOFEST 2026 arşivinden 61 resmî yarışma kartı (yön, alt kategori, resmî sayfa), 2027 kural takibi (sorumlu, son kontrol, resmî son tarih, HTTPS şartname bağlantısı; *Onaylandı* için bağlantı zorunlu) |
+| Akademi · öğrenciler ve ekipler | Başvuru öncesi öğrenci kaydı, ekip kurma (bir öğrenci yalnızca bir ekipte), kaptan ve mentor, ekipten başvuru oluşturma |
+| Akademi · kayıtlar | Fakülteler, laboratuvarlar, sanayi ortakları; eğitimler (takvimde görünür) |
+| Kaynak talepleri | Proje sekmesi: malzeme / ekipman / laboratuvar zamanı talebi, koordinatör kararı (gerekçe zorunlu) |
+| Duyurular | Role göre hedeflenen duyurular, yayınlanınca uygulama içi bildirim |
+| Hazırlık başvurusu (açık form) | Öğrenci kaptanı **hesapsız** `/apply` sayfasından TEKNOFEST yarışmasını ve alt kategorisini seçer, ekip üyelerini yazar ve bölüme hazırlık başvurusu gönderir; gizli takip bağlantısıyla durumu ve koordinatör notunu görür, gerekirse düzeltip yeniden gönderir |
+| Hazırlık başvuruları (iç kontrol) | Koordinatör `/academy/intake` üzerinden inceler (çakışma uyarıları: başka ekipteki/arşivdeki öğrenci, başka üniversite, açık başka başvuru), gerekçeli karar verir; kabul edilen başvuru aktif Akademi ekibine dönüşür, tüm adımlar işlem kaydına yazılır |
 
 **Roller:**
 - `ADMIN`: koordinatör, her şeyi görür.
@@ -26,7 +34,11 @@ ADNSU/ASOIU Startup ve Teknoloji Transferi Şubesi pilotu · TÜRK FORUM 2026.
 - `MENTOR`: yalnızca atandığı ekipleri görür.
 - `JURY`: atandığı projeleri salt okunur görür ve değerlendirir.
 
-**Diller:** Azerbaycanca (varsayılan), Türkçe, İngilizce. **Tema:** açık, koyu ve sistem.
+Akademi kayıtlarını (`/academy/*`) koordinatör yönetir; ekipler ve mentorlar kataloğu, eğitimleri ve duyuruları okur.
+
+**Diller:** Azerbaycanca (varsayılan), Türkçe, İngilizce. **Tema:** açık, koyu ve sistem (mor kimlik).
+
+> ADNSU TEKNOFEST 2027 Academy paneli (Python/SQLite) bu uygulamaya taşındı. Katalog verisi: `prisma/data/teknofest-catalog-2026.json` (elle güncellenir).
 
 ## Lokal çalıştırma
 

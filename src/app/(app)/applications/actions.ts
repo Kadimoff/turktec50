@@ -1,5 +1,4 @@
 "use server";
-import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
@@ -7,79 +6,85 @@ import { requireUser } from "@/lib/auth";
 import { logAudit, notify } from "@/lib/audit";
 import { weightedScore } from "@/lib/kpi";
 import { CHECKLIST_TEMPLATE } from "@/lib/constants";
-import { nextProjectCode } from "@/components/projects/server";
+import { done, fail, failFromZod, formStr, isUniqueViolation, RuleError, type ActionState } from "@/lib/actions";
+import { nextProjectCode, withUniqueRetry } from "@/lib/codes";
+import { generateTempPassword, hashPassword } from "@/lib/passwords";
+import { revalidateSets } from "@/lib/revalidate";
 
-export type EvalState =
-  | { ok: true; intent: "draft" | "submit"; at: number }
-  | { ok: false; error: "invalid" | "incomplete" | "locked" | "notFound" | "error"; missing?: string[]; at: number }
-  | undefined;
+function revalidateApplication(id: string) {
+  revalidateSets("applications", "dashboard");
+  revalidatePath(`/applications/${id}`);
+}
+
+/** Rubric save result (keys in `applications.rubric`); `missing` = criterion ids still unscored on submit. */
+export type EvalState = ActionState & { intent?: "draft" | "submit"; missing?: string[] };
 
 const evalSchema = z.object({
-  applicationId: z.string().min(1),
-  intent: z.enum(["draft", "submit"]),
-  comment: z.string().trim().max(2000).optional().default(""),
+  applicationId: z.string().min(1, "errors.invalid"),
+  intent: z.enum(["draft", "submit"], "errors.invalid"),
+  comment: z.string().trim().max(2000, "errors.invalid").optional().default(""),
 });
 
 /** Save (draft) or submit a selection-rubric evaluation by the current juror/coordinator. Advisory only. */
 export async function saveSelectionEvaluation(_prev: EvalState, formData: FormData): Promise<EvalState> {
   const user = await requireUser(["ADMIN", "JURY"]);
-  const at = Date.now();
   const parsed = evalSchema.safeParse({
-    applicationId: formData.get("applicationId"),
-    intent: formData.get("intent"),
-    comment: formData.get("comment") ?? "",
+    applicationId: formStr(formData, "applicationId"),
+    intent: formStr(formData, "intent"),
+    comment: formStr(formData, "comment") ?? "",
   });
-  if (!parsed.success) return { ok: false, error: "invalid", at };
+  if (!parsed.success) return failFromZod(parsed.error);
   const { applicationId, intent, comment } = parsed.data;
 
   const [app, rubric] = await Promise.all([
     prisma.application.findUnique({ where: { id: applicationId }, select: { id: true, code: true, projectTitle: true, status: true } }),
     prisma.rubric.findUnique({ where: { kind: "SELECTION" }, select: { id: true, criteria: { orderBy: { order: "asc" } } } }),
   ]);
-  if (!app || !rubric) return { ok: false, error: "notFound", at };
+  if (!app || !rubric) return fail("errors.notFound");
 
   const scores: Record<string, number> = {};
   for (const c of rubric.criteria) {
-    const raw = formData.get(`score_${c.id}`);
-    if (raw === null || raw === "") continue;
+    const raw = formStr(formData, `score_${c.id}`);
+    if (raw === undefined || raw === "") continue;
     const n = Number(raw);
-    if (!Number.isInteger(n) || n < 1 || n > c.maxScore) return { ok: false, error: "invalid", at };
+    if (!Number.isInteger(n) || n < 1 || n > c.maxScore) return fail("errors.invalid");
     scores[c.id] = n;
   }
   if (intent === "submit") {
     const missing = rubric.criteria.filter((c) => scores[c.id] === undefined).map((c) => c.id);
-    if (missing.length) return { ok: false, error: "incomplete", missing, at };
+    if (missing.length) return { ...fail("errors.incomplete"), missing };
   }
 
-  const existing = await prisma.evaluation.findFirst({
-    where: { rubricId: rubric.id, evaluatorId: user.id, applicationId },
-    select: { id: true, status: true },
-  });
-  if (existing?.status === "SUBMITTED") return { ok: false, error: "locked", at };
-
   const status = intent === "submit" ? "SUBMITTED" : "DRAFT";
-  const evaluation = await prisma.$transaction(async (tx) => {
-    const ev = existing
-      ? await tx.evaluation.update({
-          where: { id: existing.id },
-          data: { comment: comment || null, status, submittedAt: status === "SUBMITTED" ? new Date() : null },
-        })
-      : await tx.evaluation.create({
-          data: {
-            rubricId: rubric.id, evaluatorId: user.id, applicationId, comment: comment || null, status,
-            submittedAt: status === "SUBMITTED" ? new Date() : null,
-          },
-        });
-    await tx.evaluationScore.deleteMany({ where: { evaluationId: ev.id } });
-    const entries = Object.entries(scores);
-    if (entries.length) {
-      await tx.evaluationScore.createMany({ data: entries.map(([criterionId, score]) => ({ evaluationId: ev.id, criterionId, score })) });
-    }
-    if (status === "SUBMITTED" && app.status === "SUBMITTED") {
-      await tx.application.update({ where: { id: app.id }, data: { status: "UNDER_REVIEW" } });
-    }
-    return ev;
-  });
+  const data = { comment: comment || null, status, submittedAt: status === "SUBMITTED" ? new Date() : null } as const;
+  let evaluationId: string;
+  try {
+    evaluationId = await prisma.$transaction(async (tx) => {
+      // the lock is checked by the write itself: a submitted evaluation is never changed, even by a parallel request
+      const existing = await tx.evaluation.findFirst({ where: { rubricId: rubric.id, evaluatorId: user.id, applicationId }, select: { id: true } });
+      let id: string;
+      if (existing) {
+        const { count } = await tx.evaluation.updateMany({ where: { id: existing.id, status: "DRAFT" }, data });
+        if (count !== 1) throw new RuleError("errors.locked");
+        id = existing.id;
+      } else {
+        id = (await tx.evaluation.create({ data: { rubricId: rubric.id, evaluatorId: user.id, applicationId, ...data }, select: { id: true } })).id;
+      }
+      await tx.evaluationScore.deleteMany({ where: { evaluationId: id } });
+      const entries = Object.entries(scores);
+      if (entries.length) {
+        await tx.evaluationScore.createMany({ data: entries.map(([criterionId, score]) => ({ evaluationId: id, criterionId, score })) });
+      }
+      if (status === "SUBMITTED") {
+        await tx.application.updateMany({ where: { id: app.id, status: "SUBMITTED" }, data: { status: "UNDER_REVIEW" } });
+      }
+      return id;
+    });
+  } catch (e) {
+    if (e instanceof RuleError) return fail(e.key);
+    if (isUniqueViolation(e)) return fail("errors.error"); // a parallel first save of the same evaluator
+    throw e;
+  }
 
   const score = weightedScore(rubric.criteria, scores);
   await logAudit({
@@ -88,50 +93,47 @@ export async function saveSelectionEvaluation(_prev: EvalState, formData: FormDa
     entity: "Application",
     entityId: app.id,
     summary: `${app.code} · ${app.projectTitle} · ${status}`,
-    meta: { evaluationId: evaluation.id, status, score },
+    meta: { evaluationId, status, score },
   });
   if (status === "SUBMITTED") {
     const admins = await prisma.user.findMany({ where: { role: "ADMIN", active: true, id: { not: user.id } }, select: { id: true } });
     await notify(admins.map((a) => a.id), "evaluation_submitted", { project: `${app.code} · ${app.projectTitle}` }, `/applications/${app.id}`);
   }
 
-  revalidatePath(`/applications/${app.id}`);
-  revalidatePath("/applications");
-  return { ok: true, intent, at };
+  revalidateApplication(app.id);
+  return done(intent === "submit" ? "toastSubmitted" : "toastDraft", { intent });
 }
 
-export type DecisionState =
-  | { ok: true; at: number }
-  | { ok: false; error: "invalid" | "noteRequired" | "locked" | "notFound"; at: number }
-  | undefined;
-
 const decisionSchema = z.object({
-  applicationId: z.string().min(1),
-  status: z.enum(["ACCEPTED", "WAITLIST", "REJECTED"]),
-  note: z.string().trim(),
+  applicationId: z.string().min(1, "errors.notFound"),
+  status: z.enum(["ACCEPTED", "WAITLIST", "REJECTED"], "errors.invalid"),
+  note: z.string().trim().min(10, "errors.noteRequired").max(1000, "errors.noteRequired"),
 });
 
-/** Coordinator records a HUMAN decision with a rationale. The system never decides on its own. */
-export async function decideApplication(_prev: DecisionState, formData: FormData): Promise<DecisionState> {
+/** Coordinator records a HUMAN decision with a rationale. The system never decides on its own. Keys in `applications.decision`. */
+export async function decideApplication(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const user = await requireUser(["ADMIN"]);
-  const at = Date.now();
   const parsed = decisionSchema.safeParse({
-    applicationId: formData.get("applicationId"),
-    status: formData.get("status"),
-    note: formData.get("note") ?? "",
+    applicationId: formStr(formData, "applicationId"),
+    status: formStr(formData, "status"),
+    note: formStr(formData, "note") ?? "",
   });
-  if (!parsed.success) return { ok: false, error: "invalid", at };
+  if (!parsed.success) return failFromZod(parsed.error);
   const { applicationId, status, note } = parsed.data;
-  if (note.length < 10 || note.length > 1000) return { ok: false, error: "noteRequired", at };
 
   const app = await prisma.application.findUnique({
     where: { id: applicationId },
     select: { id: true, code: true, teamName: true, status: true, projectId: true, evaluations: { select: { evaluatorId: true } } },
   });
-  if (!app) return { ok: false, error: "notFound", at };
-  if (app.projectId) return { ok: false, error: "locked", at };
+  if (!app) return fail("errors.notFound");
+  if (app.projectId) return fail("errors.locked");
 
-  await prisma.application.update({ where: { id: app.id }, data: { status, decisionNote: note, decidedAt: new Date() } });
+  // conditional on "no workspace yet": a decision never changes after a project was created from it
+  const { count } = await prisma.application.updateMany({
+    where: { id: app.id, projectId: null },
+    data: { status, decisionNote: note, decidedAt: new Date() },
+  });
+  if (count !== 1) return fail("errors.locked");
   await logAudit({
     actorId: user.id,
     action: "application.decide",
@@ -146,80 +148,106 @@ export async function decideApplication(_prev: DecisionState, formData: FormData
     { team: app.teamName },
     `/applications/${app.id}`,
   );
-  revalidatePath(`/applications/${app.id}`);
-  revalidatePath("/applications");
-  return { ok: true, at };
+  revalidateApplication(app.id);
+  return done("toast");
 }
 
-export type WorkspaceResult = { ok: true; projectId: string; code: string; newUser: boolean } | { ok: false; error: "notAccepted" | "exists" | "notFound" | "error" };
-
-const DEMO_PASSWORD = "Demo2026!";
+/**
+ * Workspace result (keys in `applications.workspace`). For a NEW lead account `tempPassword` is the generated password, returned once
+ * (only its hash is stored; the lead must change it at the first sign-in).
+ */
+export type WorkspaceResult = ActionState & { projectId?: string; code?: string; email?: string; tempPassword?: string };
 
 /** Create the project workspace (VALIDATION stage + 13 checklist items + lead TEAM account) for an accepted application. */
 export async function createWorkspaceFromApplication(applicationId: string): Promise<WorkspaceResult> {
   const user = await requireUser(["ADMIN"]);
   const id = z.string().min(1).safeParse(applicationId);
-  if (!id.success) return { ok: false, error: "notFound" };
+  if (!id.success) return fail("errors.notFound");
   const app = await prisma.application.findUnique({
     where: { id: id.data },
-    include: { university: { select: { country: true } } },
+    include: { university: { select: { country: true } }, team: { select: { id: true, facultyId: true, captainId: true } } },
   });
-  if (!app) return { ok: false, error: "notFound" };
-  if (app.status !== "ACCEPTED") return { ok: false, error: "notAccepted" };
-  if (app.projectId) return { ok: false, error: "exists" };
+  if (!app) return fail("errors.notFound");
+  if (app.status !== "ACCEPTED") return fail("errors.notAccepted");
+  if (app.projectId) return fail("errors.exists");
 
   const email = app.contactEmail.toLowerCase().trim();
-  const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 10);
+  const tempPassword = generateTempPassword();
+  const passwordHash = await hashPassword(tempPassword);
   const locale = app.university.country === "AZ" ? "az" : app.university.country === "TR" ? "tr" : "en";
 
+  let result: { project: { id: string; code: string; title: string }; lead: { id: string; name: string; isNew: boolean } };
   try {
-    const result = await prisma.$transaction(async (tx) => {
-      const code = await nextProjectCode(tx);
-      const project = await tx.project.create({
-        data: {
-          code,
-          title: app.projectTitle,
-          tagline: app.solution.slice(0, 160),
-          summary: app.problem,
-          category: app.category,
-          universityId: app.universityId,
-          competitionId: app.competitionId,
-          stage: "VALIDATION",
-          checklist: {
-            create: CHECKLIST_TEMPLATE.map((c, i) => ({ key: c.key, category: c.category, required: c.required, order: i })),
+    result = await withUniqueRetry(() =>
+      prisma.$transaction(async (tx) => {
+        const code = await nextProjectCode(tx);
+        const project = await tx.project.create({
+          data: {
+            code,
+            title: app.projectTitle,
+            tagline: app.solution.slice(0, 160),
+            summary: app.problem,
+            category: app.category,
+            universityId: app.universityId,
+            competitionId: app.competitionId,
+            facultyId: app.team?.facultyId ?? null, // Academy team → project keeps its faculty
+            stage: "VALIDATION",
+            checklist: {
+              create: CHECKLIST_TEMPLATE.map((c, i) => ({ key: c.key, category: c.category, required: c.required, order: i })),
+            },
           },
-        },
-      });
-      let lead = await tx.user.findUnique({ where: { email }, select: { id: true, role: true } });
-      let newUser = false;
-      if (!lead) {
-        lead = await tx.user.create({
-          data: { email, name: app.contactName, passwordHash, role: "TEAM", universityId: app.universityId, locale },
-          select: { id: true, role: true },
+          select: { id: true, code: true, title: true },
         });
-        newUser = true;
-      }
-      if (lead.role === "TEAM") {
-        await tx.projectMember.create({ data: { projectId: project.id, userId: lead.id, teamRole: "Team lead", isLead: true } });
-      }
-      await tx.application.update({ where: { id: app.id }, data: { projectId: project.id } });
-      return { project, newUser };
-    });
+        // claim the application (still accepted, still without a project) — a parallel click loses here
+        const claim = await tx.application.updateMany({ where: { id: app.id, status: "ACCEPTED", projectId: null }, data: { projectId: project.id } });
+        if (claim.count !== 1) throw new RuleError("errors.exists");
 
-    await logAudit({
-      actorId: user.id,
-      action: "project.create",
-      entity: "Project",
-      entityId: result.project.id,
-      projectId: result.project.id,
-      summary: `${result.project.code} · ${result.project.title} (${app.code})`,
-      meta: { applicationId: app.id, leadEmail: email, newUser: result.newUser },
-    });
-    revalidatePath(`/applications/${app.id}`);
-    revalidatePath("/applications");
-    revalidatePath("/projects");
-    return { ok: true, projectId: result.project.id, code: result.project.code, newUser: result.newUser };
-  } catch {
-    return { ok: false, error: "error" };
+        const found = await tx.user.findUnique({ where: { email }, select: { id: true, name: true, role: true } });
+        const lead = found
+          ? { ...found, isNew: false }
+          : {
+              ...(await tx.user.create({
+                data: { email, name: app.contactName, passwordHash, mustChangePassword: true, role: "TEAM", universityId: app.universityId, locale },
+                select: { id: true, name: true, role: true },
+              })),
+              isNew: true,
+            };
+        if (lead.role === "TEAM") {
+          await tx.projectMember.create({ data: { projectId: project.id, userId: lead.id, teamRole: "Team lead", isLead: true } });
+          // Academy: link the team captain's student record to the lead account (only if not linked to someone else)
+          if (app.team?.captainId) {
+            await tx.student.updateMany({ where: { id: app.team.captainId, userId: null }, data: { userId: lead.id } });
+          }
+        }
+        return { project, lead: { id: lead.id, name: lead.name, isNew: lead.isNew } };
+      }),
+    );
+  } catch (e) {
+    if (e instanceof RuleError) return fail(e.key);
+    return fail("errors.error");
   }
+
+  if (result.lead.isNew) {
+    await logAudit({
+      actorId: user.id, action: "user.create", entity: "User", entityId: result.lead.id, summary: `${result.lead.name} · TEAM`,
+      meta: { source: "application", application: app.code, temporaryPassword: true },
+    });
+  }
+  await logAudit({
+    actorId: user.id,
+    action: "project.create",
+    entity: "Project",
+    entityId: result.project.id,
+    projectId: result.project.id,
+    summary: `${result.project.code} · ${result.project.title} (${app.code})`,
+    meta: { applicationId: app.id, leadEmail: email, newUser: result.lead.isNew },
+  });
+  revalidateApplication(app.id);
+  revalidateSets("projects", "admin");
+  return done("toast", {
+    projectId: result.project.id,
+    code: result.project.code,
+    email,
+    ...(result.lead.isNew ? { tempPassword } : {}),
+  });
 }

@@ -12,6 +12,19 @@ export const riskStatusTone: Record<string, Tone> = { OPEN: "danger", MITIGATING
 export const appStatusTone: Record<string, Tone> = { SUBMITTED: "neutral", UNDER_REVIEW: "info", ACCEPTED: "success", WAITLIST: "warning", REJECTED: "danger" };
 export const evaluationTone: Record<string, Tone> = { DRAFT: "warning", SUBMITTED: "success" };
 export const resultTone: Record<string, Tone> = { PENDING: "neutral", FINALIST: "success", NOT_SELECTED: "neutral" };
+// Academy
+export const ruleStatusTone: Record<string, Tone> = { TRACKING: "info", CHANGED: "warning", CONFIRMED: "success" };
+export const registryTone: Record<string, Tone> = { PLANNED: "neutral", ACTIVE: "success", ARCHIVED: "neutral" };
+export const labTone: Record<string, Tone> = { AVAILABLE: "success", LIMITED: "warning", CLOSED: "danger" };
+export const partnerTone: Record<string, Tone> = { CANDIDATE: "neutral", NEGOTIATING: "info", ACTIVE: "success", ARCHIVED: "neutral" };
+export const studentTone: Record<string, Tone> = { CANDIDATE: "neutral", SEEKING_TEAM: "warning", IN_TEAM: "success", ARCHIVED: "neutral" };
+export const teamTone: Record<string, Tone> = { FORMING: "info", ACTIVE: "success", ARCHIVED: "neutral" };
+export const trainingTone: Record<string, Tone> = { PLANNED: "neutral", REGISTRATION_OPEN: "success", COMPLETED: "info" };
+export const resourceTone: Record<string, Tone> = { NEW: "neutral", UNDER_REVIEW: "info", APPROVED: "success", REJECTED: "danger", DONE: "brand" };
+export const announcementTone: Record<string, Tone> = { DRAFT: "warning", PUBLISHED: "success" };
+export const intakeTone: Record<string, Tone> = {
+  SUBMITTED: "info", UNDER_REVIEW: "brand", NEEDS_CHANGES: "warning", ACCEPTED: "success", REJECTED: "danger", WITHDRAWN: "neutral",
+};
 
 export const toneClasses: Record<Tone, string> = {
   success: "bg-success-soft text-success",

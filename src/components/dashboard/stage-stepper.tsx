@@ -18,7 +18,7 @@ export async function StageStepper({ stage, label }: { stage: string; label: str
             <div className="mt-2 flex items-start gap-1.5">
               <span
                 className={cn(
-                  "grid size-5 shrink-0 place-items-center rounded-full text-[10px] font-bold",
+                  "grid size-5 shrink-0 place-items-center rounded-full text-2xs font-bold",
                   state === "done" && "bg-primary text-primary-foreground",
                   state === "current" && "bg-accent text-accent-foreground ring-2 ring-primary",
                   state === "next" && "bg-muted text-muted-foreground",

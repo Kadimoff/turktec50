@@ -1,0 +1,97 @@
+{
+  "eyebrow": "ADNSU TEKNOFEST 2027 Akademiyası",
+  "title": "Akademiya icmalı",
+  "description": "Tələbə qeydiyyatı, komandalar, izlənən yarışmalar, təlimlər və resurs sorğuları bir baxışda. Rəqəmlər qeydlərdən hesablanır.",
+  "stats": {
+    "title": "Akademiya göstəriciləri",
+    "intake": "Yeni hazırlıq müraciətləri",
+    "intakeHint": "{review} baxılır · {changes} düzəliş gözləyir",
+    "students": "Qeydiyyatdakı tələbələr",
+    "studentsHint": "{count, plural, one {# nəfər komanda axtarır} other {# nəfər komanda axtarır}}",
+    "teams": "Komandalar",
+    "teamsHint": "{active} aktiv · {forming} formalaşır",
+    "applications": "Komandalardan müraciətlər",
+    "applicationsHint": "{pending} baxılır · {accepted} qəbul edilib",
+    "competitions": "İzlənən yarışmalar",
+    "competitionsHint": "{count, plural, =0 {2027 qaydalarında dəyişiklik yoxdur} one {# yarışmada qayda dəyişib} other {# yarışmada qayda dəyişib}}",
+    "trainings": "Qarşıdakı təlimlər",
+    "trainingsNext": "Növbəti: {date}",
+    "trainingsNone": "Planlanmış təlim yoxdur",
+    "requests": "Açıq resurs sorğuları",
+    "requestsHint": "{fresh} yeni · {review} baxılır"
+  },
+  "deadlines": {
+    "title": "Yaxınlaşan son tarixlər",
+    "subtitle": "İzlənən TEKNOFEST kataloq yarışmaları · növbəti {days} gün",
+    "catalog": "Kataloq",
+    "empty": "Növbəti {days} gündə izlənən yarışmanın son tarixi yoxdur.",
+    "teams": "{count, plural, one {# komanda} other {# komanda}}",
+    "notConfirmed": "Son tarix rəsmi olaraq təsdiqlənməyib"
+  },
+  "requests": {
+    "title": "Açıq resurs sorğuları",
+    "subtitle": "{count, plural, =0 {Yeni və baxılan sorğu yoxdur} one {# yeni və ya baxılan sorğu · lazım olan tarixə görə} other {# yeni və ya baxılan sorğu · lazım olan tarixə görə}}",
+    "empty": "Açıq resurs sorğusu yoxdur.",
+    "noDate": "Tarix yoxdur",
+    "more": "{count, plural, one {Daha # açıq sorğu layihə səhifələrindədir.} other {Daha # açıq sorğu layihə səhifələrindədir.}}"
+  },
+  "strategy": {
+    "title": "Hazırlıq strategiyası",
+    "description": "ADNSU daxilində fənlərarası texnoloji komandaları yetişdirmək üçün təklif olunan iş modeli.",
+    "rolesTitle": "İdarəetmə və məsuliyyət",
+    "stagesTitle": "Hazırlıq mərhələləri",
+    "stageNumber": "Mərhələ {n}:",
+    "roles": {
+      "office": {
+        "name": "Startap və Texnologiya Transferi şöbəsi",
+        "text": "Fakültə koordinatorlarını, mentorları, laboratoriyaları və sənaye tərəfdaşlarını əlaqələndirir. Portfelə, risklərə, resurs bölgüsünə və mərhələ baxışlarına nəzarət edir."
+      },
+      "faculties": {
+        "name": "Fakültə koordinatorları",
+        "text": "Tələbə və mentor namizədlərini müəyyən edir, fənlərarası komandalar qurur, həftəlik irəliləyişi izləyir."
+      },
+      "mentors": {
+        "name": "Müəllimlər və mentorlar",
+        "text": "Texniki istiqaməti, komanda planını və prototipin sınaq meyarlarını komanda kapitanı ilə razılaşdırır."
+      },
+      "labs": {
+        "name": "Laboratoriyalar",
+        "text": "Avadanlıq, texniki təlim, sınaq vaxtı və resurs sorğularını planlaşdırır."
+      },
+      "teams": {
+        "name": "Tələbələr və komanda kapitanları",
+        "text": "Komanda rollarını müəyyən edir, prototipi hazırlayır, nəticələri sənədləşdirir və həftəlik hesabat verir."
+      },
+      "partners": {
+        "name": "Sənaye tərəfdaşları",
+        "text": "Problem mövzuları, ekspertiza, komponentlər, real sınaq mühiti və maliyyə dəstəyi imkanları təqdim edir."
+      }
+    },
+    "stages": {
+      "mobilisation": {
+        "name": "Səfərbərlik",
+        "text": "Fakültələrdə əlaqələndiriciləri təyin edin. Mentor və laboratoriya imkanlarını qeydiyyata alın."
+      },
+      "selection": {
+        "name": "Seçim və komanda quruculuğu",
+        "text": "Tələbə müraciətlərini bacarıq, motivasiya və vaxt imkanına görə qiymətləndirin. Komanda kapitanlarını təyin edin."
+      },
+      "training": {
+        "name": "Təlim və texniki plan",
+        "text": "Rəsmi şərtləri izləyin. Komandalarla texniki plan, iş bölgüsü və sınaq meyarlarını təsdiqləyin."
+      },
+      "prototype": {
+        "name": "Prototip və sınaq",
+        "text": "Laboratoriya vaxtını ayırın. Sınaq nəticələrini, açıq riskləri və material ehtiyaclarını müzakirə edin."
+      },
+      "application": {
+        "name": "Təqdimat və müraciət",
+        "text": "Texniki hesabatı, demo videonu və təqdimatı daxili baxışdan keçirin. Müraciəti rəsmi sistemdə tamamlayın."
+      },
+      "results": {
+        "name": "Nəticələr və davamlılıq",
+        "text": "Nəticələri və öyrənilən dərsləri sənədləşdirin. Davam edən layihələr üçün növbəti mərhələni müəyyən edin."
+      }
+    }
+  }
+}

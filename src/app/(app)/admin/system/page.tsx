@@ -24,11 +24,16 @@ export default async function SystemPage() {
     Promise.all([
       prisma.user.count(), prisma.application.count(), prisma.project.count(), prisma.task.count(), prisma.mentorSession.count(),
       prisma.document.count(), prisma.risk.count(), prisma.evaluation.count(), prisma.auditLog.count(), prisma.notification.count(),
+      prisma.student.count(), prisma.team.count(), prisma.training.count(), prisma.resourceRequest.count(), prisma.announcement.count(),
+      prisma.intakeRequest.count(),
     ]),
     prisma.project.findMany({ orderBy: { code: "asc" }, select: { id: true, code: true, title: true } }),
     prisma.application.findMany({ orderBy: { code: "asc" }, select: { id: true, code: true, projectTitle: true, teamName: true } }),
   ]);
-  const tables = ["users", "applications", "projects", "tasks", "sessions", "documents", "risks", "evaluations", "audit", "notifications"] as const;
+  const tables = [
+    "users", "applications", "projects", "tasks", "sessions", "documents", "risks", "evaluations", "audit", "notifications",
+    "students", "teams", "trainings", "resources", "announcements", "intake",
+  ] as const;
 
   return (
     <div className="space-y-6">
@@ -38,7 +43,7 @@ export default async function SystemPage() {
         description={t("description")}
       />
 
-      <section aria-labelledby="db-title" className="rounded-xl border bg-card p-5 shadow-card">
+      <section aria-labelledby="db-title" className="rounded-xl border bg-card p-4 shadow-card sm:p-5">
         <h2 id="db-title" className="flex items-center gap-2 text-sm font-semibold"><Database className="size-4 text-primary" aria-hidden />{t("db.title")}</h2>
         <p className="mt-0.5 text-xs text-muted-foreground">{t("db.subtitle")}</p>
         <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
@@ -51,28 +56,28 @@ export default async function SystemPage() {
         </dl>
       </section>
 
-      <section aria-labelledby="roles-title" className="flex flex-col gap-3 rounded-xl border bg-card p-5 shadow-card sm:flex-row sm:items-center sm:justify-between">
+      <section aria-labelledby="roles-title" className="flex flex-col gap-3 rounded-xl border bg-card p-4 shadow-card sm:p-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 id="roles-title" className="flex items-center gap-2 text-sm font-semibold"><UserCog className="size-4 text-primary" aria-hidden />{t("roles.title")}</h2>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{t("roles.body")}</p>
         </div>
-        <Button variant="outline" nativeButton={false} render={<Link href="/admin/users" />}>{t("roles.open")}</Button>
+        <Button variant="outline" size="lg" nativeButton={false} render={<Link href="/admin/users" />}>{t("roles.open")}</Button>
       </section>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <section aria-labelledby="del-project" className="rounded-xl border border-danger/30 bg-card p-5 shadow-card">
+        <section aria-labelledby="del-project" className="rounded-xl border border-danger/30 bg-card p-4 shadow-card sm:p-5">
           <h2 id="del-project" className="flex items-center gap-2 text-sm font-semibold"><FolderX className="size-4 text-danger" aria-hidden />{t("project.title")}</h2>
           <p className="mt-1 mb-4 text-xs text-muted-foreground">{t("project.body")}</p>
           <DeleteRecordForm kind="project" options={projects.map((p) => ({ id: p.id, code: p.code, label: p.title }))} />
         </section>
-        <section aria-labelledby="del-app" className="rounded-xl border border-danger/30 bg-card p-5 shadow-card">
+        <section aria-labelledby="del-app" className="rounded-xl border border-danger/30 bg-card p-4 shadow-card sm:p-5">
           <h2 id="del-app" className="flex items-center gap-2 text-sm font-semibold"><FileInput className="size-4 text-danger" aria-hidden />{t("application.title")}</h2>
           <p className="mt-1 mb-4 text-xs text-muted-foreground">{t("application.body")}</p>
           <DeleteRecordForm kind="application" options={applications.map((a) => ({ id: a.id, code: a.code, label: `${a.projectTitle} · ${a.teamName}` }))} />
         </section>
       </div>
 
-      <section aria-labelledby="wipe-title" className="rounded-xl border-2 border-danger/50 bg-danger-soft/40 p-5">
+      <section aria-labelledby="wipe-title" className="rounded-xl border-2 border-danger/50 bg-danger-soft/40 p-4 sm:p-5">
         <h2 id="wipe-title" className="flex items-center gap-2 text-sm font-semibold text-danger"><ShieldAlert className="size-4" aria-hidden />{t("wipe.title")}</h2>
         <p className="mt-1 max-w-3xl text-sm text-foreground">{t("wipe.body")}</p>
         <ul className="mt-2 mb-4 grid gap-1 text-xs text-muted-foreground sm:grid-cols-2">

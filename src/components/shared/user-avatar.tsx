@@ -11,7 +11,7 @@ export function UserAvatar({ name, size = "md", className }: { name: string; siz
       className={cn(
         "inline-grid shrink-0 place-items-center rounded-full font-semibold",
         palette[idx],
-        size === "sm" && "size-7 text-[11px]",
+        size === "sm" && "size-7 text-2xs",
         size === "md" && "size-9 text-xs",
         size === "lg" && "size-11 text-sm",
         className,

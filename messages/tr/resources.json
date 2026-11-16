@@ -1,0 +1,85 @@
+{
+  "title": "Kaynak talepleri",
+  "description": "Malzeme, ekipman ve laboratuvar zamanı ihtiyaçları. Onay, koordinatörün gerekçesini not olarak yazdığı insan kararıdır.",
+  "summary": "{count, plural, one {# talep} other {# talep}}",
+  "summaryLabel": "Durumlara göre talepler",
+  "editableHint": "Talep “Yeni” durumundayken düzenleyebilirsiniz.",
+  "empty": {
+    "title": "Henüz kaynak talebi yok",
+    "hint": "Ekipman, malzeme veya laboratuvar zamanı gerekiyorsa yeni bir talep oluşturun.",
+    "hintReadonly": "Ekip talep oluşturduğunda burada görünecek."
+  },
+  "fields": {
+    "lab": "Laboratuvar",
+    "partner": "Sanayi ortağı",
+    "neededBy": "İhtiyaç tarihi",
+    "requestedBy": "Talep eden",
+    "none": "Seçilmedi",
+    "noDate": "Tarih belirtilmedi",
+    "unknown": "Bilinmiyor"
+  },
+  "decision": {
+    "title": "Koordinatör kararı",
+    "reviewTitle": "İncelemeye alındı",
+    "noNote": "Not yazılmadı."
+  },
+  "form": {
+    "create": "Yeni talep",
+    "createTitle": "Yeni kaynak talebi",
+    "editTitle": "Talebi düzenle",
+    "dialogDescription": "Koordinatör talebi inceleyecek ve kararını bir notla bildirecek. Talep “Yeni” durumundayken düzenlenebilir.",
+    "title": "Ne gerekiyor?",
+    "titleHint": "Kısa ve net, ör. “3D baskı zamanı (6 saat)”.",
+    "details": "Ayrıntılar",
+    "detailsHint": "Neden gerekli, miktar ve teknik gereksinimler.",
+    "lab": "Laboratuvar",
+    "labHint": "Kapalı laboratuvarlar listede yer almaz.",
+    "partner": "Sanayi ortağı",
+    "partnerHint": "Aktif ve görüşme aşamasındaki ortaklar.",
+    "none": "Seçilmedi",
+    "neededBy": "İhtiyaç tarihi",
+    "neededByHint": "Boş bırakırsanız belirli bir tarih yoktur.",
+    "submitCreate": "Talebi gönder",
+    "submitEdit": "Kaydet",
+    "pending": "Gönderiliyor…",
+    "editLabel": "“{title}” talebini düzenle"
+  },
+  "decide": {
+    "button": "Karar",
+    "buttonLabel": "“{title}” talebi için karar",
+    "title": "Talep kararı",
+    "description": "Yeni durum talep edene ve ekibe bildirilecek, işlem kaydına yazılacak.",
+    "current": "Mevcut durum:",
+    "status": "Yeni durum",
+    "choose": "Seçin…",
+    "note": "Karar notu",
+    "noteHintRequired": "Onay ve ret için zorunludur: {min}–{max} karakter.",
+    "noteHintOptional": "İsteğe bağlı. “Tamamlandı” için boş bırakılırsa onay notu korunur.",
+    "count": "{count}/{max}",
+    "submit": "Kararı kaydet",
+    "pending": "Kaydediliyor…"
+  },
+  "toast": {
+    "created": "Talep gönderildi",
+    "updated": "Talep güncellendi",
+    "decided": "Karar kaydedildi"
+  },
+  "errors": {
+    "titleShort": "En az 3 karakter yazın.",
+    "titleLong": "En fazla 160 karakter olabilir.",
+    "detailsLong": "En fazla 2000 karakter olabilir.",
+    "date": "Tarih geçerli değil.",
+    "datePast": "İhtiyaç tarihi geçmişte olamaz.",
+    "lab": "Bu laboratuvar seçilemez.",
+    "partner": "Bu ortak seçilemez.",
+    "statusRequired": "Yeni durumu seçin.",
+    "noteRequired": "Karar notu 10–1000 karakter olmalıdır.",
+    "noteLong": "Not en fazla 1000 karakter olabilir.",
+    "transition": "Bu durum geçişi mümkün değil.",
+    "locked": "Talep artık incelemede ve düzenlenemez.",
+    "forbidden": "Bu işlem için yetkiniz yok.",
+    "notFound": "Talep bulunamadı.",
+    "invalid": "Bilgiler geçerli değil.",
+    "changed": "Talep bu arada değiştirildi. Sayfayı yenileyip tekrar deneyin."
+  }
+}

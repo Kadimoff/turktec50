@@ -1,8 +1,8 @@
 import "server-only";
-import { endOfDay, format } from "date-fns";
 import { prisma } from "@/lib/db";
 import { projectScope } from "@/lib/rbac";
-import { dfLocale, fmtDateTime, fmtRelative } from "@/lib/format";
+import { fmtBaku, fmtDateTime, fmtRelative, fmtTime } from "@/lib/format";
+import { bakuAddDays, bakuDateTimeInput, bakuStartOfDay } from "@/lib/dates";
 import type { CurrentUser } from "@/lib/auth";
 import type { Prisma } from "@/generated/prisma/client";
 import type { TaskStatus } from "@/generated/prisma/enums";
@@ -50,7 +50,8 @@ async function convertedMap(sessionIds: string[]) {
 
 export async function toSessionItems(rows: SessionRow[], user: CurrentUser, locale: string, now = new Date()): Promise<SessionItem[]> {
   const conv = await convertedMap(rows.filter((r) => r.status === "COMPLETED" && r.nextSteps.length > 0).map((r) => r.id));
-  const loc = dfLocale(locale);
+  // a session can be completed from its (Baku) meeting day on
+  const endOfToday = bakuAddDays(bakuStartOfDay(now), 1);
   const isAdmin = user.role === "ADMIN";
   const isTeam = user.role === "TEAM";
   const canWork = isAdmin || isTeam || user.role === "MENTOR";
@@ -74,18 +75,18 @@ export async function toSessionItems(rows: SessionRow[], user: CurrentUser, loca
       steps,
       whenAbs: fmtDateTime(s.scheduledAt, locale),
       whenRel: fmtRelative(s.scheduledAt, locale),
-      day: format(s.scheduledAt, "d", { locale: loc }),
-      month: format(s.scheduledAt, "MMM", { locale: loc }),
-      weekday: format(s.scheduledAt, "EEE", { locale: loc }),
-      time: format(s.scheduledAt, "HH:mm", { locale: loc }),
-      scheduledLocal: format(s.scheduledAt, "yyyy-MM-dd'T'HH:mm"),
+      day: fmtBaku(s.scheduledAt, "d", locale),
+      month: fmtBaku(s.scheduledAt, "MMM", locale),
+      weekday: fmtBaku(s.scheduledAt, "EEE", locale),
+      time: fmtTime(s.scheduledAt),
+      scheduledLocal: bakuDateTimeInput(s.scheduledAt),
       isPast,
       needsNotes: active && isPast,
       can: {
         confirm: active && s.status === "PLANNED" && (isAdmin || own),
         reschedule: active && (isAdmin || own),
         cancel: active && (isAdmin || own || (isTeam && s.status === "PLANNED")),
-        complete: active && (isAdmin || own) && s.scheduledAt <= endOfDay(now),
+        complete: active && (isAdmin || own) && s.scheduledAt < endOfToday,
         convert: s.status === "COMPLETED" && canWork,
         editAgenda: active && !isPast && (isAdmin || own || isTeam),
       },

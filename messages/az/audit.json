@@ -7,6 +7,13 @@
     "actor": "İcraçı",
     "actorPlaceholder": "Ad və ya e-poçt",
     "project": "Layihə",
+    "period": "Dövr",
+    "periods": {
+      "all": "Bütün dövr",
+      "today": "Bu gün",
+      "7d": "Son 7 gün",
+      "30d": "Son 30 gün"
+    },
     "from": "Başlanğıc tarixi",
     "to": "Son tarix"
   },
@@ -21,7 +28,15 @@
     "risk": "Risklər",
     "evaluation": "Qiymətləndirmə",
     "user": "İstifadəçilər",
-    "system": "Sistem (root)"
+    "system": "Sistem (root)",
+    "competition": "Yarışma kataloqu",
+    "registry": "Reyestr",
+    "student": "Tələbələr",
+    "team": "Akademiya komandaları",
+    "training": "Təlimlər",
+    "resource": "Resurs sorğuları",
+    "announcement": "Elanlar",
+    "intake": "Hazırlıq müraciətləri"
   },
   "listTitle": "Qeydlər",
   "found": "{count, plural, one {# qeyd} other {# qeyd}}",
@@ -55,7 +70,8 @@
     },
     "application": {
       "evaluate": "Müraciəti qiymətləndirdi",
-      "decide": "Müraciət qərarını qeyd etdi"
+      "decide": "Müraciət qərarını qeyd etdi",
+      "create": "Komandadan müraciət yaratdı"
     },
     "project": {
       "create": "Layihə yaratdı",
@@ -65,7 +81,8 @@
       "unassign_mentor": "Mentoru çıxardı",
       "assign_jury": "Münsif təyin etdi",
       "unassign_jury": "Münsifi çıxardı",
-      "flags": "KPI göstəricilərini yenilədi"
+      "flags": "KPI göstəricilərini yenilədi",
+      "academy": "Layihənin fakültə, lab və tərəfdaş məlumatını yenilədi"
     },
     "task": {
       "create": "Tapşırıq yaratdı",
@@ -91,7 +108,8 @@
     "risk": {
       "create": "Risk qeyd etdi",
       "update": "Riski yenilədi",
-      "close": "Riski bağladı"
+      "close": "Riski bağladı",
+      "reopen": "Riski yenidən açdı"
     },
     "evaluation": {
       "save": "Qiymətləndirmə qaralamasını saxladı",
@@ -101,13 +119,59 @@
       "create": "İstifadəçi yaratdı",
       "update": "İstifadəçini yenilədi",
       "deactivate": "İstifadəçini deaktiv etdi",
-      "activate": "İstifadəçini aktivləşdirdi"
+      "activate": "İstifadəçini aktivləşdirdi",
+      "password_reset": "Müvəqqəti şifrə yaratdı",
+      "password_change": "Şifrəsini dəyişdi"
     },
     "system": {
       "delete_user": "İstifadəçi birdəfəlik silindi",
       "delete_project": "Layihə birdəfəlik silindi",
       "delete_application": "Müraciət birdəfəlik silindi",
       "wipe": "Bütün proqram məlumatları silindi"
+    },
+    "competition": {
+      "track": "2027 qayda izləməsini yenilədi",
+      "untrack": "Qayda izləməsini dayandırdı"
+    },
+    "registry": {
+      "create": "Reyestrə qeyd əlavə etdi",
+      "update": "Reyestr qeydini yenilədi",
+      "delete": "Reyestr qeydini sildi"
+    },
+    "student": {
+      "create": "Tələbəni qeydiyyata aldı",
+      "update": "Tələbə qeydini yenilədi",
+      "delete": "Tələbə qeydini sildi"
+    },
+    "team": {
+      "create": "Komanda yaratdı",
+      "update": "Komandanı yenilədi",
+      "members": "Komanda üzvlərini dəyişdi",
+      "delete": "Komandanı sildi"
+    },
+    "training": {
+      "create": "Təlim əlavə etdi",
+      "update": "Təlimi yenilədi",
+      "delete": "Təlimi sildi"
+    },
+    "resource": {
+      "create": "Resurs sorğusu yaratdı",
+      "update": "Resurs sorğusunu yenilədi",
+      "decide": "Resurs sorğusu üzrə qərarı qeyd etdi"
+    },
+    "announcement": {
+      "create": "Elan qaralaması yaratdı",
+      "update": "Elanı yenilədi",
+      "publish": "Elanı yayımladı",
+      "delete": "Elanı sildi"
+    },
+    "intake": {
+      "submit": "Hazırlıq müraciəti göndərildi",
+      "update": "Hazırlıq müraciəti yeniləndi",
+      "withdraw": "Hazırlıq müraciəti geri çəkildi",
+      "review": "Hazırlıq müraciətinin statusunu dəyişdi",
+      "accept": "Hazırlıq müraciətini qəbul etdi",
+      "reject": "Hazırlıq müraciətini rədd etdi"
     }
   },
   "entities": {
@@ -125,7 +189,17 @@
     "JuryAssignment": "Münsif təyinatı",
     "MentorAssignment": "Mentor təyinatı",
     "StageChange": "Mərhələ dəyişikliyi",
-    "System": "Sistem"
+    "System": "Sistem",
+    "Competition": "Yarışma",
+    "Faculty": "Fakültə",
+    "Lab": "Laboratoriya",
+    "Partner": "Sənaye tərəfdaşı",
+    "Student": "Tələbə",
+    "Team": "Akademiya komandası",
+    "Training": "Təlim",
+    "ResourceRequest": "Resurs sorğusu",
+    "Announcement": "Elan",
+    "IntakeRequest": "Hazırlıq müraciəti"
   },
   "activity": {
     "title": "Fəaliyyət lenti",
@@ -137,5 +211,6 @@
     "more": "Daha köhnə qeydləri göstər",
     "showing": "Son {count} qeyd göstərilir",
     "events": "{count, plural, one {# hadisə} other {# hadisə}}"
-  }
+  },
+  "publicForm": "Açıq forma (tələbə)"
 }

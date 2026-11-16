@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { AlertTriangle, CalendarClock, CheckCircle2, ChevronLeft, ChevronRight, Columns3, ListChecks, ListTodo, Rows3 } from "lucide-react";
+import { AlertTriangle, CalendarClock, CheckCircle2, Columns3, ListChecks, ListTodo, Rows3 } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { currentWeek } from "@/lib/constants";
 import type { CurrentUser } from "@/lib/auth";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { EmptyState } from "@/components/shared/empty-state";
+import { Pagination } from "@/components/shared/pagination";
+import { buildHref, one, type SearchParams } from "@/lib/search-params";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TaskProvider } from "./task-context";
@@ -22,8 +24,6 @@ import {
 import { TASK_STATUSES } from "./types";
 import type { TaskStatus } from "@/generated/prisma/enums";
 
-type SP = Record<string, string | string[] | undefined>;
-
 /**
  * Shared tasks workspace used by /tasks and /projects/[id]/tasks:
  * stat row, filters, view toggle (board / table / week) and the selected view.
@@ -36,7 +36,7 @@ export async function TaskWorkspace({
   heading,
 }: {
   user: CurrentUser;
-  searchParams: SP;
+  searchParams: SearchParams;
   /** fixed project (project tab) */
   projectId?: string;
   basePath: string;
@@ -51,25 +51,19 @@ export async function TaskWorkspace({
   const formProjects = await getTaskFormProjects(user, projectId);
   const contextProjectId = projectId ?? filters.project ?? (formProjects.length === 1 ? formProjects[0]!.id : undefined);
   const contextProject = formProjects.find((p) => p.id === contextProjectId);
+  // a member filter belongs to one project: drop it when that member is not offered (e.g. after the project changed)
+  if (filters.assignee && filters.assignee !== "mine" && filters.assignee !== "none" && !contextProject?.members.some((m) => m.id === filters.assignee)) {
+    filters.assignee = undefined;
+  }
   const canCreate = user.role !== "JURY" && formProjects.length > 0;
 
   const base = baseTaskWhere(user, filters, projectId);
   const where = fullTaskWhere(base, filters, now);
   const stats = await getTaskStats(base, now);
 
-  const href = (patch: Record<string, string | number | null>) => {
-    const next = new URLSearchParams();
-    for (const [k, v] of Object.entries(searchParams)) {
-      const val = Array.isArray(v) ? v[0] : v;
-      if (val) next.set(k, val);
-    }
-    for (const [k, v] of Object.entries(patch)) {
-      if (v === null || v === "") next.delete(k);
-      else next.set(k, String(v));
-    }
-    const qs = next.toString();
-    return qs ? `${basePath}?${qs}` : basePath;
-  };
+  const params: Record<string, string | undefined> = Object.fromEntries(Object.entries(searchParams).map(([k, v]) => [k, one(v)]));
+  const href = (patch: Record<string, string | number | null>) =>
+    buildHref(basePath, params, Object.fromEntries(Object.entries(patch).map(([k, v]) => [k, v === null ? undefined : String(v)])));
 
   const hasFilters = !!(filters.status || filters.priority || filters.due || filters.q || filters.assignee || (!projectId && filters.project));
 
@@ -91,28 +85,15 @@ export async function TaskWorkspace({
         />
       );
   } else if (view === "table") {
-    const { rows, total, page, pages } = await getTablePage(where, filters.page);
+    const { rows, total, page } = await getTablePage(where, filters.page);
     const items = rows.map((r) => toTaskItem(r, user, locale, now));
-    const from = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
-    const to = Math.min(total, page * PAGE_SIZE);
     body =
       total === 0 ? (
         <Empty filtered={hasFilters} resetHref={href({ status: null, priority: null, due: null, q: null, assignee: null, project: null, page: null })} />
       ) : (
         <div className="space-y-3">
           <TaskTable items={items} caption={t("table.caption")} />
-          <nav aria-label={t("table.pagination")} className="flex flex-col items-center justify-between gap-2 text-xs text-muted-foreground sm:flex-row">
-            <p className="tabular" aria-live="polite">
-              {t("table.showing", { from, to, total })}
-            </p>
-            {pages > 1 && (
-              <div className="flex items-center gap-2">
-                <PageLink href={page > 1 ? href({ page: page - 1 }) : null} label={t("table.prev")} icon="prev" />
-                <span className="tabular px-1 font-medium text-foreground">{t("table.page", { page, pages })}</span>
-                <PageLink href={page < pages ? href({ page: page + 1 }) : null} label={t("table.next")} icon="next" />
-              </div>
-            )}
-          </nav>
+          <Pagination basePath={basePath} params={params} page={page} pageSize={PAGE_SIZE} total={total} />
         </div>
       );
   } else {
@@ -131,7 +112,7 @@ export async function TaskWorkspace({
     ...(projectId ? [{ key: "week" as const, icon: ListChecks }] : []),
   ];
 
-  const newButton = <NewTaskButton projectId={contextProjectId} size={heading.kind === "page" ? "lg" : "default"} />;
+  const newButton = <NewTaskButton projectId={contextProjectId} />;
   const showProjectFilter = !projectId && formProjects.length > 1;
 
   return (
@@ -177,6 +158,9 @@ export async function TaskWorkspace({
             {view === "board" && <p className="hidden text-xs text-muted-foreground lg:block">{t("board.dragHint")}</p>}
           </div>
           <TaskFilters
+            action={basePath}
+            values={{ project: projectId ? undefined : filters.project, assignee: filters.assignee, status: filters.status, priority: filters.priority, due: filters.due, q: filters.q }}
+            view={params.view}
             projects={showProjectFilter ? formProjects.map((p) => ({ id: p.id, label: `${p.code} · ${p.title}` })) : undefined}
             members={contextProject?.members.map((m) => ({ id: m.id, label: m.name }))}
             showMine={user.role === "TEAM"}
@@ -197,31 +181,12 @@ async function Empty({ filtered, resetHref }: { filtered: boolean; resetHref: st
       title={t("filtered")}
       description={t("filteredDescription")}
       action={
-        <Button variant="outline" nativeButton={false} render={<Link href={resetHref} />}>
+        <Button variant="outline" size="lg" nativeButton={false} render={<Link href={resetHref} />}>
           {t("reset")}
         </Button>
       }
     />
   ) : (
     <EmptyState icon={ListTodo} title={t("title")} description={t("description")} />
-  );
-}
-
-function PageLink({ href, label, icon }: { href: string | null; label: string; icon: "prev" | "next" }) {
-  const Icon = icon === "prev" ? ChevronLeft : ChevronRight;
-  if (!href)
-    return (
-      <Button variant="outline" size="sm" disabled aria-label={label}>
-        {icon === "prev" && <Icon aria-hidden />}
-        <span className="hidden sm:inline">{label}</span>
-        {icon === "next" && <Icon aria-hidden />}
-      </Button>
-    );
-  return (
-    <Button variant="outline" size="sm" nativeButton={false} render={<Link href={href} />} aria-label={label}>
-      {icon === "prev" && <Icon aria-hidden />}
-      <span className="hidden sm:inline">{label}</span>
-      {icon === "next" && <Icon aria-hidden />}
-    </Button>
   );
 }

@@ -130,7 +130,7 @@ export function TaskBoard({
                     )}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      {showProject ? <ProjectCode task={task} /> : <span className="text-[11px] font-medium text-muted-foreground">{task.week ? t("weekLabel", { n: task.week }) : ""}</span>}
+                      {showProject ? <ProjectCode task={task} /> : <span className="text-2xs font-medium text-muted-foreground">{task.week ? t("weekLabel", { n: task.week }) : ""}</span>}
                       <PriorityBadge priority={task.priority} />
                     </div>
                     <p className="mt-1.5 text-sm leading-snug font-medium text-pretty">{task.title}</p>

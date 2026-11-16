@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/shell/app-sidebar";
@@ -10,6 +11,8 @@ import { fmtRelative } from "@/lib/format";
 
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const user = await requireUser();
+  // a generated temporary password must be replaced before the app can be used
+  if (user.mustChangePassword) redirect("/account/password");
   const locale = await getLocale();
   const [t, te, tn] = await Promise.all([getTranslations("common"), getTranslations("enums"), getTranslations("common.notifications")]);
 
@@ -49,7 +52,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
           <SidebarTrigger className="-ml-1" />
           <span aria-hidden className="mr-1 h-5 w-px bg-border" />
           <span className="hidden truncate text-xs font-medium text-muted-foreground md:inline">{t("university")}</span>
-          <span className="ml-1 hidden rounded-full bg-warning-soft px-2 py-0.5 text-[11px] font-semibold text-warning lg:inline">
+          <span className="ml-1 hidden rounded-full bg-warning-soft px-2 py-0.5 text-2xs font-semibold text-warning lg:inline">
             {t("demoBadge")}
           </span>
           <div className="ml-auto flex items-center gap-0.5">

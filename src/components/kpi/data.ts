@@ -8,6 +8,7 @@ export type FunnelStep = { key: string; value: number; target: number | null };
 
 /** All numbers for the KPI page / CSV snapshot, computed from records (never estimated). */
 export async function getKpiReport() {
+  const academyPromise = getAcademyPipeline();
   const [kpis, byStage, byCategory, byUni, universities, completed, sessions, projectsWithSessions, tasksTotal, tasksDone] = await Promise.all([
     getProgramKpis(),
     prisma.project.groupBy({ by: ["stage"], _count: { _all: true } }),
@@ -21,6 +22,7 @@ export async function getKpiReport() {
     prisma.task.count({ where: { status: "DONE" } }),
   ]);
   const T = kpis.targets;
+  const academy = await academyPromise;
 
   const funnel: FunnelStep[] = [
     { key: "applicationsTotal", value: kpis.applicationsTotal, target: null },
@@ -85,6 +87,35 @@ export async function getKpiReport() {
     tasksTotal,
     tasksDone,
     currentWeek: cw,
+    academy,
+  };
+}
+
+/**
+ * Academy pipeline (ADNSU TEKNOFEST 2027 Academy) — reported SEPARATELY from the program funnel:
+ * people and teams are different units, so no step-to-step conversion is computed between them.
+ */
+async function getAcademyPipeline() {
+  const liveTeam = { status: { in: ["FORMING", "ACTIVE"] as ("FORMING" | "ACTIVE")[] } };
+  const [studentsRegistered, studentsInTeams, teamsByStatus, applicationsFromTeams, trackedByStatus] = await Promise.all([
+    prisma.student.count({ where: { status: { not: "ARCHIVED" } } }),
+    prisma.student.count({ where: { status: { not: "ARCHIVED" }, team: liveTeam } }),
+    prisma.team.groupBy({ by: ["status"], where: liveTeam, _count: { _all: true } }),
+    prisma.application.count({ where: { teamId: { not: null } } }),
+    prisma.competition.groupBy({ by: ["ruleStatus"], where: { ruleStatus: { not: null } }, _count: { _all: true } }),
+  ]);
+  const team = (s: string) => teamsByStatus.find((g) => g.status === s)?._count._all ?? 0;
+  const rule = (s: string) => trackedByStatus.find((g) => g.ruleStatus === s)?._count._all ?? 0;
+  return {
+    studentsRegistered,
+    studentsInTeams,
+    teamsFormed: team("ACTIVE") + team("FORMING"),
+    teamsActive: team("ACTIVE"),
+    teamsForming: team("FORMING"),
+    applicationsFromTeams,
+    trackedCompetitions: trackedByStatus.reduce((a, g) => a + g._count._all, 0),
+    trackedChanged: rule("CHANGED"),
+    trackedConfirmed: rule("CONFIRMED"),
   };
 }
 

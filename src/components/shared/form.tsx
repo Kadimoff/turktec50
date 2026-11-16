@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-/** Labeled form field with helper text and inline error (error near field, never placeholder-only labels). */
+/**
+ * Labeled form field with helper text and inline error (error near field, never placeholder-only labels).
+ * `content-start` keeps fields in one grid row aligned when only one of them has a hint or an error.
+ */
 export function Field({
   label,
   htmlFor,
@@ -24,10 +27,12 @@ export function Field({
   className?: string;
 }) {
   return (
-    <div className={cn("grid gap-1.5", className)}>
-      <Label htmlFor={htmlFor} className="text-[13px] font-medium">
-        {label}
-        {required && <span className="text-danger" aria-hidden> *</span>}
+    <div className={cn("grid content-start gap-1.5", className)}>
+      <Label htmlFor={htmlFor} className="text-label font-medium">
+        <span>
+          {label}
+          {required && <span className="ms-0.5 text-danger" aria-hidden>*</span>}
+        </span>
       </Label>
       {children}
       {error ? (
@@ -43,21 +48,27 @@ export function Field({
   );
 }
 
-/** Submit button that shows a spinner while the parent <form action> is pending. */
+/**
+ * The one submit button. Pass `pending` from `useFormAction` (onSubmit forms); without it, the pending state of a
+ * parent `<form action>` is used. Default size `lg` (h-9) matches inputs and selects.
+ */
 export function SubmitButton({
   children,
   pendingLabel,
+  pending: pendingProp,
   className,
   variant,
-  size,
+  size = "lg",
 }: {
   children: React.ReactNode;
   pendingLabel?: string;
+  pending?: boolean;
   className?: string;
   variant?: React.ComponentProps<typeof Button>["variant"];
   size?: React.ComponentProps<typeof Button>["size"];
 }) {
-  const { pending } = useFormStatus();
+  const status = useFormStatus();
+  const pending = pendingProp ?? status.pending;
   return (
     <Button type="submit" disabled={pending} aria-busy={pending} className={className} variant={variant} size={size}>
       {pending && <Loader2 className="size-4 animate-spin" aria-hidden />}

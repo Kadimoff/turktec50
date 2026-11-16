@@ -1,0 +1,153 @@
+{
+  "eyebrow": "Academy",
+  "title": "Faculty, lab and partner registry",
+  "description": "ADNSU faculties, labs and industry partners in one place. Projects, students and resource requests link to these records; a record in use is archived, not deleted.",
+  "tabsLabel": "Registry sections",
+  "tabs": {
+    "faculties": "Faculties",
+    "labs": "Labs",
+    "partners": "Partners"
+  },
+  "search": {
+    "faculties": "Name, coordinator or note",
+    "labs": "Name, faculty, contact or note",
+    "partners": "Name, sector, contact or note"
+  },
+  "found": "{count, plural, one {# record} other {# records}}",
+  "noCoordinator": "No coordinator assigned",
+  "noFaculty": "Not linked to a faculty",
+  "noSector": "No sector given",
+  "empty": {
+    "noResults": "No results",
+    "noResultsHint": "Change the search term or the status filter.",
+    "faculties": "No faculties yet",
+    "facultiesHint": "Add the pilot university's faculties so students, teams and projects can be linked to them.",
+    "labs": "No labs yet",
+    "labsHint": "Add the labs teams work in — trainings and resource requests link to them.",
+    "partners": "No industry partners yet",
+    "partnersHint": "Add candidate or active partners; projects and resource requests can link to them."
+  },
+  "cols": {
+    "faculty": "Faculty",
+    "coordinator": "Coordinator",
+    "students": "Students",
+    "teams": "Teams",
+    "projects": "Projects",
+    "labs": "Labs",
+    "status": "Status",
+    "actions": "Actions",
+    "lab": "Lab",
+    "contact": "Contact",
+    "openRequests": "Open requests",
+    "upcomingTrainings": "Upcoming trainings",
+    "partner": "Partner",
+    "sector": "Sector",
+    "requests": "Resource requests"
+  },
+  "usage": {
+    "students": "{count, plural, one {# student} other {# students}}",
+    "teams": "{count, plural, one {# team} other {# teams}}",
+    "projects": "{count, plural, one {# project} other {# projects}}",
+    "labs": "{count, plural, one {# lab} other {# labs}}",
+    "users": "{count, plural, one {# user} other {# users}}",
+    "intakeRequests": "{count, plural, one {# preparation request} other {# preparation requests}}",
+    "intakeMembers": "{count, plural, one {# request member} other {# request members}}",
+    "trainings": "{count, plural, one {# training} other {# trainings}}",
+    "requests": "{count, plural, one {# resource request} other {# resource requests}}",
+    "openRequests": "{count, plural, one {# open request} other {# open requests}}",
+    "upcomingTrainings": "{count, plural, one {# upcoming training} other {# upcoming trainings}}"
+  },
+  "faculty": {
+    "create": "New faculty",
+    "createTitle": "Add faculty",
+    "editTitle": "Edit faculty",
+    "dialogDescription": "A faculty name must be unique within its university. The coordinator does not sign in — the field is for contact only."
+  },
+  "lab": {
+    "create": "New lab",
+    "createTitle": "Add lab",
+    "editTitle": "Edit lab",
+    "dialogDescription": "Lab status is used when planning trainings: closed labs are not offered for new trainings."
+  },
+  "partner": {
+    "create": "New partner",
+    "createTitle": "Add industry partner",
+    "editTitle": "Edit partner",
+    "dialogDescription": "Status tracks the partnership talks; the coordinator makes the decisions."
+  },
+  "actions": {
+    "edit": "Edit",
+    "editLabel": "Edit {name}",
+    "delete": "Delete",
+    "deleteLabel": "Delete {name}"
+  },
+  "delete": {
+    "title": "Delete “{name}”?",
+    "body": "The record will be deleted permanently. This cannot be undone, but it stays in the audit log.",
+    "inUseTitle": "“{name}” is in use",
+    "inUseBody": {
+      "faculty": "Records are still linked to this faculty, so it cannot be deleted. Archive it instead — history is kept and it is no longer offered for new links.",
+      "lab": "Projects, trainings or resource requests are linked to this lab, so it cannot be deleted. Set its status to “Closed” instead — it will no longer be offered for new trainings.",
+      "partner": "Projects or resource requests are linked to this partner, so it cannot be deleted. Archive it instead — history is kept."
+    },
+    "usedBy": "Linked records",
+    "alreadyRetired": {
+      "faculty": "The faculty is already archived.",
+      "lab": "The lab is already closed.",
+      "partner": "The partner is already archived."
+    },
+    "retire": {
+      "faculty": "Archive",
+      "lab": "Mark as closed",
+      "partner": "Archive"
+    }
+  },
+  "form": {
+    "pending": "Saving…"
+  },
+  "fields": {
+    "university": "University",
+    "universityHint": "The pilot university is selected by default.",
+    "chooseUniversity": "Choose a university",
+    "facultyName": "Faculty name",
+    "facultyNameHint": "E.g. Faculty of Digital Technologies",
+    "coordinator": "Coordinator",
+    "coordinatorHint": "Name or contact; no system account needed.",
+    "status": "Status",
+    "notes": "Notes",
+    "notesHint": "Internal note, visible to coordinators only.",
+    "faculty": "Faculty",
+    "facultyHint": "Leave empty if the lab does not belong to a faculty.",
+    "facultyNone": "Not linked to a faculty",
+    "facultyNoneAvailable": "No faculties registered for this university.",
+    "labName": "Lab name",
+    "contact": "Contact",
+    "contactHint": "Person in charge, phone or e-mail.",
+    "labStatusHint": "“Closed” labs are not offered for new trainings.",
+    "partnerName": "Partner name",
+    "sector": "Sector",
+    "sectorHint": "E.g. Energy, Logistics",
+    "partnerContactHint": "Contact person, phone or e-mail."
+  },
+  "errors": {
+    "nameShort": "The name must be at least 2 characters.",
+    "nameLong": "The name cannot be longer than 160 characters.",
+    "nameTaken": "A faculty with this name already exists at this university.",
+    "partnerTaken": "A partner with this name is already registered.",
+    "universityRequired": "Choose a university.",
+    "universityLocked": "Records are linked to this faculty — its university cannot be changed.",
+    "facultyMismatch": "The selected faculty does not belong to this university.",
+    "notFound": "Record not found — refresh the page.",
+    "inUse": "The record is in use and cannot be deleted.",
+    "invalid": "The data entered is not valid.",
+    "generic": "Something went wrong. Please try again.",
+    "tooLong": "The text is too long."
+  },
+  "toast": {
+    "created": "Record added",
+    "updated": "Changes saved",
+    "deleted": "Record deleted",
+    "archived": "Archived",
+    "closed": "Lab marked as closed"
+  }
+}

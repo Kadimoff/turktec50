@@ -1,0 +1,74 @@
+{
+  "eyebrow": "Proqram",
+  "title": "Elanlar",
+  "description": "Proqram koordinatorlarının sizin rolunuz üçün yayımladığı elanlar — ən yenisi yuxarıda.",
+  "descriptionAdmin": "Elanları qaralama kimi hazırlayın, auditoriyanı (rolları) seçin və yayımlayın. Yayım zamanı seçilmiş rollardakı aktiv istifadəçilərə sistem daxilində bildiriş göndərilir.",
+  "feed": "Elan lenti",
+  "sections": {
+    "drafts": "Qaralamalar",
+    "published": "Yayımlanmış elanlar"
+  },
+  "count": "{count, plural, one {# elan} other {# elan}}",
+  "empty": {
+    "feed": "Hələ elan yoxdur",
+    "feedHint": "Koordinatorlar sizin rolunuz üçün elan yayımladıqda burada görünəcək və bildiriş alacaqsınız.",
+    "drafts": "Qaralama yoxdur",
+    "draftsHint": "Yeni elan qaralama kimi saxlanılır və yayımlanana qədər yalnız koordinatorlara görünür.",
+    "published": "Yayımlanmış elan yoxdur",
+    "publishedHint": "Qaralamanı yayımladıqda o, seçilmiş rollara görünəcək."
+  },
+  "publishedAt": "{date} · {relative}",
+  "draftUpdated": "Son dəyişiklik: {relative}",
+  "by": "Müəllif: {name}",
+  "audience": "Auditoriya",
+  "form": {
+    "create": "Yeni elan",
+    "createTitle": "Elan hazırla",
+    "editTitle": "Elanı redaktə et",
+    "createDescription": "Elan qaralama kimi saxlanılır; yayımlamağa hazır olduqda “Yayımla” düyməsini basın.",
+    "editDescription": "Yayımlanmış elanda edilən dəyişikliklər dərhal görünür; təkrar bildiriş göndərilmir.",
+    "title": "Başlıq",
+    "body": "Mətn",
+    "bodyHint": "Sadə mətn; sətir keçidləri saxlanılır.",
+    "counter": "{count} / {max}",
+    "audience": "Kimlər görür",
+    "audienceHint": "Ən azı bir rol seçin. Yalnız seçilmiş rollar elanı görür və bildiriş alır.",
+    "pending": "Yadda saxlanılır…",
+    "saveDraft": "Qaralama kimi saxla"
+  },
+  "actions": {
+    "edit": "Redaktə et",
+    "editLabel": "Redaktə et: {title}",
+    "publish": "Yayımla",
+    "publishLabel": "Yayımla: {title}",
+    "unpublish": "Qaralamaya qaytar",
+    "unpublishLabel": "Qaralamaya qaytar: {title}",
+    "delete": "Sil",
+    "deleteLabel": "Sil: {title}"
+  },
+  "confirm": {
+    "publishTitle": "“{title}” yayımlansın?",
+    "publishBody": "{count, plural, =0 {Elan seçilmiş rollara görünəcək. Bildiriş alacaq aktiv istifadəçi yoxdur.} one {Elan seçilmiş rollara görünəcək və # istifadəçiyə bildiriş göndəriləcək.} other {Elan seçilmiş rollara görünəcək və # istifadəçiyə bildiriş göndəriləcək.}}",
+    "unpublishTitle": "“{title}” qaralamaya qaytarılsın?",
+    "unpublishBody": "Elan koordinatorlardan başqa heç kimə görünməyəcək. Artıq göndərilmiş bildirişlər geri alınmır.",
+    "deleteTitle": "“{title}” silinsin?",
+    "deleteBody": "Elan birdəfəlik silinəcək. Bu əməliyyat geri qaytarılmır, lakin əməliyyat jurnalında qalır."
+  },
+  "errors": {
+    "titleShort": "Başlıq ən azı 3 simvol olmalıdır.",
+    "titleLong": "Başlıq 160 simvoldan uzun ola bilməz.",
+    "bodyShort": "Mətn ən azı 10 simvol olmalıdır.",
+    "bodyLong": "Mətn 4000 simvoldan uzun ola bilməz.",
+    "audience": "Ən azı bir rol seçin.",
+    "notFound": "Elan tapılmadı — səhifəni yeniləyin.",
+    "invalid": "Daxil edilən məlumat düzgün deyil.",
+    "generic": "Xəta baş verdi. Yenidən cəhd edin."
+  },
+  "toast": {
+    "created": "Qaralama yaradıldı",
+    "updated": "Elan yeniləndi",
+    "published": "Elan yayımlandı",
+    "unpublished": "Elan qaralamaya qaytarıldı",
+    "deleted": "Elan silindi"
+  }
+}

@@ -1,16 +1,14 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireUser, type CurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { projectScope } from "@/lib/rbac";
-import { logAudit, notify } from "@/lib/audit";
-import type { ActionState } from "@/components/documents/types";
+import { logAudit, notify, type AuditAction } from "@/lib/audit";
+import { done, fail, failFromZod, formStr, type ActionState } from "@/lib/actions";
+import { parseBakuDate } from "@/lib/dates";
+import { revalidateLayout, revalidateProject, revalidateSets } from "@/lib/revalidate";
 import type { OwnerOption } from "@/components/risks/types";
-
-const fail = (message: string, errors?: Record<string, string>): ActionState => ({ ok: false, message, errors, ts: Date.now() });
-const done = (message: string): ActionState => ({ ok: true, message, ts: Date.now() });
 
 /** May `user` create/edit risks in this scope? Program-level (null) → ADMIN only; project → ADMIN, or TEAM/MENTOR with the project in scope. */
 async function canManageRisksIn(user: CurrentUser, projectId: string | null) {
@@ -40,9 +38,16 @@ export async function loadOwnerOptions(scope: string): Promise<OwnerOption[]> {
 }
 
 function refresh(projectId: string | null) {
-  revalidatePath("/risks");
-  if (projectId) revalidatePath(`/projects/${projectId}/risks`);
-  revalidatePath("/", "layout");
+  revalidateSets("risks", "dashboard");
+  if (projectId) revalidateProject(projectId, "risks", "activity");
+  revalidateLayout(); // navigation badge of open high risks
+}
+
+/** Audit key of a status change: closing → risk.close, reopening → risk.reopen, anything else → risk.update. */
+function statusAction(from: string, to: string): AuditAction {
+  if (from !== "CLOSED" && to === "CLOSED") return "risk.close";
+  if (from === "CLOSED" && to !== "CLOSED") return "risk.reopen";
+  return "risk.update";
 }
 
 const level = z.enum(["LOW", "MEDIUM", "HIGH"]);
@@ -59,33 +64,21 @@ const riskSchema = z.object({
   status: z.enum(["OPEN", "MITIGATING", "CLOSED"]).optional(),
 });
 
-function str(fd: FormData, k: string) {
-  const v = fd.get(k);
-  return typeof v === "string" ? v : undefined;
-}
-
 export async function saveRisk(_prev: ActionState, fd: FormData): Promise<ActionState> {
   const user = await requireUser();
   const parsed = riskSchema.safeParse({
-    riskId: str(fd, "riskId") || undefined,
-    scope: str(fd, "scope") ?? "",
-    title: str(fd, "title") ?? "",
-    description: str(fd, "description"),
-    probability: str(fd, "probability"),
-    impact: str(fd, "impact"),
-    mitigation: str(fd, "mitigation"),
-    ownerId: str(fd, "ownerId") || undefined,
-    reviewDate: str(fd, "reviewDate") ?? "",
-    status: str(fd, "status") || undefined,
+    riskId: formStr(fd, "riskId") || undefined,
+    scope: formStr(fd, "scope") ?? "",
+    title: formStr(fd, "title") ?? "",
+    description: formStr(fd, "description"),
+    probability: formStr(fd, "probability"),
+    impact: formStr(fd, "impact"),
+    mitigation: formStr(fd, "mitigation"),
+    ownerId: formStr(fd, "ownerId") || undefined,
+    reviewDate: formStr(fd, "reviewDate") ?? "",
+    status: formStr(fd, "status") || undefined,
   });
-  if (!parsed.success) {
-    const errors: Record<string, string> = {};
-    for (const i of parsed.error.issues) {
-      const k = String(i.path[0]);
-      if (!errors[k]) errors[k] = i.message.startsWith("errors.") ? i.message : "errors.invalid";
-    }
-    return fail(Object.values(errors)[0] ?? "errors.invalid", errors);
-  }
+  if (!parsed.success) return failFromZod(parsed.error);
   const v = parsed.data;
 
   // existing risk keeps its scope (program vs project) — moving risks between projects is not supported
@@ -100,8 +93,9 @@ export async function saveRisk(_prev: ActionState, fd: FormData): Promise<Action
     const allowed = await ownerCandidates(projectId);
     if (!allowed.some((o) => o.id === v.ownerId)) return fail("errors.owner", { ownerId: "errors.owner" });
   }
-  const reviewDate = v.reviewDate ? new Date(`${v.reviewDate}T12:00:00+04:00`) : null;
-  if (reviewDate && Number.isNaN(reviewDate.getTime())) return fail("errors.date", { reviewDate: "errors.date" });
+  // a Baku calendar day, stored at 12:00 Baku
+  const reviewDate = v.reviewDate ? parseBakuDate(v.reviewDate) : null;
+  if (v.reviewDate && !reviewDate) return fail("errors.date", { reviewDate: "errors.date" });
 
   const data = {
     title: v.title,
@@ -118,7 +112,7 @@ export async function saveRisk(_prev: ActionState, fd: FormData): Promise<Action
     await prisma.risk.update({ where: { id: existing.id }, data: { ...data, status } });
     await logAudit({
       actorId: user.id,
-      action: "risk.update",
+      action: statusAction(existing.status, status),
       entity: "Risk",
       entityId: existing.id,
       projectId,
@@ -126,7 +120,7 @@ export async function saveRisk(_prev: ActionState, fd: FormData): Promise<Action
       meta: { probability: v.probability, impact: v.impact, status, from: { probability: existing.probability, impact: existing.impact, status: existing.status } },
     });
     refresh(projectId);
-    return done("toast.updated");
+    return done(status === "CLOSED" && existing.status !== "CLOSED" ? "toast.closed" : "toast.updated");
   }
 
   const risk = await prisma.risk.create({
@@ -157,10 +151,12 @@ export async function setRiskStatus(riskId: string, status: "OPEN" | "CLOSED"): 
   const risk = await prisma.risk.findUnique({ where: { id: p.data.riskId }, select: { id: true, projectId: true, title: true, status: true } });
   if (!risk) return fail("errors.notFound");
   if (!(await canManageRisksIn(user, risk.projectId))) return fail("errors.forbidden");
+  const message = p.data.status === "CLOSED" ? "toast.closed" : "toast.reopened";
+  if (risk.status === p.data.status) return done(message); // double click / stale page: nothing to change
   await prisma.risk.update({ where: { id: risk.id }, data: { status: p.data.status } });
   await logAudit({
     actorId: user.id,
-    action: "risk.close",
+    action: statusAction(risk.status, p.data.status),
     entity: "Risk",
     entityId: risk.id,
     projectId: risk.projectId,
@@ -168,5 +164,5 @@ export async function setRiskStatus(riskId: string, status: "OPEN" | "CLOSED"): 
     meta: { from: risk.status, to: p.data.status },
   });
   refresh(risk.projectId);
-  return done(p.data.status === "CLOSED" ? "toast.closed" : "toast.reopened");
+  return done(message);
 }

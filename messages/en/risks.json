@@ -52,7 +52,7 @@
   },
   "filters": {
     "q": "Search",
-    "qPlaceholder": "Risk title or mitigation…",
+    "qPlaceholder": "Risk title or mitigation",
     "status": "Status",
     "active": "Active risks",
     "all": "All",
@@ -62,8 +62,6 @@
     "anyScope": "Program and projects",
     "programOnly": "Program level only",
     "projectsOnly": "Project risks only",
-    "apply": "Apply",
-    "reset": "Reset",
     "matrixActive": "Matrix filter: probability {p} · impact {i}"
   },
   "form": {

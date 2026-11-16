@@ -52,7 +52,7 @@
   },
   "filters": {
     "q": "Arama",
-    "qPlaceholder": "Risk adı veya azaltma…",
+    "qPlaceholder": "Risk adı veya azaltma",
     "status": "Durum",
     "active": "Aktif riskler",
     "all": "Tümü",
@@ -62,8 +62,6 @@
     "anyScope": "Program ve projeler",
     "programOnly": "Yalnızca program düzeyi",
     "projectsOnly": "Yalnızca proje riskleri",
-    "apply": "Uygula",
-    "reset": "Sıfırla",
     "matrixActive": "Matris filtresi: olasılık {p} · etki {i}"
   },
   "form": {

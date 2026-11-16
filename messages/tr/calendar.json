@@ -31,7 +31,8 @@
     "taskGroup": "Görev son tarihleri",
     "deadline": "Yarışma son tarihi",
     "milestone": "Program tarihi",
-    "sessionGroup": "Mentor oturumları"
+    "sessionGroup": "Mentor oturumları",
+    "training": "Eğitim"
   },
   "milestonesTitle": "Önemli tarihler",
   "milestones": {
@@ -56,7 +57,9 @@
     "deadline": "Başvuru son tarihi",
     "final": "Final",
     "teams": "Ekipler",
-    "website": "{name} — web sitesi (yeni pencerede)"
+    "website": "{name} — web sitesi (yeni pencerede)",
+    "noDeadline": "Açıklanmadı",
+    "unconfirmed": "Resmî olarak doğrulanmadı"
   },
   "yourCompetition": "Sizin yarışmanız",
   "minutes": "{count} dk",

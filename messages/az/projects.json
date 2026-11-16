@@ -14,13 +14,6 @@
   },
   "stageStrip": "Mərhələ üzrə filtr",
   "listLabel": "Layihələr siyahısı",
-  "pagination": {
-    "label": "Səhifələr",
-    "summary": "{from}–{to} / {total}",
-    "prev": "Əvvəlki",
-    "next": "Növbəti",
-    "page": "Səhifə {page} / {pages}"
-  },
   "team": {
     "noProject": "Hələ layihəyə qoşulmamısınız",
     "noProjectHint": "Koordinator sizi komandaya əlavə etdikdən sonra layihə burada görünəcək."
@@ -84,7 +77,9 @@
     "toast": "{code} layihəsi yaradıldı",
     "errors": {
       "required": "Bu sahə tələb olunur",
-      "tooLong": "Mətn çox uzundur"
+      "tooLong": "Mətn çox uzundur",
+      "competition": "Bu müsabiqə layihə üçün seçilə bilməz.",
+      "error": "Xəta baş verdi. Yenidən cəhd edin."
     }
   },
   "overview": {
@@ -130,7 +125,13 @@
     "jurors": "Münsiflər",
     "adminOnly": "Yalnız koordinator",
     "noJurors": "Münsif təyin olunmayıb.",
-    "quickLinks": "Bölmələr"
+    "quickLinks": "Bölmələr",
+    "academy": {
+      "title": "Akademiya bağlantıları",
+      "faculty": "Fakültə",
+      "lab": "Laboratoriya",
+      "partner": "Sənaye tərəfdaşı"
+    }
   },
   "manage": {
     "title": "Koordinator idarəetməsi",
@@ -178,7 +179,19 @@
       "noteRequired": "Qeyd ən azı 5 simvol olmalıdır.",
       "sameStage": "Layihə artıq bu mərhələdədir.",
       "notFound": "Qeyd tapılmadı.",
-      "duplicate": "Artıq təyin olunub."
-    }
+      "duplicate": "Artıq təyin olunub.",
+      "date": "Tarix düzgün deyil.",
+      "faculty": "Bu fakültə seçilə bilməz (başqa universitet və ya arxivdə).",
+      "required": "Bu sahə tələb olunur"
+    },
+    "academyTitle": "Akademiya bağlantıları",
+    "academySubtitle": "Layihənin fakültəsi, əsas laboratoriyası və sənaye tərəfdaşı. Dəyişiklik əməliyyat jurnalına yazılır.",
+    "faculty": "Fakültə",
+    "facultyHint": "Yalnız {university} fakültələri",
+    "lab": "Laboratoriya",
+    "partner": "Sənaye tərəfdaşı",
+    "notLinked": "Təyin olunmayıb",
+    "saveAcademy": "Bağlantıları yadda saxla",
+    "academySaved": "Akademiya bağlantıları yeniləndi"
   }
 }

@@ -4,7 +4,8 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
   LayoutDashboard, FolderKanban, FileInput, Briefcase, ListChecks, Users, FileCheck2, TriangleAlert, Gavel,
-  BarChart3, CalendarDays, UserCog, ScrollText, DatabaseZap, type LucideIcon,
+  BarChart3, CalendarDays, UserCog, ScrollText, DatabaseZap, School, Trophy, GraduationCap, UsersRound, Building2, Presentation,
+  Megaphone, Inbox, type LucideIcon,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader,
@@ -16,31 +17,35 @@ const icons: Record<NavIcon, LucideIcon> = {
   dashboard: LayoutDashboard, project: Briefcase, applications: FileInput, projects: FolderKanban, tasks: ListChecks,
   mentors: Users, documents: FileCheck2, risks: TriangleAlert, jury: Gavel, kpi: BarChart3, calendar: CalendarDays,
   users: UserCog, audit: ScrollText, system: DatabaseZap,
+  academy: School, catalog: Trophy, students: GraduationCap, teams: UsersRound, registry: Building2, trainings: Presentation,
+  announcements: Megaphone, intake: Inbox,
 };
+/** Section roots that must not stay highlighted on their sub-pages. */
+const EXACT = new Set(["/dashboard", "/academy"]);
 
 export function AppSidebar({ groups, week }: { groups: NavGroup[]; week: string }) {
   const t = useTranslations("nav");
   const tc = useTranslations("common");
   const pathname = usePathname();
-  const isActive = (href: string) => (href === "/dashboard" ? pathname === href : pathname === href || pathname.startsWith(href + "/"));
+  const isActive = (href: string) => (EXACT.has(href) ? pathname === href : pathname === href || pathname.startsWith(href + "/"));
 
   return (
     <Sidebar collapsible="icon" className="no-print">
       <SidebarHeader className="px-3 pt-4 pb-2">
         <Link href="/dashboard" className="flex items-center gap-2.5 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring">
-          <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-sidebar-primary text-[13px] font-extrabold tracking-tight text-sidebar-primary-foreground">
+          <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-sidebar-primary text-label font-semibold tracking-tight text-sidebar-primary-foreground">
             T50
           </span>
           <span className="min-w-0 group-data-[collapsible=icon]:hidden">
-            <span className="block truncate text-sm font-bold tracking-wide text-sidebar-accent-foreground">{tc("appName")}</span>
-            <span className="block truncate text-[11px] tracking-wide text-sidebar-foreground/75">{tc("appSubtitle")}</span>
+            <span className="block truncate text-sm font-bold text-sidebar-accent-foreground">{tc("appName")}</span>
+            <span className="block truncate text-2xs text-sidebar-foreground/75">{tc("appSubtitle")}</span>
           </span>
         </Link>
       </SidebarHeader>
       <SidebarContent>
         {groups.map((g) => (
           <SidebarGroup key={g.key}>
-            <SidebarGroupLabel className="text-[11px] tracking-wide text-sidebar-foreground/70">{t(`groups.${g.key}`)}</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-2xs text-sidebar-foreground/70">{t(`groups.${g.key}`)}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {g.items.map((item) => {
@@ -67,7 +72,7 @@ export function AppSidebar({ groups, week }: { groups: NavGroup[]; week: string 
       </SidebarContent>
       <SidebarFooter className="px-3 pb-4 group-data-[collapsible=icon]:hidden">
         <div className="rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2.5">
-          <p className="text-[11px] tracking-wide text-sidebar-foreground/70">{tc("academy")}</p>
+          <p className="text-2xs text-sidebar-foreground/70">{tc("academy")}</p>
           <p className="mt-1 text-sm font-semibold text-sidebar-accent-foreground">{week}</p>
         </div>
       </SidebarFooter>

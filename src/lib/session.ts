@@ -4,7 +4,7 @@ import { SignJWT, jwtVerify } from "jose";
 export const SESSION_COOKIE = "t50_session";
 export const SESSION_TTL_SECONDS = 60 * 60 * 12; // 12h
 
-export type SessionPayload = { uid: string; role: "ADMIN" | "TEAM" | "MENTOR" | "JURY" };
+export type SessionPayload = { uid: string; role: "ADMIN" | "TEAM" | "MENTOR" | "JURY"; /** issued-at, seconds */ iat?: number };
 
 function key() {
   const secret = process.env.SESSION_SECRET;
@@ -25,7 +25,7 @@ export async function verifySession(token: string | undefined): Promise<SessionP
   try {
     const { payload } = await jwtVerify(token, key(), { algorithms: ["HS256"] });
     if (typeof payload.uid !== "string" || typeof payload.role !== "string") return null;
-    return { uid: payload.uid, role: payload.role as SessionPayload["role"] };
+    return { uid: payload.uid, role: payload.role as SessionPayload["role"], iat: typeof payload.iat === "number" ? payload.iat : undefined };
   } catch {
     return null;
   }

@@ -31,7 +31,8 @@
     "taskGroup": "Tapşırıq son tarixləri",
     "deadline": "Yarışma son tarixi",
     "milestone": "Proqram tarixi",
-    "sessionGroup": "Mentor sessiyaları"
+    "sessionGroup": "Mentor sessiyaları",
+    "training": "Təlim"
   },
   "milestonesTitle": "Əsas tarixlər",
   "milestones": {
@@ -56,7 +57,9 @@
     "deadline": "Müraciət son tarixi",
     "final": "Final",
     "teams": "Komandalar",
-    "website": "{name} — sayt (yeni pəncərədə)"
+    "website": "{name} — sayt (yeni pəncərədə)",
+    "noDeadline": "Elan olunmayıb",
+    "unconfirmed": "Rəsmi təsdiqlənməyib"
   },
   "yourCompetition": "Sizin yarışma",
   "minutes": "{count} dəq",

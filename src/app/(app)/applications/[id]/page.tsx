@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
-import { ArrowRight, Building2, CalendarDays, ClipboardCheck, ChevronLeft, FolderKanban, Lightbulb, Mail, Tag, Target, Trophy, UserRound, Users } from "lucide-react";
+import { Building2, CalendarDays, ClipboardCheck, ChevronLeft, GraduationCap, Lightbulb, Mail, Tag, Target, Trophy, UserRound, Users } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { weightedScore } from "@/lib/kpi";
@@ -11,10 +11,9 @@ import { EnumBadge } from "@/components/shared/enum-badge";
 import { HumanControlNote } from "@/components/shared/notice";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { EmptyState } from "@/components/shared/empty-state";
-import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { SelectionRubricForm } from "@/components/applications/rubric-form";
-import { CreateWorkspaceButton, DecisionForm } from "@/components/applications/decision-panel";
+import { DecisionForm, WorkspacePanel } from "@/components/applications/decision-panel";
 
 export async function generateMetadata(props: PageProps<"/applications/[id]">) {
   const { id } = await props.params;
@@ -35,6 +34,7 @@ export default async function ApplicationDetailPage(props: PageProps<"/applicati
         university: { select: { name: true, shortName: true, city: true, country: true } },
         competition: { select: { name: true, organizer: true, applicationDeadline: true } },
         project: { select: { id: true, code: true, title: true } },
+        team: { select: { id: true, name: true, _count: { select: { members: true } } } },
         evaluations: {
           where: isAdmin ? {} : { evaluatorId: user.id },
           orderBy: { submittedAt: "asc" },
@@ -80,18 +80,18 @@ export default async function ApplicationDetailPage(props: PageProps<"/applicati
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           {/* application content */}
-          <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="app-content">
+          <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="app-content">
             <h2 id="app-content" className="text-sm font-semibold">{t("detail.content")}</h2>
             <div className="mt-4 grid gap-5 md:grid-cols-2">
               <div>
-                <h3 className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-muted-foreground">
+                <h3 className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
                   <Target className="size-3.5" aria-hidden />
                   {t("detail.problem")}
                 </h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-pretty">{app.problem}</p>
               </div>
               <div>
-                <h3 className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-muted-foreground">
+                <h3 className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
                   <Lightbulb className="size-3.5" aria-hidden />
                   {t("detail.solution")}
                 </h3>
@@ -209,19 +209,27 @@ export default async function ApplicationDetailPage(props: PageProps<"/applicati
 
         {/* side column */}
         <aside className="space-y-6">
-          <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="facts">
+          <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="facts">
             <h2 id="facts" className="text-sm font-semibold">{t("detail.facts")}</h2>
             <dl className="mt-3 space-y-3 text-sm">
               <Fact icon={Tag} label={t("detail.category")} value={tc(`categories.${app.category}` as never)} />
               <Fact icon={Building2} label={t("detail.university")} value={`${app.university.name} (${app.university.shortName})`} sub={`${app.university.city} · ${tc(`countries.${app.university.country}` as never)}`} />
               <Fact icon={Trophy} label={t("detail.competition")} value={app.competition?.name ?? "—"} sub={app.competition ? `${app.competition.organizer} · ${t("detail.deadline", { date: fmtDate(app.competition.applicationDeadline, locale) })}` : undefined} />
               <Fact icon={Users} label={t("detail.teamSize")} value={tc("members", { count: app.memberCount })} />
+              {app.team && (
+                <Fact
+                  icon={GraduationCap}
+                  label={t("detail.academyTeam")}
+                  value={isAdmin ? `${app.team.name} · ${tc("members", { count: app.team._count.members })}` : app.team.name}
+                  href={isAdmin ? `/academy/teams?team=${app.team.id}` : undefined}
+                />
+              )}
               <Fact icon={CalendarDays} label={t("detail.submittedAt")} value={fmtDate(app.submittedAt, locale)} />
               <Fact icon={ClipboardCheck} label={t("detail.evaluations")} value={t("detail.evaluationsValue", { count: submittedCount })} />
             </dl>
             {isAdmin && (
               <div className="mt-4 rounded-lg border border-dashed p-3">
-                <p className="text-xs font-semibold tracking-wide text-muted-foreground">{t("detail.contact")}</p>
+                <p className="text-xs font-semibold text-muted-foreground">{t("detail.contact")}</p>
                 <p className="mt-1.5 flex items-center gap-2 text-sm"><UserRound className="size-4 text-muted-foreground" aria-hidden />{app.contactName}</p>
                 <p className="mt-1 flex items-center gap-2 text-sm break-all">
                   <Mail className="size-4 shrink-0 text-muted-foreground" aria-hidden />
@@ -233,7 +241,7 @@ export default async function ApplicationDetailPage(props: PageProps<"/applicati
           </section>
 
           {isAdmin && (
-            <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="decision">
+            <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="decision">
               <h2 id="decision" className="text-sm font-semibold">{t("decision.title")}</h2>
               <p className="text-xs text-muted-foreground">{t("decision.subtitle")}</p>
               {app.decidedAt && (
@@ -245,27 +253,18 @@ export default async function ApplicationDetailPage(props: PageProps<"/applicati
                   {app.decisionNote && <p className="mt-2 text-pretty text-muted-foreground">{app.decisionNote}</p>}
                 </div>
               )}
-              <div className="mt-4">
+              <div className="mt-4 grid gap-4">
                 {app.project ? (
-                  <div className="space-y-3">
-                    <p className="text-sm text-muted-foreground">{t("decision.lockedByProject")}</p>
-                    <Button variant="outline" className="h-10 w-full" nativeButton={false} render={<Link href={`/projects/${app.project.id}`} />}>
-                      <FolderKanban aria-hidden />
-                      {t("workspace.open", { code: app.project.code })}
-                      <ArrowRight aria-hidden />
-                    </Button>
-                  </div>
+                  <p className="text-sm text-muted-foreground">{t("decision.lockedByProject")}</p>
                 ) : (
-                  <div className="space-y-4">
-                    <DecisionForm applicationId={app.id} current={app.status} note={app.decisionNote} />
-                    {app.status === "ACCEPTED" && (
-                      <div className="space-y-2 border-t pt-4">
-                        <p className="text-sm font-semibold">{t("workspace.title")}</p>
-                        <p className="text-xs text-muted-foreground">{t("workspace.hint")}</p>
-                        <CreateWorkspaceButton applicationId={app.id} contactEmail={app.contactEmail} />
-                      </div>
-                    )}
-                  </div>
+                  <DecisionForm applicationId={app.id} current={app.status} note={app.decisionNote} />
+                )}
+                {(app.project || app.status === "ACCEPTED") && (
+                  <WorkspacePanel
+                    applicationId={app.id}
+                    contactEmail={app.contactEmail}
+                    project={app.project ? { id: app.project.id, code: app.project.code } : null}
+                  />
                 )}
               </div>
             </section>
@@ -282,13 +281,15 @@ export default async function ApplicationDetailPage(props: PageProps<"/applicati
   );
 }
 
-function Fact({ icon: Icon, label, value, sub }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string; sub?: string }) {
+function Fact({ icon: Icon, label, value, sub, href }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string; sub?: string; href?: string }) {
   return (
     <div className="flex gap-2.5">
       <Icon className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden />
       <div className="min-w-0">
         <dt className="text-xs text-muted-foreground">{label}</dt>
-        <dd className="font-medium text-pretty">{value}</dd>
+        <dd className="font-medium text-pretty">
+          {href ? <Link href={href} className="text-primary hover:underline">{value}</Link> : value}
+        </dd>
         {sub && <dd className="text-xs text-muted-foreground">{sub}</dd>}
       </div>
     </div>

@@ -1,18 +1,11 @@
 {
-  "pagination": {
-    "label": "Səhifələmə",
-    "range": "{total} nəticədən {from}–{to}",
-    "prev": "Əvvəlki",
-    "next": "Növbəti",
-    "page": "Səhifə {page} / {pages}"
-  },
   "users": {
     "eyebrow": "İdarəetmə",
     "title": "İstifadəçilər",
     "description": "Rollar, universitet bağlılığı və hesab statusu. Yalnız proqram koordinatoru üçün görünür.",
     "create": "Yeni istifadəçi",
     "createTitle": "Yeni istifadəçi yarat",
-    "createHint": "İlkin şifrəni istifadəçiyə təhlükəsiz kanalla çatdırın; ilk girişdən sonra dəyişdirilməsi tövsiyə olunur.",
+    "createHint": "Yeni hesab üçün müvəqqəti şifrə yaradılır və yaradıldıqdan sonra bir dəfə göstərilir.",
     "editTitle": "İstifadəçini redaktə et",
     "toastCreated": "İstifadəçi yaradıldı",
     "toastActivated": "Hesab aktivləşdirildi",
@@ -24,9 +17,8 @@
       "title": "Vəzifə / titul",
       "titleHint": "Məsələn: Komanda lideri, Professor, Software engineer",
       "university": "Universitet",
-      "password": "İlkin şifrə",
-      "passwordHint": "Ən azı 8 simvol. Şifrə şifrələnmiş (hash) şəkildə saxlanılır.",
-      "status": "Status"
+      "status": "Status",
+      "passwordNote": "Şifrə yazmaq lazım deyil: sistem müvəqqəti şifrə yaradır, onu bir dəfə göstərir, istifadəçi isə ilk girişdə öz şifrəsini təyin edir."
     },
     "errors": {
       "forbidden": "Bu əməliyyat üçün icazəniz yoxdur.",
@@ -36,10 +28,10 @@
       "tooLong": "Mətn çox uzundur",
       "invalidEmail": "E-poçt ünvanı düzgün deyil",
       "emailTaken": "Bu e-poçtla istifadəçi artıq mövcuddur",
-      "passwordShort": "Şifrə ən azı 8 simvol olmalıdır",
       "invalid": "Daxil edilən məlumat düzgün deyil",
       "rootOnly": "Bu əməliyyatı yalnız root (sistem sahibi) edə bilər.",
-      "rootProtected": "Root hesabı qorunur və dəyişdirilə bilməz."
+      "rootProtected": "Root hesabı qorunur və dəyişdirilə bilməz.",
+      "selfPassword": "Öz şifrənizi istifadəçi menyusundan dəyişin (Şifrəni dəyiş)."
     },
     "noUniversity": "Universitet yoxdur",
     "actionsFor": "{name} üçün əməliyyatlar",
@@ -79,7 +71,24 @@
         "c2": "Root hesabı heç kim tərəfindən deaktiv edilə və ya rolu dəyişdirilə bilməz",
         "c3": "Ayrıca, demo şifrəsindən fərqli şifrə ilə qorunur; bütün əməliyyatları jurnala yazılır"
       }
-    }
+    },
+    "toastSaved": "Yadda saxlanıldı",
+    "toastReset": "Yeni müvəqqəti şifrə yaradıldı",
+    "created": {
+      "title": "İstifadəçi yaradıldı",
+      "body": "{email} üçün hesab hazırdır. Aşağıdakı müvəqqəti şifrəni təhvil verin."
+    },
+    "done": "Hazırdır",
+    "resetPassword": "Yeni şifrə yarat",
+    "reset": {
+      "title": "{name} üçün yeni şifrə yaradılsın?",
+      "body": "Müvəqqəti şifrə cari şifrəni dərhal əvəz edir və bir dəfə göstərilir. İstifadəçi növbəti girişdə öz şifrəsini təyin etməlidir.",
+      "confirm": "Şifrə yarat",
+      "pending": "Yaradılır…",
+      "doneTitle": "{name} üçün yeni şifrə",
+      "doneBody": "Əvvəlki şifrə artıq işləmir."
+    },
+    "pendingPassword": "Müvəqqəti şifrə"
   },
   "system": {
     "eyebrow": "Yalnız root",
@@ -100,7 +109,13 @@
         "risks": "Risklər",
         "evaluations": "Qiymətləndirmələr",
         "audit": "Jurnal qeydləri",
-        "notifications": "Bildirişlər"
+        "notifications": "Bildirişlər",
+        "students": "Tələbələr",
+        "teams": "Akademiya komandaları",
+        "trainings": "Təlimlər",
+        "resources": "Resurs sorğuları",
+        "announcements": "Elanlar",
+        "intake": "Hazırlıq müraciətləri"
       }
     },
     "roles": {
@@ -134,8 +149,8 @@
     },
     "wipe": {
       "title": "Bütün proqram məlumatlarını sil",
-      "body": "Bütün istifadəçilər (root istisna), müraciətlər, layihələr, tapşırıqlar, sənədlər, risklər, qiymətləndirmələr, bildirişlər və əməliyyat jurnalı silinir. Bu əməliyyat geri qaytarılmır.",
-      "keeps": "Qalır: root hesabı, universitetlər, yarışmalar, rubriklər",
+      "body": "Bütün istifadəçilər (root istisna), akademiya tələbələri, komandaları, təlimləri və elanları, müraciətlər, layihələr, tapşırıqlar, sənədlər, risklər, resurs sorğuları, qiymətləndirmələr, bildirişlər və əməliyyat jurnalı silinir. Bu əməliyyat geri qaytarılmır.",
+      "keeps": "Qalır: root hesabı, universitetlər, yarışmalar (kataloq və qayda izləməsi), rubriklər, fakültə, laboratoriya və tərəfdaş reyestri",
       "removes": "Silinir: digər bütün məlumatlar və yüklənmiş fayllar",
       "hint": "Demo məlumatlarını yenidən yükləmək üçün serverdə: npm run db:seed",
       "button": "Hamısını sil",

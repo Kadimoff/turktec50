@@ -8,7 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { PageHeader } from "@/components/shared/page-header";
 import { DemoNote } from "@/components/shared/notice";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Panel } from "@/components/dashboard/parts";
+import { Panel, PanelLink } from "@/components/dashboard/parts";
 import { getKpiReport } from "@/components/kpi/data";
 import { KpiFunnel } from "@/components/kpi/funnel";
 import { BarList } from "@/components/kpi/bar-list";
@@ -34,6 +34,8 @@ export default async function KpiPage() {
   const now = new Date();
   const T = r.kpis.targets;
   const taskPct = r.tasksTotal ? Math.round((r.tasksDone / r.tasksTotal) * 100) : 0;
+  const a = r.academy;
+  const inTeamsPct = a.studentsRegistered ? Math.round((a.studentsInTeams / a.studentsRegistered) * 100) : 0;
   const targetFor: Record<(typeof DEFINITIONS)[number], string> = {
     applicationsEvaluated: String(T.applicationsEvaluated),
     teamsAccepted: String(T.teamsAccepted),
@@ -68,11 +70,11 @@ export default async function KpiPage() {
         description={t("description")}
         actions={
           <>
-            <a href="/kpi/export?type=projects" download className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 px-3")}>
+            <a href="/kpi/export?type=projects" download className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
               <FileSpreadsheet aria-hidden />
               {t("export.projects")}
             </a>
-            <a href="/kpi/export?type=kpi" download className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 px-3")}>
+            <a href="/kpi/export?type=kpi" download className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
               <Download aria-hidden />
               {t("export.kpi")}
             </a>
@@ -83,6 +85,28 @@ export default async function KpiPage() {
 
       <Panel id="funnel" title={t("funnel.title")} subtitle={t("funnel.subtitle")}>
         <KpiFunnel steps={r.funnel} />
+      </Panel>
+
+      {/* Academy pipeline: separate from the funnel (people vs teams — no step-to-step conversion) */}
+      <Panel id="academy" title={t("academy.title")} subtitle={t("academy.subtitle")} action={<PanelLink href="/academy">{t("academy.link")}</PanelLink>}>
+        <div className="grid gap-5 lg:grid-cols-[2fr_2fr_1fr]">
+          <AcademyGroup title={t("academy.groups.people")}>
+            <AcademyTile label={t("academy.studentsRegistered")} value={a.studentsRegistered} hint={t("academy.studentsRegisteredHint")} />
+            <AcademyTile label={t("academy.studentsInTeams")} value={a.studentsInTeams} hint={t("academy.studentsInTeamsHint", { pct: inTeamsPct })} />
+          </AcademyGroup>
+          <AcademyGroup title={t("academy.groups.teams")}>
+            <AcademyTile label={t("academy.teamsFormed")} value={a.teamsFormed} hint={t("academy.teamsFormedHint", { active: a.teamsActive, forming: a.teamsForming })} />
+            <AcademyTile label={t("academy.applicationsFromTeams")} value={a.applicationsFromTeams} hint={t("academy.applicationsFromTeamsHint")} />
+          </AcademyGroup>
+          <AcademyGroup title={t("academy.groups.competitions")} single>
+            <AcademyTile
+              label={t("academy.trackedCompetitions")}
+              value={a.trackedCompetitions}
+              hint={t("academy.trackedCompetitionsHint", { confirmed: a.trackedConfirmed, changed: a.trackedChanged })}
+            />
+          </AcademyGroup>
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">{t("academy.note")}</p>
       </Panel>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -103,7 +127,7 @@ export default async function KpiPage() {
         <Panel id="turkic" title={t("charts.turkic")} subtitle={t("charts.turkicSub", { unis: r.partnerUniversities, countries: r.partnerCountries })}>
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
-              <h3 className="mb-1 text-xs font-semibold tracking-wide text-muted-foreground">{t("charts.byCountry")}</h3>
+              <h3 className="mb-1 text-xs font-semibold text-muted-foreground">{t("charts.byCountry")}</h3>
               <BarList
                 label={t("charts.byCountry")}
                 items={r.countries.map((c) => ({
@@ -115,7 +139,7 @@ export default async function KpiPage() {
               />
             </div>
             <div>
-              <h3 className="mb-1 text-xs font-semibold tracking-wide text-muted-foreground">{t("charts.byUniversity")}</h3>
+              <h3 className="mb-1 text-xs font-semibold text-muted-foreground">{t("charts.byUniversity")}</h3>
               <BarList
                 label={t("charts.byUniversity")}
                 items={r.universities.slice(0, 7).map((u) => ({
@@ -217,6 +241,25 @@ export default async function KpiPage() {
         <p className="text-xs text-muted-foreground">{t("footnote")}</p>
         <DemoNote />
       </div>
+    </div>
+  );
+}
+
+function AcademyGroup({ title, single, children }: { title: string; single?: boolean; children: React.ReactNode }) {
+  return (
+    <div className="min-w-0" data-print-block>
+      <h3 className="mb-2 text-xs font-semibold text-muted-foreground">{title}</h3>
+      <dl className={single ? "grid gap-3" : "grid grid-cols-2 gap-3"}>{children}</dl>
+    </div>
+  );
+}
+
+function AcademyTile({ label, value, hint }: { label: string; value: number; hint: string }) {
+  return (
+    <div className="rounded-lg border px-3 py-2.5">
+      <dt className="text-xs leading-tight text-muted-foreground">{label}</dt>
+      <dd className="tabular mt-0.5 text-2xl font-bold">{value}</dd>
+      <dd className="text-xs text-muted-foreground">{hint}</dd>
     </div>
   );
 }

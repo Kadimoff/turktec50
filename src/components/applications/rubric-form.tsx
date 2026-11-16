@@ -1,5 +1,5 @@
 "use client";
-import { useActionState, useEffect, useMemo, useRef, useState, startTransition } from "react";
+import { useMemo, useRef, useState, startTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Info, Loader2, Lock, Send } from "lucide-react";
@@ -10,6 +10,7 @@ import {
   AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Field } from "@/components/shared/form";
+import { useFormAction } from "@/components/shared/use-form-action";
 import { ToneBadge } from "@/components/shared/tone-badge";
 import { ProgressBar } from "@/components/shared/progress-bar";
 import { saveSelectionEvaluation, type EvalState } from "@/app/(app)/applications/actions";
@@ -37,7 +38,10 @@ export function SelectionRubricForm({
   const t = useTranslations("applications.rubric");
   const tj = useTranslations("jury");
   const tc = useTranslations("common");
-  const [state, formAction, pending] = useActionState<EvalState, FormData>(saveSelectionEvaluation, undefined);
+  const { state, pending, dispatch } = useFormAction<EvalState>(saveSelectionEvaluation, {
+    onDone: (s) => toast.success(t((s.message ?? "toastDraft") as never)),
+    onFail: (s) => toast.error(t((s.message ?? "errors.error") as never)),
+  });
   const [scores, setScores] = useState<Record<string, number>>(initial.scores);
   const [missing, setMissing] = useState<string[]>([]);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -47,21 +51,15 @@ export function SelectionRubricForm({
 
   const score = useMemo(() => preview(criteria, scores), [criteria, scores]);
   const scoredCount = criteria.filter((c) => typeof scores[c.id] === "number").length;
-  const serverMissing = state && !state.ok && state.error === "incomplete" ? (state.missing ?? []) : [];
+  const serverMissing = !state.ok ? (state.missing ?? []) : [];
   const shownMissing = [...new Set([...missing, ...serverMissing])].filter((id) => typeof scores[id] !== "number");
-
-  useEffect(() => {
-    if (!state) return;
-    if (state.ok) toast.success(state.intent === "submit" ? t("toastSubmitted") : t("toastDraft"));
-    else toast.error(t(`errors.${state.error}`));
-  }, [state, t]);
 
   function run(intent: "draft" | "submit") {
     if (!formRef.current) return;
     const fd = new FormData(formRef.current);
     fd.set("intent", intent);
     setLastIntent(intent);
-    startTransition(() => formAction(fd));
+    startTransition(() => dispatch(fd));
   }
 
   function requestSubmit() {
@@ -141,7 +139,7 @@ export function SelectionRubricForm({
                         )}
                       >
                         <span className="tabular text-base font-bold leading-none">{v}</span>
-                        <span className="max-w-full text-[10px] leading-tight tracking-tight hyphens-auto [overflow-wrap:anywhere] sm:text-[11px] sm:tracking-normal">{tj(`scale.${v}`)}</span>
+                        <span className="max-w-full text-2xs leading-tight tracking-tight hyphens-auto [overflow-wrap:anywhere] sm:text-2xs sm:tracking-normal">{tj(`scale.${v}`)}</span>
                       </label>
                     </div>
                   );
@@ -178,11 +176,11 @@ export function SelectionRubricForm({
 
       {!locked && (
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-          <Button type="submit" variant="outline" className="h-10" disabled={pending} aria-busy={pending && lastIntent === "draft"}>
+          <Button type="submit" variant="outline" size="lg" disabled={pending} aria-busy={pending && lastIntent === "draft"}>
             {pending && lastIntent === "draft" && <Loader2 className="size-4 animate-spin" aria-hidden />}
             {tc("actions.saveDraft")}
           </Button>
-          <Button type="button" className="h-10" disabled={pending} onClick={requestSubmit} aria-busy={pending && lastIntent === "submit"}>
+          <Button type="button" size="lg" disabled={pending} onClick={requestSubmit} aria-busy={pending && lastIntent === "submit"}>
             {pending && lastIntent === "submit" ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Send aria-hidden />}
             {t("submit")}
           </Button>

@@ -73,13 +73,13 @@ export async function ChecklistItemCard({
                 <span className="break-words">{label}</span>
                 <span
                   className={cn(
-                    "rounded-md border px-1.5 py-px text-[11px] font-semibold",
+                    "rounded-md border px-1.5 py-px text-2xs font-semibold",
                     item.required ? "border-danger/30 text-danger" : "text-muted-foreground",
                   )}
                 >
                   {item.required ? t("required") : t("optional")}
                 </span>
-                {!item.key && <span className="rounded-md bg-muted px-1.5 py-px text-[11px] font-medium text-muted-foreground">{t("custom")}</span>}
+                {!item.key && <span className="rounded-md bg-muted px-1.5 py-px text-2xs font-medium text-muted-foreground">{t("custom")}</span>}
               </h4>
               {hint && <p className="mt-1 text-xs text-pretty text-muted-foreground">{hint}</p>}
             </div>
@@ -198,12 +198,12 @@ export async function ChecklistItemCard({
                       >
                         {d.fileName}
                       </a>
-                      <p className="text-[11px] text-muted-foreground">
+                      <p className="text-2xs text-muted-foreground">
                         {fmtBytes(d.size)} · {d.uploadedBy?.name ?? t("unknownUser")} · {fmtDateTime(d.createdAt, locale)}
                       </p>
                     </div>
                     {d.confidential && (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-warning">
+                      <span className="inline-flex items-center gap-1 text-2xs font-semibold text-warning">
                         <Lock className="size-3" aria-hidden />
                         {t("confidential")}
                       </span>

@@ -1,0 +1,74 @@
+{
+  "eyebrow": "Program",
+  "title": "Announcements",
+  "description": "Announcements from the program coordinators for your role — newest first.",
+  "descriptionAdmin": "Draft announcements, choose the audience (roles) and publish. On publishing, active users in the selected roles receive an in-app notification.",
+  "feed": "Announcement feed",
+  "sections": {
+    "drafts": "Drafts",
+    "published": "Published announcements"
+  },
+  "count": "{count, plural, one {# announcement} other {# announcements}}",
+  "empty": {
+    "feed": "No announcements yet",
+    "feedHint": "When coordinators publish an announcement for your role, it will appear here and you will be notified.",
+    "drafts": "No drafts",
+    "draftsHint": "A new announcement is saved as a draft and only coordinators see it until it is published.",
+    "published": "No published announcements",
+    "publishedHint": "Once you publish a draft, the selected roles will see it."
+  },
+  "publishedAt": "{date} · {relative}",
+  "draftUpdated": "Last edited {relative}",
+  "by": "By {name}",
+  "audience": "Audience",
+  "form": {
+    "create": "New announcement",
+    "createTitle": "Draft an announcement",
+    "editTitle": "Edit announcement",
+    "createDescription": "The announcement is saved as a draft; press “Publish” when it is ready.",
+    "editDescription": "Changes to a published announcement are visible immediately; no new notification is sent.",
+    "title": "Title",
+    "body": "Text",
+    "bodyHint": "Plain text; line breaks are kept.",
+    "counter": "{count} / {max}",
+    "audience": "Who can see it",
+    "audienceHint": "Choose at least one role. Only the selected roles see the announcement and get notified.",
+    "pending": "Saving…",
+    "saveDraft": "Save as draft"
+  },
+  "actions": {
+    "edit": "Edit",
+    "editLabel": "Edit {title}",
+    "publish": "Publish",
+    "publishLabel": "Publish {title}",
+    "unpublish": "Back to draft",
+    "unpublishLabel": "Move {title} back to draft",
+    "delete": "Delete",
+    "deleteLabel": "Delete {title}"
+  },
+  "confirm": {
+    "publishTitle": "Publish “{title}”?",
+    "publishBody": "{count, plural, =0 {The announcement will be visible to the selected roles. No active users will be notified.} one {The announcement will be visible to the selected roles and # user will be notified.} other {The announcement will be visible to the selected roles and # users will be notified.}}",
+    "unpublishTitle": "Move “{title}” back to draft?",
+    "unpublishBody": "Only coordinators will see the announcement. Notifications already sent are not withdrawn.",
+    "deleteTitle": "Delete “{title}”?",
+    "deleteBody": "The announcement will be deleted permanently. This cannot be undone, but it stays in the audit log."
+  },
+  "errors": {
+    "titleShort": "The title must be at least 3 characters.",
+    "titleLong": "The title cannot be longer than 160 characters.",
+    "bodyShort": "The text must be at least 10 characters.",
+    "bodyLong": "The text cannot be longer than 4000 characters.",
+    "audience": "Choose at least one role.",
+    "notFound": "Announcement not found — refresh the page.",
+    "invalid": "The data entered is not valid.",
+    "generic": "Something went wrong. Please try again."
+  },
+  "toast": {
+    "created": "Draft created",
+    "updated": "Announcement updated",
+    "published": "Announcement published",
+    "unpublished": "Announcement moved back to draft",
+    "deleted": "Announcement deleted"
+  }
+}

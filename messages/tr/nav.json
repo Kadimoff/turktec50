@@ -3,7 +3,8 @@
     "workspace": "Çalışma alanı",
     "evaluation": "Değerlendirme",
     "program": "Program",
-    "admin": "Yönetim"
+    "admin": "Yönetim",
+    "academy": "Akademi"
   },
   "dashboard": "Genel bakış",
   "myProject": "Projem",
@@ -25,8 +26,19 @@
     "documents": "Belge kontrol listesi",
     "risks": "Riskler",
     "evaluations": "Değerlendirme",
-    "activity": "Etkinlik"
+    "activity": "Etkinlik",
+    "resources": "Kaynak talepleri"
   },
   "toggleSidebar": "Menüyü aç/kapat",
-  "system": "Sistem (root)"
+  "system": "Sistem (root)",
+  "academy": "Akademi genel bakış",
+  "catalog": "Yarışma kataloğu",
+  "students": "Öğrenciler",
+  "teams": "Ekipler",
+  "registry": "Fakülte, laboratuvar, ortak",
+  "trainings": "Eğitimler",
+  "announcements": "Duyurular",
+  "myAcademyTeams": "Akademi ekiplerim",
+  "intake": "Hazırlık başvuruları",
+  "applyPrep": "Hazırlık başvurusu"
 }

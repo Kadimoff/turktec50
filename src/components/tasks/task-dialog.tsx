@@ -1,27 +1,28 @@
 "use client";
-import { useActionState, useState, useTransition } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { addDays, format } from "date-fns";
-import { Loader2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
-import { Field, NativeSelect } from "@/components/shared/form";
+import { Field, NativeSelect, SubmitButton } from "@/components/shared/form";
+import { useFormAction } from "@/components/shared/use-form-action";
+import { bakuAddDays, bakuYmd } from "@/lib/dates";
 import { createTask, updateTask } from "@/app/(app)/tasks/actions";
 import { useTaskContext } from "./task-context";
-import { PRIORITIES, initialActionState, type ActionState, type TaskItem } from "./types";
+import { PRIORITIES, type TaskItem } from "./types";
 
 /** "New task" button + dialog (uses the projects from TaskProvider). */
-export function NewTaskButton({ projectId, size }: { projectId?: string; size?: React.ComponentProps<typeof Button>["size"] }) {
+export function NewTaskButton({ projectId }: { projectId?: string }) {
   const t = useTranslations("tasks");
   const { canCreate, projects } = useTaskContext();
   const [open, setOpen] = useState(false);
   if (!canCreate || projects.length === 0) return null;
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button size={size ?? "lg"} />}>
+      <DialogTrigger render={<Button size="lg" />}>
         <Plus className="size-4" aria-hidden />
         {t("actions.new")}
       </DialogTrigger>
@@ -60,34 +61,28 @@ function TaskForm({ mode, task, defaultProjectId, onDone }: { mode: "create" | "
   const { projects, currentWeek } = useTaskContext();
   const [projectId, setProjectId] = useState(task?.projectId ?? defaultProjectId ?? (projects.length === 1 ? projects[0]!.id : ""));
   const project = projects.find((p) => p.id === projectId);
-  const [, startTransition] = useTransition();
 
-  const [state, formAction, pending] = useActionState(async (prev: ActionState, fd: FormData) => {
-    const r = mode === "create" ? await createTask(prev, fd) : await updateTask(prev, fd);
-    if (r.ok) {
+  const { state, pending, onSubmit, error } = useFormAction(mode === "create" ? createTask : updateTask, {
+    onDone: () => {
       toast.success(mode === "create" ? t("toast.created") : t("toast.updated"));
       onDone();
-    } else if (r.error && !r.fieldErrors) {
-      toast.error(t(r.error));
-    }
-    return r;
-  }, initialActionState);
+    },
+    // field errors are shown inline; anything else (forbidden, not found…) as a toast
+    onFail: (r) => {
+      if (!r.errors && r.message) toast.error(t(r.message));
+    },
+  });
 
-  const err = (k: string) => (state.fieldErrors?.[k] ? t(state.fieldErrors[k]) : undefined);
+  const err = (k: string) => {
+    const e = error(k);
+    return e ? t(e) : undefined;
+  };
   const fid = (k: string) => `task-${k}`;
-  const desc = (k: string, hint?: boolean) => (state.fieldErrors?.[k] ? `${fid(k)}-error` : hint ? `${fid(k)}-hint` : undefined);
-  const defaultDue = task?.dueISO ?? format(addDays(new Date(), 7), "yyyy-MM-dd");
+  const desc = (k: string, hint?: boolean) => (error(k) ? `${fid(k)}-error` : hint ? `${fid(k)}-hint` : undefined);
+  const defaultDue = task?.dueISO ?? bakuYmd(bakuAddDays(new Date(), 7));
 
   return (
-    <form
-      noValidate
-      onSubmit={(e) => {
-        e.preventDefault();
-        const fd = new FormData(e.currentTarget);
-        startTransition(() => formAction(fd));
-      }}
-      className="grid gap-4"
-    >
+    <form noValidate onSubmit={onSubmit} className="grid gap-4">
       {task && <input type="hidden" name="id" value={task.id} />}
 
       {mode === "create" && projects.length > 1 ? (
@@ -98,7 +93,7 @@ function TaskForm({ mode, task, defaultProjectId, onDone }: { mode: "create" | "
             value={projectId}
             onChange={(e) => setProjectId(e.target.value)}
             required
-            aria-invalid={!!state.fieldErrors?.projectId}
+            aria-invalid={!!error("projectId")}
             aria-describedby={desc("projectId")}
           >
             <option value="">{t("form.projectPlaceholder")}</option>
@@ -129,10 +124,9 @@ function TaskForm({ mode, task, defaultProjectId, onDone }: { mode: "create" | "
           required
           maxLength={160}
           placeholder={t("form.titlePlaceholder")}
-          aria-invalid={!!state.fieldErrors?.title}
+          aria-invalid={!!error("title")}
           aria-describedby={desc("title")}
           autoFocus
-          className="h-9"
         />
       </Field>
 
@@ -145,31 +139,30 @@ function TaskForm({ mode, task, defaultProjectId, onDone }: { mode: "create" | "
           maxLength={400}
           rows={2}
           placeholder={t("form.criterionPlaceholder")}
-          aria-invalid={!!state.fieldErrors?.acceptanceCriteria}
+          aria-invalid={!!error("acceptanceCriteria")}
           aria-describedby={desc("acceptanceCriteria", true)}
         />
       </Field>
 
-      <Field label={t("form.assignee")} htmlFor={fid("assigneeId")} hint={t("form.assigneeHint")} error={err("assigneeId")}>
-        <NativeSelect
-          id={fid("assigneeId")}
-          name="assigneeId"
-          defaultValue={task?.assignee?.id ?? ""}
-          key={projectId}
-          disabled={!project}
-          aria-invalid={!!state.fieldErrors?.assigneeId}
-          aria-describedby={desc("assigneeId", true)}
-        >
-          <option value="">{t("form.noAssignee")}</option>
-          {project?.members.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.isLead ? `${m.name} (${t("form.lead")})` : m.name}
-            </option>
-          ))}
-        </NativeSelect>
-      </Field>
-
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid items-start gap-4 sm:grid-cols-2">
+        <Field label={t("form.assignee")} htmlFor={fid("assigneeId")} hint={t("form.assigneeHint")} error={err("assigneeId")}>
+          <NativeSelect
+            id={fid("assigneeId")}
+            name="assigneeId"
+            defaultValue={task?.assignee?.id ?? ""}
+            key={projectId}
+            disabled={!project}
+            aria-invalid={!!error("assigneeId")}
+            aria-describedby={desc("assigneeId", true)}
+          >
+            <option value="">{t("form.noAssignee")}</option>
+            {project?.members.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.isLead ? `${m.name} (${t("form.lead")})` : m.name}
+              </option>
+            ))}
+          </NativeSelect>
+        </Field>
         <Field label={t("form.due")} htmlFor={fid("dueDate")} required error={err("dueDate")}>
           <Input
             id={fid("dueDate")}
@@ -177,9 +170,8 @@ function TaskForm({ mode, task, defaultProjectId, onDone }: { mode: "create" | "
             type="date"
             required
             defaultValue={defaultDue}
-            aria-invalid={!!state.fieldErrors?.dueDate}
+            aria-invalid={!!error("dueDate")}
             aria-describedby={desc("dueDate")}
-            className="h-9"
           />
         </Field>
         <Field label={t("form.priority")} htmlFor={fid("priority")} required>
@@ -214,18 +206,17 @@ function TaskForm({ mode, task, defaultProjectId, onDone }: { mode: "create" | "
         />
       </Field>
 
-      {state.error && state.fieldErrors && (
+      {!state.ok && state.errors && state.message === "errors.invalid" && (
         <p role="alert" className="text-xs font-medium text-danger">
-          {t(state.error)}
+          {t(state.message)}
         </p>
       )}
 
       <DialogFooter>
-        <DialogClose render={<Button type="button" variant="outline" />}>{tc("actions.cancel")}</DialogClose>
-        <Button type="submit" disabled={pending} aria-busy={pending}>
-          {pending && <Loader2 className="size-4 animate-spin" aria-hidden />}
-          {pending ? t("form.pending") : mode === "create" ? t("form.submitCreate") : t("form.submitEdit")}
-        </Button>
+        <DialogClose render={<Button type="button" variant="outline" size="lg" />}>{tc("actions.cancel")}</DialogClose>
+        <SubmitButton pending={pending} pendingLabel={t("form.pending")}>
+          {mode === "create" ? t("form.submitCreate") : t("form.submitEdit")}
+        </SubmitButton>
       </DialogFooter>
     </form>
   );

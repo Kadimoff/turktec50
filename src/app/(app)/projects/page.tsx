@@ -15,10 +15,12 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { ProgressBar } from "@/components/shared/progress-bar";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UrlFilters } from "@/components/projects/url-filters";
-import { Pagination } from "@/components/projects/pagination";
+import { FilterBar } from "@/components/shared/filter-bar";
+import { Pagination } from "@/components/shared/pagination";
 import { NewProjectDialog } from "@/components/projects/new-project-dialog";
-import { hrefWith, PAGE_SIZE, spEnum, spPage, spValue } from "@/components/projects/url";
+import { buildHref, parsePage, pick, str } from "@/lib/search-params";
+import { matchesQuery } from "@/lib/search";
+import { eligibleCompetitionWhere } from "@/lib/academy/rules";
 
 export async function generateMetadata() {
   const t = await getTranslations("projects");
@@ -27,6 +29,7 @@ export async function generateMetadata() {
 
 const HEALTHS = ["ON_TRACK", "WATCH", "AT_RISK"] as const;
 const SORTS = ["code", "readiness", "overdue"] as const;
+const PAGE_SIZE = 25;
 
 export default async function ProjectsPage(props: PageProps<"/projects">) {
   const user = await requireUser();
@@ -43,13 +46,13 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
   }
   const isAdmin = user.role === "ADMIN";
   const sp = await props.searchParams;
-  const stage = spEnum(sp, "stage", STAGE_ORDER);
-  const health = spEnum(sp, "health", HEALTHS);
-  const category = spEnum(sp, "category", CATEGORIES);
-  const university = spValue(sp, "university");
-  const q = spValue(sp, "q");
-  const sort = spEnum(sp, "sort", SORTS) ?? "code";
-  const page = spPage(sp);
+  const stage = pick(sp.stage, STAGE_ORDER);
+  const health = pick(sp.health, HEALTHS);
+  const category = pick(sp.category, CATEGORIES);
+  const university = str(sp.university);
+  const q = str(sp.q);
+  const sort = pick(sp.sort, SORTS, "code");
+  const page = parsePage(sp.page);
 
   const scope = projectScope(user);
   const base: Prisma.ProjectWhereInput = {
@@ -59,25 +62,16 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
         ...(health && { health }),
         ...(category && { category }),
         ...(university && { universityId: university }),
-        ...(q && {
-          OR: [
-            { code: { contains: q, mode: "insensitive" } },
-            { title: { contains: q, mode: "insensitive" } },
-            { tagline: { contains: q, mode: "insensitive" } },
-          ],
-        }),
       },
     ],
   };
-  const where: Prisma.ProjectWhereInput = stage ? { AND: [base, { stage }] } : base;
   const now = new Date();
 
   const [t, tc, te] = await Promise.all([getTranslations("projects"), getTranslations("common"), getTranslations("enums")]);
 
-  const [stageCounts, rows, universities, scopeTotal, competitions, allUniversities] = await Promise.all([
-    prisma.project.groupBy({ by: ["stage"], where: base, _count: { _all: true } }),
+  const [scoped, universities, scopeTotal, competitions, allUniversities] = await Promise.all([
     prisma.project.findMany({
-      where,
+      where: base,
       select: {
         id: true, code: true, title: true, tagline: true, stage: true, health: true, category: true,
         competition: { select: { name: true } },
@@ -89,10 +83,19 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
     }),
     prisma.university.findMany({ where: { projects: { some: scope } }, orderBy: { shortName: "asc" }, select: { id: true, shortName: true } }),
     prisma.project.count({ where: scope }),
-    isAdmin ? prisma.competition.findMany({ orderBy: { applicationDeadline: "asc" }, select: { id: true, name: true } }) : Promise.resolve([]),
+    isAdmin
+      ? prisma.competition.findMany({
+          where: eligibleCompetitionWhere(),
+          orderBy: [{ applicationDeadline: { sort: "asc", nulls: "last" } }, { name: "asc" }],
+          select: { id: true, name: true },
+        })
+      : Promise.resolve([]),
     isAdmin ? prisma.university.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true, shortName: true } }) : Promise.resolve([]),
   ]);
 
+  // text search in memory (Azerbaijani/Turkish folding: "memmedov" finds "Məmmədov"); the stage strip counts ignore the stage
+  const matching = q ? scoped.filter((r) => matchesQuery(q, r.code, r.title, r.tagline)) : scoped;
+  const rows = stage ? matching.filter((r) => r.stage === stage) : matching;
   const ids = rows.map((r) => r.id);
   const [openTasks, overdueTasks] = ids.length
     ? await Promise.all([
@@ -117,8 +120,8 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
   );
   const total = all.length;
   const items = all.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-  const countFor = (s: string) => stageCounts.find((c) => c.stage === s)?._count._all ?? 0;
-  const baseTotal = stageCounts.reduce((a, c) => a + c._count._all, 0);
+  const countFor = (s: string) => matching.filter((r) => r.stage === s).length;
+  const baseTotal = matching.length;
   const params = { stage, health, category, university, q, sort: sort === "code" ? undefined : sort };
 
   return (
@@ -140,20 +143,21 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
 
       {/* stage strip */}
       <nav aria-label={t("stageStrip")} className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-        <StageLink href={hrefWith("/projects", { ...params, stage: undefined })} active={!stage} label={tc("actions.all")} count={baseTotal} />
+        <StageLink href={buildHref("/projects", { ...params, stage: undefined })} active={!stage} label={tc("actions.all")} count={baseTotal} />
         {STAGE_ORDER.map((s) => (
-          <StageLink key={s} href={hrefWith("/projects", { ...params, stage: s })} active={stage === s} label={te(`ProjectStage.${s}`)} count={countFor(s)} />
+          <StageLink key={s} href={buildHref("/projects", { ...params, stage: s })} active={stage === s} label={te(`ProjectStage.${s}`)} count={countFor(s)} />
         ))}
       </nav>
 
-      <UrlFilters
-        search={{ label: tc("actions.search"), placeholder: t("filters.searchPlaceholder") }}
-        resetLabel={tc("actions.clear")}
-        filters={[
-          { name: "health", label: t("filters.health"), allLabel: tc("actions.all"), options: HEALTHS.map((h) => ({ value: h, label: te(`ProjectHealth.${h}`) })) },
-          { name: "category", label: t("filters.category"), allLabel: tc("actions.all"), options: CATEGORIES.map((c) => ({ value: c, label: tc(`categories.${c}`) })) },
-          { name: "university", label: t("filters.university"), allLabel: tc("actions.all"), options: universities.map((u) => ({ value: u.id, label: u.shortName })) },
-          { name: "sort", label: t("filters.sort"), defaultValue: "code", options: SORTS.map((s) => ({ value: s, label: t(`sort.${s}`) })) },
+      <FilterBar
+        action="/projects"
+        keep={{ stage }}
+        search={{ label: tc("filters.search"), placeholder: t("filters.searchPlaceholder"), value: q }}
+        selects={[
+          { name: "health", label: t("filters.health"), allLabel: tc("actions.all"), value: health, options: HEALTHS.map((h) => ({ value: h, label: te(`ProjectHealth.${h}`) })) },
+          { name: "category", label: t("filters.category"), allLabel: tc("actions.all"), value: category, options: CATEGORIES.map((c) => ({ value: c, label: tc(`categories.${c}`) })) },
+          { name: "university", label: t("filters.university"), allLabel: tc("actions.all"), value: university, options: universities.map((u) => ({ value: u.id, label: u.shortName })) },
+          { name: "sort", label: t("filters.sort"), value: sort, options: SORTS.map((s) => ({ value: s, label: t(`sort.${s}`) })) },
         ]}
       />
 
@@ -187,10 +191,10 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
                         href={`/projects/${p.id}`}
                         className="group/link block rounded-sm focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
                       >
-                        <span className="font-mono text-[11px] text-muted-foreground">{p.code}</span>{" "}
+                        <span className="font-mono text-2xs text-muted-foreground">{p.code}</span>{" "}
                         <span className="font-semibold text-foreground group-hover/link:text-primary group-hover/link:underline">{p.title}</span>
                         <span className="block truncate text-xs text-muted-foreground">{p.tagline}</span>
-                        {p.competition && <span className="mt-0.5 block truncate text-[11px] text-muted-foreground/80 2xl:hidden">{p.competition.name}</span>}
+                        {p.competition && <span className="mt-0.5 block truncate text-2xs text-muted-foreground/80 2xl:hidden">{p.competition.name}</span>}
                       </Link>
                     </TableCell>
                     <TableCell>
@@ -238,7 +242,7 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="font-mono text-[11px] text-muted-foreground">{p.code} · {p.university.shortName}</p>
+                      <p className="font-mono text-2xs text-muted-foreground">{p.code} · {p.university.shortName}</p>
                       <p className="truncate font-semibold">{p.title}</p>
                       <p className="line-clamp-2 text-xs text-muted-foreground">{p.tagline}</p>
                     </div>
@@ -258,7 +262,7 @@ export default async function ProjectsPage(props: PageProps<"/projects">) {
             ))}
           </ul>
 
-          <Pagination page={page} pageSize={PAGE_SIZE} total={total} path="/projects" params={params} />
+          <Pagination basePath="/projects" params={params} page={page} pageSize={PAGE_SIZE} total={total} />
         </section>
       )}
     </div>

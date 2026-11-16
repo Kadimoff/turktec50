@@ -1,22 +1,26 @@
 "use server";
-import { revalidatePath } from "next/cache";
-import { addDays, setHours, setMinutes, startOfDay } from "date-fns";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { requireUser, type CurrentUser } from "@/lib/auth";
 import { assertProjectAccess } from "@/lib/rbac";
 import { logAudit, notify } from "@/lib/audit";
 import { currentWeek } from "@/lib/constants";
-import type { ActionState } from "@/components/mentors/types";
+import { done, fail, formStr, formStrs, zodErrors, type ActionState } from "@/lib/actions";
+import { bakuAddDays, bakuYmd, parseBakuDate, parseBakuDateTime } from "@/lib/dates";
+import { revalidateProject, revalidateSets } from "@/lib/revalidate";
 
 const ROLES = ["ADMIN", "TEAM", "MENTOR"] as const;
 
+/** Pages that show sessions: mentors, calendar, dashboards, the project overview (next session) and sessions tab. */
 function revalidateSessions(projectId: string) {
-  revalidatePath("/mentors");
-  revalidatePath(`/projects/${projectId}`, "layout");
-  revalidatePath("/dashboard");
-  revalidatePath("/calendar");
+  revalidateSets("mentors", "calendar", "dashboard");
+  revalidateProject(projectId, "sessions", "activity");
 }
+
+const idSchema = z.string().min(1).max(64);
+const invalid = (error: z.ZodError) => fail("errors.invalid", zodErrors(error.issues));
+/** A single-field rule error: inline under the field (no toast). */
+const fieldFail = (field: string, key: string) => fail(key, { [field]: key });
 
 async function access(user: CurrentUser, projectId: string) {
   try {
@@ -24,22 +28,6 @@ async function access(user: CurrentUser, projectId: string) {
   } catch {
     return null;
   }
-}
-
-/** datetime-local value "yyyy-MM-ddTHH:mm" interpreted in Baku time (UTC+4, no DST). */
-function parseLocal(v: string) {
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(v)) return null;
-  const d = new Date(`${v}:00+04:00`);
-  return Number.isNaN(d.getTime()) ? null : d;
-}
-
-function fieldErrors(error: z.ZodError): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const issue of error.issues) {
-    const k = String(issue.path[0] ?? "form");
-    if (!out[k]) out[k] = issue.message.startsWith("errors.") ? issue.message : "errors.invalid";
-  }
-  return out;
 }
 
 async function teamMemberIds(projectId: string) {
@@ -61,21 +49,21 @@ const planSchema = z.object({
 export async function planSession(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const user = await requireUser([...ROLES]);
   const parsed = planSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { ok: false, error: "errors.invalid", fieldErrors: fieldErrors(parsed.error) };
+  if (!parsed.success) return invalid(parsed.error);
   const d = parsed.data;
   // before the meeting the team shares its agenda / progress → required for a team request
-  if (user.role === "TEAM" && d.agenda.length < 3) return { ok: false, fieldErrors: { agenda: "errors.agendaRequired" } };
+  if (user.role === "TEAM" && d.agenda.length < 3) return fieldFail("agenda", "errors.agendaRequired");
   const acc = await access(user, d.projectId);
-  if (!acc?.canWork) return { ok: false, error: "errors.forbidden" };
-  if (user.role === "MENTOR" && d.mentorId !== user.id) return { ok: false, error: "errors.forbidden" };
+  if (!acc?.canWork) return fail("errors.forbidden");
+  if (user.role === "MENTOR" && d.mentorId !== user.id) return fail("errors.forbidden");
   const assigned = await prisma.mentorAssignment.findUnique({
     where: { projectId_mentorId: { projectId: d.projectId, mentorId: d.mentorId } },
     select: { id: true },
   });
-  if (!assigned) return { ok: false, fieldErrors: { mentorId: "errors.mentorNotAssigned" } };
-  const when = parseLocal(d.scheduledAt);
-  if (!when) return { ok: false, fieldErrors: { scheduledAt: "errors.dateInvalid" } };
-  if (when < new Date()) return { ok: false, fieldErrors: { scheduledAt: "errors.datePast" } };
+  if (!assigned) return fieldFail("mentorId", "errors.mentorNotAssigned");
+  const when = parseBakuDateTime(d.scheduledAt);
+  if (!when) return fieldFail("scheduledAt", "errors.dateInvalid");
+  if (when < new Date()) return fieldFail("scheduledAt", "errors.datePast");
 
   const session = await prisma.mentorSession.create({
     data: {
@@ -102,7 +90,7 @@ export async function planSession(_prev: ActionState, formData: FormData): Promi
   const recipients = [...(await teamMemberIds(d.projectId)), d.mentorId].filter((id) => id !== user.id);
   await notify(recipients, "session_planned", { topic: session.topic }, `/projects/${d.projectId}/sessions`);
   revalidateSessions(d.projectId);
-  return { ok: true };
+  return done(user.role === "TEAM" ? "toast.requested" : "toast.planned");
 }
 
 async function loadSession(id: string) {
@@ -117,31 +105,37 @@ function isSessionOwner(user: CurrentUser, s: { mentorId: string }) {
   return user.role === "ADMIN" || (user.role === "MENTOR" && s.mentorId === user.id);
 }
 
-export async function confirmSession(id: string): Promise<ActionState> {
+export async function confirmSession(rawId: unknown): Promise<ActionState> {
   const user = await requireUser([...ROLES]);
+  const parsed = idSchema.safeParse(rawId);
+  if (!parsed.success) return fail("errors.invalid");
+  const id = parsed.data;
   const s = await loadSession(id);
-  if (!s) return { ok: false, error: "errors.notFound" };
-  if (!(await access(user, s.projectId)) || !isSessionOwner(user, s)) return { ok: false, error: "errors.forbidden" };
-  if (s.status !== "PLANNED") return { ok: false, error: "errors.wrongStatus" };
+  if (!s) return fail("errors.notFound");
+  if (!(await access(user, s.projectId)) || !isSessionOwner(user, s)) return fail("errors.forbidden");
+  if (s.status !== "PLANNED") return fail("errors.wrongStatus");
   await prisma.mentorSession.update({ where: { id }, data: { status: "CONFIRMED" } });
   await logAudit({ actorId: user.id, action: "session.update", entity: "MentorSession", entityId: id, projectId: s.projectId, summary: s.topic, meta: { status: "CONFIRMED" } });
   revalidateSessions(s.projectId);
-  return { ok: true };
+  return done("toast.confirmed");
 }
 
-export async function cancelSession(id: string): Promise<ActionState> {
+export async function cancelSession(rawId: unknown): Promise<ActionState> {
   const user = await requireUser([...ROLES]);
+  const parsed = idSchema.safeParse(rawId);
+  if (!parsed.success) return fail("errors.invalid");
+  const id = parsed.data;
   const s = await loadSession(id);
-  if (!s) return { ok: false, error: "errors.notFound" };
+  if (!s) return fail("errors.notFound");
   const acc = await access(user, s.projectId);
   // team may withdraw its own (not yet confirmed) request
   const allowed = isSessionOwner(user, s) || (user.role === "TEAM" && s.status === "PLANNED");
-  if (!acc || !allowed) return { ok: false, error: "errors.forbidden" };
-  if (s.status !== "PLANNED" && s.status !== "CONFIRMED") return { ok: false, error: "errors.wrongStatus" };
+  if (!acc || !allowed) return fail("errors.forbidden");
+  if (s.status !== "PLANNED" && s.status !== "CONFIRMED") return fail("errors.wrongStatus");
   await prisma.mentorSession.update({ where: { id }, data: { status: "CANCELLED" } });
   await logAudit({ actorId: user.id, action: "session.cancel", entity: "MentorSession", entityId: id, projectId: s.projectId, summary: s.topic });
   revalidateSessions(s.projectId);
-  return { ok: true };
+  return done("toast.cancelled");
 }
 
 const rescheduleSchema = z.object({
@@ -153,14 +147,14 @@ const rescheduleSchema = z.object({
 export async function rescheduleSession(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const user = await requireUser([...ROLES]);
   const parsed = rescheduleSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { ok: false, error: "errors.invalid", fieldErrors: fieldErrors(parsed.error) };
+  if (!parsed.success) return invalid(parsed.error);
   const s = await loadSession(parsed.data.id);
-  if (!s) return { ok: false, error: "errors.notFound" };
-  if (!(await access(user, s.projectId)) || !isSessionOwner(user, s)) return { ok: false, error: "errors.forbidden" };
-  if (s.status !== "PLANNED" && s.status !== "CONFIRMED") return { ok: false, error: "errors.wrongStatus" };
-  const when = parseLocal(parsed.data.scheduledAt);
-  if (!when) return { ok: false, fieldErrors: { scheduledAt: "errors.dateInvalid" } };
-  if (when < new Date()) return { ok: false, fieldErrors: { scheduledAt: "errors.datePast" } };
+  if (!s) return fail("errors.notFound");
+  if (!(await access(user, s.projectId)) || !isSessionOwner(user, s)) return fail("errors.forbidden");
+  if (s.status !== "PLANNED" && s.status !== "CONFIRMED") return fail("errors.wrongStatus");
+  const when = parseBakuDateTime(parsed.data.scheduledAt);
+  if (!when) return fieldFail("scheduledAt", "errors.dateInvalid");
+  if (when < new Date()) return fieldFail("scheduledAt", "errors.datePast");
   await prisma.mentorSession.update({ where: { id: s.id }, data: { scheduledAt: when, durationMin: parsed.data.durationMin } });
   await logAudit({
     actorId: user.id,
@@ -174,7 +168,7 @@ export async function rescheduleSession(_prev: ActionState, formData: FormData):
   const recipients = [...(await teamMemberIds(s.projectId)), s.mentorId].filter((id) => id !== user.id);
   await notify(recipients, "session_planned", { topic: s.topic }, `/projects/${s.projectId}/sessions`);
   revalidateSessions(s.projectId);
-  return { ok: true };
+  return done("toast.rescheduled");
 }
 
 const agendaSchema = z.object({
@@ -186,16 +180,16 @@ const agendaSchema = z.object({
 export async function updateAgenda(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const user = await requireUser([...ROLES]);
   const parsed = agendaSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { ok: false, fieldErrors: fieldErrors(parsed.error) };
+  if (!parsed.success) return invalid(parsed.error);
   const s = await loadSession(parsed.data.id);
-  if (!s) return { ok: false, error: "errors.notFound" };
+  if (!s) return fail("errors.notFound");
   const acc = await access(user, s.projectId);
-  if (!acc || !(isSessionOwner(user, s) || user.role === "TEAM")) return { ok: false, error: "errors.forbidden" };
-  if (s.status !== "PLANNED" && s.status !== "CONFIRMED") return { ok: false, error: "errors.wrongStatus" };
+  if (!acc || !(isSessionOwner(user, s) || user.role === "TEAM")) return fail("errors.forbidden");
+  if (s.status !== "PLANNED" && s.status !== "CONFIRMED") return fail("errors.wrongStatus");
   await prisma.mentorSession.update({ where: { id: s.id }, data: { agenda: parsed.data.agenda } });
   await logAudit({ actorId: user.id, action: "session.update", entity: "MentorSession", entityId: s.id, projectId: s.projectId, summary: s.topic, meta: { field: "agenda" } });
   revalidateSessions(s.projectId);
-  return { ok: true };
+  return done("toast.agendaSaved");
 }
 
 const completeSchema = z.object({
@@ -206,18 +200,17 @@ const completeSchema = z.object({
 /** After the meeting: the session's mentor (or admin) records advice + next steps → COMPLETED. */
 export async function completeSession(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const user = await requireUser([...ROLES]);
-  const parsed = completeSchema.safeParse({ id: formData.get("id"), notes: formData.get("notes") });
-  if (!parsed.success) return { ok: false, fieldErrors: fieldErrors(parsed.error) };
-  const steps = formData
-    .getAll("step")
-    .map((v) => String(v).trim())
+  const parsed = completeSchema.safeParse({ id: formStr(formData, "id"), notes: formStr(formData, "notes") });
+  if (!parsed.success) return invalid(parsed.error);
+  const steps = formStrs(formData, "step")
+    .map((v) => v.trim())
     .filter(Boolean);
-  if (steps.length > 10) return { ok: false, fieldErrors: { steps: "errors.tooManySteps" } };
-  if (steps.some((st) => st.length > 160)) return { ok: false, fieldErrors: { steps: "errors.stepLength" } };
+  if (steps.length > 10) return fieldFail("steps", "errors.tooManySteps");
+  if (steps.some((st) => st.length > 160)) return fieldFail("steps", "errors.stepLength");
   const s = await loadSession(parsed.data.id);
-  if (!s) return { ok: false, error: "errors.notFound" };
-  if (!(await access(user, s.projectId)) || !isSessionOwner(user, s)) return { ok: false, error: "errors.forbidden" };
-  if (s.status !== "PLANNED" && s.status !== "CONFIRMED") return { ok: false, error: "errors.wrongStatus" };
+  if (!s) return fail("errors.notFound");
+  if (!(await access(user, s.projectId)) || !isSessionOwner(user, s)) return fail("errors.forbidden");
+  if (s.status !== "PLANNED" && s.status !== "CONFIRMED") return fail("errors.wrongStatus");
   await prisma.mentorSession.update({
     where: { id: s.id },
     data: { status: "COMPLETED", notes: parsed.data.notes, nextSteps: [...new Set(steps)] },
@@ -233,27 +226,33 @@ export async function completeSession(_prev: ActionState, formData: FormData): P
   });
   await notify((await teamMemberIds(s.projectId)).filter((id) => id !== user.id), "session_notes", { topic: s.topic }, `/projects/${s.projectId}/sessions`);
   revalidateSessions(s.projectId);
-  return { ok: true };
+  return done("toast.completed");
 }
 
 /** Turn an agreed next step into a task (owner = project lead, due +7 days, MEDIUM, criterion = the step). */
-export async function convertStep(sessionId: string, index: number): Promise<ActionState & { taskId?: string }> {
+const convertSchema = z.object({ sessionId: idSchema, index: z.number().int().min(0).max(99) });
+
+export async function convertStep(rawSessionId: unknown, rawIndex: unknown): Promise<ActionState & { taskId?: string }> {
   const user = await requireUser([...ROLES]);
+  const parsed = convertSchema.safeParse({ sessionId: rawSessionId, index: rawIndex });
+  if (!parsed.success) return fail("errors.invalid");
+  const { sessionId, index } = parsed.data;
   const s = await loadSession(sessionId);
-  if (!s) return { ok: false, error: "errors.notFound" };
+  if (!s) return fail("errors.notFound");
   const acc = await access(user, s.projectId);
-  if (!acc?.canWork) return { ok: false, error: "errors.forbidden" };
-  if (s.status !== "COMPLETED") return { ok: false, error: "errors.wrongStatus" };
+  if (!acc?.canWork) return fail("errors.forbidden");
+  if (s.status !== "COMPLETED") return fail("errors.wrongStatus");
   const text = s.nextSteps[index]?.trim();
-  if (!text) return { ok: false, error: "errors.notFound" };
+  if (!text) return fail("errors.notFound");
 
   const existing = await prisma.task.findFirst({ where: { sourceSessionId: s.id, title: text }, select: { id: true } });
-  if (existing) return { ok: true, taskId: existing.id };
+  if (existing) return done("toast.converted", { taskId: existing.id });
 
   const lead =
     (await prisma.projectMember.findFirst({ where: { projectId: s.projectId, isLead: true }, select: { userId: true } })) ??
     (await prisma.projectMember.findFirst({ where: { projectId: s.projectId }, select: { userId: true } }));
-  const due = setMinutes(setHours(startOfDay(addDays(new Date(), 7)), 18), 0);
+  // 18:00 Baku time, seven Baku calendar days from today (same rule as tasks created in the task dialog)
+  const due = parseBakuDate(bakuYmd(bakuAddDays(new Date(), 7)), "18:00")!;
   const week = currentWeek();
   const task = await prisma.task.create({
     data: {
@@ -282,6 +281,7 @@ export async function convertStep(sessionId: string, index: number): Promise<Act
     await notify([lead.userId], "task_assigned", { title: task.title }, `/projects/${s.projectId}/tasks`);
   }
   revalidateSessions(s.projectId);
-  revalidatePath("/tasks");
-  return { ok: true, taskId: task.id };
+  revalidateSets("tasks", "projects");
+  revalidateProject(s.projectId, "tasks");
+  return done("toast.converted", { taskId: task.id });
 }

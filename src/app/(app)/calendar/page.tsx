@@ -1,4 +1,3 @@
-import { addDays, startOfDay } from "date-fns";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ExternalLink, Trophy } from "lucide-react";
 import { requireUser } from "@/lib/auth";
@@ -6,6 +5,7 @@ import { prisma } from "@/lib/db";
 import { projectScope } from "@/lib/rbac";
 import { PHASES, PROGRAM, currentMonth, currentWeek } from "@/lib/constants";
 import { fmtDate } from "@/lib/format";
+import { bakuAddDays, bakuStartOfDay, bakuYmd } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 import { PageHeader } from "@/components/shared/page-header";
 import { ToneBadge } from "@/components/shared/tone-badge";
@@ -21,25 +21,28 @@ export async function generateMetadata() {
   return { title: t("calendar") };
 }
 
-
 export default async function CalendarPage() {
   const user = await requireUser();
   const [t, tc, te, locale] = await Promise.all([getTranslations("calendar"), getTranslations("common"), getTranslations("enums"), getLocale()]);
   const now = new Date();
   // Jury has no sessions/tasks: look further ahead so the midterm jury and deadlines are visible.
   const HORIZON = user.role === "JURY" ? 45 : 21;
-  const until = addDays(startOfDay(now), HORIZON + 1);
+  // end of the horizon = start of the Baku day after the last day shown
+  const until = bakuAddDays(bakuStartOfDay(now), HORIZON + 1);
   const scope = projectScope(user);
   const isAdmin = user.role === "ADMIN";
   const seesWork = user.role !== "JURY"; // jury has no access to sessions / tasks
 
-  const [competitions, myCompetitionIds, sessions, tasks, overdueTasks, taskDays] = await Promise.all([
+  const [competitions, myCompetitionIds, sessions, tasks, overdueTasks, taskDays, trainings] = await Promise.all([
+    // Catalog cards without a known deadline and without teams stay in the Academy catalog, not here.
     prisma.competition.findMany({
+      where: { OR: [{ applicationDeadline: { not: null } }, { projects: { some: {} } }] },
       select: {
-        id: true, name: true, organizer: true, category: true, country: true, applicationDeadline: true, finalDate: true, url: true,
+        id: true, name: true, organizer: true, category: true, theme: true, country: true, applicationDeadline: true, finalDate: true, url: true,
+        catalogId: true, ruleStatus: true,
         _count: { select: { projects: true } },
       },
-      orderBy: { applicationDeadline: "asc" },
+      orderBy: { applicationDeadline: { sort: "asc", nulls: "last" } },
     }),
     user.role === "ADMIN"
       ? Promise.resolve([] as { competitionId: string | null }[])
@@ -76,6 +79,15 @@ export default async function CalendarPage() {
     isAdmin
       ? prisma.task.findMany({ where: { status: { not: "DONE" }, dueDate: { gte: now, lt: until } }, select: { dueDate: true, priority: true } })
       : Promise.resolve([]),
+    // Academy trainings are program-wide (not project-scoped); the jury does not take part.
+    seesWork
+      ? prisma.training.findMany({
+          where: { startsAt: { gte: now, lt: until }, status: { not: "COMPLETED" } },
+          select: { id: true, title: true, startsAt: true, durationMin: true, status: true, mentor: { select: { name: true } }, lab: { select: { name: true } } },
+          orderBy: { startsAt: "asc" },
+          take: 40,
+        })
+      : Promise.resolve([]),
   ]);
 
   const mine = new Set(myCompetitionIds.map((p) => p.competitionId).filter(Boolean));
@@ -85,7 +97,7 @@ export default async function CalendarPage() {
     // Coordinator: one line per day instead of dozens of sessions
     const byDay = new Map<string, { date: Date; codes: string[]; confirmed: number }>();
     for (const s of sessions) {
-      const key = startOfDay(s.scheduledAt).toISOString();
+      const key = bakuYmd(s.scheduledAt);
       const cur = byDay.get(key) ?? { date: s.scheduledAt, codes: [], confirmed: 0 };
       cur.codes.push(s.project.code);
       if (s.status === "CONFIRMED") cur.confirmed++;
@@ -120,8 +132,8 @@ export default async function CalendarPage() {
   if (isAdmin) {
     const byDay = new Map<string, { date: Date; n: number; high: number }>();
     for (const k of taskDays) {
-      const key = startOfDay(k.dueDate).toISOString();
-      const cur = byDay.get(key) ?? { date: startOfDay(k.dueDate), n: 0, high: 0 };
+      const key = bakuYmd(k.dueDate);
+      const cur = byDay.get(key) ?? { date: bakuStartOfDay(k.dueDate), n: 0, high: 0 };
       cur.n++;
       if (k.priority === "HIGH") cur.high++;
       byDay.set(key, cur);
@@ -133,10 +145,19 @@ export default async function CalendarPage() {
       });
     }
   }
+  for (const s of trainings) {
+    items.push({
+      id: `tr-${s.id}`, kind: "training", date: s.startsAt, timed: true, title: s.title,
+      sub: [s.lab?.name, s.mentor?.name, t("minutes", { count: s.durationMin })].filter(Boolean).join(" · "),
+      href: "/academy/trainings",
+      badge: <ToneBadge tone={s.status === "REGISTRATION_OPEN" ? "success" : "neutral"}>{te(`TrainingStatus.${s.status}`)}</ToneBadge>,
+    });
+  }
   for (const c of competitions) {
-    if (c.applicationDeadline >= now && c.applicationDeadline < until) {
+    const d = c.applicationDeadline;
+    if (d && d >= now && d < until) {
       items.push({
-        id: `c-${c.id}`, kind: "deadline", date: c.applicationDeadline, title: t("deadlineOf", { name: c.name }), sub: c.organizer, href: "#competitions",
+        id: `c-${c.id}`, kind: "deadline", date: d, title: t("deadlineOf", { name: c.name }), sub: c.organizer, href: "#competitions",
         badge: mine.has(c.id) ? <ToneBadge tone="brand">{t("yourCompetition")}</ToneBadge> : undefined,
       });
     }
@@ -150,7 +171,15 @@ export default async function CalendarPage() {
   const week = currentWeek();
   const phase = PHASES[currentMonth() - 1]?.key ?? "prep";
   const weeks = incubationWeeks();
-  const sortedComps = [...competitions].sort((a, b) => Number(b.applicationDeadline >= now) - Number(a.applicationDeadline >= now) || a.applicationDeadline.getTime() - b.applicationDeadline.getTime());
+  // upcoming first (soonest first), then passed, then competitions whose deadline is not announced yet
+  const rank = (d: Date | null) => (d === null ? 2 : d >= now ? 0 : 1);
+  const sortedComps = [...competitions].sort((a, b) => rank(a.applicationDeadline) - rank(b.applicationDeadline) || (a.applicationDeadline?.getTime() ?? 0) - (b.applicationDeadline?.getTime() ?? 0));
+  const kindLabel = (c: { category: string | null; theme: string | null }) =>
+    c.category && tc.has(`categories.${c.category}` as never) ? tc(`categories.${c.category}` as never)
+      : c.theme && tc.has(`directions.${c.theme}` as never) ? tc(`directions.${c.theme}` as never) : "—";
+  // a catalog (TEKNOFEST) deadline is only official once the 2027 rules are confirmed against the HTTPS source
+  const unconfirmed = (c: { catalogId: number | null; ruleStatus: string | null; applicationDeadline: Date | null }) =>
+    c.catalogId !== null && c.applicationDeadline !== null && c.ruleStatus !== "CONFIRMED";
 
   return (
     <div className="space-y-6">
@@ -178,9 +207,9 @@ export default async function CalendarPage() {
           )}
           <Agenda items={items} emptyText={t("agenda.empty")} />
           <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t pt-3 text-xs text-muted-foreground" aria-label={t("legend")}>
-            {([...(isAdmin ? ["sessionGroup", "taskGroup"] : seesWork ? ["session", "task"] : []), "deadline", "milestone"] as const).map((k) => (
+            {([...(isAdmin ? ["sessionGroup", "taskGroup"] : seesWork ? ["session", "task"] : []), ...(seesWork ? ["training"] : []), "deadline", "milestone"] as const).map((k) => (
               <li key={k} className="flex items-center gap-1.5">
-                <span aria-hidden className={cn("size-2.5 rounded-sm", k === "session" || k === "sessionGroup" ? "bg-info" : k === "deadline" ? "bg-warning" : k === "milestone" ? "bg-primary" : "bg-neutral")} />
+                <span aria-hidden className={cn("size-2.5 rounded-sm", k === "session" || k === "sessionGroup" ? "bg-info" : k === "deadline" ? "bg-warning" : k === "milestone" ? "bg-primary" : k === "training" ? "bg-success" : "bg-neutral")} />
                 {t(`kinds.${k}`)}
               </li>
             ))}
@@ -247,9 +276,9 @@ export default async function CalendarPage() {
                 </TableHeader>
                 <TableBody>
                   {sortedComps.map((c) => {
-                    const left = daysUntil(c.applicationDeadline);
+                    const left = c.applicationDeadline ? daysUntil(c.applicationDeadline) : null;
                     return (
-                      <TableRow key={c.id} className={cn("h-12", left < 0 && "text-muted-foreground")}>
+                      <TableRow key={c.id} className={cn("h-12", left !== null && left < 0 && "text-muted-foreground")}>
                         <TableCell className="max-w-96 pl-5 whitespace-normal">
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="font-medium">{c.name}</span>
@@ -264,10 +293,11 @@ export default async function CalendarPage() {
                             {c.organizer} · {tc.has(`countries.${c.country}` as never) ? tc(`countries.${c.country}` as never) : c.country}
                           </p>
                         </TableCell>
-                        <TableCell className="text-sm">{tc.has(`categories.${c.category}` as never) ? tc(`categories.${c.category}` as never) : c.category}</TableCell>
+                        <TableCell className="text-sm">{kindLabel(c)}</TableCell>
                         <TableCell>
-                          <p className="tabular text-sm">{fmtDate(c.applicationDeadline, locale)}</p>
+                          <p className="tabular text-sm">{c.applicationDeadline ? fmtDate(c.applicationDeadline, locale) : t("competitions.noDeadline")}</p>
                           <Countdown left={left} tc={tc} passed={t("passed")} />
+                          {unconfirmed(c) && <p className="text-xs text-muted-foreground">{t("competitions.unconfirmed")}</p>}
                         </TableCell>
                         <TableCell className="tabular text-sm">{fmtDate(c.finalDate, locale)}</TableCell>
                         <TableCell className="tabular pr-5 text-right font-semibold">{c._count.projects}</TableCell>
@@ -279,7 +309,7 @@ export default async function CalendarPage() {
             </div>
             <ul className="divide-y border-t md:hidden">
               {sortedComps.map((c) => {
-                const left = daysUntil(c.applicationDeadline);
+                const left = c.applicationDeadline ? daysUntil(c.applicationDeadline) : null;
                 return (
                   <li key={c.id} className="px-4 py-3">
                     <div className="flex items-start justify-between gap-3">
@@ -287,10 +317,14 @@ export default async function CalendarPage() {
                       <Countdown left={left} tc={tc} passed={t("passed")} />
                     </div>
                     <p className="mt-0.5 text-xs text-muted-foreground">
-                      {c.organizer} · {tc.has(`categories.${c.category}` as never) ? tc(`categories.${c.category}` as never) : c.category}
+                      {c.organizer} · {kindLabel(c)}
                     </p>
                     <dl className="mt-2 grid grid-cols-3 gap-2 text-xs">
-                      <div><dt className="text-muted-foreground">{t("competitions.deadline")}</dt><dd className="tabular font-medium">{fmtDate(c.applicationDeadline, locale)}</dd></div>
+                      <div>
+                        <dt className="text-muted-foreground">{t("competitions.deadline")}</dt>
+                        <dd className="tabular font-medium">{c.applicationDeadline ? fmtDate(c.applicationDeadline, locale) : t("competitions.noDeadline")}</dd>
+                        {unconfirmed(c) && <dd className="text-muted-foreground">{t("competitions.unconfirmed")}</dd>}
+                      </div>
                       <div><dt className="text-muted-foreground">{t("competitions.final")}</dt><dd className="tabular font-medium">{fmtDate(c.finalDate, locale)}</dd></div>
                       <div><dt className="text-muted-foreground">{t("competitions.teams")}</dt><dd className="tabular font-medium">{c._count.projects}</dd></div>
                     </dl>
@@ -306,7 +340,8 @@ export default async function CalendarPage() {
   );
 }
 
-function Countdown({ left, tc, passed }: { left: number; tc: (k: string, v?: Record<string, string | number>) => string; passed: string }) {
+function Countdown({ left, tc, passed }: { left: number | null; tc: (k: string, v?: Record<string, string | number>) => string; passed: string }) {
+  if (left === null) return null;
   if (left < 0) return <span className="text-xs text-muted-foreground">{passed}</span>;
   return (
     <span className={cn("tabular text-xs font-semibold whitespace-nowrap", left <= 14 ? "text-danger" : left <= 30 ? "text-warning" : "text-muted-foreground")}>

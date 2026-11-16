@@ -1,5 +1,4 @@
 {
-  "welcome": "Xoş gəldiniz, {name}",
   "intro": {
     "ADMIN": "Proqramın bütün göstəriciləri bir baxışda: KPI hədəfləri, portfel sağlamlığı və diqqət tələb edən məqamlar.",
     "TEAM": "Komandanızın iş sahəsi: mərhələ, tapşırıqlar, mentor sessiyası və sənəd hazırlığı.",
@@ -180,5 +179,11 @@
     "due": "Son tarixi çatan açıq tapşırıq",
     "sessions": "Mentor sessiyası",
     "hours": "Mentorluq saatı (cəmi)"
+  },
+  "title": {
+    "ADMIN": "Proqram icmalı",
+    "TEAM": "Layihə icmalı",
+    "MENTOR": "Mentor icmalı",
+    "JURY": "Münsif icmalı"
   }
 }

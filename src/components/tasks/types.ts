@@ -37,12 +37,3 @@ export type TaskFormProject = {
   title: string;
   members: { id: string; name: string; isLead: boolean }[];
 };
-
-export type ActionState = {
-  ok: boolean;
-  /** translation key under the module namespace, e.g. "errors.forbidden" */
-  error?: string;
-  fieldErrors?: Record<string, string>;
-};
-
-export const initialActionState: ActionState = { ok: false };

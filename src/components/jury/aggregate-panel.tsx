@@ -149,14 +149,14 @@ export async function AggregatePanel({ agg }: { agg: Aggregate }) {
 export function CommentBlock({ label, text, empty, advisory }: { label: string; text: string | null; empty: string; advisory?: string }) {
   return (
     <div className="mt-3">
-      <p className="flex flex-wrap items-center gap-x-2 text-xs font-semibold tracking-wide text-muted-foreground">
+      <p className="flex flex-wrap items-center gap-x-2 text-xs font-semibold text-muted-foreground">
         {label}
-        {advisory && <span className="rounded-full bg-info-soft px-1.5 text-[11px] font-medium text-info">{advisory}</span>}
+        {advisory && <span className="rounded-full bg-info-soft px-1.5 text-2xs font-medium text-info">{advisory}</span>}
       </p>
       {text ? (
         <p className="mt-1 text-sm whitespace-pre-line text-pretty">{text}</p>
       ) : (
-        <p className="mt-1 text-sm text-muted-foreground italic">{empty}</p>
+        <p className="mt-1 text-sm text-muted-foreground">{empty}</p>
       )}
     </div>
   );

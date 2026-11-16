@@ -1,17 +1,17 @@
 "use server";
-import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { assertProjectAccess } from "@/lib/rbac";
 import { logAudit, notify } from "@/lib/audit";
 import { STAGE_ORDER } from "@/lib/constants";
+import { done, fail, failFromZod, formStr, isUniqueViolation, RuleError, type ActionState } from "@/lib/actions";
+import { assertFacultyUsable } from "@/lib/academy/rules";
+import { bakuYmd, parseBakuDate } from "@/lib/dates";
+import { revalidateProject, revalidateSets } from "@/lib/revalidate";
 import { enumLabelByLocale } from "@/components/projects/server";
 
-export type ManageState = { ok: true; at: number } | { ok: false; error: "invalid" | "forbidden" | "noteRequired" | "sameStage" | "notFound" | "duplicate"; at: number } | undefined;
-
-const ok = (): ManageState => ({ ok: true, at: Date.now() });
-const fail = (error: Extract<ManageState, { ok: false }>["error"]): ManageState => ({ ok: false, error, at: Date.now() });
+// Every result is an ActionState whose `message` / `errors` are keys of the `projects.manage` namespace.
 
 /** Coordinator-only guard shared by every management action. */
 async function manager(projectId: unknown) {
@@ -23,22 +23,31 @@ async function manager(projectId: unknown) {
   return { user, project };
 }
 
-function refresh(projectId: string) {
-  revalidatePath(`/projects/${projectId}`, "layout");
-  revalidatePath("/projects");
+/** The project header (stage, health, result badges) is rendered by the layout of every tab. */
+function refreshAll(projectId: string) {
+  revalidateProject(projectId, "tasks", "sessions", "documents", "risks", "resources", "evaluations", "activity");
+  revalidateSets("projects", "dashboard");
 }
 
-const stageSchema = z.object({ toStage: z.enum(STAGE_ORDER), note: z.string().trim() });
+/** Overview + activity only (assignments, academy links). */
+function refreshOverview(projectId: string, ...extra: Parameters<typeof revalidateSets>) {
+  revalidateProject(projectId, "activity");
+  revalidateSets("projects", ...extra);
+}
 
-export async function changeStage(_prev: ManageState, formData: FormData): Promise<ManageState> {
+const stageSchema = z.object({
+  toStage: z.enum(STAGE_ORDER, { message: "errors.invalid" }),
+  note: z.string().trim().min(5, "errors.noteRequired").max(1000, "errors.noteRequired"),
+});
+
+export async function changeStage(_prev: ActionState, formData: FormData): Promise<ActionState> {
   let ctx;
-  try { ctx = await manager(formData.get("projectId")); } catch { return fail("forbidden"); }
+  try { ctx = await manager(formData.get("projectId")); } catch { return fail("errors.forbidden"); }
   const { user, project } = ctx;
-  const parsed = stageSchema.safeParse({ toStage: formData.get("toStage"), note: formData.get("note") ?? "" });
-  if (!parsed.success) return fail("invalid");
+  const parsed = stageSchema.safeParse({ toStage: formStr(formData, "toStage"), note: formStr(formData, "note") ?? "" });
+  if (!parsed.success) return failFromZod(parsed.error);
   const { toStage, note } = parsed.data;
-  if (toStage === project.stage) return fail("sameStage");
-  if (note.length < 5 || note.length > 1000) return fail("noteRequired");
+  if (toStage === project.stage) return fail("errors.sameStage", { toStage: "errors.sameStage" });
 
   await prisma.$transaction([
     prisma.project.update({ where: { id: project.id }, data: { stage: toStage } }),
@@ -64,48 +73,50 @@ export async function changeStage(_prev: ManageState, formData: FormData): Promi
   for (const [loc, ids] of byLocale) {
     await notify(ids, "stage_changed", { project: project.title, stage: labels[loc] ?? labels.az ?? toStage }, `/projects/${project.id}`);
   }
-  refresh(project.id);
-  return ok();
+  refreshAll(project.id);
+  return done("stageSaved");
 }
 
-const healthSchema = z.object({ health: z.enum(["ON_TRACK", "WATCH", "AT_RISK"]) });
+const healthSchema = z.object({ health: z.enum(["ON_TRACK", "WATCH", "AT_RISK"], { message: "errors.invalid" }) });
 
-export async function changeHealth(_prev: ManageState, formData: FormData): Promise<ManageState> {
+export async function changeHealth(_prev: ActionState, formData: FormData): Promise<ActionState> {
   let ctx;
-  try { ctx = await manager(formData.get("projectId")); } catch { return fail("forbidden"); }
+  try { ctx = await manager(formData.get("projectId")); } catch { return fail("errors.forbidden"); }
   const { user, project } = ctx;
-  const parsed = healthSchema.safeParse({ health: formData.get("health") });
-  if (!parsed.success) return fail("invalid");
-  if (parsed.data.health === project.health) return ok();
+  const parsed = healthSchema.safeParse({ health: formStr(formData, "health") });
+  if (!parsed.success) return failFromZod(parsed.error);
+  if (parsed.data.health === project.health) return done("healthSaved");
   await prisma.project.update({ where: { id: project.id }, data: { health: parsed.data.health } });
   await logAudit({
     actorId: user.id, action: "project.update", entity: "Project", entityId: project.id, projectId: project.id,
     summary: `${project.code}: health ${project.health} → ${parsed.data.health}`, meta: { field: "health", from: project.health, to: parsed.data.health },
   });
-  refresh(project.id);
-  return ok();
+  refreshAll(project.id);
+  return done("healthSaved");
 }
 
 const flagsSchema = z.object({
   prototypeVerified: z.boolean(),
   packageQcPassed: z.boolean(),
-  submittedAt: z.union([z.literal(""), z.iso.date()]),
-  result: z.enum(["PENDING", "FINALIST", "NOT_SELECTED"]),
+  submittedAt: z.union([z.literal(""), z.iso.date()], { message: "errors.date" }),
+  result: z.enum(["PENDING", "FINALIST", "NOT_SELECTED"], { message: "errors.invalid" }),
 });
 
-export async function updateFlags(_prev: ManageState, formData: FormData): Promise<ManageState> {
+export async function updateFlags(_prev: ActionState, formData: FormData): Promise<ActionState> {
   let ctx;
-  try { ctx = await manager(formData.get("projectId")); } catch { return fail("forbidden"); }
+  try { ctx = await manager(formData.get("projectId")); } catch { return fail("errors.forbidden"); }
   const { user, project } = ctx;
   const parsed = flagsSchema.safeParse({
     prototypeVerified: formData.get("prototypeVerified") === "on",
     packageQcPassed: formData.get("packageQcPassed") === "on",
-    submittedAt: formData.get("submittedAt") ?? "",
-    result: formData.get("result"),
+    submittedAt: formStr(formData, "submittedAt") ?? "",
+    result: formStr(formData, "result"),
   });
-  if (!parsed.success) return fail("invalid");
+  if (!parsed.success) return failFromZod(parsed.error);
   const d = parsed.data;
-  const submittedAt = d.submittedAt ? new Date(`${d.submittedAt}T12:00:00+04:00`) : null;
+  // the application date is a Baku calendar day (stored at 12:00 Baku)
+  const submittedAt = d.submittedAt ? parseBakuDate(d.submittedAt) : null;
+  if (d.submittedAt && !submittedAt) return fail("errors.date", { submittedAt: "errors.date" });
   const before = await prisma.project.findUniqueOrThrow({
     where: { id: project.id }, select: { prototypeVerified: true, packageQcPassed: true, submittedAt: true, result: true },
   });
@@ -116,7 +127,7 @@ export async function updateFlags(_prev: ManageState, formData: FormData): Promi
   const changed: string[] = [];
   if (before.prototypeVerified !== d.prototypeVerified) changed.push(`prototypeVerified=${d.prototypeVerified}`);
   if (before.packageQcPassed !== d.packageQcPassed) changed.push(`packageQcPassed=${d.packageQcPassed}`);
-  if ((before.submittedAt ? new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Baku" }).format(before.submittedAt) : "") !== (d.submittedAt || "")) changed.push(`submittedAt=${d.submittedAt || "—"}`);
+  if (bakuYmd(before.submittedAt) !== d.submittedAt) changed.push(`submittedAt=${d.submittedAt || "—"}`);
   if (before.result !== d.result) changed.push(`result=${d.result}`);
   if (changed.length) {
     await logAudit({
@@ -124,70 +135,144 @@ export async function updateFlags(_prev: ManageState, formData: FormData): Promi
       summary: `${project.code}: ${changed.join(", ")}`, meta: { before: { ...before, submittedAt: before.submittedAt?.toISOString() ?? null }, after: d },
     });
   }
-  refresh(project.id);
-  return ok();
+  refreshAll(project.id);
+  return done("flagsSaved");
 }
 
-const assignSchema = z.object({ userId: z.string().min(1), focus: z.string().trim().max(60).optional() });
+const academySchema = z.object({ facultyId: z.string().trim(), labId: z.string().trim(), partnerId: z.string().trim() });
 
-export async function assignMentor(_prev: ManageState, formData: FormData): Promise<ManageState> {
+/** Academy links: faculty (of the project's university), lab, industry partner — each optional. */
+export async function updateAcademyLinks(_prev: ActionState, formData: FormData): Promise<ActionState> {
   let ctx;
-  try { ctx = await manager(formData.get("projectId")); } catch { return fail("forbidden"); }
+  try { ctx = await manager(formData.get("projectId")); } catch { return fail("errors.forbidden"); }
   const { user, project } = ctx;
-  const parsed = assignSchema.safeParse({ userId: formData.get("userId"), focus: formData.get("focus") ?? undefined });
-  if (!parsed.success) return fail("invalid");
+  const parsed = academySchema.safeParse({
+    facultyId: formStr(formData, "facultyId") ?? "",
+    labId: formStr(formData, "labId") ?? "",
+    partnerId: formStr(formData, "partnerId") ?? "",
+  });
+  if (!parsed.success) return failFromZod(parsed.error);
+  const next = { facultyId: parsed.data.facultyId || null, labId: parsed.data.labId || null, partnerId: parsed.data.partnerId || null };
+
+  let result;
+  try {
+    result = await prisma.$transaction(async (tx) => {
+      const before = await tx.project.findUniqueOrThrow({
+        where: { id: project.id },
+        select: {
+          universityId: true, facultyId: true, labId: true, partnerId: true,
+          faculty: { select: { name: true } }, lab: { select: { name: true } }, partner: { select: { name: true } },
+        },
+      });
+      // a newly chosen value must be selectable: faculty of the same university and not archived, any lab, partner not archived
+      await assertFacultyUsable(tx, next.facultyId, before.universityId, before.facultyId);
+      const [faculty, lab, partner] = await Promise.all([
+        next.facultyId ? tx.faculty.findUnique({ where: { id: next.facultyId }, select: { name: true } }) : null,
+        next.labId ? tx.lab.findUnique({ where: { id: next.labId }, select: { name: true } }) : null,
+        next.partnerId ? tx.partner.findUnique({ where: { id: next.partnerId }, select: { name: true, status: true } }) : null,
+      ]);
+      if (next.labId && !lab) throw new RuleError("errors.invalid", "labId");
+      if (next.partnerId && (!partner || (partner.status === "ARCHIVED" && next.partnerId !== before.partnerId))) throw new RuleError("errors.invalid", "partnerId");
+
+      const changed: string[] = [];
+      if (before.facultyId !== next.facultyId) changed.push(`faculty=${faculty?.name ?? "—"}`);
+      if (before.labId !== next.labId) changed.push(`lab=${lab?.name ?? "—"}`);
+      if (before.partnerId !== next.partnerId) changed.push(`partner=${partner?.name ?? "—"}`);
+      if (changed.length) await tx.project.update({ where: { id: project.id }, data: next });
+      return { before, changed, names: { faculty: faculty?.name ?? null, lab: lab?.name ?? null, partner: partner?.name ?? null } };
+    });
+  } catch (e) {
+    if (e instanceof RuleError) return fail(e.key, e.field ? { [e.field]: e.key } : undefined);
+    throw e;
+  }
+  const { before, changed, names } = result;
+  if (changed.length === 0) return done("academySaved");
+
+  await logAudit({
+    actorId: user.id, action: "project.academy", entity: "Project", entityId: project.id, projectId: project.id,
+    summary: `${project.code}: ${changed.join(", ")}`,
+    meta: {
+      from: { facultyId: before.facultyId, labId: before.labId, partnerId: before.partnerId, faculty: before.faculty?.name ?? null, lab: before.lab?.name ?? null, partner: before.partner?.name ?? null },
+      to: { ...next, ...names },
+    },
+  });
+  refreshOverview(project.id, "academy");
+  return done("academySaved");
+}
+
+const assignSchema = z.object({ userId: z.string().min(1, "errors.required"), focus: z.string().trim().max(60, "errors.invalid").optional() });
+
+export async function assignMentor(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  let ctx;
+  try { ctx = await manager(formData.get("projectId")); } catch { return fail("errors.forbidden"); }
+  const { user, project } = ctx;
+  const parsed = assignSchema.safeParse({ userId: formStr(formData, "userId") ?? "", focus: formStr(formData, "focus") });
+  if (!parsed.success) return failFromZod(parsed.error);
   const mentor = await prisma.user.findFirst({ where: { id: parsed.data.userId, role: "MENTOR", active: true }, select: { id: true, name: true } });
-  if (!mentor) return fail("notFound");
-  const exists = await prisma.mentorAssignment.findUnique({ where: { projectId_mentorId: { projectId: project.id, mentorId: mentor.id } } });
-  if (exists) return fail("duplicate");
-  await prisma.mentorAssignment.create({ data: { projectId: project.id, mentorId: mentor.id, focus: parsed.data.focus || null } });
+  if (!mentor) return fail("errors.notFound", { userId: "errors.notFound" });
+  try {
+    await prisma.mentorAssignment.create({ data: { projectId: project.id, mentorId: mentor.id, focus: parsed.data.focus || null } });
+  } catch (e) {
+    // already assigned (also when two coordinators assign the same mentor at the same moment)
+    if (isUniqueViolation(e)) return fail("errors.duplicate", { userId: "errors.duplicate" });
+    throw e;
+  }
   await logAudit({ actorId: user.id, action: "project.assign_mentor", entity: "Project", entityId: project.id, projectId: project.id, summary: `${project.code} · ${mentor.name}`, meta: { mentorId: mentor.id, focus: parsed.data.focus ?? null } });
   await notify([mentor.id], "assigned_project", { project: project.title }, `/projects/${project.id}`);
-  refresh(project.id);
-  return ok();
+  refreshOverview(project.id, "mentors", "dashboard");
+  return done("mentorAssigned");
 }
 
-export async function unassignMentor(projectId: string, mentorId: string): Promise<ManageState> {
+export async function unassignMentor(projectId: string, mentorId: string): Promise<ActionState> {
   let ctx;
-  try { ctx = await manager(projectId); } catch { return fail("forbidden"); }
+  try { ctx = await manager(projectId); } catch { return fail("errors.forbidden"); }
   const { user, project } = ctx;
+  const id = z.string().min(1).safeParse(mentorId);
+  if (!id.success) return fail("errors.invalid");
   const row = await prisma.mentorAssignment.findUnique({
-    where: { projectId_mentorId: { projectId: project.id, mentorId: String(mentorId) } }, include: { mentor: { select: { name: true } } },
+    where: { projectId_mentorId: { projectId: project.id, mentorId: id.data } }, include: { mentor: { select: { name: true } } },
   });
-  if (!row) return fail("notFound");
+  if (!row) return fail("errors.notFound");
   await prisma.mentorAssignment.delete({ where: { id: row.id } });
   await logAudit({ actorId: user.id, action: "project.unassign_mentor", entity: "Project", entityId: project.id, projectId: project.id, summary: `${project.code} · ${row.mentor.name}`, meta: { mentorId: row.mentorId } });
-  refresh(project.id);
-  return ok();
+  refreshOverview(project.id, "mentors", "dashboard");
+  return done("unassigned");
 }
 
-export async function assignJury(_prev: ManageState, formData: FormData): Promise<ManageState> {
+export async function assignJury(_prev: ActionState, formData: FormData): Promise<ActionState> {
   let ctx;
-  try { ctx = await manager(formData.get("projectId")); } catch { return fail("forbidden"); }
+  try { ctx = await manager(formData.get("projectId")); } catch { return fail("errors.forbidden"); }
   const { user, project } = ctx;
-  const parsed = assignSchema.safeParse({ userId: formData.get("userId") });
-  if (!parsed.success) return fail("invalid");
+  const parsed = assignSchema.safeParse({ userId: formStr(formData, "userId") ?? "" });
+  if (!parsed.success) return failFromZod(parsed.error);
   const juror = await prisma.user.findFirst({ where: { id: parsed.data.userId, role: "JURY", active: true }, select: { id: true, name: true } });
-  if (!juror) return fail("notFound");
-  const exists = await prisma.juryAssignment.findUnique({ where: { projectId_juryId: { projectId: project.id, juryId: juror.id } } });
-  if (exists) return fail("duplicate");
-  await prisma.juryAssignment.create({ data: { projectId: project.id, juryId: juror.id } });
+  if (!juror) return fail("errors.notFound", { userId: "errors.notFound" });
+  try {
+    await prisma.juryAssignment.create({ data: { projectId: project.id, juryId: juror.id } });
+  } catch (e) {
+    if (isUniqueViolation(e)) return fail("errors.duplicate", { userId: "errors.duplicate" });
+    throw e;
+  }
   await logAudit({ actorId: user.id, action: "project.assign_jury", entity: "Project", entityId: project.id, projectId: project.id, summary: `${project.code} · ${juror.name}`, meta: { juryId: juror.id } });
   await notify([juror.id], "assigned_project", { project: project.title }, `/projects/${project.id}`);
-  refresh(project.id);
-  return ok();
+  refreshOverview(project.id, "jury", "dashboard");
+  revalidateProject(project.id, "evaluations");
+  return done("juryAssigned");
 }
 
-export async function unassignJury(projectId: string, juryId: string): Promise<ManageState> {
+export async function unassignJury(projectId: string, juryId: string): Promise<ActionState> {
   let ctx;
-  try { ctx = await manager(projectId); } catch { return fail("forbidden"); }
+  try { ctx = await manager(projectId); } catch { return fail("errors.forbidden"); }
   const { user, project } = ctx;
+  const id = z.string().min(1).safeParse(juryId);
+  if (!id.success) return fail("errors.invalid");
   const row = await prisma.juryAssignment.findUnique({
-    where: { projectId_juryId: { projectId: project.id, juryId: String(juryId) } }, include: { jury: { select: { name: true } } },
+    where: { projectId_juryId: { projectId: project.id, juryId: id.data } }, include: { jury: { select: { name: true } } },
   });
-  if (!row) return fail("notFound");
+  if (!row) return fail("errors.notFound");
   await prisma.juryAssignment.delete({ where: { id: row.id } });
   await logAudit({ actorId: user.id, action: "project.unassign_jury", entity: "Project", entityId: project.id, projectId: project.id, summary: `${project.code} · ${row.jury.name}`, meta: { juryId: row.juryId } });
-  refresh(project.id);
-  return ok();
+  refreshOverview(project.id, "jury", "dashboard");
+  revalidateProject(project.id, "evaluations");
+  return done("unassigned");
 }

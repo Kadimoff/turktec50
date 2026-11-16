@@ -52,7 +52,7 @@
   },
   "filters": {
     "q": "Axtarış",
-    "qPlaceholder": "Risk adı və ya yumşaltma…",
+    "qPlaceholder": "Risk adı və ya yumşaltma",
     "status": "Status",
     "active": "Aktiv risklər",
     "all": "Hamısı",
@@ -62,8 +62,6 @@
     "anyScope": "Proqram və layihələr",
     "programOnly": "Yalnız proqram səviyyəsi",
     "projectsOnly": "Yalnız layihə riskləri",
-    "apply": "Tətbiq et",
-    "reset": "Sıfırla",
     "matrixActive": "Matris filtri: ehtimal {p} · təsir {i}"
   },
   "form": {

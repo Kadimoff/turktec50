@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import {
-  Activity, AlertTriangle, ArrowRight, CalendarClock, Check, CheckCircle2, CircleDashed, ClipboardList, FileCheck2,
-  Gauge, ListChecks, MessagesSquare, Scale, ShieldAlert, Star,
+  Activity, AlertTriangle, ArrowRight, CalendarClock, Check, CheckCircle2, CircleDashed, ClipboardList, FileCheck2, FlaskConical,
+  Gauge, GraduationCap, Handshake, ListChecks, MessagesSquare, Package, Scale, ShieldAlert, Star,
 } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
@@ -10,13 +10,14 @@ import { getProjectAccess, type ProjectTab } from "@/lib/rbac";
 import { readinessFromChecklist } from "@/lib/kpi";
 import { STAGE_ORDER } from "@/lib/constants";
 import { fmtDate, fmtDateTime, fmtRelative } from "@/lib/format";
+import { bakuYmd } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 import { StatCard } from "@/components/shared/stat-card";
 import { EnumBadge } from "@/components/shared/enum-badge";
 import { ToneBadge } from "@/components/shared/tone-badge";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { EmptyState } from "@/components/shared/empty-state";
-import { AssignForm, FlagsForm, HealthForm, StageForm, UnassignButton } from "@/components/projects/manage-forms";
+import { AcademyLinksForm, AssignForm, FlagsForm, HealthForm, StageForm, UnassignButton } from "@/components/projects/manage-forms";
 
 export async function generateMetadata(props: PageProps<"/projects/[id]">) {
   const { id } = await props.params;
@@ -25,7 +26,7 @@ export async function generateMetadata(props: PageProps<"/projects/[id]">) {
 }
 
 const TAB_ICONS: Record<Exclude<ProjectTab, "overview">, React.ComponentType<{ className?: string }>> = {
-  tasks: ListChecks, sessions: MessagesSquare, documents: FileCheck2, risks: ShieldAlert, evaluations: Scale, activity: Activity,
+  tasks: ListChecks, sessions: MessagesSquare, documents: FileCheck2, risks: ShieldAlert, resources: Package, evaluations: Scale, activity: Activity,
 };
 
 export default async function ProjectOverviewPage(props: PageProps<"/projects/[id]">) {
@@ -42,6 +43,11 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
         id: true, title: true, summary: true, stage: true, health: true, createdAt: true,
         prototypeVerified: true, packageQcPassed: true, submittedAt: true, result: true,
         competition: { select: { name: true, applicationDeadline: true, finalDate: true } },
+        universityId: true, facultyId: true, labId: true, partnerId: true,
+        university: { select: { shortName: true } },
+        faculty: { select: { name: true } },
+        lab: { select: { name: true, status: true } },
+        partner: { select: { name: true, status: true, sector: true } },
         members: { orderBy: [{ isLead: "desc" }, { user: { name: "asc" } }], select: { id: true, teamRole: true, isLead: true, user: { select: { id: true, name: true, title: true } } } },
         mentors: { orderBy: { createdAt: "asc" }, select: { id: true, focus: true, mentor: { select: { id: true, name: true, title: true } } } },
         // juror identities are shown to the coordinator only
@@ -62,13 +68,27 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
   ]);
 
   const actorIds = [...new Set(project.stageHistory.map((s) => s.actorId).filter((v): v is string => !!v))];
-  const [actors, mentorPool, juryPool] = await Promise.all([
+  const [actors, mentorPool, juryPool, facultyPool, labPool, partnerPool] = await Promise.all([
     actorIds.length ? prisma.user.findMany({ where: { id: { in: actorIds } }, select: { id: true, name: true } }) : Promise.resolve([]),
     access.canManage
       ? prisma.user.findMany({ where: { role: "MENTOR", active: true, mentorAssignments: { none: { projectId: id } } }, orderBy: { name: "asc" }, select: { id: true, name: true, expertise: true } })
       : Promise.resolve([]),
     access.canManage
       ? prisma.user.findMany({ where: { role: "JURY", active: true, juryAssignments: { none: { projectId: id } } }, orderBy: { name: "asc" }, select: { id: true, name: true, title: true } })
+      : Promise.resolve([]),
+    // Academy links (coordinator form): archived entries only when currently linked
+    access.canManage
+      ? prisma.faculty.findMany({
+          where: { universityId: project.universityId, OR: [{ status: { not: "ARCHIVED" } }, ...(project.facultyId ? [{ id: project.facultyId }] : [])] },
+          orderBy: { name: "asc" }, select: { id: true, name: true, status: true },
+        })
+      : Promise.resolve([]),
+    access.canManage ? prisma.lab.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true, status: true } }) : Promise.resolve([]),
+    access.canManage
+      ? prisma.partner.findMany({
+          where: { OR: [{ status: { not: "ARCHIVED" } }, ...(project.partnerId ? [{ id: project.partnerId }] : [])] },
+          orderBy: { name: "asc" }, select: { id: true, name: true, status: true },
+        })
       : Promise.resolve([]),
   ]);
   const actorName = new Map(actors.map((a) => [a.id, a.name]));
@@ -103,7 +123,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="min-w-0 space-y-6 lg:col-span-2">
-          <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="ov-summary">
+          <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-summary">
             <h2 id="ov-summary" className="text-sm font-semibold">{t("overview.summary")}</h2>
             <p className="mt-2 text-sm leading-relaxed text-pretty">{project.summary}</p>
             {project.competition && (
@@ -117,7 +137,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
           </section>
 
           {/* stage stepper */}
-          <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="ov-stage">
+          <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-stage">
             <h2 id="ov-stage" className="text-sm font-semibold">{t("overview.stage")}</h2>
             <p className="text-xs text-muted-foreground">{t("overview.stageHint")}</p>
             <ol className="mt-4 grid gap-2 sm:grid-cols-5 sm:gap-0">
@@ -142,7 +162,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
                     </span>
                     <span className="min-w-0">
                       <span className={cn("block text-sm font-medium sm:text-xs", current ? "text-foreground" : "text-muted-foreground")}>{te(`ProjectStage.${s}`)}</span>
-                      <span className="block text-xs text-muted-foreground sm:text-[11px]">
+                      <span className="block text-xs text-muted-foreground sm:text-2xs">
                         {current ? t("overview.current") : done ? (at ? fmtDate(at, locale) : "") : t("overview.upcoming")}
                       </span>
                     </span>
@@ -151,7 +171,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
               })}
             </ol>
 
-            <h3 className="mt-6 text-xs font-semibold tracking-wide text-muted-foreground">{t("overview.history")}</h3>
+            <h3 className="mt-6 text-xs font-semibold text-muted-foreground">{t("overview.history")}</h3>
             {project.stageHistory.length === 0 ? (
               <p className="mt-2 text-sm text-muted-foreground">{t("overview.noHistory")}</p>
             ) : (
@@ -176,7 +196,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
           </section>
 
           {/* KPI evidence */}
-          <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="ov-kpi">
+          <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-kpi">
             <h2 id="ov-kpi" className="text-sm font-semibold">{t("overview.evidence")}</h2>
             <p className="text-xs text-muted-foreground">{t("overview.evidenceHint")}</p>
             <dl className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -197,11 +217,11 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
           {/* coordinator management */}
           {access.canManage && (
             <section className="rounded-xl border border-primary/30 bg-card shadow-card" aria-labelledby="ov-manage">
-              <div className="border-b p-5 pb-4">
+              <div className="border-b p-4 sm:p-5">
                 <h2 id="ov-manage" className="text-sm font-semibold">{t("manage.title")}</h2>
                 <p className="text-xs text-muted-foreground">{t("manage.subtitle")}</p>
               </div>
-              <div className="grid gap-6 p-5 xl:grid-cols-2">
+              <div className="grid gap-6 p-4 sm:p-5 xl:grid-cols-2">
                 <div className="space-y-6">
                   <div>
                     <h3 className="mb-3 text-sm font-semibold">{t("manage.stageTitle")}</h3>
@@ -231,12 +251,24 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
                     initial={{
                       prototypeVerified: project.prototypeVerified,
                       packageQcPassed: project.packageQcPassed,
-                      submittedAt: project.submittedAt ? bakuDate(project.submittedAt) : "",
+                      submittedAt: bakuYmd(project.submittedAt),
                       result: project.result,
                     }}
                     results={(["PENDING", "FINALIST", "NOT_SELECTED"] as const).map((r) => ({ value: r, label: te(`CompetitionResult.${r}`) }))}
                   />
                 </div>
+              </div>
+              <div className="border-t p-4 sm:p-5">
+                <h3 className="text-sm font-semibold">{t("manage.academyTitle")}</h3>
+                <p className="mb-3 text-xs text-muted-foreground">{t("manage.academySubtitle")}</p>
+                <AcademyLinksForm
+                  projectId={project.id}
+                  university={project.university.shortName}
+                  initial={{ facultyId: project.facultyId ?? "", labId: project.labId ?? "", partnerId: project.partnerId ?? "" }}
+                  faculties={facultyPool.map((f) => ({ value: f.id, label: f.status === "ACTIVE" ? f.name : `${f.name} · ${te(`RegistryStatus.${f.status}`)}` }))}
+                  labs={labPool.map((l) => ({ value: l.id, label: l.status === "AVAILABLE" ? l.name : `${l.name} · ${te(`LabStatus.${l.status}`)}` }))}
+                  partners={partnerPool.map((p) => ({ value: p.id, label: p.status === "ACTIVE" ? p.name : `${p.name} · ${te(`PartnerStatus.${p.status}`)}` }))}
+                />
               </div>
             </section>
           )}
@@ -244,7 +276,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
 
         <aside className="min-w-0 space-y-6">
           {/* team */}
-          <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="ov-team">
+          <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-team">
             <h2 id="ov-team" className="text-sm font-semibold">{t("overview.team")}</h2>
             {project.members.length === 0 ? (
               <EmptyState title={t("overview.noMembers")} className="mt-3 py-6" />
@@ -265,7 +297,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
           </section>
 
           {/* mentors */}
-          <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="ov-mentors">
+          <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-mentors">
             <h2 id="ov-mentors" className="text-sm font-semibold">{t("overview.mentors")}</h2>
             {project.mentors.length === 0 ? (
               <p className="mt-2 text-sm text-muted-foreground">{t("overview.noMentors")}</p>
@@ -290,9 +322,36 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
             )}
           </section>
 
+          {/* academy links (faculty / lab / partner) */}
+          {(project.faculty || project.lab || project.partner) && (
+            <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-academy">
+              <h2 id="ov-academy" className="text-sm font-semibold">{t("overview.academy.title")}</h2>
+              <dl className="mt-3 space-y-3">
+                {project.faculty && (
+                  <AcademyFact icon={GraduationCap} label={t("overview.academy.faculty")}>{project.faculty.name}</AcademyFact>
+                )}
+                {project.lab && (
+                  <AcademyFact icon={FlaskConical} label={t("overview.academy.lab")} badge={project.lab.status !== "AVAILABLE" ? <EnumBadge enumName="LabStatus" value={project.lab.status} /> : undefined}>
+                    {project.lab.name}
+                  </AcademyFact>
+                )}
+                {project.partner && (
+                  <AcademyFact
+                    icon={Handshake}
+                    label={t("overview.academy.partner")}
+                    sub={project.partner.sector ?? undefined}
+                    badge={project.partner.status !== "ACTIVE" ? <EnumBadge enumName="PartnerStatus" value={project.partner.status} /> : undefined}
+                  >
+                    {project.partner.name}
+                  </AcademyFact>
+                )}
+              </dl>
+            </section>
+          )}
+
           {/* jurors: coordinator only */}
           {access.isAdmin && (
-            <section className="rounded-xl border bg-card p-5 shadow-card" aria-labelledby="ov-jurors">
+            <section className="rounded-xl border bg-card p-4 shadow-card sm:p-5" aria-labelledby="ov-jurors">
               <div className="flex items-start justify-between gap-2">
                 <h2 id="ov-jurors" className="text-sm font-semibold">{t("overview.jurors")}</h2>
                 <ToneBadge tone="neutral" dot={false}>{t("overview.adminOnly")}</ToneBadge>
@@ -322,7 +381,7 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
           {/* quick links */}
           {quickTabs.length > 0 && (
             <nav className="rounded-xl border bg-card p-2 shadow-card" aria-label={t("overview.quickLinks")}>
-              <p className="px-3 pt-2 pb-1 text-xs font-semibold tracking-wide text-muted-foreground">{t("overview.quickLinks")}</p>
+              <p className="px-3 pt-2 pb-1 text-xs font-semibold text-muted-foreground">{t("overview.quickLinks")}</p>
               <ul>
                 {quickTabs.map((tab) => {
                   const Icon = TAB_ICONS[tab];
@@ -349,9 +408,24 @@ export default async function ProjectOverviewPage(props: PageProps<"/projects/[i
   );
 }
 
-/** YYYY-MM-DD in program timezone (for <input type="date">). */
-function bakuDate(d: Date) {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Baku" }).format(d);
+function AcademyFact({
+  icon: Icon, label, sub, badge, children,
+}: { icon: React.ComponentType<{ className?: string }>; label: string; sub?: string; badge?: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-muted text-muted-foreground" aria-hidden>
+        <Icon className="size-4" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <dt className="text-xs text-muted-foreground">{label}</dt>
+        <dd className="text-sm font-medium text-pretty">
+          {children}
+          {sub && <span className="block text-xs font-normal text-muted-foreground">{sub}</span>}
+          {badge && <span className="mt-1 block">{badge}</span>}
+        </dd>
+      </div>
+    </div>
+  );
 }
 
 function Flag({ label, ok, yes, no }: { label: string; ok: boolean; yes: string; no: string }) {

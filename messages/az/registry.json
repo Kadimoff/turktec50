@@ -1,0 +1,153 @@
+{
+  "eyebrow": "Akademiya",
+  "title": "Fakültə, laboratoriya və tərəfdaş reyestri",
+  "description": "ADNSU fakültələri, laboratoriyaları və sənaye tərəfdaşları bir yerdə. Layihələr, tələbələr və resurs sorğuları bu qeydlərə bağlanır; istifadədə olan qeyd silinmir, arxivə köçürülür.",
+  "tabsLabel": "Reyestr bölmələri",
+  "tabs": {
+    "faculties": "Fakültələr",
+    "labs": "Laboratoriyalar",
+    "partners": "Tərəfdaşlar"
+  },
+  "search": {
+    "faculties": "Ad, koordinator və ya qeyd",
+    "labs": "Ad, fakültə, əlaqə və ya qeyd",
+    "partners": "Ad, sektor, əlaqə və ya qeyd"
+  },
+  "found": "{count, plural, one {# qeyd} other {# qeyd}}",
+  "noCoordinator": "Koordinator təyin edilməyib",
+  "noFaculty": "Fakültəyə bağlı deyil",
+  "noSector": "Sektor göstərilməyib",
+  "empty": {
+    "noResults": "Nəticə tapılmadı",
+    "noResultsHint": "Axtarış sözünü və ya status filtrini dəyişin.",
+    "faculties": "Hələ fakültə əlavə edilməyib",
+    "facultiesHint": "Pilot universitetin fakültələrini əlavə edin ki, tələbə, komanda və layihələri onlara bağlaya biləsiniz.",
+    "labs": "Hələ laboratoriya əlavə edilməyib",
+    "labsHint": "Komandaların istifadə etdiyi laboratoriyaları əlavə edin — təlimlər və resurs sorğuları onlara bağlanır.",
+    "partners": "Hələ sənaye tərəfdaşı yoxdur",
+    "partnersHint": "Namizəd və ya aktiv tərəfdaşları əlavə edin; layihələr və resurs sorğuları onlara bağlana bilər."
+  },
+  "cols": {
+    "faculty": "Fakültə",
+    "coordinator": "Koordinator",
+    "students": "Tələbələr",
+    "teams": "Komandalar",
+    "projects": "Layihələr",
+    "labs": "Laboratoriyalar",
+    "status": "Status",
+    "actions": "Əməliyyatlar",
+    "lab": "Laboratoriya",
+    "contact": "Əlaqə",
+    "openRequests": "Açıq sorğular",
+    "upcomingTrainings": "Qarşıdakı təlimlər",
+    "partner": "Tərəfdaş",
+    "sector": "Sektor",
+    "requests": "Resurs sorğuları"
+  },
+  "usage": {
+    "students": "{count, plural, one {# tələbə} other {# tələbə}}",
+    "teams": "{count, plural, one {# komanda} other {# komanda}}",
+    "projects": "{count, plural, one {# layihə} other {# layihə}}",
+    "labs": "{count, plural, one {# laboratoriya} other {# laboratoriya}}",
+    "users": "{count, plural, one {# istifadəçi} other {# istifadəçi}}",
+    "intakeRequests": "{count, plural, one {# hazırlıq müraciəti} other {# hazırlıq müraciəti}}",
+    "intakeMembers": "{count, plural, one {# müraciət üzvü} other {# müraciət üzvü}}",
+    "trainings": "{count, plural, one {# təlim} other {# təlim}}",
+    "requests": "{count, plural, one {# resurs sorğusu} other {# resurs sorğusu}}",
+    "openRequests": "{count, plural, one {# açıq sorğu} other {# açıq sorğu}}",
+    "upcomingTrainings": "{count, plural, one {# qarşıdakı təlim} other {# qarşıdakı təlim}}"
+  },
+  "faculty": {
+    "create": "Yeni fakültə",
+    "createTitle": "Fakültə əlavə et",
+    "editTitle": "Fakültəni redaktə et",
+    "dialogDescription": "Fakültə adı universitet daxilində təkrarlanmamalıdır. Koordinator sistemə daxil olmur — yalnız əlaqə üçün qeyd olunur."
+  },
+  "lab": {
+    "create": "Yeni laboratoriya",
+    "createTitle": "Laboratoriya əlavə et",
+    "editTitle": "Laboratoriyanı redaktə et",
+    "dialogDescription": "Laboratoriyanın statusu təlim planlamasında nəzərə alınır: bağlı laboratoriyalar yeni təlimlər üçün təklif edilmir."
+  },
+  "partner": {
+    "create": "Yeni tərəfdaş",
+    "createTitle": "Sənaye tərəfdaşı əlavə et",
+    "editTitle": "Tərəfdaşı redaktə et",
+    "dialogDescription": "Status tərəfdaşlıq danışıqlarının vəziyyətini göstərir; qərarları koordinator verir."
+  },
+  "actions": {
+    "edit": "Redaktə et",
+    "editLabel": "Redaktə et: {name}",
+    "delete": "Sil",
+    "deleteLabel": "Sil: {name}"
+  },
+  "delete": {
+    "title": "“{name}” silinsin?",
+    "body": "Qeyd birdəfəlik silinəcək. Bu əməliyyat geri qaytarılmır, lakin əməliyyat jurnalında qalır.",
+    "inUseTitle": "“{name}” istifadədədir",
+    "inUseBody": {
+      "faculty": "Bu fakültəyə hələ də qeydlər bağlıdır, ona görə silinə bilməz. Fakültəni arxivə köçürün — tarixçə qorunur, yeni bağlantılar üçün təklif edilmir.",
+      "lab": "Bu laboratoriyaya layihələr, təlimlər və ya resurs sorğuları bağlıdır, ona görə silinə bilməz. Statusunu “Bağlı” edin — yeni təlimlər üçün təklif edilməyəcək.",
+      "partner": "Bu tərəfdaşa layihələr və ya resurs sorğuları bağlıdır, ona görə silinə bilməz. Tərəfdaşı arxivə köçürün — tarixçə qorunur."
+    },
+    "usedBy": "Bağlı qeydlər",
+    "alreadyRetired": {
+      "faculty": "Fakültə artıq arxivdədir.",
+      "lab": "Laboratoriya artıq bağlıdır.",
+      "partner": "Tərəfdaş artıq arxivdədir."
+    },
+    "retire": {
+      "faculty": "Arxivə köçür",
+      "lab": "Bağlı et",
+      "partner": "Arxivə köçür"
+    }
+  },
+  "form": {
+    "pending": "Yadda saxlanılır…"
+  },
+  "fields": {
+    "university": "Universitet",
+    "universityHint": "Defolt olaraq pilot universitet seçilir.",
+    "chooseUniversity": "Universitet seçin",
+    "facultyName": "Fakültənin adı",
+    "facultyNameHint": "Məs.: Rəqəmsal texnologiyalar fakültəsi",
+    "coordinator": "Koordinator",
+    "coordinatorHint": "Ad və ya əlaqə; sistem hesabı tələb olunmur.",
+    "status": "Status",
+    "notes": "Qeydlər",
+    "notesHint": "Daxili qeyd, yalnız koordinatorlar görür.",
+    "faculty": "Fakültə",
+    "facultyHint": "Laboratoriya bir fakültəyə aid deyilsə boş saxlayın.",
+    "facultyNone": "Fakültəyə bağlı deyil",
+    "facultyNoneAvailable": "Bu universitet üçün fakültə qeydə alınmayıb.",
+    "labName": "Laboratoriyanın adı",
+    "contact": "Əlaqə",
+    "contactHint": "Məsul şəxs, telefon və ya e-poçt.",
+    "labStatusHint": "“Bağlı” laboratoriyalar yeni təlimlər üçün təklif edilmir.",
+    "partnerName": "Tərəfdaşın adı",
+    "sector": "Sektor",
+    "sectorHint": "Məs.: Enerji, Logistika",
+    "partnerContactHint": "Əlaqə şəxsi, telefon və ya e-poçt."
+  },
+  "errors": {
+    "nameShort": "Ad ən azı 2 simvol olmalıdır.",
+    "nameLong": "Ad 160 simvoldan uzun ola bilməz.",
+    "nameTaken": "Bu universitetdə bu adda fakültə artıq var.",
+    "partnerTaken": "Bu adda tərəfdaş artıq qeydə alınıb.",
+    "universityRequired": "Universitet seçin.",
+    "universityLocked": "Bu fakültəyə qeydlər bağlıdır — universiteti dəyişmək olmaz.",
+    "facultyMismatch": "Seçilmiş fakültə bu universitetə aid deyil.",
+    "notFound": "Qeyd tapılmadı — səhifəni yeniləyin.",
+    "inUse": "Qeyd istifadədədir və silinə bilməz.",
+    "invalid": "Daxil edilən məlumat düzgün deyil.",
+    "generic": "Xəta baş verdi. Yenidən cəhd edin.",
+    "tooLong": "Mətn çox uzundur."
+  },
+  "toast": {
+    "created": "Qeyd əlavə edildi",
+    "updated": "Dəyişikliklər yadda saxlanıldı",
+    "deleted": "Qeyd silindi",
+    "archived": "Arxivə köçürüldü",
+    "closed": "Laboratoriya bağlı statusuna keçirildi"
+  }
+}

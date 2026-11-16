@@ -1,0 +1,576 @@
+[
+  {
+    "id": 26,
+    "name": "5G & Yapay Zeka ile Akıllı Yol Güvenliği Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/5g-yapay-zeka-ile-akilli-yol-guvenligi-yarismasi/",
+    "theme": "Süni intellekt",
+    "categories": []
+  },
+  {
+    "id": 27,
+    "name": "Biyoteknoloji İnovasyon Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/biyoteknoloji-inovasyon-yarismasi/",
+    "theme": "Səhiyyə",
+    "categories": [
+      "Lise — Fikir",
+      "Üniversite ve üzeri — Fikir",
+      "Proje"
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Blokzincir Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/blokzincir-yarismasi/",
+    "theme": "Proqram təminatı və elektronika",
+    "categories": []
+  },
+  {
+    "id": 29,
+    "name": "Çip Tasarım Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/cip-tasarim-yarismasi/",
+    "theme": "Proqram təminatı və elektronika",
+    "categories": [
+      "Analog Tasarım",
+      "Mikrodenetleyici Tasarımı"
+    ]
+  },
+  {
+    "id": 30,
+    "name": "Dikey İnişli Roket Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/dikey-inisli-roket-yarismasi/",
+    "theme": "Kosmos və raket",
+    "categories": []
+  },
+  {
+    "id": 31,
+    "name": "E-Ticaret Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/e-ticaret-yarismasi/",
+    "theme": "Proqram təminatı və elektronika",
+    "categories": []
+  },
+  {
+    "id": 32,
+    "name": "Yapay Zeka Destekli Lojistik Anahat Optimizasyonu Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/yapay-zeka-destekli-lojistik-anahat-optimizasyonu-yarismasi/",
+    "theme": "Süni intellekt",
+    "categories": []
+  },
+  {
+    "id": 33,
+    "name": "Finansal Teknolojiler Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/finansal-teknolojiler-yarismasi/",
+    "theme": "Proqram təminatı və elektronika",
+    "categories": []
+  },
+  {
+    "id": 34,
+    "name": "Hareketli Uydu Terminali Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/hareketli-uydu-terminali-yarismasi/",
+    "theme": "Müdafiə və rabitə",
+    "categories": [
+      "Lise",
+      "Üniversite ve üzeri"
+    ]
+  },
+  {
+    "id": 35,
+    "name": "Havacılıkta Yapay Zeka Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/havacilikta-yapay-zeka-yarismasi/",
+    "theme": "Süni intellekt",
+    "categories": []
+  },
+  {
+    "id": 36,
+    "name": "Çelikkubbe Hava Savunma Sistemleri Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/celikkubbe-hava-savunma-sistemleri-yarismasi/",
+    "theme": "Müdafiə və rabitə",
+    "categories": []
+  },
+  {
+    "id": 37,
+    "name": "Hyperloop Geliştirme Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/hyperloop-gelistirme-yarismasi/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": [
+      "Performans",
+      "Teknoloji Gösterimi",
+      "Tanımlı Problem Çözümü"
+    ]
+  },
+  {
+    "id": 38,
+    "name": "İnsansız Deniz Aracı Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/insansiz-deniz-araci-yarismasi/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": []
+  },
+  {
+    "id": 39,
+    "name": "İnsansız Kara Aracı Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/insansiz-kara-araci-yarismasi/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": []
+  },
+  {
+    "id": 40,
+    "name": "İnsansız Su Altı Sistemleri Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/insansiz-su-alti-sistemleri-yarismasi/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": [
+      "Temel",
+      "İleri"
+    ]
+  },
+  {
+    "id": 41,
+    "name": "İnsansız Su Altı Sistemleri Yıldızlar Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/insansiz-su-alti-sistemleri-yildizlar-yarismasi/",
+    "theme": "Aviasiya",
+    "categories": []
+  },
+  {
+    "id": 42,
+    "name": "Jet Motor Tasarım Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/jet-motor-tasarim-yarismasi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": []
+  },
+  {
+    "id": 43,
+    "name": "Kuantum Teknolojileri Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/kuantum-teknolojileri-yarismasi/",
+    "theme": "Proqram təminatı və elektronika",
+    "categories": [
+      "Yazılım",
+      "Donanım"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Liseler Arası İnsansız Hava Araçları Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/liseler-arasi-insansiz-hava-araclari-yarismasi/",
+    "theme": "Aviasiya",
+    "categories": [
+      "Sabit Kanat",
+      "Döner Kanat",
+      "Serbest Görev"
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Lise Öğrencileri İklim Değişikliği Araştırma Projeleri Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/lise-ogrencileri-iklim-degisikligi-arastirma-projeleri-yarismasi/",
+    "theme": "Enerji və ətraf mühit",
+    "categories": [
+      "Biyoçeşitlilik ve Ekosistemler",
+      "Arazi Kullanımı ve Toprak",
+      "Orman",
+      "Tarım",
+      "Hayvancılık",
+      "Sanayi",
+      "Ulaşım",
+      "Enerji",
+      "Turizm",
+      "Hava Kirliliği",
+      "Sera Gazları",
+      "Hava Kalitesi",
+      "Su Yönetimi",
+      "İçme ve Kullanma Suları",
+      "Su Kirliliği",
+      "Suyun Geleceği",
+      "Okyanus Asidifikasyonu",
+      "İklim Direnci",
+      "Atık Yönetimi",
+      "Sağlık ve Kaliteli Yaşam",
+      "Kentsel Yapılaşma",
+      "Toplumsal Farkındalık"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "Lise Öğrencileri Kutup Araştırma Projeleri Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/lise-ogrencileri-kutup-arastirma-projeleri-yarismasi/",
+    "theme": "Enerji və ətraf mühit",
+    "categories": [
+      "Canlı Bilimleri",
+      "Fiziki Bilimler",
+      "Sosyal ve Beşeri Bilimler",
+      "Yer Bilimleri"
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Model Uydu Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/model-uydu-yarismasi/",
+    "theme": "Kosmos və raket",
+    "categories": []
+  },
+  {
+    "id": 48,
+    "name": "Nükleer Enerji Teknolojileri Tasarım Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/nukleer-enerji-teknolojileri-tasarim-yarismasi/",
+    "theme": "Enerji və ətraf mühit",
+    "categories": [
+      "Detay Tasarımı",
+      "Kavramsal Tasarım — Modüler Reaktör",
+      "Kavramsal Tasarım — Araştırma Reaktörü",
+      "Enerji Çevrimi Tasarımı",
+      "Reaktör Kor Tasarımı",
+      "Nükleer Yakıt ve Atık Yönetimi",
+      "Pasif Güvenlik Sistemi Tasarımı",
+      "Nükleer Enstrümantasyon ve Kontrol Sistemi Tasarımı",
+      "Yazılım Geliştirme",
+      "Robotik Sistem Tasarımı"
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Onkolojide 3T Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/onkolojide-3t-yarismasi/",
+    "theme": "Səhiyyə",
+    "categories": []
+  },
+  {
+    "id": 50,
+    "name": "Pardus Hata Yakalama ve Öneri Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/pardus-hata-yakalama-ve-oneri-yarismasi/",
+    "theme": "Proqram təminatı və elektronika",
+    "categories": [
+      "Öneri ve Hata Yakalama",
+      "Geliştirme"
+    ]
+  },
+  {
+    "id": 51,
+    "name": "Robotaksi-Binek Otonom Araç Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/robotaksi-binek-otonom-arac-yarismasi/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": [
+      "Özgün Araç",
+      "Hazır Araç"
+    ]
+  },
+  {
+    "id": 52,
+    "name": "Roket Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/roket-yarismasi/",
+    "theme": "Kosmos və raket",
+    "categories": [
+      "A1 Lise",
+      "A2 Orta İrtifa",
+      "A3 Yüksek İrtifa",
+      "A4 Uluslararası",
+      "A5 Zorlu Görev",
+      "A6 Özgün Hibrit Yakıt Motorlu Roket",
+      "A7 Özgün Sıvı Yakıt Motorlu Roket",
+      "B1 Aktif Kontrol Sistemi",
+      "B2 Hibrit Yakıtlı Roket Motoru",
+      "B3 Sıvı Yakıtlı Roket Motoru",
+      "B4 Uçuş Modelleme ve Simülasyon Yazılımı"
+    ]
+  },
+  {
+    "id": 53,
+    "name": "Sağlıkta Yapay Zeka Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/saglikta-yapay-zeka-yarismasi/",
+    "theme": "Süni intellekt",
+    "categories": [
+      "Lise — EKG sınıflandırması",
+      "Üniversite ve üzeri — Genetik varyant tahmini"
+    ]
+  },
+  {
+    "id": 54,
+    "name": "Sanayide Robotik Uygulamalar Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/sanayide-robotik-uygulamalar-yarismasi/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": []
+  },
+  {
+    "id": 55,
+    "name": "Sürü İHA Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/suru-iha-yarismasi/",
+    "theme": "Aviasiya",
+    "categories": []
+  },
+  {
+    "id": 56,
+    "name": "Savaşan İHA Yıldızlar Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/savasan-iha-yildizlar-yarismasi/",
+    "theme": "Aviasiya",
+    "categories": []
+  },
+  {
+    "id": 57,
+    "name": "Savaşan İHA Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/savasan-iha-yarismasi/",
+    "theme": "Aviasiya",
+    "categories": []
+  },
+  {
+    "id": 58,
+    "name": "Savaşan İHA Avcı Drone Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/savasan-iha-avci-drone-yarismasi/",
+    "theme": "Aviasiya",
+    "categories": []
+  },
+  {
+    "id": 59,
+    "name": "Su Altı Roket Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/su-alti-roket-yarismasi/",
+    "theme": "Kosmos və raket",
+    "categories": []
+  },
+  {
+    "id": 60,
+    "name": "Tarım Teknolojileri Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/tarim-teknolojileri-yarismasi/",
+    "theme": "Enerji və ətraf mühit",
+    "categories": []
+  },
+  {
+    "id": 61,
+    "name": "TEKNOFEST Drone Şampiyonası",
+    "url": "https://teknofest.org/tr/yarismalar/teknofest-drone-sampiyonasi/",
+    "theme": "Aviasiya",
+    "categories": []
+  },
+  {
+    "id": 62,
+    "name": "TEKNOFEST Mimari ve Görsel Tasarım Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/teknofest-mimari-ve-gorsel-tasarim-yarismasi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "Ana Sahne Tasarımı",
+      "Ödül Heykelciği",
+      "Grafik Konsept Tasarımı"
+    ]
+  },
+  {
+    "id": 63,
+    "name": "TEKNOFEST Robolig Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/teknofest-robolig-yarismasi/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": []
+  },
+  {
+    "id": 64,
+    "name": "World Drone Cup",
+    "url": "https://teknofest.org/tr/yarismalar/world-drone-cup/",
+    "theme": "Aviasiya",
+    "categories": []
+  },
+  {
+    "id": 65,
+    "name": "İnsanlık Yararına Teknolojiler Yarışması - İlkokul Seviyesi",
+    "url": "https://teknofest.org/tr/yarismalar/insanlik-yararina-teknolojiler-yarismasi-ilkokul-seviyesi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "Astronomi, Uzay Bilimleri ve Havacılık",
+      "Doğa, Çevre ve Sürdürülebilirlik",
+      "Sağlıklı Yaşam"
+    ]
+  },
+  {
+    "id": 66,
+    "name": "İnsanlık Yararına Teknolojiler Yarışması - Ortaokul Seviyesi",
+    "url": "https://teknofest.org/tr/yarismalar/insanlik-yararina-teknolojiler-yarismasi-ortaokul-seviyesi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "Astronomi ve Uzay Teknolojileri",
+      "Doğa Bilimleri ve Çevresel Farkındalık",
+      "Sağlık ve İyi Yaşam Teknolojileri",
+      "Eğitim Teknolojileri"
+    ]
+  },
+  {
+    "id": 67,
+    "name": "İnsanlık Yararına Teknolojiler Yarışması - Lise Seviyesi",
+    "url": "https://teknofest.org/tr/yarismalar/insanlik-yararina-teknolojiler-yarismasi-lise-seviyesi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "Akıllı Teknolojiler ve Sistem Tasarımı",
+      "Sağlık ve İyi Yaşam Teknolojileri",
+      "Eğitim, Kültür ve Dijital Deneyim Teknolojileri"
+    ]
+  },
+  {
+    "id": 68,
+    "name": "Uluslararası Elektrikli Araç Yarışları",
+    "url": "https://teknofest.org/tr/yarismalar/uluslararasi-elektrikli-arac-yarislari/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": [
+      "Elektromobil",
+      "Hidromobil"
+    ]
+  },
+  {
+    "id": 69,
+    "name": "Uluslararası İnsansız Hava Aracı Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/uluslararasi-insansiz-hava-araci-yarismasi/",
+    "theme": "Aviasiya",
+    "categories": [
+      "Sabit Kanat",
+      "Döner Kanat",
+      "Serbest Görev"
+    ]
+  },
+  {
+    "id": 70,
+    "name": "Üniversite Öğrencileri Araştırma Proje Yarışmaları",
+    "url": "https://teknofest.org/tr/yarismalar/universite-ogrencileri-arastirma-proje-yarismalari/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "Akıllı Şehirler ve Ulaşım",
+      "Bilgi ve İletişim Teknolojileri",
+      "Eğitim",
+      "Enerji ve Çevre",
+      "Gıda ve Tarım",
+      "Makine İmalatı ve Otomotiv",
+      "Sağlık",
+      "Savunma, Uzay ve Havacılık",
+      "Sosyal Yenilikçilik ve Girişimcilik"
+    ]
+  },
+  {
+    "id": 71,
+    "name": "Yapay Zeka Dil Ajanları Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/yapay-zeka-dil-ajanlari-yarismasi/",
+    "theme": "Süni intellekt",
+    "categories": [
+      "Kamu evrakı və rəsmi yazışma agentləri",
+      "İştirak bankçılığı üzrə maliyyə mətnlərinin təhlili",
+      "Video üzrə multimodal hadisə və risk analizi"
+    ]
+  },
+  {
+    "id": 72,
+    "name": "Yapay Zeka Destekli Havayolu Optimizasyonu Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/yapay-zeka-destekli-havayolu-optimizasyonu-yarismasi/",
+    "theme": "Süni intellekt",
+    "categories": []
+  },
+  {
+    "id": 73,
+    "name": "TÜBA-TEKNOFEST Doktora Bilim Ödülleri",
+    "url": "https://teknofest.org/tr/yarismalar/tuba-teknofest-doktora-bilim-odulleri/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "Fen ve Mühendislik Bilimleri",
+      "Sağlık ve Yaşam Bilimleri",
+      "Sosyal ve Beşerî Bilimler",
+      "Temel Bilimler"
+    ]
+  },
+  {
+    "id": 74,
+    "name": "Sıfır Atık & Döngüsel Ekonomi Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/sifir-atik-dongusel-ekonomi-yarismasi/",
+    "theme": "Enerji və ətraf mühit",
+    "categories": [
+      "Atıktan Değere — Akıllı Geri Dönüşüm",
+      "Endüstriyel Atık Yönetimi ve Yeniden Kullanım",
+      "Tüketim Sonrası Atık İzleme ve Davranış Dönüşümü"
+    ]
+  },
+  {
+    "id": 75,
+    "name": "TEKNOFEST Yapay Zeka Film Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/teknofest-yapay-zeka-film-yarismasi/",
+    "theme": "Süni intellekt",
+    "categories": []
+  },
+  {
+    "id": 76,
+    "name": "TEKNOFEST Mesleki Yetenek Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/teknofest-mesleki-yetenek-yarismasi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "Qaynaqçılıq",
+      "Dülgərlik",
+      "Su tesisatçılığı",
+      "Elektrik tesisatı ve pano montajı",
+      "Elektrik kumanda panosu tasarımı ve uygulaması",
+      "PCB montajı",
+      "Mekatronik teknolojileri",
+      "Orta gerilim teknolojileri",
+      "Akıllı fabrika sistemleri programlama"
+    ]
+  },
+  {
+    "id": 77,
+    "name": "NSOSYAL İnovasyon Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/nsosyal-inovasyon-yarismasi/",
+    "theme": "Proqram təminatı və elektronika",
+    "categories": []
+  },
+  {
+    "id": 78,
+    "name": "HackMasters Güneydoğu",
+    "url": "https://teknofest.org/tr/yarismalar/hackmasters-guneydogu/",
+    "theme": "Proqram təminatı və elektronika",
+    "categories": []
+  },
+  {
+    "id": 79,
+    "name": "İleri Otonom Sistemler Tasarım ve Operasyon Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/ileri-otonom-sistemler-tasarim-ve-operasyon-yarismasi/",
+    "theme": "Robototexnika və mobil sistemlər",
+    "categories": []
+  },
+  {
+    "id": 80,
+    "name": "Mavi Vatan Resim Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/mavi-vatan-resim-yarismasi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": []
+  },
+  {
+    "id": 81,
+    "name": "KÜRE TEKNOFEST Güneydoğu Madde Yazım Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/kure-teknofest-guneydogu-madde-yazim-yarismasi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "KÜRE Ansiklopedi Maddesi",
+      "KÜRE Blog"
+    ]
+  },
+  {
+    "id": 82,
+    "name": "Bağımlılıklarla Mücadelede Teknolojik Uygulamalar Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/bagimliliklarla-mucadelede-teknolojik-uygulamalar-yarismasi/",
+    "theme": "Səhiyyə",
+    "categories": []
+  },
+  {
+    "id": 83,
+    "name": "FPV Drone İzleme (Tracking) Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/fpv-drone-izleme-tracking-yarismasi/",
+    "theme": "Aviasiya",
+    "categories": []
+  },
+  {
+    "id": 84,
+    "name": "KÜRE TEKNOFEST Mavi Vatan Madde Yazım Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/kure-teknofest-mavi-vatan-madde-yazim-yarismasi/",
+    "theme": "Tədqiqat və dizayn",
+    "categories": [
+      "KÜRE Ansiklopedi Maddesi",
+      "KÜRE Blog"
+    ]
+  },
+  {
+    "id": 85,
+    "name": "Elektronik Harp Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/elektronik-harp-yarismasi/",
+    "theme": "Müdafiə və rabitə",
+    "categories": []
+  },
+  {
+    "id": 86,
+    "name": "Maden Teknolojileri Yarışması",
+    "url": "https://teknofest.org/tr/yarismalar/maden-teknolojileri-yarismasi/",
+    "theme": "Enerji və ətraf mühit",
+    "categories": []
+  }
+]

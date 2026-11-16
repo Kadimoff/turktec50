@@ -1,5 +1,4 @@
 {
-  "welcome": "Hoş geldiniz, {name}",
   "intro": {
     "ADMIN": "Programın tüm göstergeleri tek bakışta: KPI hedefleri, portföy sağlığı ve dikkat gerektiren konular.",
     "TEAM": "Ekibinizin çalışma alanı: aşama, görevler, mentor oturumu ve belge hazırlığı.",
@@ -180,5 +179,11 @@
     "due": "Son tarihi gelen açık görev",
     "sessions": "Mentor oturumu",
     "hours": "Mentorluk saati (toplam)"
+  },
+  "title": {
+    "ADMIN": "Program genel bakış",
+    "TEAM": "Proje genel bakış",
+    "MENTOR": "Mentor genel bakış",
+    "JURY": "Jüri genel bakış"
   }
 }

@@ -1,0 +1,97 @@
+{
+  "eyebrow": "ADNSU TEKNOFEST 2027 Akademisi",
+  "title": "Akademi genel bakış",
+  "description": "Öğrenci kaydı, ekipler, takip edilen yarışmalar, eğitimler ve kaynak talepleri tek bakışta. Rakamlar kayıtlardan hesaplanır.",
+  "stats": {
+    "title": "Akademi göstergeleri",
+    "intake": "Yeni hazırlık başvuruları",
+    "intakeHint": "{review} inceleniyor · {changes} düzeltme bekliyor",
+    "students": "Kayıtlı öğrenciler",
+    "studentsHint": "{count, plural, one {# kişi ekip arıyor} other {# kişi ekip arıyor}}",
+    "teams": "Ekipler",
+    "teamsHint": "{active} aktif · {forming} oluşuyor",
+    "applications": "Ekiplerden başvurular",
+    "applicationsHint": "{pending} inceleniyor · {accepted} kabul edildi",
+    "competitions": "Takip edilen yarışmalar",
+    "competitionsHint": "{count, plural, =0 {2027 kurallarında değişiklik yok} one {# yarışmada kural değişti} other {# yarışmada kural değişti}}",
+    "trainings": "Yaklaşan eğitimler",
+    "trainingsNext": "Sıradaki: {date}",
+    "trainingsNone": "Planlanmış eğitim yok",
+    "requests": "Açık kaynak talepleri",
+    "requestsHint": "{fresh} yeni · {review} inceleniyor"
+  },
+  "deadlines": {
+    "title": "Yaklaşan son tarihler",
+    "subtitle": "Takip edilen TEKNOFEST katalog yarışmaları · önümüzdeki {days} gün",
+    "catalog": "Katalog",
+    "empty": "Önümüzdeki {days} günde takip edilen yarışmaların son tarihi yok.",
+    "teams": "{count, plural, one {# ekip} other {# ekip}}",
+    "notConfirmed": "Son tarih resmî olarak doğrulanmadı"
+  },
+  "requests": {
+    "title": "Açık kaynak talepleri",
+    "subtitle": "{count, plural, =0 {Yeni veya incelenen talep yok} one {# yeni veya incelenen talep · ihtiyaç tarihine göre} other {# yeni veya incelenen talep · ihtiyaç tarihine göre}}",
+    "empty": "Açık kaynak talebi yok.",
+    "noDate": "Tarih yok",
+    "more": "{count, plural, one {# açık talep daha proje sayfalarında.} other {# açık talep daha proje sayfalarında.}}"
+  },
+  "strategy": {
+    "title": "Hazırlık stratejisi",
+    "description": "ADNSU bünyesinde disiplinler arası teknoloji ekipleri yetiştirmek için önerilen çalışma modeli.",
+    "rolesTitle": "Yönetim ve sorumluluk",
+    "stagesTitle": "Hazırlık aşamaları",
+    "stageNumber": "Aşama {n}:",
+    "roles": {
+      "office": {
+        "name": "Startup ve Teknoloji Transferi Ofisi",
+        "text": "Fakülte koordinatörlerini, mentorları, laboratuvarları ve sanayi ortaklarını koordine eder. Portföyü, riskleri, kaynak dağılımını ve aşama değerlendirmelerini denetler."
+      },
+      "faculties": {
+        "name": "Fakülte koordinatörleri",
+        "text": "Öğrenci ve mentor adaylarını belirler, disiplinler arası ekipler kurar, haftalık ilerlemeyi takip eder."
+      },
+      "mentors": {
+        "name": "Öğretim elemanları ve mentorlar",
+        "text": "Teknik yönü, ekip planını ve prototipin test kabul ölçütlerini takım kaptanıyla birlikte belirler."
+      },
+      "labs": {
+        "name": "Laboratuvarlar",
+        "text": "Ekipman, teknik eğitim, test zamanı ve kaynak taleplerini planlar."
+      },
+      "teams": {
+        "name": "Öğrenciler ve takım kaptanları",
+        "text": "Ekip rollerini belirler, prototipi geliştirir, sonuçları belgeler ve haftalık rapor verir."
+      },
+      "partners": {
+        "name": "Sanayi ortakları",
+        "text": "Problem konuları, uzmanlık, bileşenler, gerçek test ortamı ve finansal destek olanakları sunar."
+      }
+    },
+    "stages": {
+      "mobilisation": {
+        "name": "Seferberlik",
+        "text": "Fakültelerde koordinatörleri atayın. Mentor ve laboratuvar olanaklarını kayda alın."
+      },
+      "selection": {
+        "name": "Seçim ve ekip oluşturma",
+        "text": "Öğrenci başvurularını beceri, motivasyon ve zaman uygunluğuna göre değerlendirin. Takım kaptanlarını belirleyin."
+      },
+      "training": {
+        "name": "Eğitim ve teknik plan",
+        "text": "Resmî şartnameleri takip edin. Ekiplerle teknik planı, iş bölümünü ve test kabul ölçütlerini onaylayın."
+      },
+      "prototype": {
+        "name": "Prototip ve test",
+        "text": "Laboratuvar zamanı ayırın. Test sonuçlarını, açık riskleri ve malzeme ihtiyaçlarını görüşün."
+      },
+      "application": {
+        "name": "Sunum ve başvuru",
+        "text": "Teknik raporu, demo videosunu ve sunumu iç değerlendirmeden geçirin. Başvuruyu resmî sistemde tamamlayın."
+      },
+      "results": {
+        "name": "Sonuçlar ve süreklilik",
+        "text": "Sonuçları ve çıkarılan dersleri belgeleyin. Devam eden projeler için bir sonraki aşamayı belirleyin."
+      }
+    }
+  }
+}

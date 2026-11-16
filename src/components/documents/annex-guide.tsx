@@ -11,8 +11,8 @@ export async function AnnexGuide({ jury }: { jury: boolean }) {
       {!jury && (
         <section className="rounded-xl border bg-card p-4 shadow-card" aria-labelledby="annex-guide-title">
           <h3 id="annex-guide-title" className="text-sm font-semibold">{t("title")}</h3>
-          <p className="mt-3 text-xs font-semibold tracking-wide text-muted-foreground">{t("fitTitle")}</p>
-          <ul className="mt-2 space-y-1.5 text-[13px]">
+          <p className="mt-3 text-xs font-semibold text-muted-foreground">{t("fitTitle")}</p>
+          <ul className="mt-2 space-y-1.5 text-label">
             {(["fit1", "fit2", "fit3"] as const).map((k) => (
               <li key={k} className="flex items-start gap-2">
                 <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-success" aria-hidden />
@@ -20,8 +20,8 @@ export async function AnnexGuide({ jury }: { jury: boolean }) {
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-xs font-semibold tracking-wide text-muted-foreground">{t("conditionalTitle")}</p>
-          <ul className="mt-2 space-y-1.5 text-[13px]">
+          <p className="mt-4 text-xs font-semibold text-muted-foreground">{t("conditionalTitle")}</p>
+          <ul className="mt-2 space-y-1.5 text-label">
             {(["cond1", "cond2", "cond3"] as const).map((k) => (
               <li key={k} className="flex items-start gap-2">
                 <ShieldAlert className="mt-0.5 size-3.5 shrink-0 text-warning" aria-hidden />
@@ -40,7 +40,7 @@ export async function AnnexGuide({ jury }: { jury: boolean }) {
           <Lock className="size-4 text-warning" aria-hidden />
           {t("confidentialTitle")}
         </h3>
-        <p className="mt-2 text-[13px] text-pretty text-muted-foreground">{jury ? t("juryConfidential") : t("confidentialBody")}</p>
+        <p className="mt-2 text-label text-pretty text-muted-foreground">{jury ? t("juryConfidential") : t("confidentialBody")}</p>
       </section>
       {!jury && (
         <section className="rounded-xl border bg-card p-4 shadow-card" aria-labelledby="annex-rules-title">
@@ -48,7 +48,7 @@ export async function AnnexGuide({ jury }: { jury: boolean }) {
             <FileCheck2 className="size-4 text-primary" aria-hidden />
             {t("rulesTitle")}
           </h3>
-          <p className="mt-2 text-[13px] text-pretty text-muted-foreground">{t("rulesBody", { size: fmtBytes(UPLOAD.maxBytes) })}</p>
+          <p className="mt-2 text-label text-pretty text-muted-foreground">{t("rulesBody", { size: fmtBytes(UPLOAD.maxBytes) })}</p>
         </section>
       )}
     </div>

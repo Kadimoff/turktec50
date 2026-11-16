@@ -15,9 +15,9 @@ import { ToneBadge } from "@/components/shared/tone-badge";
 import { EmptyState } from "@/components/shared/empty-state";
 import { HumanControlNote } from "@/components/shared/notice";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UrlFilters } from "@/components/projects/url-filters";
-import { Pagination } from "@/components/projects/pagination";
-import { hrefWith, PAGE_SIZE, spEnum, spPage, spValue } from "@/components/projects/url";
+import { FilterBar } from "@/components/shared/filter-bar";
+import { Pagination } from "@/components/shared/pagination";
+import { buildHref, parsePage, pick, str } from "@/lib/search-params";
 import type { Tone } from "@/lib/tones";
 
 export async function generateMetadata() {
@@ -25,6 +25,7 @@ export async function generateMetadata() {
   return { title: t("title") };
 }
 
+const PAGE_SIZE = 25;
 const STATUSES = Object.values(ApplicationStatus);
 const OPEN_STATUSES: ApplicationStatus[] = ["SUBMITTED", "UNDER_REVIEW"];
 
@@ -32,12 +33,12 @@ export default async function ApplicationsPage(props: PageProps<"/applications">
   const user = await requireUser(["ADMIN", "JURY"]);
   const isJury = user.role === "JURY";
   const sp = await props.searchParams;
-  const status = spEnum(sp, "status", STATUSES);
-  const category = spEnum(sp, "category", CATEGORIES);
-  const university = spValue(sp, "university");
-  const q = spValue(sp, "q");
-  const mine = isJury ? spEnum(sp, "mine", ["todo"] as const) : undefined;
-  const page = spPage(sp);
+  const status = pick(sp.status, STATUSES);
+  const category = pick(sp.category, CATEGORIES);
+  const university = str(sp.university, 40);
+  const q = str(sp.q, 80);
+  const mine = isJury ? pick(sp.mine, ["todo"] as const) : undefined;
+  const page = parsePage(sp.page);
 
   const where: Prisma.ApplicationWhereInput = {
     ...(status && { status }),
@@ -136,11 +137,11 @@ export default async function ApplicationsPage(props: PageProps<"/applications">
       </div>
 
       <nav aria-label={t("filters.status")} className="-mx-1 flex flex-wrap gap-2 px-1">
-        <StatusChip href={hrefWith("/applications", { ...params, status: undefined, mine: undefined })} active={!status && !mine} label={tc("actions.all")} count={allCount} />
+        <StatusChip href={buildHref("/applications", { ...params, status: undefined, mine: undefined })} active={!status && !mine} label={tc("actions.all")} count={allCount} />
         {STATUSES.map((s) => (
           <StatusChip
             key={s}
-            href={hrefWith("/applications", { ...params, status: s, mine: undefined })}
+            href={buildHref("/applications", { ...params, status: s, mine: undefined })}
             active={status === s && !mine}
             label={te(`ApplicationStatus.${s}`)}
             count={counts[s]}
@@ -148,7 +149,7 @@ export default async function ApplicationsPage(props: PageProps<"/applications">
         ))}
         {isJury && (
           <StatusChip
-            href={hrefWith("/applications", { ...params, status: undefined, mine: "todo" })}
+            href={buildHref("/applications", { ...params, status: undefined, mine: "todo" })}
             active={mine === "todo"}
             label={t("filters.myTodo")}
             count={myTodo}
@@ -157,12 +158,13 @@ export default async function ApplicationsPage(props: PageProps<"/applications">
         )}
       </nav>
 
-      <UrlFilters
-        search={{ label: tc("actions.search"), placeholder: t("filters.searchPlaceholder") }}
-        resetLabel={tc("actions.clear")}
-        filters={[
-          { name: "category", label: t("filters.category"), allLabel: tc("actions.all"), options: CATEGORIES.map((c) => ({ value: c, label: tc(`categories.${c}`) })) },
-          { name: "university", label: t("filters.university"), allLabel: tc("actions.all"), options: universities.map((u) => ({ value: u.id, label: u.shortName })) },
+      <FilterBar
+        action="/applications"
+        keep={{ status, mine }}
+        search={{ label: tc("filters.search"), placeholder: t("filters.searchPlaceholder"), value: q }}
+        selects={[
+          { name: "category", label: t("filters.category"), allLabel: tc("actions.all"), value: category, wide: true, options: CATEGORIES.map((c) => ({ value: c, label: tc(`categories.${c}`) })) },
+          { name: "university", label: t("filters.university"), allLabel: tc("actions.all"), value: university, options: universities.map((u) => ({ value: u.id, label: u.shortName })) },
         ]}
       />
 
@@ -228,7 +230,7 @@ export default async function ApplicationsPage(props: PageProps<"/applications">
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="font-mono text-[11px] text-muted-foreground">{a.code}</p>
+                      <p className="font-mono text-2xs text-muted-foreground">{a.code}</p>
                       <p className="truncate font-semibold">{a.projectTitle}</p>
                       <p className="truncate text-xs text-muted-foreground">{a.teamName} · {a.university.shortName}</p>
                     </div>
@@ -250,7 +252,7 @@ export default async function ApplicationsPage(props: PageProps<"/applications">
           </ul>
 
           <p className="text-xs text-muted-foreground">{t("table.scoreHint")}</p>
-          <Pagination page={page} pageSize={PAGE_SIZE} total={total} path="/applications" params={params} />
+          <Pagination basePath="/applications" params={params} page={page} pageSize={PAGE_SIZE} total={total} />
         </section>
       )}
     </div>

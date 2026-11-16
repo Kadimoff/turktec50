@@ -77,5 +77,61 @@
   "EvaluationStatus": {
     "DRAFT": "Draft",
     "SUBMITTED": "Submitted"
+  },
+  "RuleStatus": {
+    "TRACKING": "Tracking",
+    "CHANGED": "Changed",
+    "CONFIRMED": "Confirmed"
+  },
+  "RegistryStatus": {
+    "PLANNED": "Planned",
+    "ACTIVE": "Active",
+    "ARCHIVED": "Archived"
+  },
+  "LabStatus": {
+    "AVAILABLE": "Available",
+    "LIMITED": "Limited",
+    "CLOSED": "Closed"
+  },
+  "PartnerStatus": {
+    "CANDIDATE": "Candidate",
+    "NEGOTIATING": "Negotiating",
+    "ACTIVE": "Active",
+    "ARCHIVED": "Archived"
+  },
+  "StudentStatus": {
+    "CANDIDATE": "Candidate",
+    "SEEKING_TEAM": "Looking for a team",
+    "IN_TEAM": "In a team",
+    "ARCHIVED": "Archived"
+  },
+  "TeamStatus": {
+    "FORMING": "Forming",
+    "ACTIVE": "Active",
+    "ARCHIVED": "Archived"
+  },
+  "TrainingStatus": {
+    "PLANNED": "Planned",
+    "REGISTRATION_OPEN": "Registration open",
+    "COMPLETED": "Completed"
+  },
+  "ResourceStatus": {
+    "NEW": "New",
+    "UNDER_REVIEW": "Under review",
+    "APPROVED": "Approved",
+    "REJECTED": "Rejected",
+    "DONE": "Done"
+  },
+  "AnnouncementStatus": {
+    "DRAFT": "Draft",
+    "PUBLISHED": "Published"
+  },
+  "IntakeStatus": {
+    "SUBMITTED": "Submitted",
+    "UNDER_REVIEW": "Under review",
+    "NEEDS_CHANGES": "Changes requested",
+    "ACCEPTED": "Accepted",
+    "REJECTED": "Rejected",
+    "WITHDRAWN": "Withdrawn"
   }
 }

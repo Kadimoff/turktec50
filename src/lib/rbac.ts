@@ -24,7 +24,7 @@ export function projectScope(user: CurrentUser): Prisma.ProjectWhereInput {
   }
 }
 
-export type ProjectTab = "overview" | "tasks" | "sessions" | "documents" | "risks" | "evaluations" | "activity";
+export type ProjectTab = "overview" | "tasks" | "sessions" | "documents" | "risks" | "resources" | "evaluations" | "activity";
 
 export type ProjectAccess = {
   projectId: string;
@@ -56,9 +56,7 @@ export async function getProjectAccess(user: CurrentUser, projectId: string): Pr
   const isJury = user.role === "JURY";
   const tabs: ProjectTab[] = isJury
     ? ["overview", "documents", "evaluations"]
-    : isMember
-      ? ["overview", "tasks", "sessions", "documents", "risks", "evaluations", "activity"]
-      : ["overview", "tasks", "sessions", "documents", "risks", "evaluations", "activity"];
+    : ["overview", "tasks", "sessions", "documents", "risks", "resources", "evaluations", "activity"];
   return {
     projectId,
     isAdmin,

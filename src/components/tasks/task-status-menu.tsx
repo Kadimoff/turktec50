@@ -22,7 +22,7 @@ export function useStatusChange() {
   return async (id: string, status: TaskStatus) => {
     const r = await setTaskStatus(id, status);
     if (r.ok) toast.success(t("status.changed", { status: te(`TaskStatus.${status}`) }));
-    else toast.error(t(r.error ?? "errors.generic"));
+    else toast.error(t(r.message ?? "errors.generic"));
     return r;
   };
 }

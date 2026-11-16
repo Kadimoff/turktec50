@@ -1,44 +1,36 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { AlertTriangle, CalendarClock, Eye, FolderSearch, ListChecks, Search, ShieldAlert, X } from "lucide-react";
+import { AlertTriangle, CalendarClock, Eye, FolderSearch, ListChecks, ShieldAlert, X } from "lucide-react";
 import type { Prisma } from "@/generated/prisma/client";
 import type { CurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { projectScope } from "@/lib/rbac";
 import { fmtDate } from "@/lib/format";
+import { bakuDayDiff, bakuYmd } from "@/lib/dates";
+import { matchesQuery } from "@/lib/search";
+import { buildHref, parsePage, pick, str, type SearchParams } from "@/lib/search-params";
 import { riskLevelTone, riskStatusTone } from "@/lib/tones";
 import { cn } from "@/lib/utils";
 import { StatCard } from "@/components/shared/stat-card";
 import { ToneBadge } from "@/components/shared/tone-badge";
 import { EmptyState } from "@/components/shared/empty-state";
-import { NativeSelect } from "@/components/shared/form";
 import { UserAvatar } from "@/components/shared/user-avatar";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { FilterBar } from "@/components/shared/filter-bar";
+import { Pagination } from "@/components/shared/pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { AutoSubmitForm } from "@/components/documents/auto-submit-form";
-import { Pagination } from "@/components/documents/pagination";
-import { RISK_LEVELS, riskLevel, riskScore, toDateInput, type RiskLevelValue } from "./level";
+import { RISK_LEVELS, riskLevel, riskScore } from "./level";
 import { RiskFormDialog } from "./risk-form-dialog";
 import { RiskRowActions } from "./risk-row-actions";
 import type { RiskFormValue, ScopeOption } from "./types";
 
 const PAGE_SIZE = 20;
 const STATUS_FILTERS = ["active", "OPEN", "MITIGATING", "CLOSED", "all"] as const;
-type Search = Record<string, string | string[] | undefined>;
-const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
-const isLevel = (v: string | undefined): v is RiskLevelValue => !!v && (RISK_LEVELS as readonly string[]).includes(v);
-
-/** whole days between two yyyy-mm-dd (Asia/Baku) dates */
-function dayDiff(from: string, to: string) {
-  return Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000);
-}
 
 /**
  * Risk register (stats, 3×3 heat matrix, filters, list) — used by /risks (all risks in scope) and /projects/[id]/risks.
  * Visibility: ADMIN all; MENTOR assigned projects + program-level (read-only); TEAM own project(s). JURY never reaches this.
  */
-export async function RiskRegister({ user, projectId, basePath, searchParams }: { user: CurrentUser; projectId?: string; basePath: string; searchParams: Search }) {
+export async function RiskRegister({ user, projectId, basePath, searchParams }: { user: CurrentUser; projectId?: string; basePath: string; searchParams: SearchParams }) {
   const [t, te, locale] = await Promise.all([getTranslations("risks"), getTranslations("enums"), getLocale()]);
 
   const where: Prisma.RiskWhereInput = projectId
@@ -68,26 +60,29 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
 
   // ---- filters
   const sp = searchParams;
-  const q = (one(sp.q) ?? "").trim().slice(0, 80);
-  const status = STATUS_FILTERS.find((s) => s === one(sp.status)) ?? "active";
-  const level = isLevel(one(sp.level)) ? (one(sp.level) as RiskLevelValue) : undefined;
-  const scopeFilter = projectId ? undefined : one(sp.scope) || undefined;
-  const pf = isLevel(one(sp.p)) ? (one(sp.p) as RiskLevelValue) : undefined;
-  const iff = isLevel(one(sp.i)) ? (one(sp.i) as RiskLevelValue) : undefined;
+  const q = str(sp.q, 80);
+  const status = pick(sp.status, STATUS_FILTERS, "active");
+  const level = pick(sp.level, RISK_LEVELS);
+  const scopeFilter = projectId ? undefined : str(sp.scope);
+  const pf = pick(sp.p, RISK_LEVELS);
+  const iff = pick(sp.i, RISK_LEVELS);
   const cell = pf && iff ? { p: pf, i: iff } : undefined;
-  const pageReq = Math.max(1, Number.parseInt(one(sp.page) ?? "1", 10) || 1);
+  const pageReq = parsePage(sp.page);
 
-  const today = toDateInput(new Date());
-  const rows = risks.map((r) => {
-    const review = r.reviewDate ? toDateInput(r.reviewDate) : "";
-    return { ...r, level: riskLevel(r.probability, r.impact), score: riskScore(r.probability, r.impact), review, days: review ? dayDiff(today, review) : null };
-  });
+  // review dates are Baku calendar days
+  const now = new Date();
+  const rows = risks.map((r) => ({
+    ...r,
+    level: riskLevel(r.probability, r.impact),
+    score: riskScore(r.probability, r.impact),
+    review: bakuYmd(r.reviewDate),
+    days: r.reviewDate ? bakuDayDiff(now, r.reviewDate) : null,
+  }));
   const active = rows.filter((r) => r.status !== "CLOSED");
 
-  const needle = q.toLocaleLowerCase(locale);
   const base = rows.filter(
     (r) =>
-      (!needle || r.title.toLocaleLowerCase(locale).includes(needle) || (r.mitigation ?? "").toLocaleLowerCase(locale).includes(needle)) &&
+      (!q || matchesQuery(q, r.title, r.mitigation)) &&
       (!level || r.level === level) &&
       (!scopeFilter || (scopeFilter === "program" ? r.projectId === null : scopeFilter === "projects" ? r.projectId !== null : r.projectId === scopeFilter)),
   );
@@ -110,19 +105,14 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
   const overdue = active.filter((r) => r.days !== null && r.days < 0).length;
 
   const params = {
-    q: q || undefined,
+    q,
     status: status === "active" ? undefined : status,
     level,
     scope: scopeFilter,
     p: cell?.p,
     i: cell?.i,
   };
-  const hrefWith = (over: Record<string, string | undefined>) => {
-    const s = new URLSearchParams();
-    for (const [k, v] of Object.entries({ ...params, ...over })) if (v) s.set(k, v);
-    const qs = s.toString();
-    return qs ? `${basePath}?${qs}` : basePath;
-  };
+  const hrefFor = (over: Record<string, string | undefined>) => buildHref(basePath, params, over);
 
   // create-dialog scope options
   const scopes: ScopeOption[] = [
@@ -154,7 +144,7 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
       <span className={cn("block whitespace-nowrap", overdueRow && "font-semibold text-danger")}>
         <time dateTime={r.review}>{fmtDate(r.reviewDate, locale)}</time>
         {r.status !== "CLOSED" && (
-          <span className={cn("block text-[11px] font-normal", overdueRow ? "text-danger" : "text-muted-foreground")}>
+          <span className={cn("block text-2xs font-normal", overdueRow ? "text-danger" : "text-muted-foreground")}>
             {overdueRow && <AlertTriangle className="mr-0.5 inline size-3 align-[-2px]" aria-hidden />}
             {r.days < 0 ? t("table.overdueBy", { count: -r.days }) : r.days === 0 ? t("table.dueToday") : t("table.dueIn", { count: r.days })}
           </span>
@@ -165,7 +155,7 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
   const projectCell = (r: (typeof rows)[number]) =>
     r.project ? (
       <Link href={`/projects/${r.project.id}/risks`} className="group block min-w-0 hover:text-primary">
-        <span className="font-mono text-[11px] font-semibold text-primary">{r.project.code}</span>
+        <span className="font-mono text-2xs font-semibold text-primary">{r.project.code}</span>
         <span className="block truncate text-xs group-hover:underline">{r.project.title}</span>
       </Link>
     ) : (
@@ -202,7 +192,7 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
               <div role="list" aria-label={t("matrix.title")} className="grid grid-cols-[auto_repeat(3,minmax(0,1fr))] gap-1.5">
                 {(["HIGH", "MEDIUM", "LOW"] as const).map((imp) => (
                   <div key={imp} className="contents" role="presentation">
-                    <span className="flex items-center justify-end pr-1 text-[11px] font-medium text-muted-foreground" aria-hidden>{te(`RiskLevel.${imp}`)}</span>
+                    <span className="flex items-center justify-end pr-1 text-2xs font-medium text-muted-foreground" aria-hidden>{te(`RiskLevel.${imp}`)}</span>
                     {(["LOW", "MEDIUM", "HIGH"] as const).map((prob) => {
                       const lvl = riskLevel(prob, imp);
                       const count = matrixSet.filter((r) => r.probability === prob && r.impact === imp).length;
@@ -212,7 +202,7 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
                         <Link
                           key={prob}
                           role="listitem"
-                          href={selected ? hrefWith({ p: undefined, i: undefined, page: undefined }) : hrefWith({ p: prob, i: imp, page: undefined })}
+                          href={selected ? hrefFor({ p: undefined, i: undefined, page: undefined }) : hrefFor({ p: prob, i: imp, page: undefined })}
                           scroll={false}
                           aria-current={selected ? "true" : undefined}
                           aria-label={t("matrix.cell", { p: te(`RiskLevel.${prob}`), i: te(`RiskLevel.${imp}`), level: te(`RiskLevel.${lvl}`), count })}
@@ -227,7 +217,7 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
                           )}
                         >
                           <span className="tabular text-xl leading-none font-bold">{count}</span>
-                          <span className="mt-1 text-[10px] leading-none font-semibold">{te(`RiskLevel.${lvl}`)}</span>
+                          <span className="mt-1 text-2xs leading-none font-semibold">{te(`RiskLevel.${lvl}`)}</span>
                         </Link>
                       );
                     })}
@@ -235,14 +225,14 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
                 ))}
                 <span aria-hidden />
                 {(["LOW", "MEDIUM", "HIGH"] as const).map((prob) => (
-                  <span key={prob} className="text-center text-[11px] font-medium text-muted-foreground" aria-hidden>{te(`RiskLevel.${prob}`)}</span>
+                  <span key={prob} className="text-center text-2xs font-medium text-muted-foreground" aria-hidden>{te(`RiskLevel.${prob}`)}</span>
                 ))}
               </div>
               <p className="mt-1.5 text-center text-xs font-semibold text-muted-foreground" aria-hidden>{t("matrix.probability")} →</p>
             </div>
           </div>
           {cell && (
-            <Link href={hrefWith({ p: undefined, i: undefined, page: undefined })} scroll={false} className="mt-3 inline-flex min-h-8 items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-primary hover:bg-muted">
+            <Link href={hrefFor({ p: undefined, i: undefined, page: undefined })} scroll={false} className="mt-3 inline-flex min-h-8 items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-primary hover:bg-muted">
               <X className="size-3.5" aria-hidden />
               {t("matrix.clear")}
             </Link>
@@ -252,7 +242,7 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
 
         {/* list */}
         <section className="min-w-0 rounded-xl border bg-card shadow-card" aria-labelledby="risk-list-title">
-          <div className="flex flex-col gap-3 border-b p-4">
+          <div className="space-y-1 px-4 pt-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-baseline gap-3">
                 <h2 id="risk-list-title" className="text-sm font-semibold">{t("table.title")}</h2>
@@ -260,57 +250,45 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
               </div>
               {canCreate && <RiskFormDialog mode="create" scopes={scopes} defaultScope={projectId} />}
             </div>
-            <AutoSubmitForm action={basePath} className={cn("grid gap-2 sm:grid-cols-2 sm:items-end", !showScopeFilter ? "lg:grid-cols-[minmax(0,1fr)_auto_auto_auto]" : "lg:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]")}>
-              <div className="grid gap-1 sm:col-span-2 lg:col-span-1">
-                <label htmlFor="risk-q" className="text-xs font-medium text-muted-foreground">{t("filters.q")}</label>
-                <div className="relative">
-                  <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
-                  <Input id="risk-q" name="q" type="search" defaultValue={q} placeholder={t("filters.qPlaceholder")} className="h-9 pl-8" />
-                </div>
-              </div>
-              <div className="grid gap-1">
-                <label htmlFor="risk-status" className="text-xs font-medium text-muted-foreground">{t("filters.status")}</label>
-                <NativeSelect id="risk-status" name="status" defaultValue={status === "active" ? "" : status} className="lg:w-40">
-                  <option value="">{t("filters.active")}</option>
-                  {(["OPEN", "MITIGATING", "CLOSED"] as const).map((s) => <option key={s} value={s}>{te(`RiskStatus.${s}`)}</option>)}
-                  <option value="all">{t("filters.all")}</option>
-                </NativeSelect>
-              </div>
-              <div className="grid gap-1">
-                <label htmlFor="risk-level" className="text-xs font-medium text-muted-foreground">{t("filters.level")}</label>
-                <NativeSelect id="risk-level" name="level" defaultValue={level ?? ""} className="lg:w-40">
-                  <option value="">{t("filters.anyLevel")}</option>
-                  {RISK_LEVELS.map((l) => <option key={l} value={l}>{te(`RiskLevel.${l}`)}</option>)}
-                </NativeSelect>
-              </div>
-              {showScopeFilter && (
-                <div className="grid gap-1">
-                  <label htmlFor="risk-scope" className="text-xs font-medium text-muted-foreground">{t("filters.scope")}</label>
-                  <NativeSelect id="risk-scope" name="scope" defaultValue={scopeFilter ?? ""} className="lg:w-48">
-                    <option value="">{t("filters.anyScope")}</option>
-                    {rows.some((r) => r.projectId === null) && <option value="program">{t("filters.programOnly")}</option>}
-                    <option value="projects">{t("filters.projectsOnly")}</option>
-                    {projectsWithRisks.map((p) => <option key={p.id} value={p.id}>{p.code} · {p.title}</option>)}
-                  </NativeSelect>
-                </div>
-              )}
-              {cell && <input type="hidden" name="p" value={cell.p} />}
-              {cell && <input type="hidden" name="i" value={cell.i} />}
-              <div className="flex gap-2 sm:col-span-2 lg:col-span-1">
-                <Button type="submit" className="h-9 flex-1 lg:flex-none">{t("filters.apply")}</Button>
-                {(q || status !== "active" || level || scopeFilter || cell) && (
-                  <Button variant="ghost" className="h-9" nativeButton={false} render={<Link href={basePath} scroll={false} />}>
-                    {t("filters.reset")}
-                  </Button>
-                )}
-              </div>
-            </AutoSubmitForm>
             {cell && (
               <p className="text-xs font-medium text-muted-foreground" role="status">
                 {t("filters.matrixActive", { p: te(`RiskLevel.${cell.p}`), i: te(`RiskLevel.${cell.i}`) })}
               </p>
             )}
           </div>
+          <FilterBar
+            action={basePath}
+            variant="inline"
+            keep={{ p: cell?.p, i: cell?.i }}
+            search={{ label: t("filters.q"), placeholder: t("filters.qPlaceholder"), value: q }}
+            selects={[
+              {
+                name: "status",
+                label: t("filters.status"),
+                allLabel: t("filters.active"),
+                value: status === "active" ? "" : status,
+                options: [
+                  ...(["OPEN", "MITIGATING", "CLOSED"] as const).map((s) => ({ value: s, label: te(`RiskStatus.${s}`) })),
+                  { value: "all", label: t("filters.all") },
+                ],
+              },
+              { name: "level", label: t("filters.level"), allLabel: t("filters.anyLevel"), value: level, options: RISK_LEVELS.map((l) => ({ value: l, label: te(`RiskLevel.${l}`) })) },
+              ...(showScopeFilter
+                ? [{
+                    name: "scope",
+                    label: t("filters.scope"),
+                    allLabel: t("filters.anyScope"),
+                    value: scopeFilter,
+                    wide: true,
+                    options: [
+                      ...(rows.some((r) => r.projectId === null) ? [{ value: "program", label: t("filters.programOnly") }] : []),
+                      { value: "projects", label: t("filters.projectsOnly") },
+                      ...projectsWithRisks.map((p) => ({ value: p.id, label: `${p.code} · ${p.title}` })),
+                    ],
+                  }]
+                : []),
+            ]}
+          />
 
           {pageRows.length === 0 ? (
             <EmptyState icon={FolderSearch} title={t("table.empty")} description={t("table.emptyHint")} className="m-4" />
@@ -340,7 +318,7 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
                         {!projectId && <TableCell className="max-w-40">{projectCell(r)}</TableCell>}
                         <TableCell>
                           <ToneBadge tone={riskLevelTone[r.level]}>{te(`RiskLevel.${r.level}`)}</ToneBadge>
-                          <p className="mt-1 text-[11px] whitespace-nowrap text-muted-foreground">
+                          <p className="mt-1 text-2xs whitespace-nowrap text-muted-foreground">
                             {t("table.pxi", { p: te(`RiskLevel.${r.probability}`), i: te(`RiskLevel.${r.impact}`) })}
                           </p>
                         </TableCell>
@@ -363,7 +341,7 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
                           {canEdit(r) ? (
                             <RiskRowActions risk={toForm(r)} compact />
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground"><Eye className="size-3.5" aria-hidden />{t("table.readOnly")}</span>
+                            <span className="inline-flex items-center gap-1 text-2xs text-muted-foreground"><Eye className="size-3.5" aria-hidden />{t("table.readOnly")}</span>
                           )}
                         </TableCell>
                       </TableRow>
@@ -403,12 +381,12 @@ export async function RiskRegister({ user, projectId, basePath, searchParams }: 
                     {canEdit(r) ? (
                       <div className="-mr-2 flex justify-end"><RiskRowActions risk={toForm(r)} /></div>
                     ) : (
-                      <p className="inline-flex items-center gap-1 text-[11px] text-muted-foreground"><Eye className="size-3.5" aria-hidden />{t("table.readOnly")}</p>
+                      <p className="inline-flex items-center gap-1 text-2xs text-muted-foreground"><Eye className="size-3.5" aria-hidden />{t("table.readOnly")}</p>
                     )}
                   </li>
                 ))}
               </ul>
-              <Pagination basePath={basePath} params={params} page={page} pageSize={PAGE_SIZE} total={listed.length} />
+              <Pagination basePath={basePath} params={params} page={page} pageSize={PAGE_SIZE} total={listed.length} className="border-t p-4" />
             </>
           )}
         </section>

@@ -72,7 +72,18 @@
   "user": {
     "profile": "Profile",
     "logout": "Sign out",
-    "signedInAs": "Signed in as"
+    "signedInAs": "Signed in as",
+    "changePassword": "Change password",
+    "tempPassword": {
+      "label": "Temporary password",
+      "copy": "Copy",
+      "copied": "Copied",
+      "once": "Shown only once — it cannot be displayed again. Copy it now.",
+      "manual": "Copying is blocked on this connection: the password is selected — press Ctrl+C (⌘C) to copy it.",
+      "step1": "Give the password to {email} in person or through another secure channel (not in the same e-mail as the address).",
+      "step2": "At the first sign-in the user is asked to set their own password.",
+      "step3": "If the password gets lost, generate a new one from the Users page."
+    }
   },
   "notifications": {
     "title": "Notifications",
@@ -87,7 +98,13 @@
     "stage_changed": "Project stage changed: {project} → {stage}",
     "evaluation_submitted": "Jury evaluation submitted: {project}",
     "assigned_project": "You were assigned to a project: {project}",
-    "application_decided": "Application decision recorded: {team}"
+    "application_decided": "Application decision recorded: {team}",
+    "announcement": "New announcement: {title}",
+    "resource_requested": "New resource request: {title}",
+    "resource_decided": "Resource request: {title} — {status}",
+    "team_mentor": "You were assigned an academy team: {team}",
+    "intake_submitted": "New preparation request: {team}",
+    "intake_resubmitted": "Preparation request resubmitted: {team}"
   },
   "categories": {
     "agritech": "AgriTech",
@@ -118,5 +135,28 @@
     "dev2": "Development II",
     "midterm": "Midterm jury",
     "final": "Final preparation"
+  },
+  "directions": {
+    "ai": "Artificial intelligence",
+    "aviation": "Aviation",
+    "defense_comms": "Defence and communications",
+    "energy_environment": "Energy and environment",
+    "health": "Health",
+    "research_design": "Research and design",
+    "robotics_mobility": "Robotics and mobile systems",
+    "software_electronics": "Software and electronics",
+    "space_rocketry": "Space and rocketry"
+  },
+  "filters": {
+    "search": "Search",
+    "apply": "Apply",
+    "clear": "Clear filters"
+  },
+  "pagination": {
+    "label": "Pages",
+    "prev": "Previous",
+    "next": "Next",
+    "range": "{from}–{to} of {total}",
+    "page": "Page {page} of {pages}"
   }
 }

@@ -1,9 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { differenceInCalendarDays } from "date-fns";
 import { CalendarCheck2, CalendarClock, CalendarX2, History } from "lucide-react";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ToneBadge } from "@/components/shared/tone-badge";
 import { fmtDate, fmtRelative } from "@/lib/format";
+import { bakuDayDiff } from "@/lib/dates";
 import { SessionCard } from "./session-card";
 import { CADENCE_DAYS } from "./queries";
 import type { SessionItem } from "./types";
@@ -66,7 +66,7 @@ export async function SessionTimeline({
 export async function CadenceStrip({ last, next, className }: { last: Date | null; next: Date | null; className?: string }) {
   const [t, locale] = await Promise.all([getTranslations("mentors.timeline"), getLocale()]);
   const now = new Date();
-  const since = last ? differenceInCalendarDays(now, last) : null;
+  const since = last ? bakuDayDiff(last, now) : null;
   const ok = since !== null && since <= CADENCE_DAYS;
   return (
     <div className={`grid gap-3 rounded-xl border bg-card p-4 shadow-card sm:grid-cols-3 ${className ?? ""}`}>

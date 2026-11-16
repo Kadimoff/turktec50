@@ -25,7 +25,7 @@ export async function NotesExplainer({ className, layout = "stack" }: { classNam
               <Icon className="size-4" />
             </span>
             <div className="min-w-0">
-              <p className="text-[13px] font-semibold">
+              <p className="text-label font-semibold">
                 <span className="tabular text-muted-foreground">{i + 1}. </span>
                 {t(`steps.${key}.title`)}
               </p>

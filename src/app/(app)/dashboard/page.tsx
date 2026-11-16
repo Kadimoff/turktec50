@@ -27,24 +27,23 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
   const week = currentWeek();
   const phase = PHASES[currentMonth() - 1]?.key ?? "prep";
   const eyebrow = [tc(`phases.${phase}`), week > 0 ? tc("week", { current: week, total: PROGRAM.incubationWeeks }) : tc("month", { n: currentMonth() })].join(" · ");
-  const firstName = user.name.split(/\s+/).find((w) => !w.endsWith(".")) ?? user.name;
 
   return (
     <div className="space-y-6">
       {denied && <DeniedNotice />}
       <PageHeader
         eyebrow={eyebrow}
-        title={t("welcome", { name: firstName })}
+        title={t(`title.${user.role}`)}
         description={t(`intro.${user.role}`)}
         actions={
           <>
             {user.role === "ADMIN" && (
-              <Link href="/kpi" className={cn(buttonVariants({ variant: "default", size: "lg" }), "h-10 px-3")}>
+              <Link href="/kpi" className={cn(buttonVariants({ variant: "default", size: "lg" }), "px-3")}>
                 <BarChart3 aria-hidden />
                 {t("actions.kpi")}
               </Link>
             )}
-            <Link href="/calendar" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 px-3")}>
+            <Link href="/calendar" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "px-3")}>
               <CalendarDays aria-hidden />
               {t("actions.calendar")}
             </Link>

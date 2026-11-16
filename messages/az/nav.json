@@ -3,7 +3,8 @@
     "workspace": "İş sahəsi",
     "evaluation": "Qiymətləndirmə",
     "program": "Proqram",
-    "admin": "İdarəetmə"
+    "admin": "İdarəetmə",
+    "academy": "Akademiya"
   },
   "dashboard": "İcmal",
   "myProject": "Layihəm",
@@ -25,8 +26,19 @@
     "documents": "Sənəd checklist-i",
     "risks": "Risklər",
     "evaluations": "Qiymətləndirmə",
-    "activity": "Fəaliyyət"
+    "activity": "Fəaliyyət",
+    "resources": "Resurs sorğuları"
   },
   "toggleSidebar": "Menyunu aç/bağla",
-  "system": "Sistem (root)"
+  "system": "Sistem (root)",
+  "academy": "Akademiya icmalı",
+  "catalog": "Yarışma kataloqu",
+  "students": "Tələbələr",
+  "teams": "Komandalar",
+  "registry": "Fakültə, lab, tərəfdaş",
+  "trainings": "Təlimlər",
+  "announcements": "Elanlar",
+  "myAcademyTeams": "Akademiya komandalarım",
+  "intake": "Hazırlıq müraciətləri",
+  "applyPrep": "Hazırlıq müraciəti"
 }

@@ -110,7 +110,8 @@
       "invalid": "Veriler geçersiz. Sayfayı yenileyin.",
       "incomplete": "Tüm ölçütler puanlanmalıdır.",
       "locked": "Değerlendirme zaten gönderildi ve değiştirilemez.",
-      "error": "Bir hata oluştu. Tekrar deneyin."
+      "error": "Bir hata oluştu. Tekrar deneyin.",
+      "retry": "Değerlendirme az önce başka bir pencereden kaydedildi. Lütfen tekrar kaydedin."
     }
   },
   "panel": {

@@ -29,7 +29,7 @@
   "filters": {
     "label": "Görev filtreleri",
     "search": "Arama",
-    "searchPlaceholder": "Başlık veya kabul ölçütü…",
+    "searchPlaceholder": "Başlık veya kabul ölçütü",
     "project": "Proje",
     "allProjects": "Tüm projeler",
     "assignee": "Sorumlu",
@@ -46,8 +46,6 @@
     "overdue": "Geciken",
     "week": "Bu hafta",
     "later": "Daha sonra",
-    "reset": "Temizle",
-    "loading": "Yükleniyor…",
     "active": "{count, plural, =0 {Filtre uygulanmadı} one {# filtre uygulandı} other {# filtre uygulandı}}"
   },
   "columns": {
@@ -83,12 +81,7 @@
     "showAllInTable": "tümünü tabloda göster"
   },
   "table": {
-    "caption": "Görev tablosu",
-    "pagination": "Sayfalama",
-    "showing": "{from}–{to} / {total} görev",
-    "prev": "Önceki",
-    "next": "Sonraki",
-    "page": "{page} / {pages}"
+    "caption": "Görev tablosu"
   },
   "status": {
     "change": "Durumu değiştir (şu an: {status})",

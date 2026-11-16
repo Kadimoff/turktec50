@@ -7,8 +7,15 @@
     "actor": "Actor",
     "actorPlaceholder": "Name or email",
     "project": "Project",
-    "from": "From date",
-    "to": "To date"
+    "period": "Period",
+    "periods": {
+      "all": "All time",
+      "today": "Today",
+      "7d": "Last 7 days",
+      "30d": "Last 30 days"
+    },
+    "from": "From",
+    "to": "To"
   },
   "groups": {
     "auth": "Sign-in/out",
@@ -21,7 +28,15 @@
     "risk": "Risks",
     "evaluation": "Evaluation",
     "user": "Users",
-    "system": "System (root)"
+    "system": "System (root)",
+    "competition": "Competition catalog",
+    "registry": "Registry",
+    "student": "Students",
+    "team": "Academy teams",
+    "training": "Trainings",
+    "resource": "Resource requests",
+    "announcement": "Announcements",
+    "intake": "Preparation requests"
   },
   "listTitle": "Entries",
   "found": "{count, plural, one {# entry} other {# entries}}",
@@ -55,7 +70,8 @@
     },
     "application": {
       "evaluate": "Evaluated an application",
-      "decide": "Recorded an application decision"
+      "decide": "Recorded an application decision",
+      "create": "Created an application from a team"
     },
     "project": {
       "create": "Created a project",
@@ -65,7 +81,8 @@
       "unassign_mentor": "Removed a mentor",
       "assign_jury": "Assigned a juror",
       "unassign_jury": "Removed a juror",
-      "flags": "Updated KPI flags"
+      "flags": "Updated KPI flags",
+      "academy": "Updated the project faculty, lab and partner"
     },
     "task": {
       "create": "Created a task",
@@ -91,7 +108,8 @@
     "risk": {
       "create": "Logged a risk",
       "update": "Updated a risk",
-      "close": "Closed a risk"
+      "close": "Closed a risk",
+      "reopen": "Reopened a risk"
     },
     "evaluation": {
       "save": "Saved an evaluation draft",
@@ -101,13 +119,59 @@
       "create": "Created a user",
       "update": "Updated a user",
       "deactivate": "Deactivated a user",
-      "activate": "Activated a user"
+      "activate": "Activated a user",
+      "password_reset": "Generated a temporary password",
+      "password_change": "Changed their password"
     },
     "system": {
       "delete_user": "User permanently deleted",
       "delete_project": "Project permanently deleted",
       "delete_application": "Application permanently deleted",
       "wipe": "All program data deleted"
+    },
+    "competition": {
+      "track": "Updated 2027 rule tracking",
+      "untrack": "Stopped rule tracking"
+    },
+    "registry": {
+      "create": "Added a registry record",
+      "update": "Updated a registry record",
+      "delete": "Deleted a registry record"
+    },
+    "student": {
+      "create": "Registered a student",
+      "update": "Updated a student",
+      "delete": "Deleted a student"
+    },
+    "team": {
+      "create": "Created a team",
+      "update": "Updated a team",
+      "members": "Changed team members",
+      "delete": "Deleted a team"
+    },
+    "training": {
+      "create": "Added a training",
+      "update": "Updated a training",
+      "delete": "Deleted a training"
+    },
+    "resource": {
+      "create": "Created a resource request",
+      "update": "Updated a resource request",
+      "decide": "Recorded a resource request decision"
+    },
+    "announcement": {
+      "create": "Drafted an announcement",
+      "update": "Updated an announcement",
+      "publish": "Published an announcement",
+      "delete": "Deleted an announcement"
+    },
+    "intake": {
+      "submit": "Preparation request submitted",
+      "update": "Preparation request updated",
+      "withdraw": "Preparation request withdrawn",
+      "review": "Changed a preparation request status",
+      "accept": "Accepted a preparation request",
+      "reject": "Rejected a preparation request"
     }
   },
   "entities": {
@@ -125,7 +189,17 @@
     "JuryAssignment": "Jury assignment",
     "MentorAssignment": "Mentor assignment",
     "StageChange": "Stage change",
-    "System": "System"
+    "System": "System",
+    "Competition": "Competition",
+    "Faculty": "Faculty",
+    "Lab": "Lab",
+    "Partner": "Industry partner",
+    "Student": "Student",
+    "Team": "Academy team",
+    "Training": "Training",
+    "ResourceRequest": "Resource request",
+    "Announcement": "Announcement",
+    "IntakeRequest": "Preparation request"
   },
   "activity": {
     "title": "Activity feed",
@@ -137,5 +211,6 @@
     "more": "Show older entries",
     "showing": "Showing the latest {count} entries",
     "events": "{count, plural, one {# event} other {# events}}"
-  }
+  },
+  "publicForm": "Public form (student)"
 }

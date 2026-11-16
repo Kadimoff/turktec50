@@ -26,7 +26,7 @@ export async function PortfolioHealth({
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">{t("stageDistribution")}</h3>
+        <h3 className="text-xs font-semibold text-muted-foreground">{t("stageDistribution")}</h3>
         <div className="mt-2 flex h-3 gap-0.5 overflow-hidden rounded-full" aria-hidden>
           {STAGE_ORDER.map((s, i) =>
             stages[s] ? (
@@ -59,7 +59,7 @@ export async function PortfolioHealth({
         </ul>
       </div>
       <div>
-        <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">{t("healthCounts")}</h3>
+        <h3 className="text-xs font-semibold text-muted-foreground">{t("healthCounts")}</h3>
         <ul className="mt-2 grid grid-cols-3 gap-2">
           {healthItems.map(({ k, icon: Icon, tone }) => (
             <li key={k}>
@@ -71,7 +71,7 @@ export async function PortfolioHealth({
                   <Icon className="size-3.5" />
                 </span>
                 <span className="tabular mt-1.5 text-xl leading-none font-bold">{health[k]}</span>
-                <span className="mt-1 text-[11px] leading-tight text-muted-foreground">{te(`ProjectHealth.${k}`)}</span>
+                <span className="mt-1 text-2xs leading-tight text-muted-foreground">{te(`ProjectHealth.${k}`)}</span>
               </Link>
             </li>
           ))}

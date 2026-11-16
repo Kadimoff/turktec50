@@ -28,7 +28,7 @@ export async function ProgramTimeline({ compact = false, children }: { compact?:
             )}
           >
             <div className="flex items-center justify-between gap-2">
-              <span className={cn("text-[11px] font-semibold tracking-wide", p.state === "current" ? "text-accent-foreground" : "text-muted-foreground")}>
+              <span className={cn("text-2xs font-semibold", p.state === "current" ? "text-accent-foreground" : "text-muted-foreground")}>
                 {tc("month", { n: p.month })}
               </span>
               {p.state === "done" && (
@@ -37,10 +37,10 @@ export async function ProgramTimeline({ compact = false, children }: { compact?:
                   <span className="sr-only">{t("done")}</span>
                 </span>
               )}
-              {p.state === "current" && <span className="text-[11px] font-semibold text-accent-foreground">{t("now")}</span>}
+              {p.state === "current" && <span className="text-2xs font-semibold text-accent-foreground">{t("now")}</span>}
             </div>
             <p className={cn("mt-0.5 text-sm leading-snug font-semibold", p.state === "done" && "text-muted-foreground")}>{tc(`phases.${p.key}`)}</p>
-            <p className="mt-0.5 text-[11px] text-muted-foreground">{monthLabel(p.start, locale)}</p>
+            <p className="mt-0.5 text-2xs text-muted-foreground">{monthLabel(p.start, locale)}</p>
           </li>
         ))}
       </ol>
@@ -67,7 +67,7 @@ export async function ProgramTimeline({ compact = false, children }: { compact?:
                 )}
               />
               {!compact && (
-                <p className={cn("tabular mt-1.5 truncate text-center text-[11px]", w.state === "current" ? "font-semibold text-foreground" : "text-muted-foreground")}>
+                <p className={cn("tabular mt-1.5 truncate text-center text-2xs", w.state === "current" ? "font-semibold text-foreground" : "text-muted-foreground")}>
                   <span className="sm:hidden">{w.week}</span>
                   <span className="hidden sm:inline">{t("weekShort", { n: w.week })}</span>
                   <span className="sr-only"> · {fmtDay(w.start, locale)}</span>

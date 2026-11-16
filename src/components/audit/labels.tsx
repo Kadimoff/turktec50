@@ -1,7 +1,7 @@
 import type { getTranslations } from "next-intl/server";
 import {
-  AlertTriangle, ClipboardCheck, DatabaseZap, FileInput, FileText, FolderKanban, Gavel, History, ListChecks, LogIn, UserCog, UsersRound,
-  type LucideIcon,
+  AlertTriangle, Building2, ClipboardCheck, DatabaseZap, FileInput, FileText, FolderKanban, Gavel, GraduationCap, History, ListChecks, LogIn,
+  Inbox, Megaphone, Package, Presentation, Trophy, UserCog, UsersRound, type LucideIcon,
 } from "lucide-react";
 import type { Tone } from "@/lib/tones";
 import { toneClasses } from "@/lib/tones";
@@ -23,11 +23,19 @@ export function entityLabel(t: T, entity: string) {
 const groupIcon: Record<string, LucideIcon> = {
   auth: LogIn, application: FileInput, project: FolderKanban, task: ListChecks, session: UsersRound, document: FileText,
   checklist: ClipboardCheck, risk: AlertTriangle, evaluation: Gavel, user: UserCog, stage: History, system: DatabaseZap,
+  competition: Trophy, registry: Building2, student: GraduationCap, team: UsersRound, training: Presentation, resource: Package,
+  announcement: Megaphone, intake: Inbox,
 };
 const groupTone: Record<string, Tone> = {
   auth: "neutral", application: "info", project: "brand", task: "info", session: "success", document: "neutral",
   checklist: "success", risk: "danger", evaluation: "warning", user: "brand", stage: "brand", system: "danger",
+  competition: "warning", registry: "neutral", student: "info", team: "brand", training: "success", resource: "info", announcement: "brand", intake: "info",
 };
+
+/** Label for an entry without an actor: public intake actions come from students via the open form, the rest from the system. */
+export function actorFallback(t: T, action: string) {
+  return action.startsWith("intake.") ? t("publicForm") : t("system");
+}
 
 export function groupOf(action: string) {
   return action.split(".")[0] ?? action;

@@ -72,7 +72,18 @@
   "user": {
     "profile": "Profil",
     "logout": "Çıkış",
-    "signedInAs": "Giriş yapıldı"
+    "signedInAs": "Giriş yapıldı",
+    "changePassword": "Şifreyi değiştir",
+    "tempPassword": {
+      "label": "Geçici şifre",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı",
+      "once": "Yalnızca bir kez gösterilir — daha sonra tekrar gösterilemez. Şimdi kopyalayın.",
+      "manual": "Bu bağlantıda kopyalama engelli: şifre seçildi — kopyalamak için Ctrl+C (⌘C) tuşlarına basın.",
+      "step1": "Şifreyi {email} adresinin sahibine yüz yüze veya başka güvenli bir kanalla iletin (adresle aynı e-postada değil).",
+      "step2": "İlk girişte kullanıcıdan kendi şifresini belirlemesi istenir.",
+      "step3": "Şifre kaybolursa Kullanıcılar sayfasından yenisini oluşturun."
+    }
   },
   "notifications": {
     "title": "Bildirimler",
@@ -87,7 +98,13 @@
     "stage_changed": "Proje aşaması değişti: {project} → {stage}",
     "evaluation_submitted": "Jüri değerlendirmesi gönderildi: {project}",
     "assigned_project": "Size proje atandı: {project}",
-    "application_decided": "Başvuru kararı kaydedildi: {team}"
+    "application_decided": "Başvuru kararı kaydedildi: {team}",
+    "announcement": "Yeni duyuru: {title}",
+    "resource_requested": "Yeni kaynak talebi: {title}",
+    "resource_decided": "Kaynak talebi: {title} — {status}",
+    "team_mentor": "Size bir akademi ekibi atandı: {team}",
+    "intake_submitted": "Yeni hazırlık başvurusu: {team}",
+    "intake_resubmitted": "Hazırlık başvurusu düzeltilip yeniden gönderildi: {team}"
   },
   "categories": {
     "agritech": "Tarım teknolojileri",
@@ -118,5 +135,28 @@
     "dev2": "Geliştirme II",
     "midterm": "Ara jüri",
     "final": "Final hazırlığı"
+  },
+  "directions": {
+    "ai": "Yapay zekâ",
+    "aviation": "Havacılık",
+    "defense_comms": "Savunma ve haberleşme",
+    "energy_environment": "Enerji ve çevre",
+    "health": "Sağlık",
+    "research_design": "Araştırma ve tasarım",
+    "robotics_mobility": "Robotik ve mobil sistemler",
+    "software_electronics": "Yazılım ve elektronik",
+    "space_rocketry": "Uzay ve roket"
+  },
+  "filters": {
+    "search": "Arama",
+    "apply": "Uygula",
+    "clear": "Filtreleri temizle"
+  },
+  "pagination": {
+    "label": "Sayfalar",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "range": "{total} sonuçtan {from}–{to}",
+    "page": "Sayfa {page} / {pages}"
   }
 }

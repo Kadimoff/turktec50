@@ -1,0 +1,97 @@
+{
+  "eyebrow": "ADNSU TEKNOFEST 2027 Academy",
+  "title": "Academy overview",
+  "description": "Student registration, teams, tracked competitions, trainings and resource requests at a glance. All numbers are counted from records.",
+  "stats": {
+    "title": "Academy indicators",
+    "intake": "New preparation requests",
+    "intakeHint": "{review} under review · {changes} awaiting changes",
+    "students": "Registered students",
+    "studentsHint": "{count, plural, one {# looking for a team} other {# looking for a team}}",
+    "teams": "Teams",
+    "teamsHint": "{active} active · {forming} forming",
+    "applications": "Applications from teams",
+    "applicationsHint": "{pending} in review · {accepted} accepted",
+    "competitions": "Tracked competitions",
+    "competitionsHint": "{count, plural, =0 {No changes in the 2027 rules} one {# with changed rules} other {# with changed rules}}",
+    "trainings": "Upcoming trainings",
+    "trainingsNext": "Next: {date}",
+    "trainingsNone": "No trainings planned",
+    "requests": "Open resource requests",
+    "requestsHint": "{fresh} new · {review} under review"
+  },
+  "deadlines": {
+    "title": "Upcoming deadlines",
+    "subtitle": "Tracked TEKNOFEST catalog competitions · next {days} days",
+    "catalog": "Catalog",
+    "empty": "No tracked competition deadlines in the next {days} days.",
+    "teams": "{count, plural, one {# team} other {# teams}}",
+    "notConfirmed": "Deadline not officially confirmed"
+  },
+  "requests": {
+    "title": "Open resource requests",
+    "subtitle": "{count, plural, =0 {No new or in-review requests} one {# new or in-review request · by needed-by date} other {# new or in-review requests · by needed-by date}}",
+    "empty": "No open resource requests.",
+    "noDate": "No date",
+    "more": "{count, plural, one {# more open request on the project pages.} other {# more open requests on the project pages.}}"
+  },
+  "strategy": {
+    "title": "Preparation strategy",
+    "description": "The proposed operating model for growing interdisciplinary technology teams at ADNSU.",
+    "rolesTitle": "Governance and responsibilities",
+    "stagesTitle": "Preparation stages",
+    "stageNumber": "Stage {n}:",
+    "roles": {
+      "office": {
+        "name": "Startup and Technology Transfer Office",
+        "text": "Coordinates faculty coordinators, mentors, labs and industry partners. Oversees the portfolio, risks, resource allocation and stage reviews."
+      },
+      "faculties": {
+        "name": "Faculty coordinators",
+        "text": "Identify student and mentor candidates, build interdisciplinary teams and track weekly progress."
+      },
+      "mentors": {
+        "name": "Teachers and mentors",
+        "text": "Agree the technical direction, team plan and prototype test criteria with the team captain."
+      },
+      "labs": {
+        "name": "Laboratories",
+        "text": "Plan equipment, technical training, test time and resource requests."
+      },
+      "teams": {
+        "name": "Students and team captains",
+        "text": "Define team roles, build the prototype, document results and report weekly."
+      },
+      "partners": {
+        "name": "Industry partners",
+        "text": "Offer problem statements, expertise, components, a real test environment and funding opportunities."
+      }
+    },
+    "stages": {
+      "mobilisation": {
+        "name": "Mobilisation",
+        "text": "Appoint coordinators in the faculties. Register mentor and lab capacity."
+      },
+      "selection": {
+        "name": "Selection and team building",
+        "text": "Assess student applications by skills, motivation and availability. Appoint team captains."
+      },
+      "training": {
+        "name": "Training and technical plan",
+        "text": "Track the official rules. Confirm the technical plan, work split and test criteria with each team."
+      },
+      "prototype": {
+        "name": "Prototype and testing",
+        "text": "Allocate lab time. Discuss test results, open risks and material needs."
+      },
+      "application": {
+        "name": "Pitch and application",
+        "text": "Put the technical report, demo video and pitch through an internal review. Complete the application in the official system."
+      },
+      "results": {
+        "name": "Results and continuity",
+        "text": "Document results and lessons learned. Set the next stage for continuing projects."
+      }
+    }
+  }
+}

@@ -32,7 +32,7 @@ export function DeleteVersionButton({ documentId, fileName, version }: { documen
   return (
     <AlertDialog open={open} onOpenChange={(o) => !pending && setOpen(o)}>
       <AlertDialogTrigger
-        render={<Button size="icon-sm" variant="ghost" className="size-8 text-muted-foreground hover:text-danger" aria-label={t("delete.label", { n: version })} />}
+        render={<Button size="icon" variant="ghost" className="text-muted-foreground hover:text-danger" aria-label={t("delete.label", { n: version })} />}
       >
         <Trash2 aria-hidden />
       </AlertDialogTrigger>
@@ -45,8 +45,8 @@ export function DeleteVersionButton({ documentId, fileName, version }: { documen
           <AlertDialogDescription className="break-words">{t("delete.description", { name: fileName, n: version })}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={pending}>{tc("cancel")}</AlertDialogCancel>
-          <Button variant="destructive" onClick={onConfirm} disabled={pending} aria-busy={pending}>
+          <AlertDialogCancel size="lg" disabled={pending}>{tc("cancel")}</AlertDialogCancel>
+          <Button variant="destructive" size="lg" onClick={onConfirm} disabled={pending} aria-busy={pending}>
             {pending && <Loader2 className="animate-spin" aria-hidden />}
             {pending ? t("delete.pending") : t("delete.confirm")}
           </Button>

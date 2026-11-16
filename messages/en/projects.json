@@ -14,13 +14,6 @@
   },
   "stageStrip": "Filter by stage",
   "listLabel": "Projects list",
-  "pagination": {
-    "label": "Pages",
-    "summary": "{from}–{to} of {total}",
-    "prev": "Previous",
-    "next": "Next",
-    "page": "Page {page} of {pages}"
-  },
   "team": {
     "noProject": "You have not joined a project yet",
     "noProjectHint": "The project will appear here once the coordinator adds you to a team."
@@ -84,7 +77,9 @@
     "toast": "Project {code} created",
     "errors": {
       "required": "This field is required",
-      "tooLong": "The text is too long"
+      "tooLong": "The text is too long",
+      "competition": "This competition cannot be chosen for a project.",
+      "error": "Something went wrong. Please try again."
     }
   },
   "overview": {
@@ -130,7 +125,13 @@
     "jurors": "Jurors",
     "adminOnly": "Coordinator only",
     "noJurors": "No jurors assigned.",
-    "quickLinks": "Sections"
+    "quickLinks": "Sections",
+    "academy": {
+      "title": "Academy links",
+      "faculty": "Faculty",
+      "lab": "Lab",
+      "partner": "Industry partner"
+    }
   },
   "manage": {
     "title": "Coordinator management",
@@ -178,7 +179,19 @@
       "noteRequired": "The note must be at least 5 characters.",
       "sameStage": "The project is already in this stage.",
       "notFound": "Record not found.",
-      "duplicate": "Already assigned."
-    }
+      "duplicate": "Already assigned.",
+      "date": "The date is not valid.",
+      "faculty": "This faculty cannot be chosen (other university or archived).",
+      "required": "This field is required"
+    },
+    "academyTitle": "Academy links",
+    "academySubtitle": "The project's faculty, home lab and industry partner. Changes are written to the audit log.",
+    "faculty": "Faculty",
+    "facultyHint": "Only faculties of {university}",
+    "lab": "Lab",
+    "partner": "Industry partner",
+    "notLinked": "Not linked",
+    "saveAcademy": "Save links",
+    "academySaved": "Academy links updated"
   }
 }

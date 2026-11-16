@@ -49,6 +49,7 @@
     "competition": "Hedef yarışma",
     "deadline": "son tarih {date}",
     "teamSize": "Takım büyüklüğü",
+    "academyTeam": "Akademi ekibi",
     "submittedAt": "Gönderim tarihi",
     "evaluations": "Gönderilmiş rubrikler",
     "evaluationsValue": "{count, plural, =0 {Henüz yok} one {# jüri üyesi} other {# jüri üyesi}}",
@@ -116,15 +117,16 @@
     "create": "Proje çalışma alanı oluştur",
     "open": "{code} projesini aç",
     "confirmTitle": "Çalışma alanı oluşturulsun mu?",
-    "confirmBody": "Doğrulama aşamasında yeni proje, 13 maddelik belge kontrol listesi ve {email} için takım lideri hesabı (demo şifre) oluşturulacak.",
+    "confirmBody": "Doğrulama aşamasında yeni proje, 13 maddelik belge kontrol listesi ve — {email} için henüz hesap yoksa — geçici şifreli bir takım lideri hesabı oluşturulacak.",
     "confirmAction": "Oluştur",
     "toast": "{code} projesi oluşturuldu",
-    "toastUser": "{email} için takım hesabı açıldı.",
     "errors": {
       "notAccepted": "Çalışma alanı yalnızca kabul edilmiş başvuru için oluşturulabilir.",
       "exists": "Bu başvuru için proje zaten mevcut.",
       "notFound": "Başvuru bulunamadı.",
       "error": "Proje oluşturulamadı. Tekrar deneyin."
-    }
+    },
+    "createdTitle": "{code} projesi oluşturuldu",
+    "createdBody": "{email} için takım lideri hesabı açıldı. Aşağıdaki geçici şifreyi teslim edin — yalnızca şimdi gösterilir."
   }
 }

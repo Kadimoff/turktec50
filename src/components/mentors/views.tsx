@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { subDays, differenceInCalendarDays, addDays } from "date-fns";
 import { CalendarCheck2, CalendarClock, ChevronRight, Clock, FolderKanban, Lock, NotebookPen, UsersRound, AlarmClock } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { projectScope } from "@/lib/rbac";
 import { fmtRelative } from "@/lib/format";
+import { bakuAddDays, bakuDayDiff } from "@/lib/dates";
 import type { CurrentUser } from "@/lib/auth";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
@@ -43,11 +43,11 @@ function Card({ title, subtitle, action, children, id, className }: { title: str
 export async function AdminMentorsView({ user, showAll = false }: { user: CurrentUser; showAll?: boolean }) {
   const [t, locale] = await Promise.all([getTranslations("mentors"), getLocale()]);
   const now = new Date();
-  const since = subDays(now, CADENCE_DAYS);
+  const since = bakuAddDays(now, -CADENCE_DAYS);
 
   const [upcomingCount, completedMonth, projectsLate, upcoming, awaiting, mentors, sessionAgg, planProjects] = await Promise.all([
-    prisma.mentorSession.count({ where: { status: ACTIVE, scheduledAt: { gte: now, lte: addDays(now, 14) } } }),
-    prisma.mentorSession.count({ where: { status: "COMPLETED", scheduledAt: { gte: subDays(now, 30) } } }),
+    prisma.mentorSession.count({ where: { status: ACTIVE, scheduledAt: { gte: now, lte: bakuAddDays(now, 14) } } }),
+    prisma.mentorSession.count({ where: { status: "COMPLETED", scheduledAt: { gte: bakuAddDays(now, -30) } } }),
     prisma.project.count({ where: { sessions: { none: { status: "COMPLETED", scheduledAt: { gte: since } } } } }),
     loadSessions(user, locale, { status: ACTIVE, scheduledAt: { gte: now } }, { scheduledAt: "asc" }, showAll ? 200 : 15),
     loadSessions(user, locale, { status: ACTIVE, scheduledAt: { lt: now } }, { scheduledAt: "asc" }, 40),
@@ -162,7 +162,7 @@ export async function MentorSessionsView({ user }: { user: CurrentUser }) {
   const cadence = await getCadence(projects.map((p) => p.id), now);
   const late = projects.filter((p) => {
     const l = cadence.get(p.id)?.last;
-    return !l || differenceInCalendarDays(now, l) > CADENCE_DAYS;
+    return !l || bakuDayDiff(l, now) > CADENCE_DAYS;
   }).length;
 
   return (
@@ -223,7 +223,7 @@ export async function MentorSessionsView({ user }: { user: CurrentUser }) {
               <ul className="divide-y">
                 {projects.map((p) => {
                   const c = cadence.get(p.id)!;
-                  const ok = !!c.last && differenceInCalendarDays(now, c.last) <= CADENCE_DAYS;
+                  const ok = !!c.last && bakuDayDiff(c.last, now) <= CADENCE_DAYS;
                   return (
                     <li key={p.id}>
                       <Link

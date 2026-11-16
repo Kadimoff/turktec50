@@ -29,7 +29,7 @@
   "filters": {
     "label": "Task filters",
     "search": "Search",
-    "searchPlaceholder": "Title or criterion…",
+    "searchPlaceholder": "Title or criterion",
     "project": "Project",
     "allProjects": "All projects",
     "assignee": "Owner",
@@ -46,8 +46,6 @@
     "overdue": "Overdue",
     "week": "This week",
     "later": "Later",
-    "reset": "Clear",
-    "loading": "Loading…",
     "active": "{count, plural, =0 {No filters applied} one {# filter applied} other {# filters applied}}"
   },
   "columns": {
@@ -83,12 +81,7 @@
     "showAllInTable": "show all in table"
   },
   "table": {
-    "caption": "Tasks table",
-    "pagination": "Pagination",
-    "showing": "{from}–{to} of {total} tasks",
-    "prev": "Previous",
-    "next": "Next",
-    "page": "{page} / {pages}"
+    "caption": "Tasks table"
   },
   "status": {
     "change": "Change status (current: {status})",

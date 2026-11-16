@@ -139,6 +139,32 @@
       "competition": "Competition",
       "mentors": "Mentors",
       "members": "Team members"
-    }
+    },
+    "academySection": "Academy pipeline — separate section (people and teams counted separately, no conversion rate)",
+    "unitPeople": "people",
+    "unitTeams": "teams",
+    "unitApplications": "applications",
+    "unitCompetitions": "competitions"
+  },
+  "academy": {
+    "title": "Academy pipeline",
+    "subtitle": "From student registration to team applications. Kept separate from the program funnel: people and teams are different units, so no conversion rate is computed between them.",
+    "link": "Academy overview",
+    "note": "These indicators come from the ADNSU TEKNOFEST 2027 Academy records and are not part of the Annex B targets.",
+    "groups": {
+      "people": "Students (people)",
+      "teams": "Teams and applications",
+      "competitions": "Competitions"
+    },
+    "studentsRegistered": "Registered students",
+    "studentsRegisteredHint": "Archived students excluded",
+    "studentsInTeams": "Students in teams",
+    "studentsInTeamsHint": "{pct}% of registered students",
+    "teamsFormed": "Teams formed",
+    "teamsFormedHint": "{active} active · {forming} forming",
+    "applicationsFromTeams": "Applications from teams",
+    "applicationsFromTeamsHint": "Applications created from an Academy team",
+    "trackedCompetitions": "Tracked competitions",
+    "trackedCompetitionsHint": "2027 rules: {confirmed} confirmed · {changed} changed"
   }
 }

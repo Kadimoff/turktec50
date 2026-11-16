@@ -27,7 +27,7 @@ export async function RubricReference() {
       <div className="mt-4 grid gap-5 md:grid-cols-2">
         {ordered.map((r) => (
           <div key={r.kind}>
-            <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">{te(`RubricKind.${r.kind}`)}</h3>
+            <h3 className="text-xs font-semibold text-muted-foreground">{te(`RubricKind.${r.kind}`)}</h3>
             <ul className="mt-2 space-y-2.5">
               {r.criteria.map((c) => (
                 <li key={c.id}>

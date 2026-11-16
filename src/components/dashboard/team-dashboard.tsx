@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { addDays, format } from "date-fns";
 import { getLocale, getTranslations } from "next-intl/server";
 import {
   CalendarClock, CheckSquare, FileCheck2, FolderOpen, Gavel, ListChecks, MapPin, MessagesSquare, ShieldAlert, Trophy, Video,
@@ -7,7 +6,8 @@ import {
 import type { CurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { readinessFromChecklist } from "@/lib/kpi";
-import { fmtDateTime, fmtDay } from "@/lib/format";
+import { fmtBaku, fmtDateTime, fmtDay } from "@/lib/format";
+import { bakuAddDays } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { EnumBadge } from "@/components/shared/enum-badge";
@@ -52,7 +52,7 @@ export async function TeamDashboard({ user }: { user: CurrentUser }) {
     return <EmptyState icon={FolderOpen} title={t("team.noProject")} description={t("team.noProjectHint")} />;
   }
   const p = membership.project;
-  const soon = addDays(now, 7);
+  const soon = bakuAddDays(now, 7);
 
   const [myTasks, myOverdue, myOpen, statusGroups, nextSession, risks] = await Promise.all([
     prisma.task.findMany({
@@ -163,7 +163,7 @@ export async function TeamDashboard({ user }: { user: CurrentUser }) {
 
           <nav aria-label={t("team.quickLinks")} className="mt-5 flex flex-wrap gap-2 no-print">
             {quick.map(({ k, icon: Icon }) => (
-              <Link key={k} href={`/projects/${p.id}/${k}`} className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 px-3 text-[13px]")}>
+              <Link key={k} href={`/projects/${p.id}/${k}`} className={cn(buttonVariants({ variant: "outline", size: "lg" }), "px-3 text-label")}>
                 <Icon aria-hidden />
                 {tn(`projectTabs.${k}`)}
               </Link>
@@ -244,7 +244,7 @@ export async function TeamDashboard({ user }: { user: CurrentUser }) {
             <MiniEmpty>{t("team.checklistDone")}</MiniEmpty>
           ) : (
             <>
-              <h3 className="mt-4 text-xs font-semibold tracking-wide text-muted-foreground">{t("team.missingItems", { count: missing.length })}</h3>
+              <h3 className="mt-4 text-xs font-semibold text-muted-foreground">{t("team.missingItems", { count: missing.length })}</h3>
               <ul className="mt-1">
                 {missing.slice(0, 6).map((c) => (
                   <RowLink key={c.id} href={`/projects/${p.id}/documents`} meta={<EnumBadge enumName="ChecklistStatus" value={c.status} />}>
@@ -278,7 +278,7 @@ export async function TeamDashboard({ user }: { user: CurrentUser }) {
                 <p className="truncate text-sm font-medium">{r.title}</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
                   {t("attention.probShort")} <RiskLevelText v={r.probability} /> · {t("attention.impactShort")} <RiskLevelText v={r.impact} />
-                  {r.reviewDate && <> · {t("team.review")} {format(r.reviewDate, "dd.MM")}</>}
+                  {r.reviewDate && <> · {t("team.review")} {fmtBaku(r.reviewDate, "dd.MM", locale)}</>}
                 </p>
               </RowLink>
             ))}

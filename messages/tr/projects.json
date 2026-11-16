@@ -14,13 +14,6 @@
   },
   "stageStrip": "Aşamaya göre filtre",
   "listLabel": "Proje listesi",
-  "pagination": {
-    "label": "Sayfalar",
-    "summary": "{from}–{to} / {total}",
-    "prev": "Önceki",
-    "next": "Sonraki",
-    "page": "Sayfa {page} / {pages}"
-  },
   "team": {
     "noProject": "Henüz bir projeye katılmadınız",
     "noProjectHint": "Koordinatör sizi takıma ekledikten sonra proje burada görünecek."
@@ -84,7 +77,9 @@
     "toast": "{code} projesi oluşturuldu",
     "errors": {
       "required": "Bu alan zorunludur",
-      "tooLong": "Metin çok uzun"
+      "tooLong": "Metin çok uzun",
+      "competition": "Bu yarışma bir proje için seçilemez.",
+      "error": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
     }
   },
   "overview": {
@@ -130,7 +125,13 @@
     "jurors": "Jüri üyeleri",
     "adminOnly": "Yalnızca koordinatör",
     "noJurors": "Jüri üyesi atanmadı.",
-    "quickLinks": "Bölümler"
+    "quickLinks": "Bölümler",
+    "academy": {
+      "title": "Akademi bağlantıları",
+      "faculty": "Fakülte",
+      "lab": "Laboratuvar",
+      "partner": "Sanayi ortağı"
+    }
   },
   "manage": {
     "title": "Koordinatör yönetimi",
@@ -178,7 +179,19 @@
       "noteRequired": "Not en az 5 karakter olmalıdır.",
       "sameStage": "Proje zaten bu aşamada.",
       "notFound": "Kayıt bulunamadı.",
-      "duplicate": "Zaten atanmış."
-    }
+      "duplicate": "Zaten atanmış.",
+      "date": "Tarih geçerli değil.",
+      "faculty": "Bu fakülte seçilemez (başka üniversite veya arşivde).",
+      "required": "Bu alan zorunludur"
+    },
+    "academyTitle": "Akademi bağlantıları",
+    "academySubtitle": "Projenin fakültesi, ana laboratuvarı ve sanayi ortağı. Değişiklik işlem kaydına yazılır.",
+    "faculty": "Fakülte",
+    "facultyHint": "Yalnızca {university} fakülteleri",
+    "lab": "Laboratuvar",
+    "partner": "Sanayi ortağı",
+    "notLinked": "Atanmadı",
+    "saveAcademy": "Bağlantıları kaydet",
+    "academySaved": "Akademi bağlantıları güncellendi"
   }
 }

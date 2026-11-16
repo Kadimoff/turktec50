@@ -1,14 +1,14 @@
 import Link from "next/link";
-import { addDays, format, isSameDay } from "date-fns";
 import { getLocale, getTranslations } from "next-intl/server";
-import { Flag, ListChecks, MessagesSquare, Trophy } from "lucide-react";
+import { Flag, GraduationCap, ListChecks, MessagesSquare, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { fmtDay } from "@/lib/format";
+import { fmtDay, fmtTime } from "@/lib/format";
+import { bakuAddDays, bakuYmd } from "@/lib/dates";
 import { DayChip, MiniEmpty } from "@/components/dashboard/parts";
 import { programWeekOf, weekStart } from "./program";
 import { PROGRAM } from "@/lib/constants";
 
-export type AgendaKind = "session" | "sessionGroup" | "task" | "taskGroup" | "deadline" | "milestone";
+export type AgendaKind = "session" | "sessionGroup" | "task" | "taskGroup" | "training" | "deadline" | "milestone";
 export type AgendaItem = {
   id: string;
   kind: AgendaKind;
@@ -22,17 +22,18 @@ export type AgendaItem = {
   overdue?: boolean;
 };
 
-const ICON = { session: MessagesSquare, sessionGroup: MessagesSquare, task: ListChecks, taskGroup: ListChecks, deadline: Trophy, milestone: Flag } as const;
+const ICON = { session: MessagesSquare, sessionGroup: MessagesSquare, task: ListChecks, taskGroup: ListChecks, training: GraduationCap, deadline: Trophy, milestone: Flag } as const;
 const ICON_TONE: Record<AgendaKind, string> = {
   session: "bg-info-soft text-info",
   sessionGroup: "bg-info-soft text-info",
   task: "bg-neutral-soft text-neutral",
   taskGroup: "bg-neutral-soft text-neutral",
+  training: "bg-success-soft text-success",
   deadline: "bg-warning-soft text-warning",
   milestone: "bg-accent text-accent-foreground",
 };
 
-/** Agenda grouped by calendar week (Mon–Sun), then by day. */
+/** Agenda grouped by Baku calendar week (Mon–Sun), then by Baku day. */
 export async function Agenda({ items, emptyText }: { items: AgendaItem[]; emptyText: string }) {
   const [t, locale] = await Promise.all([getTranslations("calendar"), getLocale()]);
   if (items.length === 0) return <MiniEmpty>{emptyText}</MiniEmpty>;
@@ -42,30 +43,31 @@ export async function Agenda({ items, emptyText }: { items: AgendaItem[]; emptyT
     const k = weekStart(it.date).getTime();
     weeks.set(k, [...(weeks.get(k) ?? []), it]);
   }
-  const today = new Date();
+  const today = bakuYmd(new Date());
 
   return (
     <div className="space-y-6">
       {[...weeks.entries()].map(([ws, list]) => {
         const start = new Date(ws);
-        const pw = programWeekOf(addDays(start, 3));
+        const pw = programWeekOf(bakuAddDays(start, 3));
+        const range = `${fmtDay(start, locale)} – ${fmtDay(bakuAddDays(start, 6), locale)}`;
         const days: { day: Date; items: AgendaItem[] }[] = [];
         for (const it of list) {
           const last = days[days.length - 1];
-          if (last && isSameDay(last.day, it.date)) last.items.push(it);
+          if (last && bakuYmd(last.day) === bakuYmd(it.date)) last.items.push(it);
           else days.push({ day: it.date, items: [it] });
         }
         return (
-          <section key={ws} aria-label={t("agenda.weekOf", { range: `${fmtDay(start, locale)} – ${fmtDay(addDays(start, 6), locale)}` })}>
-            <h3 className="sticky top-14 z-10 -mx-1 flex items-baseline gap-2 bg-card/95 px-1 py-1.5 text-xs font-semibold tracking-wide text-muted-foreground backdrop-blur">
-              <span>{t("agenda.weekOf", { range: `${fmtDay(start, locale)} – ${fmtDay(addDays(start, 6), locale)}` })}</span>
-              {pw >= 1 && pw <= PROGRAM.incubationWeeks && <span className="rounded bg-accent px-1.5 py-px text-[11px] text-accent-foreground">{t("agenda.programWeek", { n: pw })}</span>}
+          <section key={ws} aria-label={t("agenda.weekOf", { range })}>
+            <h3 className="sticky top-14 z-10 -mx-1 flex items-baseline gap-2 bg-card/95 px-1 py-1.5 text-xs font-semibold text-muted-foreground backdrop-blur">
+              <span>{t("agenda.weekOf", { range })}</span>
+              {pw >= 1 && pw <= PROGRAM.incubationWeeks && <span className="rounded bg-accent px-1.5 py-px text-2xs text-accent-foreground">{t("agenda.programWeek", { n: pw })}</span>}
               <span className="ml-auto font-normal">{t("agenda.items", { count: list.length })}</span>
             </h3>
             <ol className="mt-1 divide-y">
               {days.map(({ day, items: dayItems }) => (
                 <li key={day.toISOString()} className="flex gap-3 py-2.5">
-                  <DayChip date={day} locale={locale} highlight={isSameDay(day, today)} className="mt-0.5" />
+                  <DayChip date={day} locale={locale} highlight={bakuYmd(day) === today} className="mt-0.5" />
                   <ul className="min-w-0 flex-1 space-y-0.5">
                     {dayItems.map((it) => {
                       const Icon = ICON[it.kind];
@@ -82,7 +84,7 @@ export async function Agenda({ items, emptyText }: { items: AgendaItem[]; emptyT
                               <span className={cn("block truncate text-sm font-medium", it.overdue && "text-danger")}>{it.title}</span>
                               <span className="block truncate text-xs text-muted-foreground">
                                 <span className="sr-only">{t(`kinds.${it.kind}`)} · </span>
-                                {it.timed && <span className="tabular">{format(it.date, "HH:mm")} · </span>}
+                                {it.timed && <span className="tabular">{fmtTime(it.date)} · </span>}
                                 {it.sub}
                               </span>
                             </span>

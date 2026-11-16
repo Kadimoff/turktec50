@@ -110,7 +110,8 @@
       "invalid": "Məlumat düzgün deyil. Səhifəni yeniləyin.",
       "incomplete": "Bütün meyarlar qiymətləndirilməlidir.",
       "locked": "Qiymətləndirmə artıq göndərilib və dəyişdirilə bilməz.",
-      "error": "Xəta baş verdi. Yenidən cəhd edin."
+      "error": "Xəta baş verdi. Yenidən cəhd edin.",
+      "retry": "Qiymətləndirmə indicə başqa pəncərədən saxlanıldı. Yenidən saxlayın."
     }
   },
   "panel": {

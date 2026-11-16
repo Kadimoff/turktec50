@@ -1,3 +1,4 @@
+import { bakuParts } from "@/lib/dates";
 // Program-wide constants for TÜRKTECH 50 pilot (ASOIU). Labels are translated via messages (keys only here).
 
 export const LOCALES = ["az", "tr", "en"] as const;
@@ -41,8 +42,10 @@ export function currentWeek(now = new Date()): number {
   return Math.max(0, Math.min(PROGRAM.incubationWeeks, week));
 }
 
+/** Programme month 1–6, counted on the Baku calendar (independent of the server time zone). */
 export function currentMonth(now = new Date()): number {
-  const m = (now.getFullYear() - PROGRAM.start.getFullYear()) * 12 + (now.getMonth() - PROGRAM.start.getMonth()) + 1;
+  const a = bakuParts(now), s = bakuParts(PROGRAM.start);
+  const m = (a.y - s.y) * 12 + (a.m - s.m) + 1;
   return Math.max(1, Math.min(6, m));
 }
 
@@ -62,6 +65,20 @@ export const CATEGORIES = [
   "transport",
 ] as const;
 export type Category = (typeof CATEGORIES)[number];
+
+/** TEKNOFEST catalog directions (Academy). key -> common.directions.<key> */
+export const COMPETITION_THEMES = [
+  "ai",
+  "aviation",
+  "defense_comms",
+  "energy_environment",
+  "health",
+  "research_design",
+  "robotics_mobility",
+  "software_electronics",
+  "space_rocketry",
+] as const;
+export type CompetitionTheme = (typeof COMPETITION_THEMES)[number];
 
 /** Stage order for transitions (ProjectStage enum). */
 export const STAGE_ORDER = ["VALIDATION", "PROTOTYPE", "MVP", "QA", "SUBMITTED"] as const;

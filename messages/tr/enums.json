@@ -77,5 +77,61 @@
   "EvaluationStatus": {
     "DRAFT": "Taslak",
     "SUBMITTED": "Gönderildi"
+  },
+  "RuleStatus": {
+    "TRACKING": "İzleniyor",
+    "CHANGED": "Değişiklik var",
+    "CONFIRMED": "Onaylandı"
+  },
+  "RegistryStatus": {
+    "PLANNED": "Planlanıyor",
+    "ACTIVE": "Aktif",
+    "ARCHIVED": "Arşiv"
+  },
+  "LabStatus": {
+    "AVAILABLE": "Müsait",
+    "LIMITED": "Sınırlı",
+    "CLOSED": "Kapalı"
+  },
+  "PartnerStatus": {
+    "CANDIDATE": "Aday",
+    "NEGOTIATING": "Görüşmede",
+    "ACTIVE": "Aktif",
+    "ARCHIVED": "Arşiv"
+  },
+  "StudentStatus": {
+    "CANDIDATE": "Aday",
+    "SEEKING_TEAM": "Ekip arıyor",
+    "IN_TEAM": "Ekipte",
+    "ARCHIVED": "Arşiv"
+  },
+  "TeamStatus": {
+    "FORMING": "Oluşuyor",
+    "ACTIVE": "Aktif",
+    "ARCHIVED": "Arşiv"
+  },
+  "TrainingStatus": {
+    "PLANNED": "Planlandı",
+    "REGISTRATION_OPEN": "Kayıt açık",
+    "COMPLETED": "Tamamlandı"
+  },
+  "ResourceStatus": {
+    "NEW": "Yeni",
+    "UNDER_REVIEW": "İnceleniyor",
+    "APPROVED": "Onaylandı",
+    "REJECTED": "Reddedildi",
+    "DONE": "Tamamlandı"
+  },
+  "AnnouncementStatus": {
+    "DRAFT": "Taslak",
+    "PUBLISHED": "Yayınlandı"
+  },
+  "IntakeStatus": {
+    "SUBMITTED": "Gönderildi",
+    "UNDER_REVIEW": "İnceleniyor",
+    "NEEDS_CHANGES": "Düzeltme gerekli",
+    "ACCEPTED": "Kabul edildi",
+    "REJECTED": "Reddedildi",
+    "WITHDRAWN": "Geri çekildi"
   }
 }

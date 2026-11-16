@@ -1,0 +1,85 @@
+{
+  "title": "Resurs sorğuları",
+  "description": "Material, avadanlıq və laboratoriya vaxtı ehtiyacları. Təsdiq koordinatorun qeydlə əsaslandırdığı insan qərarıdır.",
+  "summary": "{count, plural, one {# sorğu} other {# sorğu}}",
+  "summaryLabel": "Statuslara görə sorğular",
+  "editableHint": "Sorğu “Yeni” statusunda olduqca onu redaktə edə bilərsiniz.",
+  "empty": {
+    "title": "Hələ resurs sorğusu yoxdur",
+    "hint": "Avadanlıq, material və ya laboratoriya vaxtı lazımdırsa, yeni sorğu yaradın.",
+    "hintReadonly": "Komanda sorğu yaratdıqda burada görünəcək."
+  },
+  "fields": {
+    "lab": "Laboratoriya",
+    "partner": "Sənaye tərəfdaşı",
+    "neededBy": "Lazım olan tarix",
+    "requestedBy": "Sorğu edən",
+    "none": "Seçilməyib",
+    "noDate": "Tarix göstərilməyib",
+    "unknown": "Naməlum"
+  },
+  "decision": {
+    "title": "Koordinatorun qərarı",
+    "reviewTitle": "Baxışa götürülüb",
+    "noNote": "Qeyd yazılmayıb."
+  },
+  "form": {
+    "create": "Yeni sorğu",
+    "createTitle": "Yeni resurs sorğusu",
+    "editTitle": "Sorğunu redaktə et",
+    "dialogDescription": "Koordinator sorğuya baxacaq və qərarını qeydlə bildirəcək. Sorğu “Yeni” statusunda olduqca redaktə edilə bilər.",
+    "title": "Nə lazımdır?",
+    "titleHint": "Qısa və konkret, məs. “3D çap vaxtı (6 saat)”.",
+    "details": "Ətraflı",
+    "detailsHint": "Niyə lazımdır, miqdar və texniki tələblər.",
+    "lab": "Laboratoriya",
+    "labHint": "Bağlı laboratoriyalar siyahıda yoxdur.",
+    "partner": "Sənaye tərəfdaşı",
+    "partnerHint": "Aktiv və danışıqlar mərhələsindəki tərəfdaşlar.",
+    "none": "Seçilməyib",
+    "neededBy": "Lazım olan tarix",
+    "neededByHint": "Boş saxlasanız, konkret tarix yoxdur.",
+    "submitCreate": "Sorğunu göndər",
+    "submitEdit": "Yadda saxla",
+    "pending": "Göndərilir…",
+    "editLabel": "“{title}” sorğusunu redaktə et"
+  },
+  "decide": {
+    "button": "Qərar",
+    "buttonLabel": "“{title}” sorğusu üzrə qərar",
+    "title": "Sorğu üzrə qərar",
+    "description": "Yeni status sorğu edənə və komandaya bildiriləcək, əməliyyat jurnalına yazılacaq.",
+    "current": "Cari status:",
+    "status": "Yeni status",
+    "choose": "Seçin…",
+    "note": "Qərar qeydi",
+    "noteHintRequired": "Təsdiq və imtina üçün məcburidir: {min}–{max} simvol.",
+    "noteHintOptional": "İstəyə bağlı. “Tamamlandı” üçün boş qalsa, təsdiq qeydi saxlanılır.",
+    "count": "{count}/{max}",
+    "submit": "Qərarı qeyd et",
+    "pending": "Qeyd olunur…"
+  },
+  "toast": {
+    "created": "Sorğu göndərildi",
+    "updated": "Sorğu yeniləndi",
+    "decided": "Qərar qeyd olundu"
+  },
+  "errors": {
+    "titleShort": "Ən azı 3 simvol yazın.",
+    "titleLong": "Ən çox 160 simvol ola bilər.",
+    "detailsLong": "Ən çox 2000 simvol ola bilər.",
+    "date": "Tarix düzgün deyil.",
+    "datePast": "Lazım olan tarix keçmişdə ola bilməz.",
+    "lab": "Bu laboratoriya seçilə bilməz.",
+    "partner": "Bu tərəfdaş seçilə bilməz.",
+    "statusRequired": "Yeni statusu seçin.",
+    "noteRequired": "Qərar qeydi 10–1000 simvol olmalıdır.",
+    "noteLong": "Qeyd ən çox 1000 simvol ola bilər.",
+    "transition": "Bu status keçidi mümkün deyil.",
+    "locked": "Sorğu artıq baxışdadır və redaktə edilə bilməz.",
+    "forbidden": "Bu əməliyyat üçün icazəniz yoxdur.",
+    "notFound": "Sorğu tapılmadı.",
+    "invalid": "Məlumat düzgün deyil.",
+    "changed": "Sorğu bu arada dəyişdirilib. Səhifəni yeniləyib yenidən cəhd edin."
+  }
+}

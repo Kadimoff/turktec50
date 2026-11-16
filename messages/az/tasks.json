@@ -29,7 +29,7 @@
   "filters": {
     "label": "Tapşırıq filtrləri",
     "search": "Axtarış",
-    "searchPlaceholder": "Başlıq və ya meyar…",
+    "searchPlaceholder": "Başlıq və ya meyar",
     "project": "Layihə",
     "allProjects": "Bütün layihələr",
     "assignee": "Məsul",
@@ -46,8 +46,6 @@
     "overdue": "Gecikən",
     "week": "Bu həftə",
     "later": "Daha sonra",
-    "reset": "Təmizlə",
-    "loading": "Yüklənir…",
     "active": "{count, plural, =0 {Filtr tətbiq olunmayıb} one {# filtr tətbiq olunub} other {# filtr tətbiq olunub}}"
   },
   "columns": {
@@ -83,12 +81,7 @@
     "showAllInTable": "hamısını cədvəldə göstər"
   },
   "table": {
-    "caption": "Tapşırıqlar cədvəli",
-    "pagination": "Səhifələmə",
-    "showing": "{from}–{to} / {total} tapşırıq",
-    "prev": "Əvvəlki",
-    "next": "Növbəti",
-    "page": "{page} / {pages}"
+    "caption": "Tapşırıqlar cədvəli"
   },
   "status": {
     "change": "Statusu dəyiş (indiki: {status})",

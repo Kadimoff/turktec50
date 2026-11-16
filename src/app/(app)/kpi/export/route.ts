@@ -2,9 +2,14 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { readinessFromChecklist } from "@/lib/kpi";
+import { csvCell, csvHeaders } from "@/lib/csv";
+import { bakuYmd } from "@/lib/dates";
 import { getKpiReport } from "@/components/kpi/data";
 
-/** CSV exports for the coordinator (ADMIN only). UTF-8 with BOM so Excel renders ə/ğ/ş correctly. */
+/**
+ * CSV exports for the coordinator (ADMIN only). UTF-8 with BOM so Excel renders ə/ğ/ş correctly; every cell goes through
+ * `csvCell` (quoting + formula-injection guard). Dates are Baku calendar days.
+ */
 export async function GET(request: Request) {
   const user = await getCurrentUser();
   if (!user) return new Response("Unauthorized", { status: 401 });
@@ -14,23 +19,13 @@ export async function GET(request: Request) {
   const locale = await getLocale();
   // Excel in az/tr regional settings expects ";" as list separator; en uses ",".
   const sep = locale === "en" ? "," : ";";
-  const stamp = new Date().toISOString().slice(0, 10);
+  const stamp = bakuYmd(new Date());
 
   const rows = type === "kpi" ? await kpiRows() : await projectRows();
-  const csv = "﻿" + rows.map((r) => r.map((c) => cell(c, sep)).join(sep)).join("\r\n") + "\r\n";
+  // csvCell always quotes, so the locale separator inside a value is safe
+  const csv = "\uFEFF" + rows.map((r) => r.map(csvCell).join(sep)).join("\r\n") + "\r\n";
   const name = type === "kpi" ? `turktech50-kpi-${stamp}.csv` : `turktech50-projects-${stamp}.csv`;
-  return new Response(csv, {
-    headers: {
-      "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": `attachment; filename="${name}"`,
-      "Cache-Control": "no-store",
-    },
-  });
-}
-
-function cell(v: unknown, sep: string) {
-  const s = v === null || v === undefined ? "" : String(v);
-  return /["\r\n]/.test(s) || s.includes(sep) ? `"${s.replace(/"/g, '""')}"` : s;
+  return new Response(csv, { headers: csvHeaders(name) });
 }
 
 async function kpiRows(): Promise<(string | number)[][]> {
@@ -52,6 +47,19 @@ async function kpiRows(): Promise<(string | number)[][]> {
   out.push([t("mentoring.projects"), r.projectsMentored, r.kpis.teamsAccepted, "", ""]);
   out.push([t("csv.tasksDone"), r.tasksDone, r.tasksTotal, r.tasksTotal ? Math.round((r.tasksDone / r.tasksTotal) * 100) : "", ""]);
   for (const c of r.countries) out.push([`${t("charts.byCountry")}: ${tc.has(`countries.${c.key}` as never) ? tc(`countries.${c.key}` as never) : c.key}`, c.value, "", "", ""]);
+  // Academy pipeline: a separate, labelled section (people and teams are different units — no conversion column)
+  const a = r.academy;
+  const section = t("academy.title");
+  out.push([]);
+  out.push([t("csv.academySection")]);
+  const rows: [string, number, string][] = [
+    ["studentsRegistered", a.studentsRegistered, "unitPeople"],
+    ["studentsInTeams", a.studentsInTeams, "unitPeople"],
+    ["teamsFormed", a.teamsFormed, "unitTeams"],
+    ["applicationsFromTeams", a.applicationsFromTeams, "unitApplications"],
+    ["trackedCompetitions", a.trackedCompetitions, "unitCompetitions"],
+  ];
+  for (const [k, v, unit] of rows) out.push([`${section}: ${t(`academy.${k}` as never)} (${t(`csv.${unit}` as never)})`, v, "", "", ""]);
   out.push([]);
   out.push([t("csv.generated"), new Date().toISOString()]);
   return out;
@@ -98,7 +106,7 @@ async function projectRows(): Promise<(string | number)[][]> {
       overdueMap.get(p.id) ?? 0,
       p.prototypeVerified ? yes : no,
       p.packageQcPassed ? yes : no,
-      p.submittedAt ? p.submittedAt.toISOString().slice(0, 10) : "",
+      bakuYmd(p.submittedAt),
       te(`CompetitionResult.${p.result}`),
       p.competition?.name ?? "",
       p.mentors.map((m) => m.mentor.name).join(", "),

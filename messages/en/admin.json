@@ -1,18 +1,11 @@
 {
-  "pagination": {
-    "label": "Pagination",
-    "range": "{from}–{to} of {total}",
-    "prev": "Previous",
-    "next": "Next",
-    "page": "Page {page} of {pages}"
-  },
   "users": {
     "eyebrow": "Administration",
     "title": "Users",
     "description": "Roles, university affiliation and account status. Visible to the programme coordinator only.",
     "create": "New user",
     "createTitle": "Create a new user",
-    "createHint": "Share the initial password through a secure channel; the user should change it after first sign-in.",
+    "createHint": "A temporary password is generated for the new account and shown once after creation.",
     "editTitle": "Edit user",
     "toastCreated": "User created",
     "toastActivated": "Account activated",
@@ -24,9 +17,8 @@
       "title": "Title / position",
       "titleHint": "e.g. Team lead, Professor, Software engineer",
       "university": "University",
-      "password": "Initial password",
-      "passwordHint": "At least 8 characters. Stored only as a hash.",
-      "status": "Status"
+      "status": "Status",
+      "passwordNote": "No password to type: the system generates a temporary one, shows it once, and the user sets their own at the first sign-in."
     },
     "errors": {
       "forbidden": "You are not allowed to do this.",
@@ -36,10 +28,10 @@
       "tooLong": "Text is too long",
       "invalidEmail": "Invalid email address",
       "emailTaken": "A user with this email already exists",
-      "passwordShort": "Password must be at least 8 characters",
       "invalid": "Invalid value",
       "rootOnly": "Only root (the system owner) can perform this action.",
-      "rootProtected": "The root account is protected and cannot be changed."
+      "rootProtected": "The root account is protected and cannot be changed.",
+      "selfPassword": "Change your own password from the user menu (Change password)."
     },
     "noUniversity": "No university",
     "actionsFor": "Actions for {name}",
@@ -79,7 +71,24 @@
         "c2": "The root account cannot be deactivated or have its role changed by anyone",
         "c3": "Protected by its own password, separate from the demo password; every action is logged"
       }
-    }
+    },
+    "toastSaved": "Saved",
+    "toastReset": "New temporary password generated",
+    "created": {
+      "title": "User created",
+      "body": "The account for {email} is ready. Hand over the temporary password below."
+    },
+    "done": "Done",
+    "resetPassword": "Generate new password",
+    "reset": {
+      "title": "Generate a new password for {name}?",
+      "body": "A temporary password replaces the current one immediately; it is shown once. The user must set their own password at the next sign-in.",
+      "confirm": "Generate password",
+      "pending": "Generating…",
+      "doneTitle": "New password for {name}",
+      "doneBody": "The previous password no longer works."
+    },
+    "pendingPassword": "Temporary password"
   },
   "system": {
     "eyebrow": "Root only",
@@ -100,7 +109,13 @@
         "risks": "Risks",
         "evaluations": "Evaluations",
         "audit": "Audit entries",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "students": "Students",
+        "teams": "Academy teams",
+        "trainings": "Trainings",
+        "resources": "Resource requests",
+        "announcements": "Announcements",
+        "intake": "Preparation requests"
       }
     },
     "roles": {
@@ -134,8 +149,8 @@
     },
     "wipe": {
       "title": "Delete all program data",
-      "body": "Deletes all users (except root), applications, projects, tasks, documents, risks, evaluations, notifications and the audit log. This cannot be undone.",
-      "keeps": "Kept: root account, universities, competitions, rubrics",
+      "body": "Deletes all users (except root), Academy students, teams, trainings and announcements, applications, projects, tasks, documents, risks, resource requests, evaluations, notifications and the audit log. This cannot be undone.",
+      "keeps": "Kept: root account, universities, competitions (catalog and rule tracking), rubrics, the faculty, lab and partner registry",
       "removes": "Deleted: everything else and uploaded files",
       "hint": "To reload demo data, run on the server: npm run db:seed",
       "button": "Delete everything",

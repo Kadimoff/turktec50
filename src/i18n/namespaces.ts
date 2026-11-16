@@ -16,4 +16,15 @@ export const NAMESPACES = [
   "jury",
   "admin",
   "audit",
+  // Academy (merged ADNSU TEKNOFEST 2027 Academy)
+  "academy",
+  "catalog",
+  "teams",
+  "registry",
+  "trainings",
+  "announcements",
+  "resources",
+  // Public preparation requests (students) + coordinator review
+  "intake",
+  "intakeAdmin",
 ] as const;

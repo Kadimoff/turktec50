@@ -15,9 +15,3 @@ export function riskLevel(probability: string, impact: string): RiskLevelValue {
 export function riskScore(probability: string, impact: string) {
   return (weight[probability as RiskLevelValue] ?? 2) * (weight[impact as RiskLevelValue] ?? 2);
 }
-
-/** yyyy-mm-dd in Asia/Baku for <input type="date"> */
-export function toDateInput(d: Date | string | null | undefined) {
-  if (!d) return "";
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Baku", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(d));
-}

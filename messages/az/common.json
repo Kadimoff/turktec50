@@ -72,7 +72,18 @@
   "user": {
     "profile": "Profil",
     "logout": "Çıxış",
-    "signedInAs": "Daxil olmusunuz"
+    "signedInAs": "Daxil olmusunuz",
+    "changePassword": "Şifrəni dəyiş",
+    "tempPassword": {
+      "label": "Müvəqqəti şifrə",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı",
+      "once": "Yalnız bir dəfə göstərilir — sonra yenidən göstərilə bilməz. İndi kopyalayın.",
+      "manual": "Bu bağlantıda kopyalama bloklanıb: şifrə seçildi — kopyalamaq üçün Ctrl+C (⌘C) basın.",
+      "step1": "Şifrəni {email} ünvanının sahibinə şəxsən və ya başqa təhlükəsiz kanalla çatdırın (ünvanla eyni e-poçtda yox).",
+      "step2": "İlk girişdə istifadəçidən öz şifrəsini təyin etməsi istənəcək.",
+      "step3": "Şifrə itərsə, İstifadəçilər səhifəsindən yenisini yaradın."
+    }
   },
   "notifications": {
     "title": "Bildirişlər",
@@ -87,7 +98,13 @@
     "stage_changed": "Layihə mərhələsi dəyişdi: {project} → {stage}",
     "evaluation_submitted": "Münsif qiymətləndirməsi göndərildi: {project}",
     "assigned_project": "Sizə layihə təyin olundu: {project}",
-    "application_decided": "Müraciət qərarı qeyd olundu: {team}"
+    "application_decided": "Müraciət qərarı qeyd olundu: {team}",
+    "announcement": "Yeni elan: {title}",
+    "resource_requested": "Yeni resurs sorğusu: {title}",
+    "resource_decided": "Resurs sorğusu: {title} — {status}",
+    "team_mentor": "Sizə akademiya komandası təyin olundu: {team}",
+    "intake_submitted": "Yeni hazırlıq müraciəti: {team}",
+    "intake_resubmitted": "Hazırlıq müraciəti düzəldilib yenidən göndərildi: {team}"
   },
   "categories": {
     "agritech": "Aqrotexnologiya",
@@ -118,5 +135,28 @@
     "dev2": "İnkişaf II",
     "midterm": "Ara münsif",
     "final": "Final hazırlığı"
+  },
+  "directions": {
+    "ai": "Süni intellekt",
+    "aviation": "Aviasiya",
+    "defense_comms": "Müdafiə və rabitə",
+    "energy_environment": "Enerji və ətraf mühit",
+    "health": "Səhiyyə",
+    "research_design": "Tədqiqat və dizayn",
+    "robotics_mobility": "Robototexnika və mobil sistemlər",
+    "software_electronics": "Proqram təminatı və elektronika",
+    "space_rocketry": "Kosmos və raket"
+  },
+  "filters": {
+    "search": "Axtarış",
+    "apply": "Tətbiq et",
+    "clear": "Filtrləri təmizlə"
+  },
+  "pagination": {
+    "label": "Səhifələr",
+    "prev": "Əvvəlki",
+    "next": "Növbəti",
+    "range": "{total} nəticədən {from}–{to}",
+    "page": "Səhifə {page} / {pages}"
   }
 }

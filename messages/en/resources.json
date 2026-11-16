@@ -1,0 +1,85 @@
+{
+  "title": "Resource requests",
+  "description": "Material, equipment and lab-time needs. Approval is the coordinator's human decision, justified with a written note.",
+  "summary": "{count, plural, one {# request} other {# requests}}",
+  "summaryLabel": "Requests by status",
+  "editableHint": "You can edit this request while it is “New”.",
+  "empty": {
+    "title": "No resource requests yet",
+    "hint": "Need equipment, materials or lab time? Create a new request.",
+    "hintReadonly": "Requests appear here once the team creates them."
+  },
+  "fields": {
+    "lab": "Lab",
+    "partner": "Industry partner",
+    "neededBy": "Needed by",
+    "requestedBy": "Requested by",
+    "none": "Not selected",
+    "noDate": "No date given",
+    "unknown": "Unknown"
+  },
+  "decision": {
+    "title": "Coordinator decision",
+    "reviewTitle": "Taken into review",
+    "noNote": "No note written."
+  },
+  "form": {
+    "create": "New request",
+    "createTitle": "New resource request",
+    "editTitle": "Edit request",
+    "dialogDescription": "The coordinator reviews the request and records the decision with a note. You can edit it while it is “New”.",
+    "title": "What is needed?",
+    "titleHint": "Short and specific, e.g. “3D printing time (6 hours)”.",
+    "details": "Details",
+    "detailsHint": "Why it is needed, quantity and technical requirements.",
+    "lab": "Lab",
+    "labHint": "Closed labs are not listed.",
+    "partner": "Industry partner",
+    "partnerHint": "Active partners and partners in negotiation.",
+    "none": "Not selected",
+    "neededBy": "Needed by",
+    "neededByHint": "Leave empty if there is no specific date.",
+    "submitCreate": "Send request",
+    "submitEdit": "Save",
+    "pending": "Sending…",
+    "editLabel": "Edit request “{title}”"
+  },
+  "decide": {
+    "button": "Decide",
+    "buttonLabel": "Decide on request “{title}”",
+    "title": "Decision on request",
+    "description": "The new status is sent to the requester and the team, and written to the audit log.",
+    "current": "Current status:",
+    "status": "New status",
+    "choose": "Choose…",
+    "note": "Decision note",
+    "noteHintRequired": "Required to approve or reject: {min}–{max} characters.",
+    "noteHintOptional": "Optional. If left empty for “Done”, the approval note is kept.",
+    "count": "{count}/{max}",
+    "submit": "Record decision",
+    "pending": "Recording…"
+  },
+  "toast": {
+    "created": "Request sent",
+    "updated": "Request updated",
+    "decided": "Decision recorded"
+  },
+  "errors": {
+    "titleShort": "Enter at least 3 characters.",
+    "titleLong": "160 characters at most.",
+    "detailsLong": "2000 characters at most.",
+    "date": "The date is not valid.",
+    "datePast": "The needed-by date cannot be in the past.",
+    "lab": "This lab cannot be selected.",
+    "partner": "This partner cannot be selected.",
+    "statusRequired": "Choose the new status.",
+    "noteRequired": "The decision note must be 10–1000 characters.",
+    "noteLong": "The note can be 1000 characters at most.",
+    "transition": "This status change is not allowed.",
+    "locked": "The request is already in review and can no longer be edited.",
+    "forbidden": "You do not have permission for this action.",
+    "notFound": "Request not found.",
+    "invalid": "The data is not valid.",
+    "changed": "The request was changed in the meantime. Refresh the page and try again."
+  }
+}

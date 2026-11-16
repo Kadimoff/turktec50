@@ -2,14 +2,13 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowRight, History } from "lucide-react";
 import { prisma } from "@/lib/db";
-import { fmtDate } from "@/lib/format";
+import { bakuAddDays, bakuYmd, parseBakuDate } from "@/lib/dates";
+import { fmtDate, fmtTime } from "@/lib/format";
+import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/shared/empty-state";
 import { EnumBadge } from "@/components/shared/enum-badge";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { ActionIcon, actionLabel } from "./labels";
-
-const TZ_OFFSET_MS = 4 * 3600 * 1000; // programme time zone Asia/Baku (UTC+4, no DST)
-const dayKey = (d: Date) => new Date(d.getTime() + TZ_OFFSET_MS).toISOString().slice(0, 10);
 
 type Item =
   | { kind: "audit"; id: string; at: Date; actor: { name: string; role: string } | null; action: string; summary: string | null }
@@ -48,15 +47,13 @@ export async function ProjectTimeline({ projectId, limit, moreHref }: { projectI
 
   const groups = new Map<string, Item[]>();
   for (const it of items) {
-    const k = dayKey(it.at);
+    const k = bakuYmd(it.at);
     groups.set(k, [...(groups.get(k) ?? []), it]);
   }
   const now = new Date();
-  const today = dayKey(now);
-  const yesterday = dayKey(new Date(now.getTime() - 86400000));
-  const time = new Intl.DateTimeFormat(locale === "en" ? "en-GB" : locale, { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Baku" });
-  const dayLabel = (k: string) =>
-    k === today ? tc("today") : k === yesterday ? t("activity.yesterday") : fmtDate(new Date(`${k}T12:00:00+04:00`), locale);
+  const today = bakuYmd(now);
+  const yesterday = bakuYmd(bakuAddDays(now, -1));
+  const dayLabel = (k: string) => (k === today ? tc("today") : k === yesterday ? t("activity.yesterday") : fmtDate(parseBakuDate(k), locale));
 
   return (
     <div className="space-y-6">
@@ -87,8 +84,8 @@ export async function ProjectTimeline({ projectId, limit, moreHref }: { projectI
                   )}
                 </div>
                 <div className="flex shrink-0 flex-col items-end gap-1">
-                  <time dateTime={it.at.toISOString()} className="tabular text-xs text-muted-foreground">{time.format(it.at)}</time>
-                  {it.actor && <span className="hidden text-[11px] text-muted-foreground sm:inline">{te(`Role.${it.actor.role}` as never)}</span>}
+                  <time dateTime={it.at.toISOString()} className="tabular text-xs text-muted-foreground">{fmtTime(it.at)}</time>
+                  {it.actor && <span className="hidden text-2xs text-muted-foreground sm:inline">{te(`Role.${it.actor.role}` as never)}</span>}
                 </div>
                 {it.actor && <UserAvatar name={it.actor.name} size="sm" className="hidden md:inline-grid" />}
               </li>
@@ -99,9 +96,9 @@ export async function ProjectTimeline({ projectId, limit, moreHref }: { projectI
       {totalLogs > limit && (
         <div className="flex flex-col items-center gap-2 pt-2">
           <p className="text-xs text-muted-foreground">{t("activity.showing", { count: limit })}</p>
-          <Link href={moreHref} scroll={false} className="inline-flex h-9 items-center rounded-lg border bg-background px-3 text-sm font-medium transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none dark:bg-input/30">
+          <Button variant="outline" size="lg" nativeButton={false} render={<Link href={moreHref} scroll={false} />}>
             {t("activity.more")}
-          </Link>
+          </Button>
         </div>
       )}
     </div>

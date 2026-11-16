@@ -28,7 +28,7 @@ export function RiskRowActions({ risk, compact = false }: { risk: RiskFormValue;
       <Button
         size={compact ? "icon-sm" : "sm"}
         variant="ghost"
-        className={compact ? "size-8 text-muted-foreground hover:text-foreground" : "h-8 text-muted-foreground hover:text-foreground"}
+        className="text-muted-foreground hover:text-foreground"
         title={compact ? (closed ? t("actions.reopen") : t("actions.close")) : undefined}
         onClick={toggle}
         disabled={pending}

@@ -1,8 +1,9 @@
 import "server-only";
-import { differenceInCalendarDays, endOfWeek, format, startOfWeek } from "date-fns";
 import { prisma } from "@/lib/db";
 import { projectScope } from "@/lib/rbac";
 import { fmtDay } from "@/lib/format";
+import { bakuAddDays, bakuDaysUntil, bakuParts, bakuStartOfDay, bakuYmd } from "@/lib/dates";
+import { parsePage, pick, str, type SearchParams } from "@/lib/search-params";
 import type { CurrentUser } from "@/lib/auth";
 import type { Prisma } from "@/generated/prisma/client";
 import type { Priority, TaskStatus } from "@/generated/prisma/enums";
@@ -21,34 +22,32 @@ export type TaskFilters = {
   page: number;
 };
 
-type SP = Record<string, string | string[] | undefined>;
-const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v)?.trim() || undefined;
+const DUES = ["overdue", "week", "later"] as const satisfies readonly DueFilter[];
 
-export function parseTaskFilters(sp: SP): TaskFilters {
-  const status = one(sp.status);
-  const priority = one(sp.priority);
-  const due = one(sp.due);
-  const page = Number.parseInt(one(sp.page) ?? "1", 10);
+export function parseTaskFilters(sp: SearchParams): TaskFilters {
+  const status = str(sp.status);
   return {
-    project: one(sp.project),
-    assignee: one(sp.assignee),
-    status: status === "open" || (TASK_STATUSES as readonly string[]).includes(status ?? "") ? (status as TaskFilters["status"]) : undefined,
-    priority: (PRIORITIES as readonly string[]).includes(priority ?? "") ? (priority as Priority) : undefined,
-    due: due === "overdue" || due === "week" || due === "later" ? due : undefined,
-    q: one(sp.q)?.slice(0, 100),
-    page: Number.isFinite(page) && page > 0 ? page : 1,
+    project: str(sp.project),
+    assignee: str(sp.assignee),
+    status: status === "open" ? "open" : pick(status, TASK_STATUSES),
+    priority: pick(sp.priority, PRIORITIES),
+    due: pick(sp.due, DUES),
+    q: str(sp.q, 100),
+    page: parsePage(sp.page),
   };
 }
 
-export function parseView(sp: SP, fallback: TaskView, allowWeek: boolean): TaskView {
-  const v = one(sp.view);
+export function parseView(sp: SearchParams, fallback: TaskView, allowWeek: boolean): TaskView {
+  const v = str(sp.view);
   if (v === "board" || v === "table") return v;
   if (v === "week" && allowWeek) return v;
   return fallback;
 }
 
+/** Monday 00:00 – Sunday 23:59:59.999 of the current week, in Baku time. */
 export function weekBounds(now = new Date()) {
-  return { start: startOfWeek(now, { weekStartsOn: 1 }), end: endOfWeek(now, { weekStartsOn: 1 }) };
+  const start = bakuAddDays(bakuStartOfDay(now), -((bakuParts(now).dow + 6) % 7));
+  return { start, end: new Date(bakuAddDays(start, 7).getTime() - 1) };
 }
 
 /** Scope + project + assignee (the "context" — stats are computed on this). */
@@ -126,9 +125,9 @@ export function toTaskItem(t: TaskRow, user: CurrentUser, locale: string, now = 
     projectCode: t.project.code,
     projectTitle: t.project.title,
     assignee: t.assignee,
-    dueISO: format(t.dueDate, "yyyy-MM-dd"),
+    dueISO: bakuYmd(t.dueDate),
     dueAbs: fmtDay(t.dueDate, locale),
-    dueDays: differenceInCalendarDays(t.dueDate, now),
+    dueDays: bakuDaysUntil(t.dueDate, now),
     overdue: t.status !== "DONE" && t.dueDate < now,
     completedAbs: t.completedAt ? fmtDay(t.completedAt, locale) : null,
     source: t.sourceSession,

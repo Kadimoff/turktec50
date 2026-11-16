@@ -1,5 +1,4 @@
 {
-  "welcome": "Welcome, {name}",
   "intro": {
     "ADMIN": "The whole programme at a glance: KPI targets, portfolio health and items that need attention.",
     "TEAM": "Your team workspace: stage, tasks, mentor session and document readiness.",
@@ -180,5 +179,11 @@
     "due": "Open tasks due",
     "sessions": "Mentor sessions",
     "hours": "Mentoring hours (total)"
+  },
+  "title": {
+    "ADMIN": "Programme overview",
+    "TEAM": "Project overview",
+    "MENTOR": "Mentor overview",
+    "JURY": "Jury overview"
   }
 }

@@ -63,7 +63,7 @@ export async function MentorCard({ m, variant = "pool", className }: { m: Mentor
       {tags.length > 0 && (
         <ul className="mt-3 flex flex-wrap gap-1.5" aria-label={t("pool.expertise")}>
           {tags.map((tag) => (
-            <li key={tag} className="rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+            <li key={tag} className="rounded-md bg-muted px-2 py-0.5 text-2xs font-medium text-muted-foreground">
               {tag}
             </li>
           ))}
@@ -73,7 +73,7 @@ export async function MentorCard({ m, variant = "pool", className }: { m: Mentor
       <dl className="grid grid-cols-3 gap-2 border-t pt-3 text-center">
         {stats.map((s) => (
           <div key={s.label}>
-            <dt className="text-[11px] text-muted-foreground">{s.label}</dt>
+            <dt className="text-2xs text-muted-foreground">{s.label}</dt>
             <dd className="tabular text-base font-bold">{s.value}</dd>
           </div>
         ))}

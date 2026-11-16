@@ -50,11 +50,3 @@ export type PlanProject = {
   title: string;
   mentors: { id: string; name: string }[];
 };
-
-export type ActionState = {
-  ok: boolean;
-  error?: string;
-  fieldErrors?: Record<string, string>;
-};
-
-export const initialActionState: ActionState = { ok: false };

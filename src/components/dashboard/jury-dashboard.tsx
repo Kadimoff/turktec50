@@ -47,7 +47,6 @@ export async function JuryDashboard({ user }: { user: CurrentUser }) {
       <HumanControlNote />
       <div className="grid gap-4 md:grid-cols-3">
         <section aria-labelledby="midterm-title" className="relative overflow-hidden rounded-xl border bg-sidebar p-5 text-sidebar-foreground shadow-card">
-          <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-sidebar-primary/20 blur-2xl" />
           <h2 id="midterm-title" className="relative flex items-center gap-2 text-sm font-semibold text-sidebar-accent-foreground">
             <Gavel className="size-4 text-sidebar-primary" aria-hidden />
             {t("jury.midterm")}
@@ -59,7 +58,7 @@ export async function JuryDashboard({ user }: { user: CurrentUser }) {
           <p className="relative mt-1 text-xs text-sidebar-foreground/80">{fmtDateTime(PROGRAM.midtermJury, locale)}</p>
         </section>
         <div className="rounded-xl border bg-card p-4 shadow-card">
-          <p className="flex items-center justify-between text-[13px] font-medium text-muted-foreground">
+          <p className="flex items-center justify-between text-label font-medium text-muted-foreground">
             {t("jury.progress")}
             <span className="grid size-8 place-items-center rounded-lg bg-accent text-accent-foreground" aria-hidden>
               <ClipboardList className="size-4" />
@@ -76,7 +75,7 @@ export async function JuryDashboard({ user }: { user: CurrentUser }) {
           href="/applications?status=UNDER_REVIEW"
           className="group rounded-xl border bg-card p-4 shadow-card transition-colors hover:border-primary/40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
-          <p className="flex items-center justify-between text-[13px] font-medium text-muted-foreground">
+          <p className="flex items-center justify-between text-label font-medium text-muted-foreground">
             {t("jury.selection")}
             <span className={cn("grid size-8 place-items-center rounded-lg", pendingSelection > 0 ? "bg-warning-soft text-warning" : "bg-success-soft text-success")} aria-hidden>
               <FileInput className="size-4" />
@@ -116,7 +115,7 @@ export async function JuryDashboard({ user }: { user: CurrentUser }) {
                   )}
                   <Link
                     href={`/projects/${r.id}/evaluations`}
-                    className={cn(buttonVariants({ variant: r.evalStatus === "SUBMITTED" ? "outline" : "default", size: "lg" }), "h-10 min-w-28 lg:w-full")}
+                    className={cn(buttonVariants({ variant: r.evalStatus === "SUBMITTED" ? "outline" : "default", size: "lg" }), "min-w-28 lg:w-full")}
                   >
                     {r.evalStatus === "SUBMITTED" ? t("jury.view") : r.evalStatus === "DRAFT" ? t("jury.continue") : t("jury.evaluate")}
                   </Link>

@@ -77,5 +77,61 @@
   "EvaluationStatus": {
     "DRAFT": "Qaralama",
     "SUBMITTED": "Göndərilib"
+  },
+  "RuleStatus": {
+    "TRACKING": "İzlənir",
+    "CHANGED": "Dəyişiklik var",
+    "CONFIRMED": "Təsdiqləndi"
+  },
+  "RegistryStatus": {
+    "PLANNED": "Planlaşdırılır",
+    "ACTIVE": "Aktiv",
+    "ARCHIVED": "Arxiv"
+  },
+  "LabStatus": {
+    "AVAILABLE": "Mövcuddur",
+    "LIMITED": "Məhdud",
+    "CLOSED": "Bağlı"
+  },
+  "PartnerStatus": {
+    "CANDIDATE": "Namizəd",
+    "NEGOTIATING": "Danışıqlar",
+    "ACTIVE": "Aktiv",
+    "ARCHIVED": "Arxiv"
+  },
+  "StudentStatus": {
+    "CANDIDATE": "Namizəd",
+    "SEEKING_TEAM": "Komanda axtarır",
+    "IN_TEAM": "Komandadadır",
+    "ARCHIVED": "Arxiv"
+  },
+  "TeamStatus": {
+    "FORMING": "Formalaşır",
+    "ACTIVE": "Aktiv",
+    "ARCHIVED": "Arxiv"
+  },
+  "TrainingStatus": {
+    "PLANNED": "Planlaşdırılır",
+    "REGISTRATION_OPEN": "Qeydiyyat açıqdır",
+    "COMPLETED": "Tamamlandı"
+  },
+  "ResourceStatus": {
+    "NEW": "Yeni",
+    "UNDER_REVIEW": "Baxılır",
+    "APPROVED": "Təsdiqləndi",
+    "REJECTED": "İmtina edildi",
+    "DONE": "Tamamlandı"
+  },
+  "AnnouncementStatus": {
+    "DRAFT": "Qaralama",
+    "PUBLISHED": "Yayımlandı"
+  },
+  "IntakeStatus": {
+    "SUBMITTED": "Göndərilib",
+    "UNDER_REVIEW": "Baxılır",
+    "NEEDS_CHANGES": "Düzəliş lazımdır",
+    "ACCEPTED": "Qəbul edildi",
+    "REJECTED": "Rədd edildi",
+    "WITHDRAWN": "Geri çəkildi"
   }
 }

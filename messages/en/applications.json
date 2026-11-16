@@ -49,6 +49,7 @@
     "competition": "Target competition",
     "deadline": "deadline {date}",
     "teamSize": "Team size",
+    "academyTeam": "Academy team",
     "submittedAt": "Submitted on",
     "evaluations": "Submitted rubrics",
     "evaluationsValue": "{count, plural, =0 {None yet} one {# juror} other {# jurors}}",
@@ -116,15 +117,16 @@
     "create": "Create project workspace",
     "open": "Open project {code}",
     "confirmTitle": "Create the workspace?",
-    "confirmBody": "A new project in the Validation stage, a 13-item document checklist and a team lead account for {email} (demo password) will be created.",
+    "confirmBody": "A new project in the Validation stage, a 13-item document checklist and — if {email} has no account yet — a team lead account with a temporary password will be created.",
     "confirmAction": "Create",
     "toast": "Project {code} created",
-    "toastUser": "Team account opened for {email}.",
     "errors": {
       "notAccepted": "A workspace can only be created for an accepted application.",
       "exists": "A project already exists for this application.",
       "notFound": "Application not found.",
       "error": "The project could not be created. Please try again."
-    }
+    },
+    "createdTitle": "Project {code} created",
+    "createdBody": "A team lead account was opened for {email}. Hand over the temporary password below — it is shown only now."
   }
 }

@@ -7,6 +7,13 @@
     "actor": "İşlemi yapan",
     "actorPlaceholder": "Ad veya e-posta",
     "project": "Proje",
+    "period": "Dönem",
+    "periods": {
+      "all": "Tüm zamanlar",
+      "today": "Bugün",
+      "7d": "Son 7 gün",
+      "30d": "Son 30 gün"
+    },
     "from": "Başlangıç tarihi",
     "to": "Bitiş tarihi"
   },
@@ -21,7 +28,15 @@
     "risk": "Riskler",
     "evaluation": "Değerlendirme",
     "user": "Kullanıcılar",
-    "system": "Sistem (root)"
+    "system": "Sistem (root)",
+    "competition": "Yarışma kataloğu",
+    "registry": "Kayıtlar",
+    "student": "Öğrenciler",
+    "team": "Akademi ekipleri",
+    "training": "Eğitimler",
+    "resource": "Kaynak talepleri",
+    "announcement": "Duyurular",
+    "intake": "Hazırlık başvuruları"
   },
   "listTitle": "Kayıtlar",
   "found": "{count, plural, one {# kayıt} other {# kayıt}}",
@@ -55,7 +70,8 @@
     },
     "application": {
       "evaluate": "Başvuruyu değerlendirdi",
-      "decide": "Başvuru kararını kaydetti"
+      "decide": "Başvuru kararını kaydetti",
+      "create": "Ekipten başvuru oluşturdu"
     },
     "project": {
       "create": "Proje oluşturdu",
@@ -65,7 +81,8 @@
       "unassign_mentor": "Mentoru çıkardı",
       "assign_jury": "Jüri üyesi atadı",
       "unassign_jury": "Jüri üyesini çıkardı",
-      "flags": "KPI göstergelerini güncelledi"
+      "flags": "KPI göstergelerini güncelledi",
+      "academy": "Projenin fakülte, laboratuvar ve ortak bilgisini güncelledi"
     },
     "task": {
       "create": "Görev oluşturdu",
@@ -91,7 +108,8 @@
     "risk": {
       "create": "Risk kaydetti",
       "update": "Riski güncelledi",
-      "close": "Riski kapattı"
+      "close": "Riski kapattı",
+      "reopen": "Riski yeniden açtı"
     },
     "evaluation": {
       "save": "Değerlendirme taslağını kaydetti",
@@ -101,13 +119,59 @@
       "create": "Kullanıcı oluşturdu",
       "update": "Kullanıcıyı güncelledi",
       "deactivate": "Kullanıcıyı devre dışı bıraktı",
-      "activate": "Kullanıcıyı etkinleştirdi"
+      "activate": "Kullanıcıyı etkinleştirdi",
+      "password_reset": "Geçici şifre oluşturdu",
+      "password_change": "Şifresini değiştirdi"
     },
     "system": {
       "delete_user": "Kullanıcı kalıcı olarak silindi",
       "delete_project": "Proje kalıcı olarak silindi",
       "delete_application": "Başvuru kalıcı olarak silindi",
       "wipe": "Tüm program verisi silindi"
+    },
+    "competition": {
+      "track": "2027 kural takibini güncelledi",
+      "untrack": "Kural takibini durdurdu"
+    },
+    "registry": {
+      "create": "Kayıt ekledi",
+      "update": "Kaydı güncelledi",
+      "delete": "Kaydı sildi"
+    },
+    "student": {
+      "create": "Öğrenci kaydetti",
+      "update": "Öğrenci kaydını güncelledi",
+      "delete": "Öğrenci kaydını sildi"
+    },
+    "team": {
+      "create": "Ekip oluşturdu",
+      "update": "Ekibi güncelledi",
+      "members": "Ekip üyelerini değiştirdi",
+      "delete": "Ekibi sildi"
+    },
+    "training": {
+      "create": "Eğitim ekledi",
+      "update": "Eğitimi güncelledi",
+      "delete": "Eğitimi sildi"
+    },
+    "resource": {
+      "create": "Kaynak talebi oluşturdu",
+      "update": "Kaynak talebini güncelledi",
+      "decide": "Kaynak talebi kararını kaydetti"
+    },
+    "announcement": {
+      "create": "Duyuru taslağı oluşturdu",
+      "update": "Duyuruyu güncelledi",
+      "publish": "Duyuruyu yayınladı",
+      "delete": "Duyuruyu sildi"
+    },
+    "intake": {
+      "submit": "Hazırlık başvurusu gönderildi",
+      "update": "Hazırlık başvurusu güncellendi",
+      "withdraw": "Hazırlık başvurusu geri çekildi",
+      "review": "Hazırlık başvurusunun durumunu değiştirdi",
+      "accept": "Hazırlık başvurusunu kabul etti",
+      "reject": "Hazırlık başvurusunu reddetti"
     }
   },
   "entities": {
@@ -125,7 +189,17 @@
     "JuryAssignment": "Jüri ataması",
     "MentorAssignment": "Mentor ataması",
     "StageChange": "Aşama değişikliği",
-    "System": "Sistem"
+    "System": "Sistem",
+    "Competition": "Yarışma",
+    "Faculty": "Fakülte",
+    "Lab": "Laboratuvar",
+    "Partner": "Sanayi ortağı",
+    "Student": "Öğrenci",
+    "Team": "Akademi ekibi",
+    "Training": "Eğitim",
+    "ResourceRequest": "Kaynak talebi",
+    "Announcement": "Duyuru",
+    "IntakeRequest": "Hazırlık başvurusu"
   },
   "activity": {
     "title": "Etkinlik akışı",
@@ -137,5 +211,6 @@
     "more": "Daha eski kayıtları göster",
     "showing": "Son {count} kayıt gösteriliyor",
     "events": "{count, plural, one {# olay} other {# olay}}"
-  }
+  },
+  "publicForm": "Açık form (öğrenci)"
 }

@@ -11,7 +11,7 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { JurorStatusBadge } from "./aggregate-panel";
 import type { EvalKind, JurorStatus } from "./data";
-import { daysUntil } from "./dates";
+import { bakuDaysUntil } from "@/lib/dates";
 
 /** JURY home: assigned projects with per-rubric status, countdown, pending selection reviews. */
 export async function JurorHome({ user }: { user: CurrentUser }) {
@@ -38,7 +38,7 @@ export async function JurorHome({ user }: { user: CurrentUser }) {
   const projects = assignments.map((a) => a.project);
   const midSubmitted = projects.filter((p) => statusOf(p.id, "MIDTERM") === "SUBMITTED").length;
   const drafts = myEvals.filter((e) => e.status === "DRAFT" && projects.some((p) => p.id === e.projectId)).length;
-  const days = daysUntil(PROGRAM.midtermJury);
+  const days = bakuDaysUntil(PROGRAM.midtermJury);
 
   return (
     <div className="space-y-6">
@@ -77,7 +77,7 @@ export async function JurorHome({ user }: { user: CurrentUser }) {
         <Button
           variant={pendingSelection > 0 ? "default" : "outline"}
           size="lg"
-          className="h-10 shrink-0"
+          className="shrink-0"
           nativeButton={false} render={<Link href="/applications?status=UNDER_REVIEW" />}
         >
           {t("home.selectionCta")}
@@ -127,7 +127,7 @@ export async function JurorHome({ user }: { user: CurrentUser }) {
                     <Button
                       variant={mid === "SUBMITTED" ? "outline" : "default"}
                       size="lg"
-                      className="h-10 w-full"
+                      className="w-full"
                       nativeButton={false} render={<Link href={href} />}
                       aria-label={`${cta}: ${p.title}`}
                     >

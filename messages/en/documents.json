@@ -213,7 +213,7 @@
   },
   "filters": {
     "q": "Search",
-    "qPlaceholder": "Project title or code…",
+    "qPlaceholder": "Project title or code",
     "status": "Status",
     "all": "All",
     "missing": "Missing required",
@@ -224,14 +224,6 @@
     "sortReadinessAsc": "Readiness: lowest first",
     "sortReadinessDesc": "Readiness: highest first",
     "sortCode": "By code",
-    "sortRecent": "Last upload",
-    "apply": "Apply",
-    "reset": "Reset"
-  },
-  "pagination": {
-    "label": "Pagination",
-    "range": "{from}–{to} of {total}",
-    "prev": "Previous",
-    "next": "Next"
+    "sortRecent": "Last upload"
   }
 }

@@ -1,18 +1,11 @@
 {
-  "pagination": {
-    "label": "Sayfalama",
-    "range": "{total} sonuçtan {from}–{to}",
-    "prev": "Önceki",
-    "next": "Sonraki",
-    "page": "Sayfa {page} / {pages}"
-  },
   "users": {
     "eyebrow": "Yönetim",
     "title": "Kullanıcılar",
     "description": "Roller, üniversite bağlantısı ve hesap durumu. Yalnızca program koordinatörü görebilir.",
     "create": "Yeni kullanıcı",
     "createTitle": "Yeni kullanıcı oluştur",
-    "createHint": "İlk şifreyi kullanıcıya güvenli bir kanalla iletin; ilk girişten sonra değiştirilmesi önerilir.",
+    "createHint": "Yeni hesap için geçici bir şifre oluşturulur ve oluşturulduktan sonra bir kez gösterilir.",
     "editTitle": "Kullanıcıyı düzenle",
     "toastCreated": "Kullanıcı oluşturuldu",
     "toastActivated": "Hesap etkinleştirildi",
@@ -24,9 +17,8 @@
       "title": "Unvan / görev",
       "titleHint": "Örn.: Takım lideri, Profesör, Software engineer",
       "university": "Üniversite",
-      "password": "İlk şifre",
-      "passwordHint": "En az 8 karakter. Şifre özetlenmiş (hash) olarak saklanır.",
-      "status": "Durum"
+      "status": "Durum",
+      "passwordNote": "Şifre yazmanız gerekmez: sistem geçici bir şifre oluşturur, bir kez gösterir; kullanıcı ilk girişte kendi şifresini belirler."
     },
     "errors": {
       "forbidden": "Bu işlem için yetkiniz yok.",
@@ -36,10 +28,10 @@
       "tooLong": "Metin çok uzun",
       "invalidEmail": "E-posta adresi geçersiz",
       "emailTaken": "Bu e-postayla bir kullanıcı zaten var",
-      "passwordShort": "Şifre en az 8 karakter olmalıdır",
       "invalid": "Girilen bilgi geçersiz",
       "rootOnly": "Bu işlemi yalnızca root (sistem sahibi) yapabilir.",
-      "rootProtected": "Root hesabı korumalıdır ve değiştirilemez."
+      "rootProtected": "Root hesabı korumalıdır ve değiştirilemez.",
+      "selfPassword": "Kendi şifrenizi kullanıcı menüsünden değiştirin (Şifreyi değiştir)."
     },
     "noUniversity": "Üniversite yok",
     "actionsFor": "{name} için işlemler",
@@ -79,7 +71,24 @@
         "c2": "Root hesabı kimse tarafından devre dışı bırakılamaz, rolü değiştirilemez",
         "c3": "Demo şifresinden ayrı bir şifreyle korunur; tüm işlemleri kayıt altına alınır"
       }
-    }
+    },
+    "toastSaved": "Kaydedildi",
+    "toastReset": "Yeni geçici şifre oluşturuldu",
+    "created": {
+      "title": "Kullanıcı oluşturuldu",
+      "body": "{email} için hesap hazır. Aşağıdaki geçici şifreyi teslim edin."
+    },
+    "done": "Tamam",
+    "resetPassword": "Yeni şifre oluştur",
+    "reset": {
+      "title": "{name} için yeni şifre oluşturulsun mu?",
+      "body": "Geçici şifre mevcut şifrenin yerini hemen alır ve bir kez gösterilir. Kullanıcı bir sonraki girişte kendi şifresini belirlemelidir.",
+      "confirm": "Şifre oluştur",
+      "pending": "Oluşturuluyor…",
+      "doneTitle": "{name} için yeni şifre",
+      "doneBody": "Önceki şifre artık çalışmıyor."
+    },
+    "pendingPassword": "Geçici şifre"
   },
   "system": {
     "eyebrow": "Yalnızca root",
@@ -100,7 +109,13 @@
         "risks": "Riskler",
         "evaluations": "Değerlendirmeler",
         "audit": "İşlem kayıtları",
-        "notifications": "Bildirimler"
+        "notifications": "Bildirimler",
+        "students": "Öğrenciler",
+        "teams": "Akademi ekipleri",
+        "trainings": "Eğitimler",
+        "resources": "Kaynak talepleri",
+        "announcements": "Duyurular",
+        "intake": "Hazırlık başvuruları"
       }
     },
     "roles": {
@@ -134,8 +149,8 @@
     },
     "wipe": {
       "title": "Tüm program verisini sil",
-      "body": "Tüm kullanıcılar (root hariç), başvurular, projeler, görevler, belgeler, riskler, değerlendirmeler, bildirimler ve işlem kaydı silinir. Bu işlem geri alınamaz.",
-      "keeps": "Kalır: root hesabı, üniversiteler, yarışmalar, rubrikler",
+      "body": "Tüm kullanıcılar (root hariç), akademi öğrencileri, ekipleri, eğitimleri ve duyuruları, başvurular, projeler, görevler, belgeler, riskler, kaynak talepleri, değerlendirmeler, bildirimler ve işlem kaydı silinir. Bu işlem geri alınamaz.",
+      "keeps": "Kalır: root hesabı, üniversiteler, yarışmalar (katalog ve kural takibi), rubrikler, fakülte, laboratuvar ve ortak kayıtları",
       "removes": "Silinir: diğer tüm veriler ve yüklenen dosyalar",
       "hint": "Demo verisini yeniden yüklemek için sunucuda: npm run db:seed",
       "button": "Tümünü sil",

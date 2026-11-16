@@ -31,7 +31,7 @@ export function TaskWeekView({ items }: { items: TaskItem[] }) {
                 <h3 id={id} className="text-sm font-semibold">
                   {week ? t("weekLabel", { n: week }) : t("noWeek")}
                 </h3>
-                {current && <span className="rounded-full bg-accent px-2 py-0.5 text-[11px] font-semibold text-accent-foreground">{t("weekView.current")}</span>}
+                {current && <span className="rounded-full bg-accent px-2 py-0.5 text-2xs font-semibold text-accent-foreground">{t("weekView.current")}</span>}
               </div>
               <div className="flex items-center gap-3 sm:w-64">
                 <span className="tabular shrink-0 text-xs text-muted-foreground">{t("weekView.progress", { done, total: list.length })}</span>

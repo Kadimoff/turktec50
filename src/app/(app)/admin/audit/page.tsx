@@ -3,18 +3,18 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Download, ScrollText, ShieldCheck } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { fmtDateTime, fmtRelative } from "@/lib/format";
+import { fmtBaku, fmtDateTime, fmtRelative } from "@/lib/format";
+import { buildHref, parsePage } from "@/lib/search-params";
+import { parseBakuDate } from "@/lib/dates";
 import { PageHeader } from "@/components/shared/page-header";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { EmptyState } from "@/components/shared/empty-state";
-import { NativeSelect } from "@/components/shared/form";
-import { Input } from "@/components/ui/input";
+import { FilterBar } from "@/components/shared/filter-bar";
+import { Pagination } from "@/components/shared/pagination";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FilterBar, FilterField } from "@/components/admin/filter-bar";
-import { Pagination, buildHref, parsePage } from "@/components/admin/pagination";
-import { AUDIT_GROUPS, auditWhere, filtersToParams, parseAuditFilters } from "@/components/audit/query";
-import { ActionIcon, actionLabel, entityLabel } from "@/components/audit/labels";
+import { AUDIT_GROUPS, AUDIT_PERIODS, auditWhere, filtersToParams, monthsSince, parseAuditFilters } from "@/components/audit/query";
+import { ActionIcon, actionLabel, entityLabel, actorFallback } from "@/components/audit/labels";
 
 const PAGE_SIZE = 50;
 
@@ -33,7 +33,7 @@ export default async function AuditPage(props: PageProps<"/admin/audit">) {
   const params = filtersToParams(filters);
   const where = auditWhere(filters);
 
-  const [total, rows, projects] = await Promise.all([
+  const [total, rows, projects, first] = await Promise.all([
     prisma.auditLog.count({ where }),
     prisma.auditLog.findMany({
       where,
@@ -47,9 +47,17 @@ export default async function AuditPage(props: PageProps<"/admin/audit">) {
       },
     }),
     prisma.project.findMany({ orderBy: { code: "asc" }, select: { id: true, code: true, title: true } }),
+    prisma.auditLog.findFirst({ orderBy: { createdAt: "asc" }, select: { createdAt: true } }),
   ]);
-  const filtered = Object.values(params).some(Boolean);
-  const exportHref = buildHref("/admin/audit/export", params, {});
+  const exportHref = buildHref("/admin/audit/export", params);
+  const monthLabel = (ym: string) => {
+    const label = fmtBaku(parseBakuDate(`${ym}-15`) ?? new Date(), "LLLL yyyy", locale);
+    return label.charAt(0).toLocaleUpperCase(locale) + label.slice(1);
+  };
+  const periods = [
+    ...AUDIT_PERIODS.map((p) => ({ value: p, label: t(`filters.periods.${p}`) })),
+    ...monthsSince(first?.createdAt ?? new Date()).map((m) => ({ value: m, label: monthLabel(m) })),
+  ];
 
   return (
     <div className="space-y-6">
@@ -58,36 +66,29 @@ export default async function AuditPage(props: PageProps<"/admin/audit">) {
         title={t("title")}
         description={t("description")}
         actions={
-          <Button variant="outline" size="lg" className="h-10" nativeButton={false} render={<a href={exportHref} download />}>
+          <Button variant="outline" size="lg" nativeButton={false} render={<a href={exportHref} download />}>
             <Download className="size-4" aria-hidden />
             {tc("actions.exportCsv")}
           </Button>
         }
       />
 
-      <FilterBar action="/admin/audit" clearHref="/admin/audit" active={filtered}>
-        <FilterField label={t("filters.group")} htmlFor="a-group">
-          <NativeSelect id="a-group" name="group" defaultValue={filters.group ?? ""}>
-            <option value="">{tc("actions.all")}</option>
-            {AUDIT_GROUPS.map((g) => <option key={g} value={g}>{t(`groups.${g}`)}</option>)}
-          </NativeSelect>
-        </FilterField>
-        <FilterField label={t("filters.actor")} htmlFor="a-actor" className="lg:min-w-52 lg:flex-1">
-          <Input id="a-actor" name="actor" type="search" defaultValue={filters.actor} placeholder={t("filters.actorPlaceholder")} className="h-9" />
-        </FilterField>
-        <FilterField label={t("filters.project")} htmlFor="a-project" className="lg:max-w-56">
-          <NativeSelect id="a-project" name="project" defaultValue={filters.project ?? ""}>
-            <option value="">{tc("actions.all")}</option>
-            {projects.map((p) => <option key={p.id} value={p.id}>{p.code} · {p.title}</option>)}
-          </NativeSelect>
-        </FilterField>
-        <FilterField label={t("filters.from")} htmlFor="a-from" className="lg:min-w-36">
-          <Input id="a-from" name="from" type="date" defaultValue={filters.from} className="h-9" />
-        </FilterField>
-        <FilterField label={t("filters.to")} htmlFor="a-to" className="lg:min-w-36">
-          <Input id="a-to" name="to" type="date" defaultValue={filters.to} className="h-9" />
-        </FilterField>
-      </FilterBar>
+      <FilterBar
+        action="/admin/audit"
+        search={{ name: "actor", label: t("filters.actor"), placeholder: t("filters.actorPlaceholder"), value: filters.actor }}
+        selects={[
+          { name: "group", label: t("filters.group"), allLabel: tc("actions.all"), value: filters.group, options: AUDIT_GROUPS.map((g) => ({ value: g, label: t(`groups.${g}`) })) },
+          {
+            name: "project", label: t("filters.project"), allLabel: tc("actions.all"), value: filters.project, wide: true,
+            options: projects.map((p) => ({ value: p.id, label: `${p.code} · ${p.title}` })),
+          },
+          { name: "period", label: t("filters.period"), allLabel: t("filters.periods.all"), value: filters.period, options: periods },
+        ]}
+        dates={[
+          { name: "from", label: t("filters.from"), value: filters.from },
+          { name: "to", label: t("filters.to"), value: filters.to },
+        ]}
+      />
 
       <section className="rounded-xl border bg-card shadow-card" aria-labelledby="audit-list">
         <div className="flex items-center justify-between gap-3 border-b px-4 py-3 sm:px-5">
@@ -107,7 +108,7 @@ export default async function AuditPage(props: PageProps<"/admin/audit">) {
                     <p className="text-sm font-medium">{actionLabel(t, r.action)}</p>
                     {r.summary && <p className="truncate text-sm text-muted-foreground">{r.summary}</p>}
                     <p className="mt-1 text-xs text-muted-foreground">
-                      {r.actor?.name ?? t("system")}
+                      {r.actor?.name ?? actorFallback(t, r.action)}
                       {" · "}
                       <time dateTime={r.createdAt.toISOString()} title={fmtDateTime(r.createdAt, locale)}>{fmtRelative(r.createdAt, locale)}</time>
                     </p>
@@ -149,7 +150,7 @@ export default async function AuditPage(props: PageProps<"/admin/audit">) {
                             </div>
                           </div>
                         ) : (
-                          <span className="text-sm text-muted-foreground">{t("system")}</span>
+                          <span className="text-sm text-muted-foreground">{actorFallback(t, r.action)}</span>
                         )}
                       </TableCell>
                       <TableCell>
@@ -179,9 +180,11 @@ export default async function AuditPage(props: PageProps<"/admin/audit">) {
             </div>
           </>
         )}
-        <div className="border-t px-4 py-3 sm:px-5">
-          <Pagination basePath="/admin/audit" params={params} page={page} pageSize={PAGE_SIZE} total={total} />
-        </div>
+        {total > 0 && (
+          <div className="border-t px-4 py-3 sm:px-5">
+            <Pagination basePath="/admin/audit" params={params} page={page} pageSize={PAGE_SIZE} total={total} />
+          </div>
+        )}
       </section>
 
       <p className="flex items-start gap-2 rounded-lg border border-dashed bg-card px-3 py-2.5 text-xs text-muted-foreground">

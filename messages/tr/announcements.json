@@ -1,0 +1,74 @@
+{
+  "eyebrow": "Program",
+  "title": "Duyurular",
+  "description": "Program koordinatörlerinin rolünüz için yayınladığı duyurular — en yenisi üstte.",
+  "descriptionAdmin": "Duyuruları taslak olarak hazırlayın, hedef kitleyi (rolleri) seçin ve yayınlayın. Yayınlandığında seçilen rollerdeki aktif kullanıcılara sistem içi bildirim gönderilir.",
+  "feed": "Duyuru akışı",
+  "sections": {
+    "drafts": "Taslaklar",
+    "published": "Yayınlanan duyurular"
+  },
+  "count": "{count, plural, one {# duyuru} other {# duyuru}}",
+  "empty": {
+    "feed": "Henüz duyuru yok",
+    "feedHint": "Koordinatörler rolünüz için duyuru yayınladığında burada görünecek ve bildirim alacaksınız.",
+    "drafts": "Taslak yok",
+    "draftsHint": "Yeni duyuru taslak olarak kaydedilir ve yayınlanana kadar yalnızca koordinatörler görür.",
+    "published": "Yayınlanan duyuru yok",
+    "publishedHint": "Bir taslağı yayınladığınızda seçilen rollere görünür."
+  },
+  "publishedAt": "{date} · {relative}",
+  "draftUpdated": "Son değişiklik: {relative}",
+  "by": "Yazan: {name}",
+  "audience": "Hedef kitle",
+  "form": {
+    "create": "Yeni duyuru",
+    "createTitle": "Duyuru hazırla",
+    "editTitle": "Duyuruyu düzenle",
+    "createDescription": "Duyuru taslak olarak kaydedilir; yayına hazır olduğunda “Yayınla” düğmesine basın.",
+    "editDescription": "Yayınlanmış bir duyurudaki değişiklikler hemen görünür; yeniden bildirim gönderilmez.",
+    "title": "Başlık",
+    "body": "Metin",
+    "bodyHint": "Düz metin; satır sonları korunur.",
+    "counter": "{count} / {max}",
+    "audience": "Kimler görür",
+    "audienceHint": "En az bir rol seçin. Duyuruyu yalnızca seçilen roller görür ve bildirim alır.",
+    "pending": "Kaydediliyor…",
+    "saveDraft": "Taslak olarak kaydet"
+  },
+  "actions": {
+    "edit": "Düzenle",
+    "editLabel": "Düzenle: {title}",
+    "publish": "Yayınla",
+    "publishLabel": "Yayınla: {title}",
+    "unpublish": "Taslağa geri al",
+    "unpublishLabel": "Taslağa geri al: {title}",
+    "delete": "Sil",
+    "deleteLabel": "Sil: {title}"
+  },
+  "confirm": {
+    "publishTitle": "“{title}” yayınlansın mı?",
+    "publishBody": "{count, plural, =0 {Duyuru seçilen rollere görünecek. Bildirim alacak aktif kullanıcı yok.} one {Duyuru seçilen rollere görünecek ve # kullanıcıya bildirim gönderilecek.} other {Duyuru seçilen rollere görünecek ve # kullanıcıya bildirim gönderilecek.}}",
+    "unpublishTitle": "“{title}” taslağa geri alınsın mı?",
+    "unpublishBody": "Duyuru koordinatörler dışında kimseye görünmeyecek. Gönderilmiş bildirimler geri alınmaz.",
+    "deleteTitle": "“{title}” silinsin mi?",
+    "deleteBody": "Duyuru kalıcı olarak silinecek. Bu işlem geri alınamaz, ancak işlem kaydında kalır."
+  },
+  "errors": {
+    "titleShort": "Başlık en az 3 karakter olmalıdır.",
+    "titleLong": "Başlık 160 karakterden uzun olamaz.",
+    "bodyShort": "Metin en az 10 karakter olmalıdır.",
+    "bodyLong": "Metin 4000 karakterden uzun olamaz.",
+    "audience": "En az bir rol seçin.",
+    "notFound": "Duyuru bulunamadı — sayfayı yenileyin.",
+    "invalid": "Girilen bilgi geçersiz.",
+    "generic": "Bir hata oluştu. Tekrar deneyin."
+  },
+  "toast": {
+    "created": "Taslak oluşturuldu",
+    "updated": "Duyuru güncellendi",
+    "published": "Duyuru yayınlandı",
+    "unpublished": "Duyuru taslağa geri alındı",
+    "deleted": "Duyuru silindi"
+  }
+}

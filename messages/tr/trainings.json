@@ -1,0 +1,82 @@
+{
+  "eyebrow": "Akademi",
+  "title": "Eğitimler",
+  "descriptionAdmin": "Akademi eğitimlerini planlayın: tarih, laboratuvar ve mentor. Eğitimler takvimde ve akademi genel bakışında da görünür.",
+  "descriptionMentor": "Akademi eğitim takvimi. Yürüttüğünüz eğitimler işaretlidir; değişiklik için program koordinatörüyle iletişime geçin.",
+  "descriptionTeam": "Ekipler için akademi eğitimleri. Kaydı açık eğitimlere katılmak için program koordinatörüyle iletişime geçin.",
+  "timezoneNote": "Tüm saatler Bakü saatiyle (UTC+4) gösterilir.",
+  "timezone": "Bakü saati",
+  "sections": {
+    "upcoming": "Yaklaşan eğitimler",
+    "past": "Geçmiş eğitimler"
+  },
+  "count": "{count, plural, one {# eğitim} other {# eğitim}}",
+  "empty": {
+    "upcoming": "Yaklaşan eğitim yok",
+    "upcomingAdmin": "Yeni bir eğitim ekleyin — takvimde de görünecek.",
+    "upcomingHint": "Yeni eğitimler planlandığında burada görünecek.",
+    "past": "Geçmiş eğitim yok",
+    "pastHint": "Tamamlanan eğitimler burada arşivlenir."
+  },
+  "ongoing": "Şu an sürüyor",
+  "youLead": "Siz yürütüyorsunuz",
+  "statusStale": "Eğitim sona erdi — durumu “Tamamlandı” olarak güncelleyin.",
+  "noLab": "Laboratuvar atanmadı",
+  "noMentor": "Mentor atanmadı",
+  "duration": "{count, plural, one {# dk} other {# dk}}",
+  "meta": {
+    "time": "Saat",
+    "lab": "Laboratuvar",
+    "mentor": "Mentor"
+  },
+  "actions": {
+    "edit": "Düzenle",
+    "editLabel": "Düzenle: {title}",
+    "delete": "Sil",
+    "deleteLabel": "Sil: {title}"
+  },
+  "delete": {
+    "title": "“{title}” eğitimi silinsin mi?",
+    "body": "Eğitim programdan ve takvimden kaldırılacak. Bu işlem geri alınamaz, ancak işlem kaydında kalır."
+  },
+  "form": {
+    "create": "Yeni eğitim",
+    "createTitle": "Eğitim ekle",
+    "editTitle": "Eğitimi düzenle",
+    "description": "Tarih ve saat Bakü saatiyle girilir. Kapalı laboratuvarlar ve pasif mentorlar listede gösterilmez.",
+    "title": "Eğitim adı",
+    "date": "Tarih",
+    "time": "Başlangıç saati",
+    "timeHint": "Bakü saati (UTC+4)",
+    "duration": "Süre (dk)",
+    "durationHint": "15–600 dakika",
+    "mentor": "Mentor",
+    "mentorHint": "Yalnızca aktif mentorlar.",
+    "noMentor": "Mentor atanmadı",
+    "lab": "Laboratuvar",
+    "labHint": "Kapalı laboratuvarlar gösterilmez.",
+    "noLab": "Laboratuvar atanmadı",
+    "status": "Durum",
+    "notes": "Notlar",
+    "notesHint": "Katılımcılar için bilgi: gereksinimler, yanınızda getirmeniz gerekenler vb. Herkes görür.",
+    "pending": "Kaydediliyor…"
+  },
+  "errors": {
+    "titleShort": "Ad en az 3 karakter olmalıdır.",
+    "titleLong": "Ad 160 karakterden uzun olamaz.",
+    "date": "Geçerli bir tarih girin.",
+    "time": "Geçerli bir saat girin (SS:dd).",
+    "duration": "Süre 15 ile 600 dakika arasında olmalıdır.",
+    "invalid": "Girilen bilgi geçersiz.",
+    "notesLong": "Not 2000 karakterden uzun olamaz.",
+    "notFound": "Eğitim bulunamadı — sayfayı yenileyin.",
+    "mentor": "Aktif bir mentor seçin.",
+    "lab": "Bu laboratuvar kapalı veya bulunamadı.",
+    "generic": "Bir hata oluştu. Tekrar deneyin."
+  },
+  "toast": {
+    "created": "Eğitim eklendi",
+    "updated": "Eğitim güncellendi",
+    "deleted": "Eğitim silindi"
+  }
+}

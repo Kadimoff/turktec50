@@ -213,7 +213,7 @@
   },
   "filters": {
     "q": "Axtarış",
-    "qPlaceholder": "Layihə adı və ya kodu…",
+    "qPlaceholder": "Layihə adı və ya kodu",
     "status": "Vəziyyət",
     "all": "Hamısı",
     "missing": "Çatışmayan mütləq var",
@@ -224,14 +224,6 @@
     "sortReadinessAsc": "Hazırlıq: aşağıdan",
     "sortReadinessDesc": "Hazırlıq: yuxarıdan",
     "sortCode": "Kod üzrə",
-    "sortRecent": "Son yükləmə",
-    "apply": "Tətbiq et",
-    "reset": "Sıfırla"
-  },
-  "pagination": {
-    "label": "Səhifələmə",
-    "range": "{from}–{to} / {total}",
-    "prev": "Əvvəlki",
-    "next": "Növbəti"
+    "sortRecent": "Son yükləmə"
   }
 }

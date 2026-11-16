@@ -1,0 +1,82 @@
+{
+  "eyebrow": "Academy",
+  "title": "Trainings",
+  "descriptionAdmin": "Plan Academy trainings: date, lab and mentor. Trainings also appear in the calendar and the Academy overview.",
+  "descriptionMentor": "The Academy training schedule. Trainings you lead are marked; contact the program coordinator for changes.",
+  "descriptionTeam": "Academy trainings for teams. To join a training with open registration, contact the program coordinator.",
+  "timezoneNote": "All times are shown in Baku time (UTC+4).",
+  "timezone": "Baku time",
+  "sections": {
+    "upcoming": "Upcoming trainings",
+    "past": "Past trainings"
+  },
+  "count": "{count, plural, one {# training} other {# trainings}}",
+  "empty": {
+    "upcoming": "No upcoming trainings",
+    "upcomingAdmin": "Add a training — it will also appear in the calendar.",
+    "upcomingHint": "New trainings will appear here once they are planned.",
+    "past": "No past trainings",
+    "pastHint": "Trainings that have taken place are archived here."
+  },
+  "ongoing": "In progress",
+  "youLead": "You lead this",
+  "statusStale": "This training has ended — update its status to “Completed”.",
+  "noLab": "No lab assigned",
+  "noMentor": "No mentor assigned",
+  "duration": "{count, plural, one {# min} other {# min}}",
+  "meta": {
+    "time": "Time",
+    "lab": "Lab",
+    "mentor": "Mentor"
+  },
+  "actions": {
+    "edit": "Edit",
+    "editLabel": "Edit {title}",
+    "delete": "Delete",
+    "deleteLabel": "Delete {title}"
+  },
+  "delete": {
+    "title": "Delete the training “{title}”?",
+    "body": "The training will be removed from the schedule and the calendar. This cannot be undone, but it stays in the audit log."
+  },
+  "form": {
+    "create": "New training",
+    "createTitle": "Add training",
+    "editTitle": "Edit training",
+    "description": "Enter the date and time in Baku time. Closed labs and inactive mentors are not listed.",
+    "title": "Training title",
+    "date": "Date",
+    "time": "Start time",
+    "timeHint": "Baku time (UTC+4)",
+    "duration": "Duration (min)",
+    "durationHint": "15–600 minutes",
+    "mentor": "Mentor",
+    "mentorHint": "Active mentors only.",
+    "noMentor": "No mentor assigned",
+    "lab": "Lab",
+    "labHint": "Closed labs are not listed.",
+    "noLab": "No lab assigned",
+    "status": "Status",
+    "notes": "Notes",
+    "notesHint": "Information for participants: requirements, what to bring, etc. Visible to everyone.",
+    "pending": "Saving…"
+  },
+  "errors": {
+    "titleShort": "The title must be at least 3 characters.",
+    "titleLong": "The title cannot be longer than 160 characters.",
+    "date": "Enter a valid date.",
+    "time": "Enter a valid time (HH:mm).",
+    "duration": "Duration must be between 15 and 600 minutes.",
+    "invalid": "The data entered is not valid.",
+    "notesLong": "Notes cannot be longer than 2000 characters.",
+    "notFound": "Training not found — refresh the page.",
+    "mentor": "Choose an active mentor.",
+    "lab": "This lab is closed or no longer exists.",
+    "generic": "Something went wrong. Please try again."
+  },
+  "toast": {
+    "created": "Training added",
+    "updated": "Training updated",
+    "deleted": "Training deleted"
+  }
+}

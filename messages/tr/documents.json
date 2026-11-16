@@ -213,7 +213,7 @@
   },
   "filters": {
     "q": "Arama",
-    "qPlaceholder": "Proje adı veya kodu…",
+    "qPlaceholder": "Proje adı veya kodu",
     "status": "Durum",
     "all": "Tümü",
     "missing": "Eksik zorunlu var",
@@ -224,14 +224,6 @@
     "sortReadinessAsc": "Hazırlık: düşükten",
     "sortReadinessDesc": "Hazırlık: yüksekten",
     "sortCode": "Koda göre",
-    "sortRecent": "Son yükleme",
-    "apply": "Uygula",
-    "reset": "Sıfırla"
-  },
-  "pagination": {
-    "label": "Sayfalama",
-    "range": "{from}–{to} / {total}",
-    "prev": "Önceki",
-    "next": "Sonraki"
+    "sortRecent": "Son yükleme"
   }
 }

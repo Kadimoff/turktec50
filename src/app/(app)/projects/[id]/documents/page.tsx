@@ -88,7 +88,7 @@ export default async function ProjectDocumentsPage(props: PageProps<"/projects/[
                   {t("readiness.qcPending")}
                 </ToneBadge>
               )}
-              <p className="mt-1.5 text-[11px] text-muted-foreground">{t("readiness.qcNote")}</p>
+              <p className="mt-1.5 text-2xs text-muted-foreground">{t("readiness.qcNote")}</p>
             </div>
           </div>
           <div>
@@ -106,7 +106,7 @@ export default async function ProjectDocumentsPage(props: PageProps<"/projects/[
               ))}
             </dl>
             <div className="mt-3">
-              <p className="text-xs font-semibold tracking-wide text-muted-foreground">{t("readiness.missingList")}</p>
+              <p className="text-xs font-semibold text-muted-foreground">{t("readiness.missingList")}</p>
               {missingReq.length === 0 ? (
                 <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-success">
                   <CheckCircle2 className="size-3.5" aria-hidden />
